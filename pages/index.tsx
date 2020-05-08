@@ -1,11 +1,12 @@
-import Head from 'next/head'
-
+import * as React from 'react'
 import Dummy from '@ui/Dummy'
 
-export default function Home() {
+const Home: React.FC<{}> = () => {
   return (
     <div>
       <Dummy />
     </div>
   )
 }
+
+export default Home
