@@ -1,12 +1,8 @@
 import * as React from 'react'
-import Dummy from '@ui/Dummy'
+import AppLayout from '@ui/layouts/App'
 
 const Home: React.FC<{}> = () => {
-  return (
-    <div>
-      <Dummy />
-    </div>
-  )
+  return <AppLayout>cocococococo</AppLayout>
 }
 
 export default Home

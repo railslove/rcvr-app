@@ -7,23 +7,41 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js",
-    "test": "jest"
+    "test": "jest",
+    "sb": "start-storybook -p 6006"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@styled-system/css": "^5.1.5",
+    "@styled-system/should-forward-prop": "^5.1.5",
+    "emotion-theming": "^10.0.27",
+    "framer-motion": "^2.0.0-beta.66",
+    "modern-normalize": "^0.6.0",
     "next": "9.3.6",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "styled-system": "^5.1.5",
+    "typeface-nunito": "^1.1.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.6",
     "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-backgrounds": "^5.3.18",
+    "@storybook/addon-knobs": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addon-viewport": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react": "^5.3.18",
     "@testing-library/react": "^10.0.4",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.5",
     "@types/react": "^16.9.34",
+    "@types/styled-system": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
+    "babel-loader": "^8.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.0.0",
@@ -34,6 +52,8 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "jest": "^26.0.1",
     "prettier": "^2.0.5",
+    "storybook-dark-mode": "^0.4.1",
+    "ts-loader": "^7.0.3",
     "typescript": "^3.8.3"
   },
   "prettier": {

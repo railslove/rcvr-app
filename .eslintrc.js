@@ -33,6 +33,14 @@ module.exports = {
     'react/prop-types': 'off',
     'import/newline-after-import': 'warn',
   },
+  overrides: [
+    {
+      files: ['*stories.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
+      },
+    },
+  ],
   env: {
     browser: true,
     node: true,

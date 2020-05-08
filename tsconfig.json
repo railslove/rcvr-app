@@ -15,8 +15,8 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@ui": ["ui/index"],
-      "@ui/*": ["ui/*"]
+      "@ui/*": ["ui/*"],
+      "@lib/*": ["lib/*"]
     }
   },
   "exclude": ["node_modules"],
