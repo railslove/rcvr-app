@@ -42,7 +42,7 @@
   },
   "jest": {
     "setupFilesAfterEnv": [
-      "<rootDir>/setup-tests.ts"
+      "<rootDir>/setup-tests.js"
     ]
   }
 }
