@@ -21,8 +21,8 @@ class RcvrDatabase extends Dexie {
   constructor() {
     super('RcvrDatabase')
     this.version(1).stores({
-      checkins: 'id, business, enteredAt, leftAt',
-      guests: '++id, name, phone',
+      checkins: 'id, enteredAt',
+      guests: '++id',
     })
 
     this.checkins = this.table('checkins')
@@ -46,6 +46,11 @@ export async function addGuest(guestData: Guest): Promise<Guest> {
 export async function getCheckin(id: string): Promise<Checkin> {
   const checkin = await db.checkins.get(id)
   return checkin
+}
+
+export async function getAllCheckins(): Promise<Checkin[]> {
+  const checkins = await db.checkins.toCollection().sortBy('enteredAt')
+  return checkins
 }
 
 export async function addCheckin(checkinData: Checkin): Promise<Checkin> {

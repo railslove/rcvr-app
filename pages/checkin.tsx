@@ -5,8 +5,6 @@ import { v4 as uuidv4 } from 'uuid'
 import * as db from '@lib/db'
 import Onboarding from '@ui/blocks/Onboarding'
 
-type CheckingPageProps = {}
-
 type CreateCheckinData = {
   id: string
   businessId: string
@@ -27,7 +25,7 @@ async function createCheckin(data: CreateCheckinData): Promise<db.Checkin> {
   return checkin
 }
 
-const CheckingPage: React.FC<CheckingPageProps> = () => {
+const CheckingPage: React.FC<{}> = () => {
   const id = React.useRef<string>(uuidv4())
   const { query } = useRouter()
   const key = Array.isArray(query.key) ? undefined : query.key
