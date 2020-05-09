@@ -1,0 +1,50 @@
+version: v1.0
+name: rcvr ci
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+global_job_config:
+  prologue:
+    commands:
+      - sem-version node 12
+
+blocks:
+  - name: 'Install'
+    dependencies: []
+    task:
+      jobs:
+        - name: npm install
+          commands:
+            - checkout
+            - cache restore
+            - npm i
+            - cache store
+
+  - name: 'Test'
+    dependencies: ['Install']
+    task:
+      prologue:
+        commands:
+          - checkout --use-cache
+          - cache restore
+      jobs:
+        - name: jest
+          commands:
+            - npm test
+
+  - name: 'Analyze'
+    dependencies: ['Install']
+    task:
+      prologue:
+        commands:
+          - checkout --use-cache
+          - cache restore
+      jobs:
+        - name: lint
+          commands:
+            - npm run lint
+        - name: typecheck
+          commands:
+            - npm run typecheck

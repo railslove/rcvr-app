@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js",
+    "typecheck": "tsc --noemit",
     "test": "jest",
     "sb": "start-storybook -p 6006"
   },
