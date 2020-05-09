@@ -4,7 +4,7 @@ import CardList from '@ui/blocks/CardList'
 
 type CheckinsIndexProps = {}
 
-const CheckinsIndex: React.FC<CheckinsIndexProps> = (props) => {
+const CheckinsIndex: React.FC<CheckinsIndexProps> = () => {
   return (
     <AppLayout>
       <CardList />
