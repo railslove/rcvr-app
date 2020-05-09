@@ -16,14 +16,17 @@
     "@emotion/styled": "^10.0.27",
     "@styled-system/css": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
+    "dexie": "^3.0.1",
     "emotion-theming": "^10.0.27",
     "framer-motion": "^2.0.0-beta.66",
     "modern-normalize": "^0.6.0",
     "next": "9.3.6",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-query": "^1.3.3",
     "styled-system": "^5.1.5",
-    "typeface-nunito": "^1.1.3"
+    "typeface-nunito": "^1.1.3",
+    "uuid": "^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
