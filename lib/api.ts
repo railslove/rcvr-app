@@ -32,11 +32,20 @@ type TicketRequest = {
   publicKey?: string
 }
 
-type OwnerRequest = {
+type OwnerSignup = {
   email: string
-  password?: string
-  name?: string
-  publicKey?: string
+  password: string
+  name: string
+}
+
+type OwnerLogin = {
+  email: string
+  password: string
+}
+
+type OwnerPatch = {
+  id: number
+  publicKey: string
 }
 
 type OwnerResponse = {
@@ -63,7 +72,7 @@ async function patchTicket(ticket: TicketRequest): Promise<TicketResponse> {
   return camelCased
 }
 
-async function postSignup(owner: OwnerRequest): Promise<OwnerResponse> {
+async function postSignup(owner: OwnerSignup): Promise<OwnerResponse> {
   const json = snakecaseKeys({ owner }, { deep: true })
   const res: any = await api.post('signup', { json }) // eslint-disable-line @typescript-eslint/no-explicit-any
   const token = res.headers.get('Authorization').replace('Bearer ', '')
@@ -72,14 +81,22 @@ async function postSignup(owner: OwnerRequest): Promise<OwnerResponse> {
   return { ...camelCased, token }
 }
 
-async function patchOwner(owner: OwnerRequest): Promise<OwnerResponse> {
+async function patchOwner(owner: OwnerPatch): Promise<OwnerResponse> {
   const json = snakecaseKeys({ owner }, { deep: true })
-  const parsed: any = await await api.post('signup', { json }).json() // eslint-disable-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parsed: any = await api
+    .patch('owner/' + owner.id, {
+      json,
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
+      },
+    })
+    .json()
   const camelCased = camelcaseKeys(parsed, { deep: true })
   return camelCased
 }
 
-async function postLogin(owner: OwnerRequest): Promise<OwnerResponse> {
+async function postLogin(owner: OwnerLogin): Promise<OwnerResponse> {
   const json = snakecaseKeys({ owner }, { deep: true })
   const res: any = await api.post('login', { json }) // eslint-disable-line @typescript-eslint/no-explicit-any
   const token = res.headers.get('Authorization').replace('Bearer ', '')
@@ -120,7 +137,7 @@ export async function checkoutTicket(data: UpdateCheckin): Promise<db.Checkin> {
   return checkin
 }
 
-export async function createOwner(data: OwnerRequest): Promise<db.Owner> {
+export async function createOwner(data: OwnerSignup): Promise<db.Owner> {
   const ownerRes = await postSignup(data)
   const owner = await db.addOwner({
     id: ownerRes.id,
@@ -131,13 +148,13 @@ export async function createOwner(data: OwnerRequest): Promise<db.Owner> {
   return owner
 }
 
-export async function updateOwner(data: OwnerRequest): Promise<db.Owner> {
+export async function updateOwner(data: OwnerPatch): Promise<db.Owner> {
   const ownerRes = await patchOwner(data)
   const owner = await db.updateOwner(ownerRes.id, { publicKey: data.publicKey })
   return owner
 }
 
-export async function loginOwner(data: OwnerRequest): Promise<db.Owner> {
+export async function loginOwner(data: OwnerLogin): Promise<db.Owner> {
   const { token, ...ownerData } = await postLogin(data)
   let owner = await db.getOwner(ownerData.id)
   if (!owner) {

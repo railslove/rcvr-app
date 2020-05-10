@@ -4,6 +4,7 @@ import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
 
 import * as api from '@lib/api'
+import * as db from '@lib/db'
 import AppLayout from '@ui/layouts/App'
 import { Box, Flex, Input, Button, Text } from '@ui/base'
 import StrengthMeter from '@ui/blocks/StrengthMeter'
@@ -16,6 +17,7 @@ type strengthState = -1 | 0 | 1 | 2
 
 const SignupPage: React.FC<{}> = () => {
   const router = useRouter()
+  const { owner } = db.useOwner()
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -27,6 +29,10 @@ const SignupPage: React.FC<{}> = () => {
   const [passwordVerifyError, setPasswordVerifyError] = React.useState<
     errorState
   >()
+
+  React.useEffect(() => {
+    if (owner) router.replace('/business/dashboard')
+  }, [owner, router])
 
   const [signup, { status, error }] = useMutation(api.createOwner, {
     throwOnError: true,

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
 
+import * as db from '@lib/db'
 import * as api from '@lib/api'
 import AppLayout from '@ui/layouts/App'
 import { Box, Flex, Input, Button } from '@ui/base'
@@ -11,11 +12,16 @@ import Logo from '@ui/blocks/Logo'
 
 const LoginPage: React.FC<{}> = () => {
   const router = useRouter()
+  const { owner } = db.useOwner()
   const [email, setEmail] = React.useState('')
   const [emailError, setEmailError] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [passwordError, setPasswordError] = React.useState('')
   const [isRedirecting, setIsRedirecting] = React.useState(false)
+
+  React.useEffect(() => {
+    if (owner) router.replace('/business/dashboard')
+  }, [owner, router])
 
   const [login, { status, error }] = useMutation(api.loginOwner, {
     throwOnError: true,

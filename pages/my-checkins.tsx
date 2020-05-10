@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 import * as api from '@lib/api'
 import * as db from '@lib/db'
-import { Card, Flex } from '@ui/base'
+import { CheckinCard, Flex } from '@ui/base'
 import AppLayout from '@ui/layouts/App'
 import LastCheckin from '@ui/blocks/LastCheckin'
 import CheckinHead from '@ui/blocks/CheckinHead'
@@ -55,7 +55,7 @@ const MyCheckinsPage: React.FC<{}> = () => {
               delay: i > 0 && 0.75,
             }}
           >
-            <Card
+            <CheckinCard
               exit={{ opacity: 0 }}
               flexGrow={i === 0 ? 1 : 0}
               flexShrink={0}
@@ -71,7 +71,7 @@ const MyCheckinsPage: React.FC<{}> = () => {
               ) : (
                 <CheckinHead checkin={checkin} />
               )}
-            </Card>
+            </CheckinCard>
           </motion.li>
         ))}
       </Flex>

@@ -81,11 +81,19 @@ export function isLoggedIn(): boolean {
   return oid != null
 }
 
-type UseOwner = {
-  owner: Owner
-  refetch: () => Promise<Owner>
-}
-export function useOwner(): UseOwner | undefined {
+type UseOwner =
+  | {
+      owner: Owner
+      refetch: () => Promise<Owner>
+    }
+  | undefined
+type UseOwnerConfig =
+  | {
+      redirect?: boolean
+    }
+  | undefined
+
+export function useOwner({ redirect = true }: UseOwnerConfig = {}): UseOwner {
   const { data: currentOwner, refetch } = useQuery(
     'currentOwner',
     getCurrentOwner
@@ -93,11 +101,11 @@ export function useOwner(): UseOwner | undefined {
   const router = useRouter()
 
   React.useEffect(() => {
-    if (!isLoggedIn()) {
+    if (redirect && !isLoggedIn()) {
       router.push('/business/login')
       return undefined
     }
-  }, [router, currentOwner])
+  }, [router, currentOwner, redirect])
 
   return { owner: currentOwner, refetch }
 }
