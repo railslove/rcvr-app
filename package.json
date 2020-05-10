@@ -17,6 +17,7 @@
     "@styled-system/css": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
     "camelcase-keys": "^6.2.2",
+    "check-password-strength": "^1.0.8",
     "dexie": "^3.0.1",
     "emotion-theming": "^10.0.27",
     "framer-motion": "^2.0.0-beta.66",
