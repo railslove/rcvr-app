@@ -18,7 +18,7 @@ type UpdateCheckin = {
 
 type TicketResponse = {
   id?: string
-  business: string
+  companyName: string
   enteredAt?: Date
   leftAt?: Date
 }
@@ -38,14 +38,14 @@ async function postTicket(ticket: TicketRequest): Promise<TicketResponse> {
   const json = snakecaseKeys({ ticket }, { deep: true })
   const parsed: any = await api.post('tickets', { json }).json() // eslint-disable-line @typescript-eslint/no-explicit-any
   const camelCased = camelcaseKeys(parsed, { deep: true })
-  return camelCased.ticket
+  return camelCased
 }
 
 async function patchTicket(ticket: TicketRequest): Promise<TicketResponse> {
   const json = snakecaseKeys({ ticket }, { deep: true })
   const parsed: any = await api.patch('tickets/' + ticket.id, { json }).json() // eslint-disable-line @typescript-eslint/no-explicit-any
   const camelCased = camelcaseKeys(parsed, { deep: true })
-  return camelCased.ticket
+  return camelCased
 }
 
 function binKey(key: string): Uint8Array {
@@ -78,7 +78,7 @@ export async function createCheckin(data: CreateCheckin): Promise<db.Checkin> {
 
   const checkin = await db.addCheckin({
     id: data.id,
-    business: response.business,
+    business: response.companyName,
     enteredAt: data.enteredAt,
   })
 

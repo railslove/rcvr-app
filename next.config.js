@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    apiBase: 'https://rcvrtest.free.beeceptor.com/',
+    apiBase: 'https://rcvr.herokuapp.com/',
   },
 }
