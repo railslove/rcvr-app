@@ -1,1 +1,7 @@
-export { default as CircleCheck } from './CircleCheck'
+export { default as Arrows } from './Arrows'
+export { default as Check } from './Check'
+export { default as Lock } from './Lock'
+export { default as Slashes } from './Slashes'
+export { default as Thumb } from './Thumb'
+export { default as Ticket } from './Ticket'
+export { default as Virus } from './Virus'

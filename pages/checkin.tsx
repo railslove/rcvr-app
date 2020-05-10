@@ -3,13 +3,16 @@ import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
 import * as db from '@lib/db'
+import { Flex } from '@ui/base'
 import Onboarding from '@ui/blocks/Onboarding'
+import Loading from '@ui/blocks/Loading'
+import AppLayout from '@ui/layouts/App'
 
 type CreateCheckinData = {
   id: string
-  businessId: string
-  key: string
-  place: string
+  businessId?: string
+  key?: string
+  place?: string
 }
 
 async function createCheckin(data: CreateCheckinData): Promise<db.Checkin> {
@@ -27,24 +30,42 @@ async function createCheckin(data: CreateCheckinData): Promise<db.Checkin> {
 
 const CheckingPage: React.FC<{}> = () => {
   const id = React.useRef<string>(uuidv4())
-  const { query } = useRouter()
-  const key = Array.isArray(query.key) ? undefined : query.key
-  const businessId = Array.isArray(query.business) ? undefined : query.business
-  const place = Array.isArray(query.place) ? undefined : query.place
+  const router = useRouter()
+
+  // query params can be array, we need to be sure they're strings
+  const key = router.query.key?.toString()
+  const businessId = router.query.business?.toString()
+  const place = router.query.place?.toString()
+
+  const [doCheckin, { status, error }] = useMutation(createCheckin, {
+    throwOnError: true,
+  })
+  const performCheckin = React.useCallback(async () => {
+    await doCheckin({ key, businessId, place, id: id.current })
+    router.replace('/my-checkins')
+  }, [doCheckin, key, businessId, place, router])
+
+  // The loading spinner should only become visible after a small amount of time
+  // to prevent it flashing up unnecessarily.
+  const [isDelayedLoading, setIsDelayedLoading] = React.useState(false)
+  const loadingTimeoutId = React.useRef<NodeJS.Timer>()
+  React.useEffect(() => {
+    loadingTimeoutId.current = setTimeout(() => {
+      setIsDelayedLoading(true)
+    }, 1000)
+
+    return (): void => clearTimeout(loadingTimeoutId.current)
+  }, [])
 
   const [showOnboarding, setShowOnboarding] = React.useState(false)
-  const [doCheckin, { status, data }] = useMutation(createCheckin)
-  const isIdle = status === 'idle' && !showOnboarding
-
-  const performCheckin = React.useCallback(() => {
-    doCheckin({ key, businessId, place, id: id.current })
-  }, [doCheckin, key, businessId, place])
-
   const handleFinishOnboarding = React.useCallback(
     async (data) => {
+      const timeoutId = setTimeout(() => setIsDelayedLoading(true), 400)
       await db.addGuest(data)
       setShowOnboarding(false)
       performCheckin()
+      clearTimeout(timeoutId)
+      setIsDelayedLoading(false)
     },
     [performCheckin]
   )
@@ -54,6 +75,7 @@ const CheckingPage: React.FC<{}> = () => {
     // static optimization
     if (!key || !businessId || !place) return
 
+    // Check if a guest was already created, then do the checkin cha cha cha.
     db.getGuest().then((guest) => {
       if (guest) {
         performCheckin()
@@ -63,13 +85,18 @@ const CheckingPage: React.FC<{}> = () => {
     })
   }, [performCheckin, key, businessId, place])
 
+  const showLoading = isDelayedLoading && !showOnboarding && status !== 'error'
+
   return (
-    <div>
-      {isIdle && 'Loading...'}
+    <AppLayout withTabs={false} withHeader={false}>
       {showOnboarding && <Onboarding onFinish={handleFinishOnboarding} />}
-      {status === 'loading' && 'Creating new Checkin...'}
-      {status === 'success' && 'Dummy checked in ' + JSON.stringify(data)}
-    </div>
+      {showLoading && (
+        <Flex flex={1} align="center" justify="center">
+          <Loading />
+        </Flex>
+      )}
+      {status === 'error' && <div>{error.toString()}</div>}
+    </AppLayout>
   )
 }
 

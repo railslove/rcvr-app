@@ -6,7 +6,6 @@ const Text = styled(Box)({})
 Text.defaultProps = {
   as: 'p',
   fontFamily: 'body',
-  margin: 0,
   color: 'black',
   lineHeight: 1.4,
 }

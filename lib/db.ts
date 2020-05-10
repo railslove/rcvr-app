@@ -8,6 +8,10 @@ export interface Checkin {
   leftAt?: Date
 }
 
+export interface CheckinChangeset {
+  leftAt?: Date
+}
+
 export interface Guest {
   id?: number
   name: string
@@ -49,12 +53,21 @@ export async function getCheckin(id: string): Promise<Checkin> {
 }
 
 export async function getAllCheckins(): Promise<Checkin[]> {
-  const checkins = await db.checkins.toCollection().sortBy('enteredAt')
+  const checkins = await db.checkins.reverse().sortBy('enteredAt')
   return checkins
 }
 
 export async function addCheckin(checkinData: Checkin): Promise<Checkin> {
   const id = await db.checkins.add(checkinData)
+  const checkin = await getCheckin(id)
+  return checkin
+}
+
+export async function updateCheckin(
+  id: string,
+  changes: CheckinChangeset
+): Promise<Checkin> {
+  await db.checkins.update(id, changes)
   const checkin = await getCheckin(id)
   return checkin
 }
