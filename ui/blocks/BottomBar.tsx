@@ -39,6 +39,13 @@ const BottomBar: React.FC<BottomBarProps> = ({ currentPath }) => {
         active={currentPath === '/info'}
         color="red"
       />
+      <Tab
+        href="/qrcode"
+        icon={<Virus />}
+        title="QRCode"
+        active={currentPath === '/qrcode'}
+        color="red"
+      />
     </Flex>
   )
 }
