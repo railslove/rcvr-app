@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useQuery, useMutation } from 'react-query'
 import { motion } from 'framer-motion'
 
+import * as api from '@lib/api'
 import * as db from '@lib/db'
 import { Card, Flex } from '@ui/base'
 import AppLayout from '@ui/layouts/App'
@@ -9,15 +10,9 @@ import LastCheckin from '@ui/blocks/LastCheckin'
 import CheckinHead from '@ui/blocks/CheckinHead'
 import Loading from '@ui/blocks/Loading'
 
-async function updateCheckinCheckout(checkin: db.Checkin): Promise<db.Checkin> {
-  console.log('dummy request', checkin)
-  const updatedCheckin = { ...checkin, leftAt: new Date() }
-  return updatedCheckin
-}
-
 const MyCheckinsPage: React.FC<{}> = () => {
   const [isRefetching, setIsRefetching] = React.useState(false)
-  const [checkout] = useMutation(updateCheckinCheckout)
+  const [checkout] = useMutation(api.checkoutTicket)
   const { data: checkins = [], refetch } = useQuery(
     'checkins',
     db.getAllCheckins
@@ -25,9 +20,8 @@ const MyCheckinsPage: React.FC<{}> = () => {
 
   const handleCheckout = React.useCallback(
     async (checkin) => {
-      const timeoutId = setTimeout(() => setIsRefetching(true), 400)
-      const updatedCheckin = await checkout()
-      await db.updateCheckin(checkin.id, { leftAt: updatedCheckin.leftAt })
+      const timeoutId = setTimeout(() => setIsRefetching(true), 800)
+      await checkout({ id: checkin.id, leftAt: new Date() })
       await refetch()
       clearTimeout(timeoutId)
       setIsRefetching(false)
