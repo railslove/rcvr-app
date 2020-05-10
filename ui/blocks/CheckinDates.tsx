@@ -12,7 +12,7 @@ const CheckinDates: React.FC<CheckinDatesProps> = ({ from, to }) => {
   return (
     <Flex align="baseline">
       <Text as="div" fontSize="s">
-        {formatDate(from, 'MM.DD.YYYY')}
+        {formatDate(from, 'DD.MM.YYYY')}
       </Text>
       <Slashes mx={1} />
       <Text as="div" fontSize="s">

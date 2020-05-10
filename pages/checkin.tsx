@@ -3,47 +3,33 @@ import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
 import * as db from '@lib/db'
+import * as api from '@lib/api'
 import { Flex } from '@ui/base'
 import Onboarding from '@ui/blocks/Onboarding'
 import Loading from '@ui/blocks/Loading'
 import AppLayout from '@ui/layouts/App'
 
-type CreateCheckinData = {
-  id: string
-  businessId?: string
-  key?: string
-  place?: string
-}
-
-async function createCheckin(data: CreateCheckinData): Promise<db.Checkin> {
-  const guest = await db.getGuest()
-  const enteredAt = new Date()
-  // here be dragons: crypto & request
-  console.log('dummy request with', { data, guest })
-  const checkin = await db.addCheckin({
-    id: data.id,
-    business: 'Business with id ' + data.businessId,
-    enteredAt,
-  })
-  return checkin
-}
-
 const CheckingPage: React.FC<{}> = () => {
   const id = React.useRef<string>(uuidv4())
+  const enteredAt = React.useRef<Date>(new Date())
   const router = useRouter()
 
-  // query params can be array, we need to be sure they're strings
-  const key = router.query.key?.toString()
-  const businessId = router.query.business?.toString()
-  const place = router.query.place?.toString()
+  // query params can be arrays, we need to make sure they're strings
+  const publicKey = router.query.k?.toString()
+  const areaId = router.query.a?.toString()
 
-  const [doCheckin, { status, error }] = useMutation(createCheckin, {
+  const [doCheckin, { status, error }] = useMutation(api.createCheckin, {
     throwOnError: true,
   })
   const performCheckin = React.useCallback(async () => {
-    await doCheckin({ key, businessId, place, id: id.current })
+    await doCheckin({
+      publicKey,
+      areaId,
+      id: id.current,
+      enteredAt: enteredAt.current,
+    })
     router.replace('/my-checkins')
-  }, [doCheckin, key, businessId, place, router])
+  }, [doCheckin, publicKey, areaId, router])
 
   // The loading spinner should only become visible after a small amount of time
   // to prevent it flashing up unnecessarily.
@@ -73,7 +59,7 @@ const CheckingPage: React.FC<{}> = () => {
   React.useEffect(() => {
     // Disallow empty data. This is the case on initial mount due to next's
     // static optimization
-    if (!key || !businessId || !place) return
+    if (!publicKey || !areaId) return
 
     // Check if a guest was already created, then do the checkin cha cha cha.
     db.getGuest().then((guest) => {
@@ -83,7 +69,7 @@ const CheckingPage: React.FC<{}> = () => {
         setShowOnboarding(true)
       }
     })
-  }, [performCheckin, key, businessId, place])
+  }, [performCheckin, publicKey, areaId])
 
   const showLoading = isDelayedLoading && !showOnboarding && status !== 'error'
 
