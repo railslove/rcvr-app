@@ -34,7 +34,7 @@ const KeysPage: React.FC<KeysPageProps> = () => {
         const { privateKey, publicKey } = generateKeys()
         didGenerateKeys.current = true
         await db.updateOwner(owner.id, { privateKey, publicKey })
-        setHexPrivateKey(base64ToHex(owner.privateKey))
+        setHexPrivateKey(base64ToHex(privateKey))
       }
     }
 

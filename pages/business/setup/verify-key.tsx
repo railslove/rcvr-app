@@ -19,6 +19,7 @@ const VerifyKey: React.FC<VerifyKeyProps> = () => {
   const handleKeyInputChange = React.useCallback(
     (value) => {
       keyInput.current = value
+      setIsWrong(false)
     },
     [keyInput]
   )
@@ -57,8 +58,9 @@ const VerifyKey: React.FC<VerifyKeyProps> = () => {
           <KeyInput onChange={handleKeyInputChange} />
         </Box>
         <Text fontSize="s" fontWeight="bold" mb={3}>
-          Schreiben Sie alle Zeichen hintereinander, ohne Leerzeichen. Sie
-          können auch Kleinbuchstaben verwenden.
+          Schreiben Sie alle Zeichen hintereinander, ohne Leerzeichen. Der
+          Schlüssel beinhaltet nur Zahlen von 0 bis 9 und Buchstaben von A bis
+          F.
         </Text>
 
         <Text fontSize="s" fontWeight="bold" mb={5}>

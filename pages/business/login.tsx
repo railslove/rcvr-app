@@ -15,6 +15,7 @@ const LoginPage: React.FC<{}> = () => {
   const [emailError, setEmailError] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [passwordError, setPasswordError] = React.useState('')
+  const [isRedirecting, setIsRedirecting] = React.useState(false)
 
   const [login, { status, error }] = useMutation(api.loginOwner, {
     throwOnError: true,
@@ -37,7 +38,8 @@ const LoginPage: React.FC<{}> = () => {
     if (!valid) return
 
     await login({ email, password })
-    router.replace('/business/encryption')
+    setIsRedirecting(true)
+    router.replace('/business/dashboard')
   }
   const handleEmailChange = React.useCallback((event) => {
     setEmailError(undefined)
@@ -49,7 +51,7 @@ const LoginPage: React.FC<{}> = () => {
     setPassword(event.target.value)
   }, [])
 
-  if (status === 'loading') {
+  if (status === 'loading' || isRedirecting) {
     return (
       <AppLayout withHeader={false} withTabs={false}>
         <Flex flex={1} align="center" justify="center">

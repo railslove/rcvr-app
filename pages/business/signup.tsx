@@ -70,7 +70,7 @@ const SignupPage: React.FC<{}> = () => {
     if (!valid) return
 
     await signup({ email, name, password })
-    router.replace('/business/encryption')
+    router.replace('/business/setup/intro')
   }
 
   const handleNameChange = React.useCallback((event) => {

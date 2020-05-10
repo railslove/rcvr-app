@@ -66,8 +66,8 @@ async function patchTicket(ticket: TicketRequest): Promise<TicketResponse> {
 async function postSignup(owner: OwnerRequest): Promise<OwnerResponse> {
   const json = snakecaseKeys({ owner }, { deep: true })
   const res: any = await api.post('signup', { json }) // eslint-disable-line @typescript-eslint/no-explicit-any
-  const parsed = await res.json()
   const token = res.headers.get('Authorization').replace('Bearer ', '')
+  const parsed = await res.json()
   const camelCased = camelcaseKeys(parsed, { deep: true })
   return { ...camelCased, token }
 }
@@ -82,8 +82,8 @@ async function patchOwner(owner: OwnerRequest): Promise<OwnerResponse> {
 async function postLogin(owner: OwnerRequest): Promise<OwnerResponse> {
   const json = snakecaseKeys({ owner }, { deep: true })
   const res: any = await api.post('login', { json }) // eslint-disable-line @typescript-eslint/no-explicit-any
-  const parsed = await res.json()
   const token = res.headers.get('Authorization').replace('Bearer ', '')
+  const parsed = await res.json()
   const camelCased = camelcaseKeys(parsed, { deep: true })
   return { ...camelCased, token }
 }
@@ -127,6 +127,7 @@ export async function createOwner(data: OwnerRequest): Promise<db.Owner> {
     email: ownerRes.email,
   })
   sessionStorage.setItem('rcvr_olt', ownerRes.token)
+  sessionStorage.setItem('rcvr_oid', JSON.stringify(ownerRes.id))
   return owner
 }
 

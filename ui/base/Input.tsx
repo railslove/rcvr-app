@@ -9,15 +9,21 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   decorator?: React.ReactNode
 }
 
-const Input: React.FC<InputProps> = ({ label, error, decorator, ...rest }) => {
+const Input: React.FC<InputProps> = ({
+  label,
+  error,
+  decorator,
+  value,
+  ...rest
+}) => {
   const [passwordVisible, setPasswordVisible] = React.useState(false)
-  const [value, setValue] = React.useState('')
+  const [ownValue, setOwnValue] = React.useState(value)
   const [focused, setFocused] = React.useState(false)
-  const active = value !== '' || focused
+  const active = ownValue !== '' || focused
   const underline = focused || Boolean(error)
 
   function handleChange(event): void {
-    setValue(event.target.value)
+    setOwnValue(event.target.value)
     rest?.onChange(event)
   }
 
