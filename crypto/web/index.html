@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  </head>
+  <body>
+    <script src="https://tweetnacl.js.org/nacl.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tweetnacl-sealedbox-js@1.2.0/sealedbox.web.js"></script>
+    <script src="demo.js"></script>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>Secret key (b64):</td>
+          <td><input id="secretKey" size="50"></input></td>
+        </tr>
+        <tr>
+          <td>Public key (b64):</td>
+          <td><input id="publicKey" size="50"></input></td>
+        </tr>
+        <tr>
+          <td>Plain text:</td>
+          <td><input id="plainText" size="50"></input></td>
+        </tr>
+        <tr>
+          <td>Encrypted (b64):</td>
+          <td><input id="encrypted" size="80"></input></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button onclick="genKey()">Generate keypair</button>
+    <button onclick="encrypt()">Encrypt</button>
+    <button onclick="decrypt()">Decrypt</button>
+  </body>
+</html>
