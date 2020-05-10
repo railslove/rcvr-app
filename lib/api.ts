@@ -1,7 +1,7 @@
 import { seal } from 'tweetnacl-sealedbox-js'
 import * as db from '@lib/db'
 import ky from 'ky/umd'
-import camelcaseKeys from 'camelcase-keys'
+import camelcaseKeys from 'camelcase-keys' // eslint-disable-line import/default
 import snakecaseKeys from 'snakecase-keys'
 
 type CreateCheckin = {
