@@ -1,5 +1,5 @@
-import { seal } from 'tweetnacl-sealedbox-js'
 import * as db from '@lib/db'
+import { encrypt } from '@lib/crypto'
 import ky from 'ky/umd'
 import camelcaseKeys from 'camelcase-keys' // eslint-disable-line import/default
 import snakecaseKeys from 'snakecase-keys'
@@ -32,7 +32,22 @@ type TicketRequest = {
   publicKey?: string
 }
 
-const api = ky.create({ prefixUrl: process.env.apiBase })
+type OwnerRequest = {
+  email: string
+  password?: string
+  name?: string
+  publicKey?: string
+}
+
+type OwnerResponse = {
+  id: number
+  email: string
+  name?: string
+  publicKey?: string
+  token?: string
+}
+
+const api = ky.create({ prefixUrl: process.env.apiBase, timeout: false })
 
 async function postTicket(ticket: TicketRequest): Promise<TicketResponse> {
   const json = snakecaseKeys({ ticket }, { deep: true })
@@ -48,15 +63,29 @@ async function patchTicket(ticket: TicketRequest): Promise<TicketResponse> {
   return camelCased
 }
 
-function binKey(key: string): Uint8Array {
-  return Uint8Array.from(atob(key), (c) => c.charCodeAt(0))
+async function postSignup(owner: OwnerRequest): Promise<OwnerResponse> {
+  const json = snakecaseKeys({ owner }, { deep: true })
+  const res: any = await api.post('signup', { json }) // eslint-disable-line @typescript-eslint/no-explicit-any
+  const parsed = await res.json()
+  const token = res.headers.get('Authorization').replace('Bearer ', '')
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return { ...camelCased, token }
 }
 
-function encrypt(publicKey: string, plain: string): string {
-  const input = new TextEncoder().encode(plain)
-  const sealed = seal(input, binKey(publicKey))
-  const encrypted = btoa(String.fromCharCode.apply(null, sealed))
-  return encrypted
+async function patchOwner(owner: OwnerRequest): Promise<OwnerResponse> {
+  const json = snakecaseKeys({ owner }, { deep: true })
+  const parsed: any = await await api.post('signup', { json }).json() // eslint-disable-line @typescript-eslint/no-explicit-any
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return camelCased
+}
+
+async function postLogin(owner: OwnerRequest): Promise<OwnerResponse> {
+  const json = snakecaseKeys({ owner }, { deep: true })
+  const res: any = await api.post('login', { json }) // eslint-disable-line @typescript-eslint/no-explicit-any
+  const parsed = await res.json()
+  const token = res.headers.get('Authorization').replace('Bearer ', '')
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return { ...camelCased, token }
 }
 
 function toCSV(values: string[]): string {
@@ -89,4 +118,31 @@ export async function checkoutTicket(data: UpdateCheckin): Promise<db.Checkin> {
   await patchTicket({ id: data.id, leftAt: data.leftAt.toISOString() })
   const checkin = await db.updateCheckin(data.id, { leftAt: data.leftAt })
   return checkin
+}
+
+export async function createOwner(data: OwnerRequest): Promise<db.Owner> {
+  const ownerRes = await postSignup(data)
+  const owner = await db.addOwner({
+    id: ownerRes.id,
+    email: ownerRes.email,
+  })
+  sessionStorage.setItem('rcvr_olt', ownerRes.token)
+  return owner
+}
+
+export async function updateOwner(data: OwnerRequest): Promise<db.Owner> {
+  const ownerRes = await patchOwner(data)
+  const owner = await db.updateOwner(ownerRes.id, { publicKey: data.publicKey })
+  return owner
+}
+
+export async function loginOwner(data: OwnerRequest): Promise<db.Owner> {
+  const { token, ...ownerData } = await postLogin(data)
+  let owner = await db.getOwner(ownerData.id)
+  if (!owner) {
+    owner = await db.addOwner(ownerData)
+  }
+  sessionStorage.setItem('rcvr_olt', token)
+  sessionStorage.setItem('rcvr_oid', JSON.stringify(ownerData.id))
+  return owner
 }

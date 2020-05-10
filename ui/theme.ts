@@ -15,6 +15,7 @@ const theme = {
       100: '#F8FAFB',
       300: '#DFEAEB',
       500: '#ADCDD0',
+      800: '#6b878a',
     },
     black: '#000000',
     green: '#28EE5F',
@@ -26,10 +27,13 @@ const theme = {
     body: 'Nunito',
   },
   fontSizes: pxToRem.withObject({
+    xxs: 9,
     xs: 11,
     s: 13,
     md: 16,
     l: 21,
+    xl: 32,
+    xxl: 38,
   }),
   fontWeights: {
     xlight: 200,

@@ -1,5 +1,7 @@
-// eslint-disable-next-line import/no-named-as-default
-import Dexie from 'dexie'
+import * as React from 'react'
+import Dexie from 'dexie' // eslint-disable-line import/no-named-as-default
+import { useRouter } from 'next/router'
+import { useQuery } from 'react-query'
 
 export interface Checkin {
   id?: string
@@ -18,19 +20,34 @@ export interface Guest {
   phone: string
 }
 
+export interface Owner {
+  id: number
+  email: string
+  privateKey?: string
+  publicKey?: string
+}
+
+export interface OwnerChangeset {
+  publicKey?: string
+  privateKey?: string
+}
+
 class RcvrDatabase extends Dexie {
   checkins: Dexie.Table<Checkin, string>
   guests: Dexie.Table<Guest, number>
+  owners: Dexie.Table<Owner, number>
 
   constructor() {
     super('RcvrDatabase')
-    this.version(1).stores({
+    this.version(2).stores({
       checkins: 'id, enteredAt',
       guests: '++id',
+      owners: 'id, email',
     })
 
     this.checkins = this.table('checkins')
     this.guests = this.table('guests')
+    this.owners = this.table('owners')
   }
 }
 
@@ -45,6 +62,59 @@ export async function addGuest(guestData: Guest): Promise<Guest> {
   await db.guests.add(guestData)
   const guest = await getGuest()
   return guest
+}
+
+export async function getOwner(id: number): Promise<Owner> {
+  const owner = await db.owners.get(id)
+  return owner
+}
+
+export async function getCurrentOwner(): Promise<Owner | undefined> {
+  const oid = window.sessionStorage.getItem('rcvr_oid')
+  if (!oid) return undefined
+  const owner = await getOwner(+oid)
+  return owner
+}
+
+export function isLoggedIn(): boolean {
+  const oid = window.sessionStorage.getItem('rcvr_oid')
+  return oid != null
+}
+
+type UseOwner = {
+  owner: Owner
+  refetch: () => Promise<Owner>
+}
+export function useOwner(): UseOwner | undefined {
+  const { data: currentOwner, refetch } = useQuery(
+    'currentOwner',
+    getCurrentOwner
+  )
+  const router = useRouter()
+
+  React.useEffect(() => {
+    if (!isLoggedIn()) {
+      router.push('/business/login')
+      return undefined
+    }
+  }, [router, currentOwner])
+
+  return { owner: currentOwner, refetch }
+}
+
+export async function addOwner(ownerData: Owner): Promise<Owner> {
+  await db.owners.add(ownerData)
+  const owner = await getOwner(ownerData.id)
+  return owner
+}
+
+export async function updateOwner(
+  id: number,
+  changes: OwnerChangeset
+): Promise<Owner> {
+  await db.owners.update(id, changes)
+  const owner = await getOwner(id)
+  return owner
 }
 
 export async function getCheckin(id: string): Promise<Checkin> {

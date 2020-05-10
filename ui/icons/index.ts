@@ -1,5 +1,7 @@
 export { default as Arrows } from './Arrows'
 export { default as Check } from './Check'
+export { default as Eye } from './Eye'
+export { default as EyeCrossed } from './EyeCrossed'
 export { default as Lock } from './Lock'
 export { default as Slashes } from './Slashes'
 export { default as Thumb } from './Thumb'
