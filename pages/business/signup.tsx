@@ -17,7 +17,7 @@ type strengthState = -1 | 0 | 1 | 2
 
 const SignupPage: React.FC<{}> = () => {
   const router = useRouter()
-  const { owner } = db.useOwner()
+  const { owner } = db.useOwner({ redirect: false })
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')

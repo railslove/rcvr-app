@@ -12,7 +12,7 @@ import Logo from '@ui/blocks/Logo'
 
 const LoginPage: React.FC<{}> = () => {
   const router = useRouter()
-  const { owner } = db.useOwner()
+  const { owner } = db.useOwner({ redirect: false })
   const [email, setEmail] = React.useState('')
   const [emailError, setEmailError] = React.useState('')
   const [password, setPassword] = React.useState('')

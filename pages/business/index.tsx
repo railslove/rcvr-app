@@ -9,7 +9,7 @@ import Logo from '@ui/blocks/Logo'
 
 const BusinessIndex: React.FC<{}> = () => {
   const router = useRouter()
-  const { owner } = db.useOwner()
+  const { owner } = db.useOwner({ redirect: false })
   React.useEffect(() => {
     if (owner) router.replace('/business/dashboard')
   }, [owner, router])
