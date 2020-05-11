@@ -13,6 +13,16 @@ const Home: React.FC<{}> = () => {
           <Logo width="124px" height="20px" />
         </Box>
         <Box px={3} mb={4}>
+          <Link href="/qrcode">
+            <a css={{ textDeocration: 'none' }}>
+              <Button
+                title="QR Code Scannen"
+                right={<Arrows size="16px" color="pink" />}
+              />
+            </a>
+          </Link>
+        </Box>
+        <Box px={3} mb={4}>
           <Link href="/my-checkins">
             <a css={{ textDeocration: 'none' }}>
               <Button
