@@ -1,10 +1,10 @@
 import * as React from 'react'
-import checkStrength from 'check-password-strength'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
 
 import * as api from '@lib/api'
 import * as db from '@lib/db'
+import passwordStrength from '@lib/password-strength'
 import AppLayout from '@ui/layouts/App'
 import { Box, Flex, Input, Button, Text } from '@ui/base'
 import StrengthMeter from '@ui/blocks/StrengthMeter'
@@ -92,9 +92,7 @@ const SignupPage: React.FC<{}> = () => {
   const handlePasswordChange = React.useCallback((event) => {
     setPasswordError(undefined)
     setPasswordVerifyError(undefined)
-    setStrength(
-      event.target.value === '' ? -1 : checkStrength(event.target.value).id
-    )
+    setStrength(passwordStrength(event.target.value))
     setPassword(event.target.value)
   }, [])
 
