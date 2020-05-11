@@ -172,7 +172,7 @@ const SignupPage: React.FC<{}> = () => {
           </Box>
           <Text fontSize="xs" mt={3}>
             Mit dem betätigen des Buttons erkläre ich mich mit den{' '}
-            <a className="link" href="https://www.recoverapp.de/datenschutz">
+            <a className="link" href="https://railslove.com/privacy/">
               Datenschutzbestimmungen
             </a>{' '}
             einverstanden.
