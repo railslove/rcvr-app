@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    apiBase: 'https://rcvr.herokuapp.com/',
+    apiBase: 'https://api.rcvr.app/',
   },
 }
