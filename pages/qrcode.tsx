@@ -5,7 +5,7 @@ import AppLayout from '@ui/layouts/App'
 
 const QRCodePage: React.FC<{}> = () => {
   React.useEffect(() => {
-    const launchBrowserQRCodeReader = async (): void => {
+    const launchBrowserQRCodeReader = async (): Promise<void> => {
       const { BrowserQRCodeReader } = require('@zxing/library')
       const codeReader = new BrowserQRCodeReader()
 
