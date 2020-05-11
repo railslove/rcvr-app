@@ -19,10 +19,9 @@ const BottomBar: React.FC<BottomBarProps> = ({ currentPath }) => {
         right={0}
       />
       <Tab
-        href="/privacy"
+        href="https://www.recoverapp.de/datenschutz"
         icon={<Lock />}
         title="Datenschutz"
-        active={currentPath === '/privacy'}
         color="yellow"
       />
       <Tab
@@ -33,10 +32,10 @@ const BottomBar: React.FC<BottomBarProps> = ({ currentPath }) => {
         color="yellow"
       />
       <Tab
-        href="/info"
+        href="/corona"
         icon={<Virus />}
         title="Corona"
-        active={currentPath === '/info'}
+        active={currentPath === '/corona'}
         color="red"
       />
     </Flex>
@@ -52,20 +51,28 @@ type TabProps = {
 }
 
 const Tab: React.FC<TabProps> = ({ href, icon, title, active, color }) => {
-  return (
-    <Link href={href}>
-      <Flex as="a" align="center" flexDirection="column" flex="1 0 33.333%">
-        <Box mb={1}>
-          <Circle size="38px" color={active && color}>
-            {icon}
-          </Circle>
-        </Box>
-        <Text fontSize="xs" fontWeight="semibold">
-          {title}
-        </Text>
-      </Flex>
-    </Link>
+  const isExternal = href.startsWith('http')
+
+  const link = (
+    <Flex
+      as="a"
+      href={isExternal ? href : undefined}
+      align="center"
+      flexDirection="column"
+      flex="1 0 33.333%"
+    >
+      <Box mb={1}>
+        <Circle size="38px" color={active && color}>
+          {icon}
+        </Circle>
+      </Box>
+      <Text fontSize="xs" fontWeight="semibold">
+        {title}
+      </Text>
+    </Flex>
   )
+
+  return isExternal ? link : <Link href={href}>{link}</Link>
 }
 
 export default BottomBar
