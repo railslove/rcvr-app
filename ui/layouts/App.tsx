@@ -6,15 +6,18 @@ import { AnimatePresence } from 'framer-motion'
 import { Box, Flex } from '@ui/base'
 import Logo from '@ui/blocks/Logo'
 import BottomBar from '@ui/blocks/BottomBar'
+import SharedMeta from '@ui/blocks/SharedMeta'
 
 type AppLayoutProps = {
   children: React.ReactNode
   withHeader?: boolean
   withTabs?: boolean
+  sticky?: boolean
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({
   children,
+  sticky = true,
   withHeader = true,
   withTabs = true,
 }) => {
@@ -36,6 +39,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
           content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"
         />
       </Head>
+      <SharedMeta />
       <AnimatePresence>
         {withHeader && (
           <Flex
@@ -43,7 +47,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({
             px={4}
             align="center"
             justify="space-between"
-            position="sticky"
+            position={sticky ? 'sticky' : 'relative'}
             top={0}
             zIndex={5}
             flex="0 0 auto"

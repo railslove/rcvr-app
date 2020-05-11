@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { Flex, Text } from '@ui/base'
 import Logo from '@ui/blocks/Logo'
 import Loading from '@ui/blocks/Loading'
+import SharedMeta from '@ui/blocks/SharedMeta'
 
 type BusinessLayoutProps = {
   children?: React.ReactNode
@@ -32,6 +33,7 @@ const BusinessLayout: React.FC<BusinessLayoutProps> = ({
           content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"
         />
       </Head>
+      <SharedMeta />
       <Flex
         height={5}
         px={4}
