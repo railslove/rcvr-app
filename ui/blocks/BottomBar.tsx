@@ -19,7 +19,7 @@ const BottomBar: React.FC<BottomBarProps> = ({ currentPath }) => {
         right={0}
       />
       <Tab
-        href="https://www.recoverapp.de/datenschutz"
+        href="https://railslove.com/privacy/"
         icon={<Lock />}
         title="Datenschutz"
         color="yellow"
