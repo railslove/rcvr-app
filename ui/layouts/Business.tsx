@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
-import { Flex, Text, Box } from '@ui/base'
+import { Flex, Text } from '@ui/base'
 import Logo from '@ui/blocks/Logo'
 import Loading from '@ui/blocks/Loading'
 
