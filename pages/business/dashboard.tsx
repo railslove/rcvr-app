@@ -38,7 +38,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   }, [router])
 
   return (
-    <BusinessLayout title="Meine Firmen">
+    <BusinessLayout title="Meine Betriebe">
       {companies.map((company) => (
         <Link
           key={company.id}
@@ -51,7 +51,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
         </Link>
       ))}
       {tmpNewCompany && <CompanyCard name={tmpNewCompany} loading />}
-      <AddCard label="Firmenname" onAdd={handleAddNewCompany} />
+      <AddCard label="Betriebsname" onAdd={handleAddNewCompany} />
 
       <Box
         textAlign="center"

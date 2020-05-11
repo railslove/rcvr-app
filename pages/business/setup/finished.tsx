@@ -28,7 +28,7 @@ const FinishedPage: React.FC<FinishedPageProps> = () => {
         Vielen Dank, dein Schlüssel wurde erfolgreich eingerichtet.
       </Text>
       <Text fontSize="m" fontWeight="bold" mb={5}>
-        Du kannst recover nun für deine Geschäfte nutzen.
+        Du kannst recover nun für deine Betriebe nutzen.
       </Text>
       <Link href="/business/dashboard">
         <a css={{ textDeocration: 'none' }}>

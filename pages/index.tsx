@@ -26,7 +26,7 @@ const Home: React.FC<{}> = () => {
           <Link href="/business">
             <a css={{ textDeocration: 'none' }}>
               <Button
-                title="Für Geschäfte"
+                title="Für Betriebe"
                 right={<Arrows size="16px" color="pink" />}
               />
             </a>

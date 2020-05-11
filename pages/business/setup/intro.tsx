@@ -23,8 +23,8 @@ const IntroPage: React.FC<IntroPageProps> = () => {
         Zuerst kümmern wir uns um den Schutz deiner Kundendaten.
       </Text>
       <Text fontSize="m" fontWeight="bold" mb={4}>
-        Danach kannst du QR Codes generieren, mit denen sich deine Gäste
-        einchecken können.
+        Danach kannst du QR Codes generieren, mit denen Gäste in deinen
+        Betrieben einchecken können.
       </Text>
       <Text fontSize="m" color="red" fontWeight="xbold" mb={4}>
         Nimm dir etwas Zeit und befolge den nächsten Schritt sorgfältig.
