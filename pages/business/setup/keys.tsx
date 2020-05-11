@@ -97,9 +97,9 @@ const KeysPage: React.FC<KeysPageProps> = () => {
           <Text fontSize="s" fontWeight="bold" mb={3}>
             Er beinhaltet nur Zahlen von 0 bis 9 und Großbuchstaben von A bis F.
           </Text>
-          <Box my={5} mx={-4}>
+          <Flex my={5} justify="center">
             <KeyViewer value={hexPrivateKey} />
-          </Box>
+          </Flex>
         </>
       )}
       {!isLoading && (

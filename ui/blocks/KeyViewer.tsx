@@ -7,12 +7,7 @@ type KeyViewerProps = {
 
 const KeyViewer: React.FC<KeyViewerProps> = ({ value }) => {
   return (
-    <Flex
-      overflow="scroll"
-      bg="bluegrey.300"
-      fontSize="xxl"
-      fontFamily="monospace"
-    >
+    <Flex wrap="wrap" fontSize="l" fontFamily="monospace" justify="center">
       {value.match(/.{1,2}/g).map((group, i) => (
         <Box
           key={i}
@@ -20,8 +15,9 @@ const KeyViewer: React.FC<KeyViewerProps> = ({ value }) => {
           pt={3}
           pb={4}
           flexShrink={0}
-          borderRight="1px solid rgba(0,0,0,0.1)"
+          border="1px solid rgba(0,0,0,0.1)"
           position="relative"
+          bg="bluegrey.300"
         >
           {group}
           <Box
@@ -32,6 +28,7 @@ const KeyViewer: React.FC<KeyViewerProps> = ({ value }) => {
             right={0}
             textAlign="center"
             opacity="0.3"
+            css={{ userSelect: 'none' }}
           >
             {i + 1}
           </Box>
