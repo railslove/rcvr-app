@@ -48,10 +48,7 @@ const CoronaPage: React.FC<CoronaPageProps> = () => {
         <Text fontSize="s" lineHeight={1.5}>
           Eine Vielzahl von ständig aktualisierten Informationen gibt es auf der
           Internetseite des nordrhein-westfälischen Gesundheitsministeriums:{' '}
-          <a
-            href="https://www.mags.nrw/coronavirus"
-            css={{ color: '#226EEC', textDecoration: 'underline' }}
-          >
+          <a href="https://www.mags.nrw/coronavirus" className="link">
             www.mags.nrw/coronavirus
           </a>
           . Dort finden sich insbesondere auch Links zu den
