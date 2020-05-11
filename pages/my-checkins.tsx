@@ -45,23 +45,26 @@ const MyCheckinsPage: React.FC<{}> = () => {
         mt={-5}
       >
         {status === 'success' && checkins.length === 0 && (
-          <Text
-            size="s"
-            color="bluegrey.800"
-            fontWeight="bold"
-            px={4}
-            py={4}
-            textAlign="center"
-          >
-            Du hast noch keine Checkins.
-          </Text>
+          <Flex align="center" justify="center" flex={1}>
+            <Text
+              size="s"
+              color="bluegrey.800"
+              fontWeight="bold"
+              px={4}
+              py={4}
+              textAlign="center"
+            >
+              Du hast noch keine Checkins.
+            </Text>
+          </Flex>
         )}
         {checkins.map((checkin, i) => (
           <motion.li
             key={checkin.id}
             initial={{
-              y: window.innerHeight + i * -50,
-              opacity: i === 0 ? 1 : 0,
+              // only animate the first 25 checkins. The other's will be outside the viewport anyways.
+              y: i < 25 ? window.innerHeight + i * -50 : 0,
+              opacity: i !== 0 && i < 25 ? 0 : 1,
             }}
             animate={{ y: 0, opacity: 1 }}
             transition={{

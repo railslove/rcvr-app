@@ -2,6 +2,7 @@ import * as React from 'react'
 import Dexie from 'dexie' // eslint-disable-line import/no-named-as-default
 import { useRouter } from 'next/router'
 import { useQuery } from 'react-query'
+import { subDays } from 'date-fns'
 
 export interface Checkin {
   id?: string
@@ -130,14 +131,20 @@ export async function getCheckin(id: string): Promise<Checkin> {
   return checkin
 }
 
-export async function getLastCheckin(): Promise<Checkin> {
-  const checkins = await db.checkins.reverse().sortBy('enteredAt')
-  return checkins[0]
+export async function getAllCheckins(): Promise<Checkin[]> {
+  const showCheckinsFromLastDays = 28
+
+  const checkins = await db.checkins
+    .where('enteredAt')
+    .above(subDays(new Date(), showCheckinsFromLastDays))
+    .reverse()
+    .sortBy('enteredAt')
+  return checkins
 }
 
-export async function getAllCheckins(): Promise<Checkin[]> {
-  const checkins = await db.checkins.reverse().sortBy('enteredAt')
-  return checkins
+export async function getLastCheckin(): Promise<Checkin> {
+  const checkins = await getAllCheckins()
+  return checkins[0]
 }
 
 export async function addCheckin(checkinData: Checkin): Promise<Checkin> {
