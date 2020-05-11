@@ -105,7 +105,7 @@ const KeysPage: React.FC<KeysPageProps> = () => {
       {!isLoading && (
         <>
           <Text fontSize="m" fontWeight="xbold" color="red" mb={3}>
-            Es ist sehr wichtig, dass du diesen Schlüssel notieren.
+            Es ist sehr wichtig, dass du diesen Schlüssel notierst.
           </Text>
           <Text fontSize="s" fontWeight="bold" mb={5}>
             Schreib den Schlüssel zum Beispiel auf ein Stück Papier und behalte
