@@ -71,6 +71,7 @@ const Input: React.FC<InputProps> = ({
             justify="center"
             flexShrink={0}
             onClick={(): void => setPasswordVisible((cur) => !cur)}
+            css={{ ':focus': { outline: 'none' } }}
           >
             {passwordVisible ? <EyeCrossed /> : <Eye />}
           </Flex>
