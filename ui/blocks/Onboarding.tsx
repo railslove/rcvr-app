@@ -70,8 +70,11 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           />
         </Box>
         <Text fontSize="xs" mt={3}>
-          Mit dem betätigen des Buttons erkläre ich mich mit den
-          Datenschutzbestimmungen einverstanden.
+          Mit dem betätigen des Buttons erkläre ich mich mit den{' '}
+          <a className="link" href="https://www.recoverapp.de/datenschutz">
+            Datenschutzbestimmungen
+          </a>{' '}
+          einverstanden.
         </Text>
       </form>
     </Flex>
