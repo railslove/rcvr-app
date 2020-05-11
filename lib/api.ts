@@ -182,23 +182,28 @@ function toCSV(values: string[]): string {
   return values.map((v) => JSON.stringify(v)).join()
 }
 
-export async function createCheckin(data: CreateCheckin): Promise<db.Checkin> {
-  const guest = await db.getGuest()
+export async function createCheckin({
+  ticket,
+  guest,
+}: {
+  ticket: CreateCheckin
+  guest: db.Guest
+}): Promise<db.Checkin> {
   const csv = toCSV([guest.name, guest.phone])
-  const encrypted = encrypt(data.publicKey, csv)
+  const encrypted = encrypt(ticket.publicKey, csv)
 
   const response = await postTicket({
-    id: data.id,
-    areaId: data.areaId,
+    id: ticket.id,
+    areaId: ticket.areaId,
     encryptedData: encrypted,
-    enteredAt: data.enteredAt.toISOString(),
-    publicKey: data.publicKey,
+    enteredAt: ticket.enteredAt.toISOString(),
+    publicKey: ticket.publicKey,
   })
 
   const checkin = await db.addCheckin({
-    id: data.id,
+    id: ticket.id,
     business: response.companyName,
-    enteredAt: data.enteredAt,
+    enteredAt: ticket.enteredAt,
   })
 
   return checkin

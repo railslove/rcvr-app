@@ -28,21 +28,27 @@ const CheckingPage: React.FC<{}> = () => {
   )
   const error = checkinError || checkoutError
 
-  const performCheckin = React.useCallback(async () => {
-    const lastCheckin = await db.getLastCheckin()
+  const performCheckin = React.useCallback(
+    async (guest: db.Guest) => {
+      const lastCheckin = await db.getLastCheckin()
 
-    if (lastCheckin && !lastCheckin.leftAt) {
-      await doCheckout({ id: lastCheckin.id, leftAt: enteredAt.current })
-    }
+      if (lastCheckin && !lastCheckin.leftAt) {
+        await doCheckout({ id: lastCheckin.id, leftAt: enteredAt.current })
+      }
 
-    await doCheckin({
-      publicKey,
-      areaId,
-      id: id.current,
-      enteredAt: enteredAt.current,
-    })
-    router.replace('/my-checkins')
-  }, [doCheckin, doCheckout, publicKey, areaId, router])
+      await doCheckin({
+        ticket: {
+          publicKey,
+          areaId,
+          id: id.current,
+          enteredAt: enteredAt.current,
+        },
+        guest,
+      })
+      router.replace('/my-checkins')
+    },
+    [doCheckin, doCheckout, publicKey, areaId, router]
+  )
 
   // The loading spinner should only become visible after a small amount of time
   // to prevent it flashing up unnecessarily.
@@ -58,11 +64,13 @@ const CheckingPage: React.FC<{}> = () => {
 
   const [showOnboarding, setShowOnboarding] = React.useState(false)
   const handleFinishOnboarding = React.useCallback(
-    async (data) => {
+    async (guest, opts) => {
       const timeoutId = setTimeout(() => setIsDelayedLoading(true), 400)
-      await db.addGuest(data)
+      if (opts.rememberMe) {
+        await db.addGuest(guest)
+      }
       setShowOnboarding(false)
-      performCheckin()
+      performCheckin(guest)
       clearTimeout(timeoutId)
       setIsDelayedLoading(false)
     },
@@ -77,7 +85,7 @@ const CheckingPage: React.FC<{}> = () => {
     // Check if a guest was already created, then do the checkin cha cha cha.
     db.getGuest().then((guest) => {
       if (guest) {
-        performCheckin()
+        performCheckin(guest)
       } else {
         setShowOnboarding(true)
       }

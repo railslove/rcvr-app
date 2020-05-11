@@ -1,10 +1,13 @@
 import * as React from 'react'
 import { Flex, Text, Box } from '@ui/base'
+import { motion } from 'framer-motion'
 
 type ButtonProps = {
   title: string
   left?: React.ReactNode
   right?: React.ReactNode
+  animateIn?: boolean
+  animateOut?: boolean
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button: React.FC<ButtonProps> = ({
@@ -12,8 +15,12 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   left,
   right,
+  animateIn,
+  animateOut,
   ...rest
 }) => {
+  const animate = animateIn || animateOut
+
   return (
     <Flex
       as="button"
@@ -26,7 +33,22 @@ const Button: React.FC<ButtonProps> = ({
       justify="center"
       {...rest}
     >
-      {left && <Box mr={3}>{left}</Box>}
+      {left && (
+        <motion.div
+          animate={
+            animate && { x: animateIn ? 10 : -10, opacity: [0, 0.5, 1, 0.5, 0] }
+          }
+          initial={animate && { x: 0, opacity: 0 }}
+          transition={{
+            loop: Infinity,
+            duration: 1.5,
+            repeatDelay: 0.1,
+            ease: 'linear',
+          }}
+        >
+          <Box mr={3}>{left}</Box>
+        </motion.div>
+      )}
       <Text
         as="span"
         fontSize="s"
@@ -34,11 +56,26 @@ const Button: React.FC<ButtonProps> = ({
         textTransform="uppercase"
         css={{ textTransform: 'uppercase' }}
         lineHeight={1}
-        pt="2px"
+        pt="4px"
       >
         {title}
       </Text>
-      {right && <Box ml={3}>{right}</Box>}
+      {right && (
+        <motion.div
+          animate={
+            animate && { x: animateIn ? -10 : 10, opacity: [0, 0.5, 1, 0.5, 0] }
+          }
+          initial={animate && { x: 0, opacity: 0 }}
+          transition={{
+            loop: Infinity,
+            duration: 1.5,
+            repeatDelay: 0.1,
+            ease: 'linear',
+          }}
+        >
+          <Box ml={3}>{right}</Box>
+        </motion.div>
+      )}
     </Flex>
   )
 }

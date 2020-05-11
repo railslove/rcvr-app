@@ -15,8 +15,8 @@ const LastCheckin: React.FC<LastCheckinProps> = ({ checkin, onCheckout }) => {
 
   return (
     <Flex flexDirection="column" align="center" py={6}>
-      <Circle color={checkedOut ? 'pink' : 'green'}>
-        <StatusIcon animated />
+      <Circle color={checkedOut ? 'pink' : 'green'} animated delay={0.8}>
+        <StatusIcon animated delay={0.4} />
       </Circle>
       <Text fontSize="l" fontWeight="bold" pt={3}>
         {checkedOut ? 'Checked out' : 'Welcome'}
@@ -29,6 +29,7 @@ const LastCheckin: React.FC<LastCheckinProps> = ({ checkin, onCheckout }) => {
         {!checkedOut && (
           <Button
             title="Check out"
+            animateOut
             left={<Arrows color="pink" left size="16px" />}
             right={<Arrows color="pink" size="16px" />}
             onClick={(): void => onCheckout(checkin)}

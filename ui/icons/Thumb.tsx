@@ -2,9 +2,12 @@ import * as React from 'react'
 import { Box, BoxProps } from '@ui/base'
 import { motion } from 'framer-motion'
 
-type ThumbProps = BoxProps & { animated?: boolean }
+type ThumbProps = BoxProps & {
+  animated?: boolean
+  delay?: number
+}
 
-const Thumb: React.FC<ThumbProps> = ({ animated, ...rest }) => {
+const Thumb: React.FC<ThumbProps> = ({ animated, delay = 0.2, ...rest }) => {
   return (
     <motion.div
       initial={{ rotate: 0, y: 0 }}
@@ -20,7 +23,7 @@ const Thumb: React.FC<ThumbProps> = ({ animated, ...rest }) => {
       transition={{
         ease: 'easeInOut',
         duration: 1,
-        delay: 0.2,
+        delay,
       }}
     >
       <Box

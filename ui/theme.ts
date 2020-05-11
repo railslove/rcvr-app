@@ -7,6 +7,7 @@ const theme = {
   borders: {
     card: '1px solid #DFEAEB',
     circle: '2px solid #000000',
+    checkbox: '2px solid #000000',
     input: '1px solid #000000',
   },
   colors: {

@@ -1,16 +1,20 @@
 import * as React from 'react'
 import * as db from '@lib/db'
-import { Box, Flex, Input, Button, Text } from '@ui/base'
+import { Box, Flex, Input, Button, Text, Checkbox } from '@ui/base'
 import { Arrows } from '@ui/icons'
 import Logo from '@ui/blocks/Logo'
 
+type OnFinishOptions = {
+  rememberMe: boolean
+}
 type OnboardingProps = {
-  onFinish: (guest: db.Guest) => void
+  onFinish: (guest: db.Guest, options: OnFinishOptions) => void
 }
 
 const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
   const [name, setName] = React.useState('')
   const [phone, setPhone] = React.useState('')
+  const [rememberMe, setRememberMe] = React.useState(false)
   const [nameError, setNameError] = React.useState(false)
   const [phoneError, setPhoneError] = React.useState(false)
 
@@ -21,7 +25,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
       !phone && setPhoneError(true)
       return
     }
-    onFinish({ name, phone })
+    onFinish({ name, phone }, { rememberMe })
   }
 
   const handleNameChange = React.useCallback((event) => {
@@ -32,6 +36,10 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
   const handlePhoneChange = React.useCallback((event) => {
     setPhoneError(false)
     setPhone(event.target.value)
+  }, [])
+
+  const handleRememberMeChange = React.useCallback((event) => {
+    setRememberMe(event.target.checked)
   }, [])
 
   return (
@@ -61,10 +69,17 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           onChange={handlePhoneChange}
           error={phoneError && 'Telefonnummer muss ausgefüllt werden.'}
         />
+        <Checkbox
+          checked={rememberMe}
+          onChange={handleRememberMeChange}
+          label="Daten auf meinem Handy speichern"
+          name="rememberMe"
+        />
         <Box mt={6}>
           <Button
             type="submit"
             title="Check in"
+            animateIn
             left={<Arrows color="green" size="16px" />}
             right={<Arrows color="green" left size="16px" />}
           />
