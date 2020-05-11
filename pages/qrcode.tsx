@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jsx-a11y/media-has-caption */
 import * as React from 'react'
 import AppLayout from '@ui/layouts/App'
 
 const QRCodePage: React.FC<{}> = () => {
   React.useEffect(() => {
-    const launchBrowserQRCodeReader = async () => {
+    const launchBrowserQRCodeReader = async (): void => {
       const { BrowserQRCodeReader } = require('@zxing/library')
       const codeReader = new BrowserQRCodeReader()
 
@@ -23,7 +24,10 @@ const QRCodePage: React.FC<{}> = () => {
     <AppLayout>
       <h1>QRCode</h1>
       <br />
-      <p>Scanne den QR-Code mit deiner Kamera und du wirst auf die Checkin Seite weiter geleitet:</p>
+      <p>
+        Scanne den QR-Code mit deiner Kamera und du wirst auf die Checkin Seite
+        weiter geleitet:
+      </p>
       <br />
       <video id="video" width="100%" height="100%" />
     </AppLayout>
