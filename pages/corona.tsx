@@ -22,12 +22,12 @@ const CoronaPage: React.FC<CoronaPageProps> = () => {
         </Text>
         <Text mb={2}>
           Das Gesundheitsamt wird sich telefonisch innerhalb von 48 Stunden bei
-          Ihnen melden.
+          dir melden.
         </Text>
         <Text mb={4}>
-          Falls Sie bereits typische Symptome wie Fieber, Müdigkeit und
-          trockenen Husten aufweisen, sollten Sie vorsichtshalber in
-          Haus-Quarantäne bleiben und das Gesundheitsamt informieren.
+          Falls du bereits typische Symptome wie Fieber, Müdigkeit und trockenen
+          Husten hast, solltest du vorsichtshalber in Haus-Quarantäne bleiben
+          und das Gesundheitsamt informieren.
         </Text>
         <Flex mb={4}>
           <Circle color="red" size={5}>
