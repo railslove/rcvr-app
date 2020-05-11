@@ -28,7 +28,7 @@ const Input: React.FC<InputProps> = ({
   }
 
   return (
-    <Box my={4}>
+    <Box mb={4}>
       <Flex borderBottom="input" position="relative">
         <motion.div
           css={{

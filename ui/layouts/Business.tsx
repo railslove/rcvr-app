@@ -1,14 +1,20 @@
 import * as React from 'react'
 import Link from 'next/link'
-import { Flex, Text } from '@ui/base'
+import { Flex, Text, Box } from '@ui/base'
 import Logo from '@ui/blocks/Logo'
+import Loading from '@ui/blocks/Loading'
 
 type BusinessLayoutProps = {
-  children: React.ReactNode
+  children?: React.ReactNode
   title?: string
+  loading?: boolean
 }
 
-const BusinessLayout: React.FC<BusinessLayoutProps> = ({ children, title }) => {
+const BusinessLayout: React.FC<BusinessLayoutProps> = ({
+  children,
+  title,
+  loading,
+}) => {
   return (
     <Flex
       position="relative"
@@ -44,6 +50,11 @@ const BusinessLayout: React.FC<BusinessLayoutProps> = ({ children, title }) => {
           <Text as="h1" fontSize="l" fontWeight="bold" mb={4} mt={2}>
             {title}
           </Text>
+        )}
+        {loading && (
+          <Flex justify="center" mt={6} mb={6}>
+            <Loading />
+          </Flex>
         )}
         {children}
       </Flex>

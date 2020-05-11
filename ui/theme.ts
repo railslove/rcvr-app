@@ -63,6 +63,7 @@ const globalcss = css({
   },
   a: {
     textDecorationSkipInk: 'auto',
+    textDecoration: 'none',
   },
   '#__next': {
     display: 'flex',

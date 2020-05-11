@@ -56,7 +56,80 @@ type OwnerResponse = {
   token?: string
 }
 
+type CompanyResponse = {
+  id: string
+  name: string
+  areas: AreaResponse[]
+}
+
+type AreaPost = {
+  name: string
+  companyId: string
+}
+
+type AreaResponse = {
+  id: string
+  name: string
+}
+
 const api = ky.create({ prefixUrl: process.env.apiBase, timeout: false })
+
+export async function fetchCompany(
+  companyId: string
+): Promise<CompanyResponse> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parsed: any = await api
+    .get(`companies/${companyId}`, {
+      headers: {
+        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+      },
+    })
+    .json()
+  return parsed
+}
+
+export async function fetchCompanies(): Promise<CompanyResponse[]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parsed: any = await api
+    .get('companies', {
+      headers: {
+        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+      },
+    })
+    .json()
+  return parsed
+}
+
+export async function postCompany(company: {
+  name: string
+}): Promise<CompanyResponse> {
+  const json = snakecaseKeys({ company }, { deep: true })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parsed: any = await api
+    .post('companies', {
+      json,
+      headers: {
+        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+      },
+    })
+    .json()
+  return parsed
+}
+
+export async function postArea(area: AreaPost): Promise<AreaResponse> {
+  const json = snakecaseKeys({ area }, { deep: true })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parsed: any = await api
+    .post(`companies/${area.companyId}/areas`, {
+      json,
+      headers: {
+        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+      },
+    })
+    .json()
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return camelCased
+}
 
 async function postTicket(ticket: TicketRequest): Promise<TicketResponse> {
   const json = snakecaseKeys({ ticket }, { deep: true })
@@ -85,10 +158,10 @@ async function patchOwner(owner: OwnerPatch): Promise<OwnerResponse> {
   const json = snakecaseKeys({ owner }, { deep: true })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const parsed: any = await api
-    .patch('owner/' + owner.id, {
+    .patch('owner', {
       json,
       headers: {
-        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
+        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
       },
     })
     .json()

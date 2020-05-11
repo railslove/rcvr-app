@@ -7,7 +7,7 @@ const Card = styled(Box)(
     position: 'relative',
     borderRadius: 'l',
     bg: 'white',
-    p: 4,
+    p: 3,
     border: 'card',
   })
 )
