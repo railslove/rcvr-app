@@ -1,7 +1,9 @@
 import * as React from 'react'
+import Link from 'next/link'
 import { fetchCompany, postArea } from '@lib/api'
 import { useRouter } from 'next/router'
 import { useQuery, useMutation } from 'react-query'
+import { Box } from '@ui/base'
 import AreaCard from '@ui/blocks/AreaCard'
 import AddCard from '@ui/blocks/AddCard'
 import BusinessLayout from '@ui/layouts/Business'
@@ -32,6 +34,11 @@ const CompanyPage: React.FC<CompanyPageProps> = () => {
 
   return (
     <BusinessLayout title={company.name}>
+      <Box fontSize="s" fontWeight="bold" color="bluegrey.800" mb={5} mt={-3}>
+        <Link href="/business/dashboard">
+          <a css={{ color: 'inherit', textDecoration: 'none' }}>&lt; Zurück</a>
+        </Link>
+      </Box>
       {company.areas.map((area) => (
         <AreaCard name={area.name} key={area.id} id={area.id} />
       ))}

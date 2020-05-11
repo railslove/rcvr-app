@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Link from 'next/link'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
 import { generateKeys, base64ToHex } from '@lib/crypto'
@@ -23,7 +24,7 @@ const KeysPage: React.FC<KeysPageProps> = () => {
   })
 
   const handleNext = React.useCallback(() => {
-    if (confirm('Haben Sie sich den Schlüssel notiert?')) {
+    if (confirm('Hast du dir den Schlüssel notiert?')) {
       router.push('/business/setup/verify-key')
     }
   }, [router])
@@ -39,7 +40,7 @@ const KeysPage: React.FC<KeysPageProps> = () => {
         return
       }
 
-      if (didGenerateKeys.current === false) {
+      if (!owner.publicKey && didGenerateKeys.current === false) {
         const { privateKey, publicKey } = generateKeys()
         didGenerateKeys.current = true
         await update({ id: owner.id, publicKey: owner.publicKey })
@@ -52,10 +53,28 @@ const KeysPage: React.FC<KeysPageProps> = () => {
     main()
   }, [owner, update])
 
+  if (owner?.publicKey && !owner?.privateKey) {
+    return (
+      <BusinessLayout>
+        <Text fontSize="l" fontWeight="bold" mb={5}>
+          Du hast schonmal einen Schlüssel generiert.
+        </Text>
+        <Link href="/business/dashboard">
+          <a css={{ textDeocration: 'none' }}>
+            <Button
+              title="Zum Dashboard"
+              right={<Arrows size="16px" color="pink" />}
+            />
+          </a>
+        </Link>
+      </BusinessLayout>
+    )
+  }
+
   return (
     <BusinessLayout>
       <Text fontSize="xl" fontWeight="bold" mb={5}>
-        Ihr geheimer Schlüssel.
+        Dein geheimer Schlüssel.
       </Text>
       {isLoading && (
         <Flex mt="120px" align="center" flexDirection="column">
@@ -67,11 +86,11 @@ const KeysPage: React.FC<KeysPageProps> = () => {
       )}
       {hexPrivateKey && (
         <>
-          <Text fontSize="s" fontWeight="bold">
-            Ihr Schlüssel ist {hexPrivateKey.length} Zeichen lang, in{' '}
+          <Text fontSize="m" fontWeight="xbold" mb={2}>
+            Dein Schlüssel ist {hexPrivateKey.length} Zeichen lang, in{' '}
             {hexPrivateKey.length / 2} Blöcken.
           </Text>
-          <Text fontSize="s" fontWeight="bold" mb={4}>
+          <Text fontSize="s" fontWeight="bold" mb={3}>
             Er beinhaltet nur Zahlen von 0 bis 9 und Großbuchstaben von A bis F.
           </Text>
           <Box my={5} mx={-4}>
@@ -81,13 +100,13 @@ const KeysPage: React.FC<KeysPageProps> = () => {
       )}
       {!isLoading && (
         <>
-          <Text fontSize="m" fontWeight="xbold" color="red" mb={2}>
-            Es ist sehr wichtig, dass Sie sich diesen Schlüssel notieren.
+          <Text fontSize="m" fontWeight="xbold" color="red" mb={3}>
+            Es ist sehr wichtig, dass du diesen Schlüssel notieren.
           </Text>
-          <Text fontSize="m" fontWeight="bold" mb={5}>
-            Schreiben Sie den Schlüssel zum Beispiel auf ein Stück Papier und
-            behalten ihn sorgfältig in Ihren Unterlagen. Sie können auch einen
-            Passwortmanager nutzen. Ohne den Schlüssel sind die Kundendaten
+          <Text fontSize="s" fontWeight="bold" mb={5}>
+            Schreib den Schlüssel zum Beispiel auf ein Stück Papier und behalte
+            ihn sorgfältig in deinen Unterlagen. Du kannst ihn auch in einem
+            Passwortmanager speichern. Ohne den Schlüssel sind die Kundendaten
             nicht mehr einsehbar.
           </Text>
           <Button

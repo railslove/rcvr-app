@@ -21,10 +21,10 @@ const FinishedPage: React.FC<FinishedPageProps> = () => {
         </Circle>
       </Flex>
       <Text fontSize="m" fontWeight="bold" mb={3}>
-        Vielen Dank, ihr Schlüssel wurde erfolgreich eingerichtet.
+        Vielen Dank, dein Schlüssel wurde erfolgreich eingerichtet.
       </Text>
       <Text fontSize="m" fontWeight="bold" mb={5}>
-        Sie können recover nun für ihre Geschäfte nutzen.
+        Du kannst recover nun für deine Geschäfte nutzen.
       </Text>
       <Link href="/business/dashboard">
         <a css={{ textDeocration: 'none' }}>

@@ -25,7 +25,8 @@ const VerifyKey: React.FC<VerifyKeyProps> = () => {
   )
 
   const handleNext = React.useCallback(() => {
-    if (keyInput.current === base64ToHex(owner.privateKey)) {
+    const cleanKey = keyInput.current.replace(/\s/g, '')
+    if (cleanKey === base64ToHex(owner.privateKey)) {
       router.push('/business/setup/finished')
       return
     }
@@ -40,12 +41,12 @@ const VerifyKey: React.FC<VerifyKeyProps> = () => {
       </Text>
 
       <Text fontSize="s" fontWeight="bold" mb={3}>
-        Bitte geben Sie den Schlüssel nun nochmals ein. Damit bestätigen Sie,
-        dass er korrekt notiert wurde.
+        Bitte geben den Schlüssel nun nochmals ein. Damit bestätigst du, dass du
+        ihn korrekt notiert hast.
       </Text>
       {isWrong && (
         <Text fontSize="s" fontWeight="xbold" color="red" mb={3}>
-          Der Schlüssel stimmt nicht überein. Sie können ihn korrigieren oder{' '}
+          Der Schlüssel stimmt nicht überein. Du kannst ihn korrigieren oder{' '}
           <Link href="/business/setup/keys">
             <a css={{ color: 'inherit', textDecoration: 'underline' }}>
               zurück gehen und erneut anschauen.
@@ -57,7 +58,7 @@ const VerifyKey: React.FC<VerifyKeyProps> = () => {
         <KeyInput onChange={handleKeyInputChange} />
       </Box>
       <Text fontSize="s" fontWeight="bold" mb={3}>
-        Schreiben Sie alle Zeichen hintereinander, ohne Leerzeichen. Der
+        Schreib alle Zeichen hintereinander, ohne Leerzeichen. Denk dran: der
         Schlüssel beinhaltet nur Zahlen von 0 bis 9 und Buchstaben von A bis F.
       </Text>
 

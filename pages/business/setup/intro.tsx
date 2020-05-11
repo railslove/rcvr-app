@@ -15,16 +15,15 @@ const IntroPage: React.FC<IntroPageProps> = () => {
       <Text fontSize="xl" fontWeight="bold" mb={5}>
         Willkommen bei Recover.
       </Text>
-      <Text fontSize="l" fontWeight="bold" mb={5}>
-        Zuerst kümmern wir uns um den Schutz der Kundendaten.
+      <Text fontSize="m" fontWeight="bold" mb={4}>
+        Zuerst kümmern wir uns um den Schutz deiner Kundendaten.
       </Text>
-      <Text fontSize="l" fontWeight="bold" mb={5}>
-        Danach können Sie QR Codes generieren, mit denen sich ihre Gäste
+      <Text fontSize="m" fontWeight="bold" mb={4}>
+        Danach kannst du QR Codes generieren, mit denen sich deine Gäste
         einchecken können.
       </Text>
-      <Text fontSize="l" color="red" fontWeight="xbold" mb={5}>
-        Nehmen Sie sich etwas Zeit und befolgen Sie die folgenden Schritte
-        sorgfältig.
+      <Text fontSize="m" color="red" fontWeight="xbold" mb={4}>
+        Nimm dir etwas Zeit und befolge den nächsten Schritt sorgfältig.
       </Text>
       <Link href="/business/setup/keys">
         <a css={{ textDeocration: 'none' }}>
