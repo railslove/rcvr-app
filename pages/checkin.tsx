@@ -19,10 +19,22 @@ const CheckingPage: React.FC<{}> = () => {
   const publicKey = router.query.k?.toString()
   const areaId = router.query.a?.toString()
 
-  const [doCheckin, { status, error }] = useMutation(api.createCheckin, {
+  const [doCheckin, { error: checkinError }] = useMutation(api.createCheckin, {
     throwOnError: true,
   })
+  const [doCheckout, { error: checkoutError }] = useMutation(
+    api.checkoutTicket,
+    { throwOnError: true }
+  )
+  const error = checkinError || checkoutError
+
   const performCheckin = React.useCallback(async () => {
+    const lastCheckin = await db.getLastCheckin()
+
+    if (lastCheckin && !lastCheckin.leftAt) {
+      await doCheckout({ id: lastCheckin.id, leftAt: enteredAt.current })
+    }
+
     await doCheckin({
       publicKey,
       areaId,
@@ -30,7 +42,7 @@ const CheckingPage: React.FC<{}> = () => {
       enteredAt: enteredAt.current,
     })
     router.replace('/my-checkins')
-  }, [doCheckin, publicKey, areaId, router])
+  }, [doCheckin, doCheckout, publicKey, areaId, router])
 
   // The loading spinner should only become visible after a small amount of time
   // to prevent it flashing up unnecessarily.
@@ -72,7 +84,7 @@ const CheckingPage: React.FC<{}> = () => {
     })
   }, [performCheckin, publicKey, areaId])
 
-  const showLoading = isDelayedLoading && !showOnboarding && status !== 'error'
+  const showLoading = isDelayedLoading && !showOnboarding && !error
 
   return (
     <AppLayout withTabs={false} withHeader={false}>
@@ -85,7 +97,7 @@ const CheckingPage: React.FC<{}> = () => {
           <Loading />
         </Flex>
       )}
-      {status === 'error' && <div>{error.toString()}</div>}
+      {error && <div>{error.toString()}</div>}
     </AppLayout>
   )
 }

@@ -13,7 +13,7 @@ const CheckinHead: React.FC<CheckinHeadProps> = ({ checkin }) => {
       <Text as="div" fontSize="s" fontWeight="bold" pb={1}>
         {checkin.business}
       </Text>
-      <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
+      <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} autoCheckout />
     </div>
   )
 }

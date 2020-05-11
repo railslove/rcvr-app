@@ -130,6 +130,11 @@ export async function getCheckin(id: string): Promise<Checkin> {
   return checkin
 }
 
+export async function getLastCheckin(): Promise<Checkin> {
+  const checkins = await db.checkins.reverse().sortBy('enteredAt')
+  return checkins[0]
+}
+
 export async function getAllCheckins(): Promise<Checkin[]> {
   const checkins = await db.checkins.reverse().sortBy('enteredAt')
   return checkins
