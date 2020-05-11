@@ -16,6 +16,7 @@
     "@emotion/styled": "^10.0.27",
     "@styled-system/css": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
+    "@zxing/library": "^0.17.0",
     "camelcase-keys": "^6.2.2",
     "dexie": "^3.0.1",
     "emotion-theming": "^10.0.27",
