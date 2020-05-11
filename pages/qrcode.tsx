@@ -22,7 +22,10 @@ const QRCodePage: React.FC<{}> = () => {
   return (
     <AppLayout>
       <h1>QRCode</h1>
-      <video id="video" width="300" height="200" />
+      <br />
+      <p>Scanne den QR-Code mit deiner Kamera und du wirst auf die Checkin Seite weiter geleitet:</p>
+      <br />
+      <video id="video" width="100%" height="100%" />
     </AppLayout>
   )
 }
