@@ -81,7 +81,7 @@ export async function fetchCompany(
   const parsed: any = await api
     .get(`companies/${companyId}`, {
       headers: {
-        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
       },
     })
     .json()
@@ -93,7 +93,7 @@ export async function fetchCompanies(): Promise<CompanyResponse[]> {
   const parsed: any = await api
     .get('companies', {
       headers: {
-        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
       },
     })
     .json()
@@ -109,7 +109,7 @@ export async function postCompany(company: {
     .post('companies', {
       json,
       headers: {
-        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
       },
     })
     .json()
@@ -123,7 +123,7 @@ export async function postArea(area: AreaPost): Promise<AreaResponse> {
     .post(`companies/${area.companyId}/areas`, {
       json,
       headers: {
-        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
       },
     })
     .json()
@@ -161,7 +161,7 @@ async function patchOwner(owner: OwnerPatch): Promise<OwnerResponse> {
     .patch('owner', {
       json,
       headers: {
-        Authorization: 'Bearer ' + window.sessionStorage.getItem('rcvr_olt'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
       },
     })
     .json()
