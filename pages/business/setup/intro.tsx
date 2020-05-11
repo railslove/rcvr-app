@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Head from 'next/head'
 import { useOwner } from '@lib/db'
 import { Text, Button } from '@ui/base'
 import Link from 'next/link'
@@ -12,6 +13,9 @@ const IntroPage: React.FC<IntroPageProps> = () => {
 
   return (
     <BusinessLayout>
+      <Head>
+        <title key="title">Willkommen bei recover</title>
+      </Head>
       <Text fontSize="xl" fontWeight="bold" mb={5}>
         Willkommen bei Recover.
       </Text>

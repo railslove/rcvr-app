@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { AnimatePresence } from 'framer-motion'
 import { Box, Flex } from '@ui/base'
@@ -28,6 +29,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({
       flexDir="column"
       flex={1}
     >
+      <Head>
+        <title key="title">recover</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <AnimatePresence>
         {withHeader && (
           <Flex

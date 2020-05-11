@@ -1,10 +1,11 @@
 import * as React from 'react'
+import Head from 'next/head'
 import { useQuery, useMutation } from 'react-query'
 import { motion } from 'framer-motion'
 
 import * as api from '@lib/api'
 import * as db from '@lib/db'
-import { CheckinCard, Flex } from '@ui/base'
+import { CheckinCard, Flex, Text } from '@ui/base'
 import AppLayout from '@ui/layouts/App'
 import LastCheckin from '@ui/blocks/LastCheckin'
 import CheckinHead from '@ui/blocks/CheckinHead'
@@ -13,7 +14,7 @@ import Loading from '@ui/blocks/Loading'
 const MyCheckinsPage: React.FC<{}> = () => {
   const [isRefetching, setIsRefetching] = React.useState(false)
   const [checkout] = useMutation(api.checkoutTicket)
-  const { data: checkins = [], refetch } = useQuery(
+  const { data: checkins = [], refetch, status } = useQuery(
     'checkins',
     db.getAllCheckins
   )
@@ -31,6 +32,9 @@ const MyCheckinsPage: React.FC<{}> = () => {
 
   return (
     <AppLayout>
+      <Head>
+        <title key="title">Meine Checkins | recover</title>
+      </Head>
       <Flex
         as="ul"
         flexDir="column"
@@ -40,6 +44,18 @@ const MyCheckinsPage: React.FC<{}> = () => {
         pt={5}
         mt={-5}
       >
+        {status === 'success' && checkins.length === 0 && (
+          <Text
+            size="s"
+            color="bluegrey.800"
+            fontWeight="bold"
+            px={4}
+            py={4}
+            textAlign="center"
+          >
+            Du hast noch keine Checkins.
+          </Text>
+        )}
         {checkins.map((checkin, i) => (
           <motion.li
             key={checkin.id}

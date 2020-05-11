@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
@@ -75,6 +76,9 @@ const CheckingPage: React.FC<{}> = () => {
 
   return (
     <AppLayout withTabs={false} withHeader={false}>
+      <Head>
+        <title key="title">Checkin... | recover</title>
+      </Head>
       {showOnboarding && <Onboarding onFinish={handleFinishOnboarding} />}
       {showLoading && (
         <Flex flex={1} align="center" justify="center">

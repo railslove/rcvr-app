@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 import { Flex, Text } from '@ui/base'
 import Logo from '@ui/blocks/Logo'
 import Loading from '@ui/blocks/Loading'
@@ -24,6 +25,10 @@ const BusinessLayout: React.FC<BusinessLayoutProps> = ({
       flexDir="column"
       flex={1}
     >
+      <Head>
+        <title key="title">{title ? title + ' | ' : ''} recover</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Flex
         height={5}
         px={4}

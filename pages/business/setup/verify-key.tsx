@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { base64ToHex } from '@lib/crypto'
@@ -36,6 +37,9 @@ const VerifyKey: React.FC<VerifyKeyProps> = () => {
 
   return (
     <BusinessLayout>
+      <Head>
+        <title key="title">Dein Schlüssel | recover</title>
+      </Head>
       <Text fontSize="xl" fontWeight="bold" mb={5}>
         Schlüssel eingeben.
       </Text>

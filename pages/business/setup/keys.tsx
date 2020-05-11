@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
@@ -73,6 +74,9 @@ const KeysPage: React.FC<KeysPageProps> = () => {
 
   return (
     <BusinessLayout>
+      <Head>
+        <title key="title">Dein Schlüssel | recover</title>
+      </Head>
       <Text fontSize="xl" fontWeight="bold" mb={5}>
         Dein geheimer Schlüssel.
       </Text>

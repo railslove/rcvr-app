@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Head from 'next/head'
 import { useOwner } from '@lib/db'
 import Link from 'next/link'
 import { Text, Button, Flex, Circle } from '@ui/base'
@@ -12,6 +13,9 @@ const FinishedPage: React.FC<FinishedPageProps> = () => {
 
   return (
     <BusinessLayout>
+      <Head>
+        <title key="title">Fertig | recover</title>
+      </Head>
       <Text fontSize="xl" fontWeight="bold" mb={5}>
         Erfolgreich abgeschlossen.
       </Text>
