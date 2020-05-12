@@ -1,39 +1,51 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { useOwner } from '@lib/db'
-import { Text, Button } from '@ui/base'
+import { Text, Button, Circle, Flex, Box } from '@ui/base'
 import Link from 'next/link'
-import { Arrows } from '@ui/icons'
+import { Arrows, Shop } from '@ui/icons'
 import BusinessLayout from '@ui/layouts/Business'
 
 type IntroPageProps = {}
 
 const IntroPage: React.FC<IntroPageProps> = () => {
-  useOwner()
-
   return (
     <BusinessLayout>
       <Head>
-        <title key="title">Willkommen bei recover</title>
+        <title key="title">recover für deinen Betrieb</title>
       </Head>
       <Text fontSize="xl" fontWeight="bold" mb={5}>
-        Willkommen bei Recover.
+        So nutzt Du recover für deinen Betrieb
       </Text>
-      <Text fontSize="m" fontWeight="bold" mb={4}>
-        Zuerst kümmern wir uns um den Schutz deiner Kundendaten.
+      <Flex justify="center" mb={5}>
+        <Circle color="pink">
+          <Shop />
+        </Circle>
+      </Flex>
+      <Text fontSize="m" fontWeight="semibold" mb={3}>
+        Die aktuellen Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
+        der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese Liste
+        digital. Um die Daten deiner Gäste zu schützt, werden sie von der App
+        verschlüsselt. Während des Onboardings erstellst Du daher ein sog.
+        digitales Schlüsselpaar.
       </Text>
-      <Text fontSize="m" fontWeight="bold" mb={4}>
-        Danach kannst du QR Codes generieren, mit denen Gäste in deinen
-        Betrieben einchecken können.
+      <Text fontSize="m" fontWeight="semibold" mb={3}>
+        Nach dem Onboarding wird sich unser Team bei Dir melden und die Echtheit
+        deiner Daten mit Dir gemeinsam überprüfen.
       </Text>
-      <Text fontSize="m" color="red" fontWeight="xbold" mb={4}>
-        Nimm dir etwas Zeit und befolge den nächsten Schritt sorgfältig.
+      <Text fontSize="m" fontWeight="semibold" mb={4}>
+        Die Einrichtung von recover dauert ca. 10 Min. Bist Du bereit? Dann lass
+        uns starten.
       </Text>
-      <Link href="/business/setup/keys">
-        <a css={{ textDeocration: 'none' }}>
-          <Button title="Starten" right={<Arrows size="16px" color="pink" />} />
-        </a>
-      </Link>
+      <Box mb={4}>
+        <Link href="/business/setup/signup">
+          <a css={{ textDeocration: 'none' }}>
+            <Button
+              title="Los geht's"
+              right={<Arrows size="16px" color="pink" />}
+            />
+          </a>
+        </Link>
+      </Box>
     </BusinessLayout>
   )
 }

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { generateKeys, base64ToHex } from '@lib/crypto'
 import * as db from '@lib/db'
 import * as api from '@lib/api'
-import { Flex, Text, Button } from '@ui/base'
+import { Flex, Text, Button, Box } from '@ui/base'
 import { Arrows } from '@ui/icons'
 import KeyViewer from '@ui/blocks/KeyViewer'
 import Loading from '@ui/blocks/Loading'
@@ -77,7 +77,7 @@ const KeysPage: React.FC<KeysPageProps> = () => {
       <Head>
         <title key="title">Dein Schlüssel | recover</title>
       </Head>
-      <Text fontSize="xl" fontWeight="bold" mb={5}>
+      <Text fontSize="xl" fontWeight="bold" mb={4}>
         Dein geheimer Schlüssel.
       </Text>
       {isLoading && (
@@ -91,13 +91,12 @@ const KeysPage: React.FC<KeysPageProps> = () => {
       {hexPrivateKey && (
         <>
           <Text fontSize="m" fontWeight="xbold" mb={2}>
-            Dein Schlüssel ist {hexPrivateKey.length} Zeichen lang, in{' '}
-            {hexPrivateKey.length / 2} Blöcken.
-          </Text>
-          <Text fontSize="s" fontWeight="bold" mb={3}>
+            Hier ist dein privater Schlüssel. Er ist {hexPrivateKey.length}{' '}
+            Zeichen lang, in {hexPrivateKey.length / 2} Blöcken.
+            <br />
             Er beinhaltet nur Zahlen von 0 bis 9 und Großbuchstaben von A bis F.
           </Text>
-          <Flex my={5} justify="center" mx={-4}>
+          <Flex my={3} justify="center" mx={-4}>
             <KeyViewer value={hexPrivateKey} />
           </Flex>
         </>
@@ -105,19 +104,23 @@ const KeysPage: React.FC<KeysPageProps> = () => {
       {!isLoading && (
         <>
           <Text fontSize="m" fontWeight="xbold" color="red" mb={3}>
-            Es ist sehr wichtig, dass du diesen Schlüssel notierst.
+            Es ist sehr wichtig, dass Du diesen Schlüssel notierst.
           </Text>
-          <Text fontSize="s" fontWeight="bold" mb={5}>
-            Schreib den Schlüssel zum Beispiel auf ein Stück Papier und behalte
-            ihn sorgfältig in deinen Unterlagen. Du kannst ihn auch in einem
-            Passwortmanager speichern. Ohne den Schlüssel sind die Kundendaten
-            nicht mehr einsehbar.
+          <Text fontSize="m" fontWeight="semibold" mb={3}>
+            Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre ihn
+            sorgfältig. Du kannst ihn auch in einem Passwortmanager speichern.
           </Text>
-          <Button
-            title="Schlüssel ist notiert"
-            onClick={handleNext}
-            right={<Arrows size="16px" color="pink" />}
-          />
+          <Text fontSize="m" fontWeight="semibold" mb={4}>
+            Im nächsten Schritt stellen wir sicher, dass Du den Schlüssel auch
+            korrekt notiert hast.
+          </Text>
+          <Box mb={4}>
+            <Button
+              title="Schlüssel ist notiert"
+              onClick={handleNext}
+              right={<Arrows size="16px" color="pink" />}
+            />
+          </Box>
         </>
       )}
     </BusinessLayout>

@@ -40,13 +40,21 @@ const VerifyKey: React.FC<VerifyKeyProps> = () => {
       <Head>
         <title key="title">Dein Schlüssel | recover</title>
       </Head>
-      <Text fontSize="xl" fontWeight="bold" mb={5}>
-        Schlüssel eingeben.
+      <Text fontSize="xl" fontWeight="bold" mb={4}>
+        Fast geschafft!
       </Text>
 
-      <Text fontSize="s" fontWeight="bold" mb={3}>
-        Bitte geben den Schlüssel nun nochmals ein. Damit bestätigst du, dass du
-        ihn korrekt notiert hast.
+      <Text fontSize="m" fontWeight="semibold" mb={3}>
+        Du hast es fast geschafft!
+      </Text>
+      <Text fontSize="m" fontWeight="semibold" mb={3}>
+        Wir müssen nur noch sicher stellen, dass Du dir den Schlüssel auch
+        richtig notiert hast. Gib ihn dafür in das folgende Feld ein. Schreib
+        alle Zeichen hintereinander, mit oder ohne Leerzeichen.
+      </Text>
+      <Text fontSize="m" fontWeight="semibold" mb={3}>
+        Denk dran: dein Schlüssel beinhaltet nur Zahlen von 0 bis 9 und
+        Buchstaben von A bis F.
       </Text>
       {isWrong && (
         <Text fontSize="s" fontWeight="xbold" color="red" mb={3}>
@@ -58,16 +66,13 @@ const VerifyKey: React.FC<VerifyKeyProps> = () => {
           </Link>
         </Text>
       )}
-      <Box my={5} mx={-4}>
+      <Box mt={3} mb={4} mx={-4}>
         <KeyInput onChange={handleKeyInputChange} />
       </Box>
-      <Text fontSize="s" fontWeight="bold" mb={3}>
-        Schreib alle Zeichen hintereinander, ohne Leerzeichen. Denk dran: der
-        Schlüssel beinhaltet nur Zahlen von 0 bis 9 und Buchstaben von A bis F.
-      </Text>
 
-      <Text fontSize="s" fontWeight="bold" mb={5}>
-        Alles eingegeben? Dann überprüfen wir, ob der Schlüssel stimmt.
+      <Text fontSize="m" fontWeight="semibold" mb={4}>
+        Alles eingegeben? Dann überprüfen wir, ob der Schlüssel stimmt. Sollte
+        er nicht stimmen, kannst du ihn noch korrigieren oder nochmals einsehen.
       </Text>
 
       <Button
