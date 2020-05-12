@@ -26,6 +26,9 @@ const LoginPage: React.FC<{}> = () => {
   const [login, { status, error }] = useMutation(api.loginOwner, {
     throwOnError: true,
   })
+  const [update] = useMutation(api.updateOwner, {
+    throwOnError: true,
+  })
 
   async function handleSubmit(event): Promise<void> {
     event.preventDefault()
@@ -43,7 +46,10 @@ const LoginPage: React.FC<{}> = () => {
 
     if (!valid) return
 
-    await login({ email, password })
+    const owner = await login({ email, password })
+    if (owner.publicKey) {
+      await update({ id: owner.id, publicKey: owner.publicKey })
+    }
     setIsRedirecting(true)
     router.replace('/business/dashboard')
   }
