@@ -103,7 +103,7 @@ export function useOwner({ redirect = true }: UseOwnerConfig = {}): UseOwner {
 
   React.useEffect(() => {
     if (redirect && !isLoggedIn()) {
-      router.push('/business/login')
+      router.push('/business')
       return undefined
     }
   }, [router, currentOwner, redirect])

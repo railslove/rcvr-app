@@ -44,7 +44,7 @@ const KeysPage: React.FC<KeysPageProps> = () => {
       if (!owner.publicKey && didGenerateKeys.current === false) {
         const { privateKey, publicKey } = generateKeys()
         didGenerateKeys.current = true
-        await update({ id: owner.id, publicKey: owner.publicKey })
+        await update({ id: owner.id, publicKey })
         await db.updateOwner(owner.id, { privateKey, publicKey })
         setHexPrivateKey(base64ToHex(privateKey))
         setIsLoading(false)

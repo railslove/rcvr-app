@@ -158,7 +158,7 @@ async function patchOwner(owner: OwnerPatch): Promise<OwnerResponse> {
   const json = snakecaseKeys({ owner }, { deep: true })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const parsed: any = await api
-    .patch('owner', {
+    .patch('ownerda', {
       json,
       headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
