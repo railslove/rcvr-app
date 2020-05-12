@@ -13,7 +13,7 @@ const Home: React.FC<{}> = () => {
           <Logo width="124px" height="20px" />
         </Box>
         <Box px={3} mb={4}>
-          <Link href="/qrcode">
+          <Link href="/qr">
             <a css={{ textDeocration: 'none' }}>
               <Button
                 title="QR Code Scannen"
