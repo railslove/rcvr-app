@@ -136,7 +136,7 @@ const SignupPage: React.FC<{}> = () => {
         <form onSubmit={handleSubmit}>
           <Input
             type="text"
-            label="Name"
+            label="Dein Name"
             value={name}
             onChange={handleNameChange}
             error={nameError}
