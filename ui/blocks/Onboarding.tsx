@@ -85,11 +85,9 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           />
         </Box>
         <Text fontSize="xs" mt={3}>
-          Mit dem betätigen des Buttons erkläre ich mich mit den{' '}
-          <a className="link" href="https://railslove.com/privacy/">
-            Datenschutzbestimmungen
-          </a>{' '}
-          einverstanden.
+          Mit dem betätigen des Buttons erkläre ich mich einverstanden, dass
+          meine Daten zur Erfüllung der Verpflichtung der Hygiene- und
+          Infektionsschutzstandards für 4 Wochen gespeichert werden.
         </Text>
       </form>
     </Flex>
