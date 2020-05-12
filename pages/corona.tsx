@@ -14,18 +14,15 @@ const CoronaPage: React.FC<CoronaPageProps> = () => {
       </Head>
       <Box px={4} py={4}>
         <Text fontSize="l" fontWeight="bold" mb={2}>
-          Ich bin eine mögliche Kontaktperson
+          Was sollte ich tun, wenn ich Kontaktperson bin?
         </Text>
         <Text mb={3}>Zu allererst: ruhig bleiben.</Text>
-        <Text fontWeight="bold" mb={2}>
-          Was nun?
-        </Text>
         <Text mb={2}>
-          Das Gesundheitsamt wird sich telefonisch innerhalb von 48 Stunden bei
-          dir melden.
+          Wenn Du eine bestätigte Kontaktperson bist, wird sich das
+          Gesundheitsamt bei dir telefonisch innerhalb von 48 Stunden melden.
         </Text>
         <Text mb={4}>
-          Falls du bereits typische Symptome wie Fieber, Müdigkeit und trockenen
+          Falls Du bereits typische Symptome wie Fieber, Müdigkeit und trockenen
           Husten hast, solltest du vorsichtshalber in Haus-Quarantäne bleiben
           und das Gesundheitsamt informieren.
         </Text>
