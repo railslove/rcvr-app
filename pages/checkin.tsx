@@ -19,14 +19,10 @@ const CheckingPage: React.FC<{}> = () => {
   const publicKey = router.query.k?.toString()
   const areaId = router.query.a?.toString()
 
-  const [doCheckin, { error: checkinError }] = useMutation(api.createCheckin, {
+  const [doCheckin, { error }] = useMutation(api.createCheckin, {
     throwOnError: true,
   })
-  const [doCheckout, { error: checkoutError }] = useMutation(
-    api.checkoutTicket,
-    { throwOnError: true }
-  )
-  const error = checkinError || checkoutError
+  const [doCheckout] = useMutation(api.checkoutTicket)
 
   const performCheckin = React.useCallback(
     async (guest: db.Guest) => {
