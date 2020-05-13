@@ -141,7 +141,7 @@ const Decrypt: React.FC<DecryptProps> = () => {
             <Callout variant="danger" mb={3}>
               Scheinbar konnten keine Checkins entschlüsselt werden. Dein
               privater Schlüssel scheint nicht richtig zu sein. Bitte
-              kontrollier ihn auf Richtigkeit und versuche es erneut.
+              kontrolliere ihn auf Richtigkeit und versuche es erneut.
             </Callout>
           )}
           <Box mb={3}>
