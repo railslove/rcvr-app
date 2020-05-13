@@ -9,9 +9,9 @@ import BusinessPageSwitcher from '@ui/blocks/BusinessPageSwitcher'
 import TicketTable from '@ui/blocks/TicketTable'
 import BusinessLayout from '@ui/layouts/Business'
 
-type CompanyPageProps = {}
+type TicketsPageProps = {}
 
-const CompanyPage: React.FC<CompanyPageProps> = () => {
+const TicketsPage: React.FC<TicketsPageProps> = () => {
   const router = useRouter()
   const companyId = router.query.companyId?.toString()
   const [ticketsTo, _setTicketsTo] = React.useState(new Date())
@@ -57,4 +57,4 @@ const CompanyPage: React.FC<CompanyPageProps> = () => {
   )
 }
 
-export default CompanyPage
+export default TicketsPage

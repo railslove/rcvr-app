@@ -46,7 +46,9 @@ const TicketTable: React.FC<TicketTableProps> = ({ tickets }) => {
               {formatDate(new Date(ticket.enteredAt), 'DD.MM. HH:mm')}
             </td>
             <td css={{ padding: '12px 4px' }}>
-              {formatDate(new Date(ticket.leftAt), 'HH:mm')}
+              {ticket.leftAt
+                ? formatDate(new Date(ticket.leftAt), 'HH:mm')
+                : '–'}
             </td>
             <td css={{ padding: '12px 4px', paddingRight: 32 }}>
               verschlüsselt

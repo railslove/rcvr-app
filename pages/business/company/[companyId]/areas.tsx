@@ -7,9 +7,9 @@ import AddCard from '@ui/blocks/AddCard'
 import BusinessPageSwitcher from '@ui/blocks/BusinessPageSwitcher'
 import BusinessLayout from '@ui/layouts/Business'
 
-type CompanyPageProps = {}
+type AreasPageProps = {}
 
-const CompanyPage: React.FC<CompanyPageProps> = () => {
+const AreasPage: React.FC<AreasPageProps> = () => {
   const router = useRouter()
   const companyId = router.query.companyId?.toString()
   const { data: company, refetch } = useQuery(
@@ -46,4 +46,4 @@ const CompanyPage: React.FC<CompanyPageProps> = () => {
   )
 }
 
-export default CompanyPage
+export default AreasPage

@@ -31,6 +31,7 @@ const Button: React.FC<ButtonProps> = ({
       width="100%"
       align="center"
       justify="center"
+      opacity={rest.disabled ? '0.5' : 1}
       {...rest}
     >
       {left && (

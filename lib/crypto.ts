@@ -1,4 +1,4 @@
-import { seal } from 'tweetnacl-sealedbox-js'
+import { seal, open } from 'tweetnacl-sealedbox-js'
 import { box } from 'tweetnacl'
 
 function binKey(key: string): Uint8Array {
@@ -10,6 +10,17 @@ export function encrypt(publicKey: string, plain: string): string {
   const sealed = seal(input, binKey(publicKey))
   const encrypted = btoa(String.fromCharCode.apply(null, sealed))
   return encrypted
+}
+
+export function decrypt(
+  encrypted: string,
+  publicKey: string,
+  privateKey: string
+): string | undefined {
+  const params = [binKey(encrypted), binKey(publicKey), binKey(privateKey)]
+  const decrypted = open(...params)
+  if (!decrypted) return undefined
+  return new TextDecoder().decode(decrypted)
 }
 
 type Keypair = {
@@ -32,4 +43,15 @@ export function base64ToHex(base64: string): string {
     })
     .join('')
     .toUpperCase()
+}
+
+export function hexToBase64(hex: string): string {
+  const hexArray = hex
+    .replace(/\r|\n/g, '')
+    .replace(/([\da-fA-F]{2}) ?/g, '0x$1 ')
+    .replace(/ +$/, '')
+    .split(' ')
+  const byteString = String.fromCharCode.apply(null, hexArray)
+  const base64string = window.btoa(byteString)
+  return base64string
 }

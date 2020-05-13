@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { variant } from 'styled-system'
 import { css } from '@styled-system/css'
 import { Box } from '@ui/base'
 
@@ -16,6 +17,15 @@ const Callout = styled(Box)(
     a: {
       color: 'currentColor',
       textDecoration: 'underline',
+    },
+  }),
+  variant({
+    variants: {
+      danger: {
+        bg: '#f6eae8',
+        color: '#7a6363',
+        border: '#e7d9d9',
+      },
     },
   })
 )
