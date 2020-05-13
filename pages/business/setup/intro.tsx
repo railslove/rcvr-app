@@ -22,11 +22,11 @@ const IntroPage: React.FC<IntroPageProps> = () => {
         </Circle>
       </Flex>
       <Text fontSize="m" fontWeight="semibold" mb={3}>
-        Die aktuellen Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
+        Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
         der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese Liste
-        digital. Um die Daten deiner Gäste zu schützt, werden sie von der App
-        verschlüsselt. Während des Onboardings erstellst Du daher ein sog.
-        digitales Schlüsselpaar.
+        digital. Um die Daten deiner Gäste zu schützen, werden sie von der App
+        verschlüsselt. Während des Onboardings erstellst Du daher in wenigen
+        Schritten ein digitales Schlüsselpaar.
       </Text>
       <Text fontSize="m" fontWeight="semibold" mb={3}>
         Nach dem Onboarding wird sich unser Team bei Dir melden und die Echtheit

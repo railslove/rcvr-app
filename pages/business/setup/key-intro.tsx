@@ -26,7 +26,7 @@ const KeyIntroPage: React.FC<KeyIntroPageProps> = () => {
       </Flex>
       <Text fontSize="m" fontWeight="semibold" mb={3}>
         Im nächsten Schritt kümmern wir uns um die Verschlüsselung der Daten
-        deiner Gäste. Dafür erstellen wir ein sog. digitales Schlüsselpaar.
+        deiner Gäste. Dafür erstellen wir ein digitales Schlüsselpaar.
       </Text>
       <Text fontSize="m" fontWeight="semibold" mb={3}>
         Das digitale Schlüsselpaar besteht aus einem öffentlichen und einem
