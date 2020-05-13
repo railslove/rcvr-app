@@ -155,7 +155,10 @@ async function postSignup(owner: OwnerSignup): Promise<OwnerResponse> {
 }
 
 async function patchOwner(owner: OwnerPatch): Promise<OwnerResponse> {
-  const json = snakecaseKeys({ owner }, { deep: true })
+  const json = snakecaseKeys(
+    { owner: { publicKey: owner.publicKey } },
+    { deep: true }
+  )
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const parsed: any = await api
     .patch('owner', {
@@ -165,6 +168,7 @@ async function patchOwner(owner: OwnerPatch): Promise<OwnerResponse> {
       },
     })
     .json()
+
   const camelCased = camelcaseKeys(parsed, { deep: true })
   return camelCased
 }
@@ -233,12 +237,27 @@ export async function updateOwner(data: OwnerPatch): Promise<db.Owner> {
 }
 
 export async function loginOwner(data: OwnerLogin): Promise<db.Owner> {
-  const { token, ...ownerData } = await postLogin(data)
-  let owner = await db.getOwner(ownerData.id)
+  const { token, ...ownerRes } = await postLogin(data)
+  let owner = await db.getOwner(ownerRes.id)
+
+  // add owner to local db if he doesn't yet exist
   if (!owner) {
-    owner = await db.addOwner(ownerData)
+    owner = await db.addOwner(ownerRes)
   }
+
+  // update public key in api if the publicKey exists locally but not in api
+  if (owner.publicKey && !ownerRes.publicKey) {
+    owner = await updateOwner({ id: owner.id, publicKey: owner.publicKey })
+  }
+
+  // update public key locally if it's missing locally but exists in api
+  if (!owner.publicKey && ownerRes.publicKey) {
+    owner = await db.updateOwner(ownerRes.id, { publicKey: ownerRes.publicKey })
+  }
+
+  // persist current session data temporarily
   sessionStorage.setItem('rcvr_olt', token)
-  sessionStorage.setItem('rcvr_oid', JSON.stringify(ownerData.id))
+  sessionStorage.setItem('rcvr_oid', JSON.stringify(ownerRes.id))
+
   return owner
 }

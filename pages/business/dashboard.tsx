@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useOwner } from '@lib/db'
 import { postCompany, fetchCompanies } from '@lib/api'
-import { Box } from '@ui/base'
+import { Box, Text, Button } from '@ui/base'
 import BusinessLayout from '@ui/layouts/Business'
 import AddCard from '@ui/blocks/AddCard'
 import CompanyCard from '@ui/blocks/CompanyCard'
@@ -12,7 +12,7 @@ import CompanyCard from '@ui/blocks/CompanyCard'
 type DashboardProps = {}
 
 const Dashboard: React.FC<DashboardProps> = () => {
-  useOwner()
+  const { owner } = useOwner()
   const router = useRouter()
   const { data: companies = [], refetch } = useQuery(
     'companies',
@@ -39,6 +39,19 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   return (
     <BusinessLayout title="Meine Betriebe">
+      {owner && !owner.publicKey && (
+        <>
+          <Text fontWeight="xbold" color="red" mb={3}>
+            Du hast noch keinen Schlüssel eingerichtet. Ohne Schlüssel kannst du
+            keine QR Codes erstellen.
+          </Text>
+          <Link href="/business/setup/key-intro">
+            <a css={{ textDeocration: 'none' }}>
+              <Button title="Schlüssel erstellen" />
+            </a>
+          </Link>
+        </>
+      )}
       {companies.map((company) => (
         <Link
           key={company.id}
@@ -51,7 +64,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
         </Link>
       ))}
       {tmpNewCompany && <CompanyCard name={tmpNewCompany} loading />}
-      <AddCard label="Betriebsname" onAdd={handleAddNewCompany} />
+      {owner && owner.publicKey && (
+        <AddCard label="Betriebsname" onAdd={handleAddNewCompany} />
+      )}
 
       <Box
         textAlign="center"

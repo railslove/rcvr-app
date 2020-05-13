@@ -26,9 +26,6 @@ const LoginPage: React.FC<{}> = () => {
   const [login, { status, error }] = useMutation(api.loginOwner, {
     throwOnError: true,
   })
-  const [update] = useMutation(api.updateOwner, {
-    throwOnError: true,
-  })
 
   async function handleSubmit(event): Promise<void> {
     event.preventDefault()
@@ -47,12 +44,18 @@ const LoginPage: React.FC<{}> = () => {
     if (!valid) return
 
     const owner = await login({ email, password })
-    if (owner.publicKey) {
-      await update({ id: owner.id, publicKey: owner.publicKey })
-    }
     setIsRedirecting(true)
-    router.replace('/business/dashboard')
+
+    if (!owner.publicKey) {
+      // If the owner has no publicKey here, it means the owner didn't finish
+      // the onboarding correctly (or something went wrong). There's no keypair
+      // yet. Send them back to the key setup.
+      router.replace('/business/setup/key-intro')
+    } else {
+      router.replace('/business/dashboard')
+    }
   }
+
   const handleEmailChange = React.useCallback((event) => {
     setEmailError(undefined)
     setEmail(event.target.value)
