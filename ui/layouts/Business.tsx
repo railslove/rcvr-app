@@ -8,7 +8,7 @@ import SharedMeta from '@ui/blocks/SharedMeta'
 
 type BusinessLayoutProps = {
   children?: React.ReactNode
-  title?: string
+  title?: React.ReactNode
   loading?: boolean
 }
 
@@ -52,7 +52,8 @@ const BusinessLayout: React.FC<BusinessLayoutProps> = ({
         width="100%"
         zIndex={10}
         px={4}
-        py={4}
+        pt={2}
+        pb={4}
         flex="1 0 auto"
         flexDir="column"
       >
