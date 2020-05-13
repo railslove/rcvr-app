@@ -13,7 +13,7 @@ const BusinessPageSwitcher: React.FC<BusinessPageSwitcherProps> = ({
 }) => {
   return (
     <Flex mb={4}>
-      <Box mr={3}>
+      <Box mr={2}>
         <Link
           href="/business/company/[companyId]/areas"
           as={`/business/company/${companyId}/areas`}
