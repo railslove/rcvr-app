@@ -15,7 +15,7 @@ const TicketsPage: React.FC<TicketsPageProps> = () => {
   const router = useRouter()
   const companyId = router.query.companyId?.toString()
   const [ticketsTo, _setTicketsTo] = React.useState(new Date())
-  const [ticketsFrom, _setTicketsFrom] = React.useState(subHours(ticketsTo, 5))
+  const [ticketsFrom, _setTicketsFrom] = React.useState(subHours(ticketsTo, 12))
 
   const { data: company } = useQuery(
     companyId && ['company', companyId],
