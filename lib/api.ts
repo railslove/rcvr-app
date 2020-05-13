@@ -62,6 +62,21 @@ type CompanyResponse = {
   areas: AreaResponse[]
 }
 
+type CompanyTicketParams = {
+  from: Date
+  to: Date
+  companyId: string
+}
+
+export type CompanyTicketResponse = {
+  id: string
+  enteredAt: string
+  leftAt: string
+  areaId: string
+  companyName: string
+  areaName: string
+}
+
 type AreaPost = {
   name: string
   companyId: string
@@ -127,6 +142,25 @@ export async function postArea(area: AreaPost): Promise<AreaResponse> {
       },
     })
     .json()
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return camelCased
+}
+
+export async function fetchTickets({
+  from,
+  to,
+  companyId,
+}: CompanyTicketParams): Promise<CompanyTicketResponse[]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parsed: any = await api
+    .get(`companies/${companyId}/tickets`, {
+      searchParams: { from: from.toISOString(), to: to.toISOString() },
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
+      },
+    })
+    .json()
+
   const camelCased = camelcaseKeys(parsed, { deep: true })
   return camelCased
 }

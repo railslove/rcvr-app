@@ -1,16 +1,15 @@
 import * as React from 'react'
-import Link from 'next/link'
 import { fetchCompany, postArea } from '@lib/api'
 import { useRouter } from 'next/router'
 import { useQuery, useMutation } from 'react-query'
-import { Box } from '@ui/base'
 import AreaCard from '@ui/blocks/AreaCard'
 import AddCard from '@ui/blocks/AddCard'
+import BusinessPageSwitcher from '@ui/blocks/BusinessPageSwitcher'
 import BusinessLayout from '@ui/layouts/Business'
 
-type CompanyPageProps = {}
+type AreasPageProps = {}
 
-const CompanyPage: React.FC<CompanyPageProps> = () => {
+const AreasPage: React.FC<AreasPageProps> = () => {
   const router = useRouter()
   const companyId = router.query.companyId?.toString()
   const { data: company, refetch } = useQuery(
@@ -34,11 +33,7 @@ const CompanyPage: React.FC<CompanyPageProps> = () => {
 
   return (
     <BusinessLayout title={company.name}>
-      <Box fontSize="s" fontWeight="bold" color="bluegrey.800" mb={5} mt={-3}>
-        <Link href="/business/dashboard">
-          <a css={{ color: 'inherit', textDecoration: 'none' }}>&lt; Zurück</a>
-        </Link>
-      </Box>
+      <BusinessPageSwitcher companyId={company.id} active="areas" />
       {company.areas.map((area) => (
         <AreaCard name={area.name} key={area.id} id={area.id} />
       ))}
@@ -51,4 +46,4 @@ const CompanyPage: React.FC<CompanyPageProps> = () => {
   )
 }
 
-export default CompanyPage
+export default AreasPage

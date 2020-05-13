@@ -55,8 +55,8 @@ const Dashboard: React.FC<DashboardProps> = () => {
       {companies.map((company) => (
         <Link
           key={company.id}
-          href="/business/company/[companyId]"
-          as={`/business/company/${company.id}`}
+          href="/business/company/[companyId]/areas"
+          as={`/business/company/${company.id}/areas`}
         >
           <a>
             <CompanyCard name={company.name} />

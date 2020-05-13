@@ -9,6 +9,7 @@ const theme = {
     circle: '2px solid #000000',
     checkbox: '2px solid #000000',
     input: '1px solid #000000',
+    activePage: '3px solid #28EE5F',
   },
   colors: {
     white: '#FFFFFF',
@@ -61,6 +62,7 @@ const globalcss = css({
     textRendering: 'optimizeSpeed',
     WebkitFontSmoothing: 'antialiased',
     MozOsxFontSmoothing: 'grayscale',
+    fontWeight: 'semibold',
   },
   a: {
     textDecorationSkipInk: 'auto',
