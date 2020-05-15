@@ -248,7 +248,12 @@ export async function createCheckin({
 }
 
 export async function checkoutTicket(data: UpdateCheckin): Promise<db.Checkin> {
-  await patchTicket({ id: data.id, leftAt: data.leftAt.toISOString() })
+  try {
+    await patchTicket({ id: data.id, leftAt: data.leftAt.toISOString() })
+  } catch (error) {
+    // most likely because of auto-checkout
+    console.warn('Could not checkout. Setting checkout date to now.', error)
+  }
   const checkin = await db.updateCheckin(data.id, { leftAt: data.leftAt })
   return checkin
 }
