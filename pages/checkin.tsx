@@ -16,8 +16,23 @@ const CheckingPage: React.FC<{}> = () => {
   const router = useRouter()
 
   // query params can be arrays, we need to make sure they're strings
-  const publicKey = router.query.k?.toString()
-  const areaId = router.query.a?.toString()
+  const [publicKey, setPublicKey] = React.useState<string | undefined>()
+  const [areaId, setAreaId] = React.useState<string | undefined>()
+
+  React.useEffect(() => {
+    // NORMALLY you would parse query strings using the URLSearchParams interface,
+    // which is also used by nextjs' useRouter. BUT iOS Safari seems to have broken
+    // URLSearchParams! Using URLSearchParams with iOS Safari will turn `+` into
+    // whitespaces. This is pretty bad.
+    // This wouldn't be a problem for us because our QR Codes are correctly encoded,
+    // but some QR Code scanners first encode the URL params and then open Safari. (╯°□°）╯︵ ┻━┻
+    // This solution uses a regex to parse the query string. That's not optimal.
+    // But we don't have any other way to cover all those cases gracefully.
+    const areaMatches = window.location.search.match(/\?a=([^&]*)/)
+    const keyMatches = window.location.search.match(/&k=([^&]*)/)
+    setAreaId(decodeURIComponent(areaMatches[1]))
+    setPublicKey(decodeURIComponent(keyMatches[1]))
+  }, [])
 
   const [doCheckin, { error }] = useMutation(api.createCheckin, {
     throwOnError: true,
@@ -74,8 +89,6 @@ const CheckingPage: React.FC<{}> = () => {
   )
 
   React.useEffect(() => {
-    // Disallow empty data. This is the case on initial mount due to next's
-    // static optimization
     if (!publicKey || !areaId) return
 
     // Check if a guest was already created, then do the checkin cha cha cha.
