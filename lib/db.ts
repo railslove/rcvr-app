@@ -22,6 +22,12 @@ export interface Guest {
   address: string
 }
 
+export interface GuestChangeset {
+  name?: string
+  phone?: string
+  address?: string
+}
+
 export interface Owner {
   id: number
   email: string
@@ -57,6 +63,13 @@ export const db = new RcvrDatabase()
 
 export async function getGuest(): Promise<Guest> {
   const guest = await db.guests.toCollection().first()
+  return guest
+}
+
+export async function updateGuest(changes: GuestChangeset): Promise<Guest> {
+  let guest = await db.guests.toCollection().first()
+  await db.guests.update(guest.id, changes)
+  guest = await getGuest()
   return guest
 }
 

@@ -62,9 +62,16 @@ const CheckingPage: React.FC<{}> = () => {
   const handleFinishOnboarding = React.useCallback(
     async (guest, opts) => {
       const timeoutId = setTimeout(() => setIsDelayedLoading(true), 400)
+
       if (opts.rememberMe) {
-        await db.addGuest(guest)
+        const existingGuest = await db.getGuest()
+        if (existingGuest) {
+          await db.updateGuest(guest)
+        } else {
+          await db.addGuest(guest)
+        }
       }
+
       setShowOnboarding(false)
       performCheckin(guest)
       clearTimeout(timeoutId)
