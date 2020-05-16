@@ -16,21 +16,21 @@
 
 ## Intro
 
-Due to COVID19, many businesses in germany like bars and restaurants are required to keep track of the name, phone number, table where the guest is sitting, and time of visit. In case of an infection, the public health department can trace contact persons using this data.
+Due to COVID19, many businesses in germany like bars and restaurants are required to keep track of the name, phone number, address, table where the guest is sitting, and time of visit. In case of an infection, the public health department can trace contact persons using this data.
 
 The german government suggested a very oldschool way on how to achieve this: owners should put a list on each table – with paper and a pen – and guests need to write down their data, visible to everyone.
 
 **We think we can do better.** Those lists are annoying for everyone, and it's a big privacy concern.  
-With **recover**, guests simply scan a QR Code, they enter their name and phone number, which will be encryped on their device and stored on our server. This data can only be decrypted by the business owner, and only when the public health department requests this data.
+With **recover**, guests simply scan a QR Code with their phone and enter their contact details, which will be encrypted on their device and stored on our server. This data can only be decrypted by the business owner, and only when the public health department requests this data.
 
 ## How does rcvr.app work?
 
-When an owner signs up, a keypair will generated on their device. The owner needs to store the private key, by saving it inside a password manager or writing it on a piece of paper and store it safely. This private key is required to decrypt the data of the guests.
+When an owner signs up, a keypair will be generated on their device. The owner needs to store the private key safely, by saving it inside a password manager or writing it on a piece of paper. This private key is required to decrypt the data of the guests.
 
 The public part of this keypair is embedded inside the QR Code, together with a unique identifier for each table.  
-When guests scans this QR Code, they enter their data, which will be encrypted using this public key. This encrypted data will be stored on our server, together with the table identifier and checkin date / checkout date.
+When a guest scans this QR Code, they enter their data, which will be encrypted using this public key. This encrypted data will be stored on our server, together with the table identifier and checkin / checkout date.
 
-When the public health department requests data for a specific timerange from the owner, we will send them the encrypted data of each guest in this timerange. The owner can decrypt this data using his private key, and send it to the public health department.
+When the public health department requests data for a specific timerange from an owner, we will send them the encrypted data of each guest in this timerange. The owner can then decrypt this data using his private key, and send it to the public health department.
 
 When a guest checks in, a random ID will be saved on the guest's device. **recover** will provide a public feed of all checkin IDs which are in danger of a COVID19 infection. The IDs can be public because they cannot be traced back to a person. Only the guest's device knows if one of the stored IDs is also inside this public feed. If this is the case, we can notify the guest of the potential infection.
 
