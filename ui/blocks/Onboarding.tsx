@@ -14,18 +14,21 @@ type OnboardingProps = {
 const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
   const [name, setName] = React.useState('')
   const [phone, setPhone] = React.useState('')
+  const [address, setAddress] = React.useState('')
   const [rememberMe, setRememberMe] = React.useState(false)
   const [nameError, setNameError] = React.useState(false)
   const [phoneError, setPhoneError] = React.useState(false)
+  const [addressError, setAddressError] = React.useState(false)
 
   function handleSubmit(event): void {
     event.preventDefault()
-    if (!name || !phone) {
+    if (!name || !phone || !address) {
       !name && setNameError(true)
       !phone && setPhoneError(true)
+      !address && setAddressError(true)
       return
     }
-    onFinish({ name, phone }, { rememberMe })
+    onFinish({ name, phone, address }, { rememberMe })
   }
 
   const handleNameChange = React.useCallback((event) => {
@@ -36,6 +39,11 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
   const handlePhoneChange = React.useCallback((event) => {
     setPhoneError(false)
     setPhone(event.target.value)
+  }, [])
+
+  const handleAddressChange = React.useCallback((event) => {
+    setAddressError(false)
+    setAddress(event.target.value)
   }, [])
 
   const handleRememberMeChange = React.useCallback((event) => {
@@ -61,6 +69,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           value={name}
           onChange={handleNameChange}
           error={nameError && 'Name muss ausgefüllt werden.'}
+          autoComplete="name"
         />
         <Input
           type="tel"
@@ -68,6 +77,15 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           value={phone}
           onChange={handlePhoneChange}
           error={phoneError && 'Telefonnummer muss ausgefüllt werden.'}
+          autoComplete="tel"
+        />
+        <Input
+          type="text"
+          label="Anschrift"
+          value={address}
+          onChange={handleAddressChange}
+          error={addressError && 'Anschrift muss ausgefüllt werden.'}
+          autoComplete="street-address"
         />
         <Checkbox
           checked={rememberMe}

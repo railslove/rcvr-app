@@ -227,7 +227,7 @@ export async function createCheckin({
   ticket: CreateCheckin
   guest: db.Guest
 }): Promise<db.Checkin> {
-  const csv = toCSV([guest.name, guest.phone])
+  const csv = toCSV([guest.name, guest.phone, guest.address])
   const encrypted = encrypt(ticket.publicKey, csv)
 
   const response = await postTicket({

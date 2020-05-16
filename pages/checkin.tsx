@@ -62,9 +62,16 @@ const CheckingPage: React.FC<{}> = () => {
   const handleFinishOnboarding = React.useCallback(
     async (guest, opts) => {
       const timeoutId = setTimeout(() => setIsDelayedLoading(true), 400)
+
       if (opts.rememberMe) {
-        await db.addGuest(guest)
+        const existingGuest = await db.getGuest()
+        if (existingGuest) {
+          await db.updateGuest(guest)
+        } else {
+          await db.addGuest(guest)
+        }
       }
+
       setShowOnboarding(false)
       performCheckin(guest)
       clearTimeout(timeoutId)
@@ -80,7 +87,7 @@ const CheckingPage: React.FC<{}> = () => {
 
     // Check if a guest was already created, then do the checkin cha cha cha.
     db.getGuest().then((guest) => {
-      if (guest) {
+      if (guest && guest.name && guest.phone && guest.address) {
         performCheckin(guest)
       } else {
         setShowOnboarding(true)
