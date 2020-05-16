@@ -38,7 +38,11 @@ const AreasPage: React.FC<AreasPageProps> = () => {
         <AreaCard name={area.name} key={area.id} id={area.id} />
       ))}
       {tmpNewArea && <AreaCard name={tmpNewArea} loading />}
-      <AddCard label='z.B. "Tisch 1" oder "Theke"' onAdd={handleAddNewPlace} />
+      <AddCard
+        label='z.B. "Tisch 1" oder "Theke"'
+        onAdd={handleAddNewPlace}
+        id="areaName"
+      />
     </BusinessLayout>
   )
 }

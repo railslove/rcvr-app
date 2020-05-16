@@ -64,6 +64,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
       </Box>
       <form onSubmit={handleSubmit}>
         <Input
+          id="name"
           type="text"
           label="Name"
           value={name}
@@ -72,6 +73,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           autoComplete="name"
         />
         <Input
+          id="phone"
           type="tel"
           label="Telefon"
           value={phone}
@@ -80,6 +82,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           autoComplete="tel"
         />
         <Input
+          id="address"
           type="text"
           label="Anschrift"
           value={address}

@@ -135,6 +135,7 @@ const SignupPage: React.FC<{}> = () => {
         </Box>
         <form onSubmit={handleSubmit}>
           <Input
+            id="name"
             type="text"
             label="Dein Name"
             value={name}
@@ -142,6 +143,7 @@ const SignupPage: React.FC<{}> = () => {
             error={nameError}
           />
           <Input
+            id="email"
             type="email"
             label="Email"
             value={email}
@@ -149,6 +151,7 @@ const SignupPage: React.FC<{}> = () => {
             error={emailError}
           />
           <Input
+            id="password"
             type="password"
             label="Passwort"
             value={password}
@@ -157,6 +160,7 @@ const SignupPage: React.FC<{}> = () => {
             decorator={<StrengthMeter strength={strength} />}
           />
           <Input
+            id="passwordrepeat"
             type="password"
             label="Passwort wiederholen"
             value={passwordVerify}

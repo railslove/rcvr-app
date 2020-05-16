@@ -100,6 +100,7 @@ const LoginPage: React.FC<{}> = () => {
         </Box>
         <form onSubmit={handleSubmit} css={{ width: '255px' }}>
           <Input
+            id="email"
             type="email"
             label="Email"
             value={email}
@@ -107,6 +108,7 @@ const LoginPage: React.FC<{}> = () => {
             error={emailError}
           />
           <Input
+            id="password"
             type="password"
             label="Passwort"
             value={password}

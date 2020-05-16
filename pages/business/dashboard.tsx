@@ -65,7 +65,11 @@ const Dashboard: React.FC<DashboardProps> = () => {
       ))}
       {tmpNewCompany && <CompanyCard name={tmpNewCompany} loading />}
       {owner && owner.publicKey && (
-        <AddCard label="Betriebsname" onAdd={handleAddNewCompany} />
+        <AddCard
+          label="Betriebsname"
+          onAdd={handleAddNewCompany}
+          id="companyName"
+        />
       )}
 
       <Box

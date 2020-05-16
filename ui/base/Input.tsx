@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label: string
+  id: string
   error?: string
   decorator?: React.ReactNode
 }
@@ -14,6 +15,7 @@ const Input: React.FC<InputProps> = ({
   error,
   decorator,
   value,
+  id,
   ...rest
 }) => {
   const [passwordVisible, setPasswordVisible] = React.useState(false)
@@ -41,7 +43,7 @@ const Input: React.FC<InputProps> = ({
           animate={{ y: active ? -20 : 0, scale: active ? 0.75 : 1 }}
           style={{ originX: 0 }}
         >
-          <Text as="div" fontSize="s" fontWeight="semibold">
+          <Text as="label" htmlFor={id} fontSize="s" fontWeight="semibold">
             {label}
           </Text>
         </motion.div>
@@ -56,6 +58,7 @@ const Input: React.FC<InputProps> = ({
             outline: 'none',
           }}
           {...rest}
+          id={id}
           onChange={handleChange}
           onFocus={(): void => setFocused(true)}
           onBlur={(): void => setFocused(false)}
