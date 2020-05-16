@@ -62,6 +62,7 @@ const Input: React.FC<InputProps> = ({
           type={
             rest.type === 'password' && passwordVisible ? 'text' : rest.type
           }
+          autoComplete={rest.autoComplete}
         />
         {rest.type === 'password' && (
           <Flex

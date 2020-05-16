@@ -69,6 +69,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           value={name}
           onChange={handleNameChange}
           error={nameError && 'Name muss ausgefüllt werden.'}
+          autoComplete="name"
         />
         <Input
           type="tel"
@@ -76,6 +77,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           value={phone}
           onChange={handlePhoneChange}
           error={phoneError && 'Telefonnummer muss ausgefüllt werden.'}
+          autoComplete="tel"
         />
         <Input
           type="text"
@@ -83,6 +85,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
           value={address}
           onChange={handleAddressChange}
           error={addressError && 'Anschrift muss ausgefüllt werden.'}
+          autoComplete="street-address"
         />
         <Checkbox
           checked={rememberMe}
