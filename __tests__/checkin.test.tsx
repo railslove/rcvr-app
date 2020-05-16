@@ -17,7 +17,7 @@ const route = {
 }
 
 beforeEach(() => {
-  MockDate.set(new Date(2020, 4, 11, 14, 30), 120)
+  MockDate.set(new Date(2020, 4, 11, 14, 30), -120)
 })
 
 it('shows onboarding the first time', async () => {
