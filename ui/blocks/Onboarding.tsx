@@ -79,10 +79,10 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
         />
         <Input
           type="text"
-          label="Adresse"
+          label="Anschrift"
           value={address}
           onChange={handleAddressChange}
-          error={addressError && 'Adresse muss ausgefüllt werden.'}
+          error={addressError && 'Anschrift muss ausgefüllt werden.'}
         />
         <Checkbox
           checked={rememberMe}
