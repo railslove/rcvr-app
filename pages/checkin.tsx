@@ -87,7 +87,7 @@ const CheckingPage: React.FC<{}> = () => {
 
     // Check if a guest was already created, then do the checkin cha cha cha.
     db.getGuest().then((guest) => {
-      if (guest) {
+      if (guest && guest.name && guest.phone && guest.address) {
         performCheckin(guest)
       } else {
         setShowOnboarding(true)
