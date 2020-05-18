@@ -41,7 +41,7 @@ const AreasPage: React.FC<AreasPageProps> = () => {
       await refetch()
       alert('Erfolgreich gespeichert')
     },
-    [companyId, updateCompany]
+    [companyId, updateCompany, refetch]
   )
 
   if (!company) return <BusinessLayout loading />
