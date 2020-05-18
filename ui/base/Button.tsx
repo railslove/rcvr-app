@@ -8,6 +8,7 @@ type ButtonProps = {
   right?: React.ReactNode
   animateIn?: boolean
   animateOut?: boolean
+  as?: React.ElementType
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button: React.FC<ButtonProps> = ({

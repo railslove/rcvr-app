@@ -8,6 +8,7 @@ export interface Checkin {
   id?: string
   business: string
   enteredAt: Date
+  areaId: string
   leftAt?: Date
 }
 

@@ -59,7 +59,13 @@ type OwnerResponse = {
 type CompanyResponse = {
   id: string
   name: string
+  menuLink?: string
   areas: AreaResponse[]
+}
+
+type CompanyChangeset = {
+  id: string
+  menuLink?: string
 }
 
 type CompanyTicketParams = {
@@ -85,6 +91,7 @@ type AreaPost = {
 type AreaResponse = {
   id: string
   name: string
+  menuLink?: string
 }
 
 const api = ky.create({ prefixUrl: process.env.apiBase, timeout: false })
@@ -100,7 +107,26 @@ export async function fetchCompany(
       },
     })
     .json()
-  return parsed
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return camelCased
+}
+
+export async function patchCompany({
+  id: companyId,
+  ...company
+}: CompanyChangeset): Promise<CompanyResponse> {
+  const json = snakecaseKeys({ company }, { deep: true })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parsed: any = await api
+    .patch(`companies/${companyId}`, {
+      json,
+      headers: {
+        Authorization: 'Bearer ' + sessionStorage.getItem('rcvr_olt'),
+      },
+    })
+    .json()
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return camelCased
 }
 
 export async function fetchCompanies(): Promise<CompanyResponse[]> {
@@ -112,7 +138,8 @@ export async function fetchCompanies(): Promise<CompanyResponse[]> {
       },
     })
     .json()
-  return parsed
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return camelCased
 }
 
 export async function postCompany(company: {
@@ -128,7 +155,8 @@ export async function postCompany(company: {
       },
     })
     .json()
-  return parsed
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return camelCased
 }
 
 export async function postArea(area: AreaPost): Promise<AreaResponse> {
@@ -142,6 +170,13 @@ export async function postArea(area: AreaPost): Promise<AreaResponse> {
       },
     })
     .json()
+  const camelCased = camelcaseKeys(parsed, { deep: true })
+  return camelCased
+}
+
+export async function fetchArea(areaId: string): Promise<AreaResponse> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const parsed: any = await api.get(`areas/${areaId}`).json()
   const camelCased = camelcaseKeys(parsed, { deep: true })
   return camelCased
 }
@@ -239,6 +274,7 @@ export async function createCheckin({
   })
 
   const checkin = await db.addCheckin({
+    areaId: ticket.areaId,
     id: ticket.id,
     business: response.companyName,
     enteredAt: ticket.enteredAt,

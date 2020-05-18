@@ -29,6 +29,10 @@ const Input: React.FC<InputProps> = ({
     rest?.onChange(event)
   }
 
+  React.useEffect(() => {
+    value && setOwnValue(value)
+  }, [value])
+
   return (
     <Box mb={4}>
       <Flex borderBottom="input" position="relative">
@@ -59,6 +63,7 @@ const Input: React.FC<InputProps> = ({
           }}
           {...rest}
           id={id}
+          value={ownValue}
           onChange={handleChange}
           onFocus={(): void => setFocused(true)}
           onBlur={(): void => setFocused(false)}
