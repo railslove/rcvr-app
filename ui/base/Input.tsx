@@ -29,10 +29,6 @@ const Input: React.FC<InputProps> = ({
     rest?.onChange(event)
   }
 
-  React.useEffect(() => {
-    value && setOwnValue(value)
-  }, [value])
-
   return (
     <Box mb={4}>
       <Flex borderBottom="input" position="relative">

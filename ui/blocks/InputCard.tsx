@@ -19,10 +19,6 @@ const InputCard: React.FC<InputCardProps> = ({
     setValue(event.target.value)
   }, [])
 
-  React.useEffect(() => {
-    initialValue && setValue(initialValue)
-  }, [initialValue])
-
   const handleSubmit = React.useCallback(() => {
     onSubmit(value)
     setValue('')
