@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { useQuery } from 'react-query'
+import * as api from '@lib/api'
 import * as db from '@lib/db'
 import { Circle, Flex, Text, Box, Button } from '@ui/base'
 import { Check, Arrows, Thumb } from '@ui/icons'
@@ -12,6 +14,10 @@ type LastCheckinProps = {
 const LastCheckin: React.FC<LastCheckinProps> = ({ checkin, onCheckout }) => {
   const checkedOut = !!checkin.leftAt
   const StatusIcon = checkedOut ? Thumb : Check
+  const { data: area } = useQuery(
+    checkin.areaId && ['area', checkin.areaId],
+    (_key, areaId) => api.fetchArea(areaId)
+  )
 
   return (
     <Flex flexDirection="column" align="center" py={6}>
@@ -34,6 +40,11 @@ const LastCheckin: React.FC<LastCheckinProps> = ({ checkin, onCheckout }) => {
             right={<Arrows color="pink" size="16px" />}
             onClick={(): void => onCheckout(checkin)}
           />
+        )}
+        {!checkedOut && area && area.menuLink && (
+          <a href={area.menuLink} target="_blank" rel="noopener noreferrer">
+            <Button css={{ marginTop: 20 }} as="div" title="Speisekarte" />
+          </a>
         )}
       </Box>
     </Flex>
