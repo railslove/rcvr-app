@@ -6,6 +6,7 @@ import { subDays } from 'date-fns'
 
 export interface Checkin {
   id?: string
+  companyId: string
   business: string
   enteredAt: Date
   areaId: string
@@ -21,6 +22,7 @@ export interface Guest {
   name: string
   phone: string
   address: string
+  acceptedPrivacy: string[]
 }
 
 export interface GuestChangeset {
@@ -175,4 +177,14 @@ export async function updateCheckin(
   await db.checkins.update(id, changes)
   const checkin = await getCheckin(id)
   return checkin
+}
+
+export async function setAcceptedPrivacy(companyId: string): Promise<Guest> {
+  let guest = await db.guests.toCollection().first()
+  if (!guest.acceptedPrivacy) guest.acceptedPrivacy = []
+  if (guest.acceptedPrivacy.indexOf(companyId) < 0)
+    guest.acceptedPrivacy.push(companyId)
+  await db.guests.update(guest.id, guest)
+  guest = await getGuest()
+  return guest
 }

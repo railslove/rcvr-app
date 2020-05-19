@@ -18,6 +18,7 @@ type UpdateCheckin = {
 
 type TicketResponse = {
   id?: string
+  companyId: string
   companyName: string
   enteredAt?: Date
   leftAt?: Date
@@ -277,6 +278,7 @@ export async function createCheckin({
   const checkin = await db.addCheckin({
     areaId: ticket.areaId,
     id: ticket.id,
+    companyId: response.companyId,
     business: response.companyName,
     enteredAt: ticket.enteredAt,
   })

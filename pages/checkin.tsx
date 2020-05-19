@@ -32,7 +32,7 @@ const CheckingPage: React.FC<{}> = () => {
         await doCheckout({ id: lastCheckin.id, leftAt: enteredAt.current })
       }
 
-      await doCheckin({
+      const checkin = await doCheckin({
         ticket: {
           publicKey,
           areaId,
@@ -41,6 +41,7 @@ const CheckingPage: React.FC<{}> = () => {
         },
         guest,
       })
+      await db.setAcceptedPrivacy(checkin.companyId)
       router.replace('/my-checkins')
     },
     [doCheckin, doCheckout, publicKey, areaId, router]
