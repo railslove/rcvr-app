@@ -36,6 +36,7 @@ type OwnerSignup = {
   email: string
   password: string
   name: string
+  affiliate: string
 }
 
 type OwnerLogin = {

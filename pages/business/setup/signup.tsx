@@ -23,12 +23,17 @@ const SignupPage: React.FC<{}> = () => {
   const [password, setPassword] = React.useState('')
   const [strength, setStrength] = React.useState<strengthState>(-1)
   const [passwordVerify, setPasswordVerify] = React.useState('')
+  const [affiliate, setAffiliate] = React.useState('')
   const [nameError, setNameError] = React.useState<errorState>()
   const [emailError, setEmailError] = React.useState<errorState>()
   const [passwordError, setPasswordError] = React.useState<errorState>()
   const [passwordVerifyError, setPasswordVerifyError] = React.useState<
     errorState
   >()
+
+  React.useEffect(() => {
+    setAffiliate(router.query.affiliate?.toString())
+  }, [router])
 
   React.useEffect(() => {
     if (owner) router.replace('/business/dashboard')
@@ -75,7 +80,7 @@ const SignupPage: React.FC<{}> = () => {
 
     if (!valid) return
 
-    await signup({ email, name, password })
+    await signup({ email, name, password, affiliate })
     router.replace('/business/setup/success')
   }
 
