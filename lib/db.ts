@@ -70,7 +70,7 @@ export async function getGuest(): Promise<Guest> {
 }
 
 export async function updateGuest(changes: GuestChangeset): Promise<Guest> {
-  let guest = await db.guests.toCollection().first()
+  let guest = await getGuest()
   await db.guests.update(guest.id, changes)
   guest = await getGuest()
   return guest

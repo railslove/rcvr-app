@@ -8,7 +8,7 @@ type OnFinishOptions = {
   rememberMe: boolean
 }
 type OnboardingProps = {
-  onFinish: (guest: db.Guest, options: OnFinishOptions) => void
+  onFinish: (guest: db.GuestChangeset, options: OnFinishOptions) => void
 }
 
 const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
