@@ -32,7 +32,7 @@ const SignupPage: React.FC<{}> = () => {
   >()
 
   React.useEffect(() => {
-    setAffiliate(router.query.affiliate?.toString())
+    router.query.affiliate && setAffiliate(router.query.affiliate?.toString())
   }, [router])
 
   React.useEffect(() => {

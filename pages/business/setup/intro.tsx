@@ -4,10 +4,19 @@ import { Text, Button, Circle, Flex, Box } from '@ui/base'
 import Link from 'next/link'
 import { Arrows, Shop } from '@ui/icons'
 import BusinessLayout from '@ui/layouts/Business'
+import { useRouter } from 'next/router'
 
 type IntroPageProps = {}
 
 const IntroPage: React.FC<IntroPageProps> = () => {
+  const router = useRouter()
+
+  const [affiliate, setAffiliate] = React.useState('')
+
+  React.useEffect(() => {
+    router.query.affiliate && setAffiliate(router.query.affiliate?.toString())
+  }, [router])
+
   return (
     <BusinessLayout>
       <Head>
@@ -37,7 +46,11 @@ const IntroPage: React.FC<IntroPageProps> = () => {
         uns starten.
       </Text>
       <Box mb={4}>
-        <Link href="/business/setup/signup">
+        <Link
+          href={`/business/setup/signup${
+            affiliate && `?affiliate=${affiliate}`
+          }`}
+        >
           <a css={{ textDeocration: 'none' }}>
             <Button
               title="Los geht's"
