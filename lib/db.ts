@@ -180,7 +180,7 @@ export async function updateCheckin(
 }
 
 export async function setAcceptedPrivacy(companyId: string): Promise<Guest> {
-  let guest = await db.guests.toCollection().first()
+  let guest = await getGuest()
   if (!guest.acceptedPrivacy) guest.acceptedPrivacy = []
   if (guest.acceptedPrivacy.indexOf(companyId) < 0)
     guest.acceptedPrivacy.push(companyId)
