@@ -21,6 +21,7 @@ export interface Guest {
   name: string
   phone: string
   address: string
+  checkedInCompanyIds?: string[]
 }
 
 export interface GuestChangeset {
@@ -68,7 +69,7 @@ export async function getGuest(): Promise<Guest> {
 }
 
 export async function updateGuest(changes: GuestChangeset): Promise<Guest> {
-  let guest = await db.guests.toCollection().first()
+  let guest = await getGuest()
   await db.guests.update(guest.id, changes)
   guest = await getGuest()
   return guest
@@ -175,4 +176,18 @@ export async function updateCheckin(
   await db.checkins.update(id, changes)
   const checkin = await getCheckin(id)
   return checkin
+}
+
+export async function setCheckedInCompanyIds(
+  companyId: string
+): Promise<Guest> {
+  let guest = await getGuest()
+  if (!guest) return
+
+  if (!guest.checkedInCompanyIds) guest.checkedInCompanyIds = []
+  if (guest.checkedInCompanyIds.indexOf(companyId) < 0)
+    guest.checkedInCompanyIds.push(companyId)
+  await db.guests.update(guest.id, guest)
+  guest = await getGuest()
+  return guest
 }

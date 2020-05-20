@@ -24,6 +24,14 @@ const CheckingPage: React.FC<{}> = () => {
   })
   const [doCheckout] = useMutation(api.checkoutTicket)
 
+  const [area, setArea] = React.useState<api.AreaResponse>()
+  React.useEffect(() => {
+    if (!areaId) return
+    api.fetchArea(areaId).then((area) => {
+      setArea(area)
+    })
+  }, [areaId])
+
   const performCheckin = React.useCallback(
     async (guest: db.Guest) => {
       const lastCheckin = await db.getLastCheckin()
@@ -41,9 +49,10 @@ const CheckingPage: React.FC<{}> = () => {
         },
         guest,
       })
+      await db.setCheckedInCompanyIds(area?.companyId)
       router.replace('/my-checkins')
     },
-    [doCheckin, doCheckout, publicKey, areaId, router]
+    [doCheckin, doCheckout, publicKey, areaId, router, area]
   )
 
   // The loading spinner should only become visible after a small amount of time
@@ -83,17 +92,23 @@ const CheckingPage: React.FC<{}> = () => {
   React.useEffect(() => {
     // Disallow empty data. This is the case on initial mount due to next's
     // static optimization
-    if (!publicKey || !areaId) return
+    if (!publicKey || !areaId || !area?.companyId) return
 
     // Check if a guest was already created, then do the checkin cha cha cha.
     db.getGuest().then((guest) => {
-      if (guest && guest.name && guest.phone && guest.address) {
+      if (
+        guest &&
+        guest.name &&
+        guest.phone &&
+        guest.address &&
+        guest.checkedInCompanyIds?.indexOf(area?.companyId) >= 0
+      ) {
         performCheckin(guest)
       } else {
         setShowOnboarding(true)
       }
     })
-  }, [performCheckin, publicKey, areaId])
+  }, [performCheckin, publicKey, areaId, area])
 
   const showLoading = isDelayedLoading && !showOnboarding && !error
 

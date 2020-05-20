@@ -20,6 +20,21 @@ const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
   const [phoneError, setPhoneError] = React.useState(false)
   const [addressError, setAddressError] = React.useState(false)
 
+  React.useEffect(() => {
+    /*
+      Check if a guest was already created, then prefill form
+      This occurs if guest is checking in a new company
+    */
+    db.getGuest().then((guest) => {
+      if (guest) {
+        setName(guest.name)
+        setPhone(guest.phone)
+        setAddress(guest.address)
+        setRememberMe(true)
+      }
+    })
+  }, [])
+
   function handleSubmit(event): void {
     event.preventDefault()
     if (!name || !phone || !address) {

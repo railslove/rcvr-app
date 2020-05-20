@@ -21,6 +21,13 @@ beforeEach(() => {
 })
 
 it('shows onboarding the first time', async () => {
+  fetchMock.get(`path:/areas/${areaId}`, {
+    id: areaId,
+    name: 'Test Tisch',
+    menuLink: null,
+    companyId: 'som-uuid',
+  })
+
   render(withTestRouter(<Checkin />, route))
   await screen.findByLabelText('Name')
   await screen.findByLabelText('Telefon')
