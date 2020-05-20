@@ -24,6 +24,10 @@ const Input: React.FC<InputProps> = ({
   const active = ownValue !== '' || focused
   const underline = focused || Boolean(error)
 
+  React.useEffect(() => {
+    setOwnValue(value)
+  }, [value])
+
   function handleChange(event): void {
     setOwnValue(event.target.value)
     rest?.onChange(event)
