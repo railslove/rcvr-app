@@ -10,6 +10,7 @@ export interface AreaReq {
 export interface AreaRes {
   id: string
   name: string
+  companyId: string
   menuLink?: string
 }
 
@@ -27,7 +28,7 @@ export async function postArea(area: AreaReq): Promise<AreaRes> {
   return await api
     .post(`companies/${companyId}/areas`, { json })
     .json()
-    .then((res: CompanyRes) => camelcaseKeys(res, { deep: true }))
+    .then((res: AreaRes) => camelcaseKeys(res, { deep: true }))
 }
 
 interface AreaTicket<DateT = Date> {

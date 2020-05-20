@@ -3,15 +3,18 @@ import * as api from '../api'
 import { encrypt } from '../crypto'
 
 interface Params {
-  ticket: api.TicketReq & { encryptedData: undefined }
+  ticket: api.TicketReq
   guest: db.Guest
+  companyId: api.CompanyRes['id']
 }
 
 function toCSV(values: string[]): string {
   return values.map((v) => JSON.stringify(v)).join()
 }
 
-export async function checkin({ ticket, guest }: Params): Promise<db.Checkin> {
+export async function checkin(params: Params): Promise<db.Checkin> {
+  const { ticket, guest, companyId } = params
+
   const csv = toCSV([guest.name, guest.phone, guest.address])
   const encryptedData = encrypt(ticket.publicKey, csv)
 
@@ -22,6 +25,15 @@ export async function checkin({ ticket, guest }: Params): Promise<db.Checkin> {
     business: ticketRes.companyName,
     enteredAt: ticket.enteredAt,
   })
+
+  const latestGuest = await db.getCurrentGuest()
+  const checkedInCompanyIds = latestGuest.checkedInCompanyIds || []
+  if (!checkedInCompanyIds.includes(companyId)) {
+    await db.updateGuest({
+      id: latestGuest.id,
+      checkedInCompanyIds: [companyId, ...checkedInCompanyIds],
+    })
+  }
 
   return checkin
 }

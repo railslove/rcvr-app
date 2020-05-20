@@ -32,13 +32,14 @@ export async function postTicket(ticket: TicketReq): Promise<TicketRes> {
 }
 
 export async function patchTicket(ticket: TicketReq): Promise<TicketRes> {
+  const { id, ...changes } = ticket
   const json = snakecaseKeys(
-    { ticket: stringifyDates(ticket, 'enteredAt', 'leftAt') },
+    { ticket: stringifyDates(changes, 'enteredAt', 'leftAt') },
     { deep: true }
   )
 
   return await api
-    .patch('tickets', { json })
+    .patch(`tickets/${id}`, { json })
     .json()
     .then((res: object) => camelcaseKeys(res, { deep: true }))
     .then((res: object) => parseDates<TicketRes>(res, 'enteredAt', 'leftAt'))

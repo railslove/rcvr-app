@@ -1,116 +1,98 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
-import * as db from '@lib/db'
-import * as api from '@lib/api'
-import { Flex } from '@ui/base'
-import Onboarding from '@ui/blocks/Onboarding'
-import Loading from '@ui/blocks/Loading'
-import AppLayout from '@ui/layouts/App'
 
-const CheckingPage: React.FC<{}> = () => {
-  const id = React.useRef<string>(uuidv4())
-  const enteredAt = React.useRef<Date>(new Date())
+import { checkin, checkout } from '@lib/actions'
+import { useCurrentGuest } from '@lib/hooks/useCurrentGuest'
+import { useArea } from '@lib/hooks/useArea'
+import * as db from '@lib/db'
+import Onboarding from '@ui/blocks/Onboarding'
+
+export default function CheckinPage() {
+  const idRef = React.useRef<string>(uuidv4())
+  const enteredAtRef = React.useRef<Date>(new Date())
+  const isProcessing = React.useRef<boolean>(false)
+  const [showOnboarding, setShowOnboarding] = React.useState(false)
   const router = useRouter()
 
-  // query params can be arrays, we need to make sure they're strings
   const publicKey = router.query.k?.toString()
   const areaId = router.query.a?.toString()
 
-  const [doCheckin, { error }] = useMutation(api.createCheckin, {
-    throwOnError: true,
-  })
-  const [doCheckout] = useMutation(api.checkoutTicket)
+  const guestInfo = useCurrentGuest()
+  const areaInfo = useArea(areaId)
 
-  const performCheckin = React.useCallback(
+  const checkinAndRedirect = React.useCallback(
     async (guest: db.Guest) => {
-      const lastCheckin = await db.getLastCheckin()
+      const id = idRef.current
+      const enteredAt = enteredAtRef.current
 
+      // auto checkout
+      const lastCheckin = await db.getLastCheckin()
       if (lastCheckin && !lastCheckin.leftAt) {
-        await doCheckout({ id: lastCheckin.id, leftAt: enteredAt.current })
+        await checkout({ id: lastCheckin.id, leftAt: enteredAt })
       }
 
-      await doCheckin({
-        ticket: {
-          publicKey,
-          areaId,
-          id: id.current,
-          enteredAt: enteredAt.current,
-        },
-        guest,
-      })
+      const ticket = { id, publicKey, areaId, enteredAt }
+      await checkin({ ticket, guest, companyId: areaInfo.data.companyId })
+
       router.replace('/my-checkins')
     },
-    [doCheckin, doCheckout, publicKey, areaId, router]
+    [publicKey, areaId, areaInfo, router]
   )
 
-  // The loading spinner should only become visible after a small amount of time
-  // to prevent it flashing up unnecessarily.
-  const [isDelayedLoading, setIsDelayedLoading] = React.useState(false)
-  const loadingTimeoutId = React.useRef<NodeJS.Timer>()
-  React.useEffect(() => {
-    loadingTimeoutId.current = setTimeout(() => {
-      setIsDelayedLoading(true)
-    }, 1000)
-
-    return (): void => clearTimeout(loadingTimeoutId.current)
-  }, [])
-
-  const [showOnboarding, setShowOnboarding] = React.useState(false)
-  const handleFinishOnboarding = React.useCallback(
+  const handleSubmitOnboarding = React.useCallback(
     async (guest, opts) => {
-      const timeoutId = setTimeout(() => setIsDelayedLoading(true), 400)
-
       if (opts.rememberMe) {
-        const existingGuest = await db.getGuest()
-        if (existingGuest) {
-          await db.updateGuest(guest)
-        } else {
-          await db.addGuest(guest)
-        }
+        if (guestInfo.data) await db.updateGuest(guest)
+        else await db.addGuest(guest)
       }
 
       setShowOnboarding(false)
-      performCheckin(guest)
-      clearTimeout(timeoutId)
-      setIsDelayedLoading(false)
+      checkinAndRedirect(guest)
     },
-    [performCheckin]
+    [guestInfo, checkinAndRedirect]
   )
 
+  const isInitializing =
+    !publicKey ||
+    !areaId ||
+    areaInfo.status === 'loading' ||
+    guestInfo.status === 'loading'
+
   React.useEffect(() => {
-    // Disallow empty data. This is the case on initial mount due to next's
-    // static optimization
-    if (!publicKey || !areaId) return
+    if (isInitializing) return
+
+    // Make sure this hook only executes once from here on
+    if (isProcessing.current) return
+    isProcessing.current = true
+
+    const guest = guestInfo.data
 
     // Check if a guest was already created, then do the checkin cha cha cha.
-    db.getGuest().then((guest) => {
-      if (guest && guest.name && guest.phone && guest.address) {
-        performCheckin(guest)
+    if (guest) {
+      const hasData = guest.name && guest.phone && guest.address
+      const hasAcceptedPrivacy =
+        guest.checkedInCompanyIds &&
+        guest.checkedInCompanyIds.includes(areaInfo.data.companyId)
+
+      if (hasData && hasAcceptedPrivacy) {
+        checkinAndRedirect(guest)
       } else {
         setShowOnboarding(true)
       }
-    })
-  }, [performCheckin, publicKey, areaId])
-
-  const showLoading = isDelayedLoading && !showOnboarding && !error
+    } else {
+      setShowOnboarding(true)
+    }
+  }, [isInitializing, checkinAndRedirect, areaInfo, guestInfo])
 
   return (
-    <AppLayout withTabs={false} withHeader={false}>
+    <div>
       <Head>
         <title key="title">Checkin... | recover</title>
       </Head>
-      {showOnboarding && <Onboarding onFinish={handleFinishOnboarding} />}
-      {showLoading && (
-        <Flex flex={1} align="center" justify="center">
-          <Loading />
-        </Flex>
-      )}
-      {error && <div>{error.toString()}</div>}
-    </AppLayout>
+      {!showOnboarding && <div>Loading!</div>}
+      {showOnboarding && <Onboarding onSubmit={handleSubmitOnboarding} />}
+    </div>
   )
 }
-
-export default CheckingPage

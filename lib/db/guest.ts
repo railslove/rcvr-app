@@ -5,6 +5,7 @@ export interface Guest {
   name?: string
   phone?: string
   address?: string
+  checkedInCompanyIds?: string[]
 }
 
 export async function getCurrentGuest(): Promise<Guest> {

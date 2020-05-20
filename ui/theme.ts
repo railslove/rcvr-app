@@ -26,7 +26,7 @@ const theme = {
     red: '#EE283F',
   },
   fonts: {
-    body: 'Nunito',
+    body: 'Nunito, sans-serif',
   },
   fontSizes: pxToRem.withObject({
     xxs: 9,
@@ -52,8 +52,7 @@ const theme = {
   },
 }
 
-// shared with app + storybook
-const globalcss = css({
+const globalStyles = css({
   'body, html': {
     fontFamily: 'body',
     fontSize: 16, // baseline for rems
@@ -63,6 +62,7 @@ const globalcss = css({
     WebkitFontSmoothing: 'antialiased',
     MozOsxFontSmoothing: 'grayscale',
     fontWeight: 'semibold',
+    bg: 'bluegrey.100',
   },
   a: {
     textDecorationSkipInk: 'auto',
@@ -75,11 +75,4 @@ const globalcss = css({
   },
 })
 
-// only for app
-const pagecss = css({
-  'body, html': {
-    bg: 'bluegrey.100',
-  },
-})
-
-export { theme, globalcss, pagecss }
+export { theme, globalStyles }
