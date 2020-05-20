@@ -21,7 +21,7 @@ export interface Guest {
   name: string
   phone: string
   address: string
-  acceptedPrivacy?: string[]
+  checkedInCompanyIds?: string[]
 }
 
 export interface GuestChangeset {
@@ -178,13 +178,13 @@ export async function updateCheckin(
   return checkin
 }
 
-export async function setAcceptedPrivacy(companyId: string): Promise<Guest> {
+export async function setCheckedInCompanyIds(companyId: string): Promise<Guest> {
   let guest = await getGuest()
   if (!guest) return
 
-  if (!guest.acceptedPrivacy) guest.acceptedPrivacy = []
-  if (guest.acceptedPrivacy.indexOf(companyId) < 0)
-    guest.acceptedPrivacy.push(companyId)
+  if (!guest.checkedInCompanyIds) guest.checkedInCompanyIds = []
+  if (guest.checkedInCompanyIds.indexOf(companyId) < 0)
+    guest.checkedInCompanyIds.push(companyId)
   await db.guests.update(guest.id, guest)
   guest = await getGuest()
   return guest

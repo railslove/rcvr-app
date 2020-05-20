@@ -49,7 +49,7 @@ const CheckingPage: React.FC<{}> = () => {
         },
         guest,
       })
-      await db.setAcceptedPrivacy(area?.companyId)
+      await db.setCheckedInCompanyIds(area?.companyId)
       router.replace('/my-checkins')
     },
     [doCheckin, doCheckout, publicKey, areaId, router, area]
@@ -101,7 +101,7 @@ const CheckingPage: React.FC<{}> = () => {
         guest.name &&
         guest.phone &&
         guest.address &&
-        guest.acceptedPrivacy?.indexOf(area?.companyId) >= 0
+        guest.checkedInCompanyIds?.indexOf(area?.companyId) >= 0
       ) {
         performCheckin(guest)
       } else {
