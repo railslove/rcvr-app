@@ -18,7 +18,6 @@ type UpdateCheckin = {
 
 type TicketResponse = {
   id?: string
-  companyId: string
   companyName: string
   enteredAt?: Date
   leftAt?: Date
@@ -90,10 +89,11 @@ type AreaPost = {
   companyId: string
 }
 
-type AreaResponse = {
+export type AreaResponse = {
   id: string
   name: string
   menuLink?: string
+  companyId: string
 }
 
 const api = ky.create({ prefixUrl: process.env.apiBase, timeout: false })
@@ -278,7 +278,6 @@ export async function createCheckin({
   const checkin = await db.addCheckin({
     areaId: ticket.areaId,
     id: ticket.id,
-    companyId: response.companyId,
     business: response.companyName,
     enteredAt: ticket.enteredAt,
   })
