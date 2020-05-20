@@ -178,7 +178,9 @@ export async function updateCheckin(
   return checkin
 }
 
-export async function setCheckedInCompanyIds(companyId: string): Promise<Guest> {
+export async function setCheckedInCompanyIds(
+  companyId: string
+): Promise<Guest> {
   let guest = await getGuest()
   if (!guest) return
 
