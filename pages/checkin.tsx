@@ -26,10 +26,10 @@ const CheckingPage: React.FC<{}> = () => {
 
   const [area, setArea] = React.useState<api.AreaResponse>()
   React.useEffect(() => {
-    areaId &&
-      api.fetchArea(areaId).then((area) => {
-        setArea(area)
-      })
+    if (!areaId) return
+    api.fetchArea(areaId).then((area) => {
+      setArea(area)
+    })
   }, [areaId])
 
   const performCheckin = React.useCallback(
