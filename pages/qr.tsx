@@ -1,42 +1,58 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jsx-a11y/media-has-caption */
 import * as React from 'react'
 import Head from 'next/head'
-import AppLayout from '@ui/layouts/App'
-import { Text, Box } from '@ui/base'
+import { GuestApp } from '@ui/layouts/GuestApp'
+import { Text, Card, Box } from '@ui/core'
+import { ArrowsLeft, ArrowsRight } from '@ui/anicons/Arrows'
 
-const QRCodePage: React.FC<{}> = () => {
+type QRCodePageProps = {}
+
+const QRCodePage: React.FC<QRCodePageProps> = () => {
   React.useEffect(() => {
-    const launchBrowserQRCodeReader = async (): Promise<void> => {
-      const { BrowserQRCodeReader } = require('@zxing/library')
-      const codeReader = new BrowserQRCodeReader()
-
-      codeReader
-        .decodeOnceFromVideoDevice(undefined, 'video')
-        .then((result: { text: any }) => {
-          window.location.href = result.text
-        })
-        .catch((err: any) => console.error(err))
-    }
-
-    launchBrowserQRCodeReader()
+    const { BrowserQRCodeReader } = require('@zxing/library')
+    const reader = new BrowserQRCodeReader()
+    reader
+      .decodeOnceFromVideoDevice(undefined, 'video')
+      .then((result) => {
+        window.location.href = result.text
+      })
+      .catch((err) => console.warn(err))
   }, [])
 
   return (
-    <AppLayout sticky={false}>
+    <GuestApp logoVariant="big">
       <Head>
         <title key="title">QR-Code scannen | recover</title>
       </Head>
-      <Box px={4}>
-        <Text as="h1" size="l" mt={3} mb={5}>
-          QR-Code scannen
-        </Text>
-        <Text size="s" fontWeight="bold" mb={4}>
-          Halte einfach deine Kamera auf den QR-Code und wir checken dich ein.
-        </Text>
-      </Box>
-      <video id="video" width="100%" height="100%" />
-    </AppLayout>
+      <Text as="h2" variant="h2">
+        QR-Code scannen
+      </Text>
+      <Box height={4} />
+      <Text>
+        Scanne den QR-Code, den Du auf dem Tisch teilnehmender Restaurants
+        findest.
+      </Text>
+      <Card p={0} my={8} css={{ position: 'relative' }}>
+        <video
+          id="video"
+          width="100%"
+          height="100%"
+          css={{ display: 'block' }}
+        />
+        <ArrowsLeft
+          color="green"
+          width="56"
+          height="32"
+          css={{ position: 'absolute', top: '50%', right: 10, marginTop: -16 }}
+        />
+        <ArrowsRight
+          color="green"
+          width="56"
+          height="32"
+          css={{ position: 'absolute', top: '50%', left: 10, marginTop: -16 }}
+        />
+      </Card>
+    </GuestApp>
   )
 }
 

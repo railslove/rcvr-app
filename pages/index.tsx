@@ -37,7 +37,7 @@ const Index: React.FC<{}> = () => {
           right={<ArrowsLeft color="green" />}
           css={{ width: '100%' }}
         >
-          QR Code scannen
+          QR-Code scannen
         </ButtonLink>
         <Box height={4} />
         <ButtonLink href="/my-checkins">Deine Tickets</ButtonLink>
