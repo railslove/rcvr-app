@@ -64,7 +64,7 @@ export default function CheckinPage() {
 
   const hasStarted = React.useRef<boolean>(false)
   React.useEffect(() => {
-    if (isReady) return
+    if (!isReady) return
 
     // Make sure this hook only executes once from here on
     if (hasStarted.current) return

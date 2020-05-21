@@ -1,4 +1,4 @@
-import ky from 'ky/umd'
+import ky from 'ky-universal'
 
 export * from './areas'
 export * from './owner'

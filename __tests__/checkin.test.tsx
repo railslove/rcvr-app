@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { render, fireEvent, screen, waitFor } from '@testing-library/react'
 import MockDate from 'mockdate'
-import fetchMock from 'fetch-mock'
 import { decrypt } from '../lib/crypto'
 import { withTestRouter } from '../config/with-test-router'
 import Checkin from '../pages/checkin'
+import fetchMock from 'fetch-mock-jest'
 
 const privateKey = 'KVITtyAWMy0fKTRyqTAm2r05+FkyibXVSnlsI5v0XqQ='
 const publicKey = '5ki/YAX91GQ0ABSyBTsOXBO7tBl6ZJat+OzxnbZCjVM='
@@ -13,28 +13,30 @@ const areaId = '5ac34aab-81f8-4f4d-bc24-97ba8d21eb7b'
 const route = {
   pathname: '/checkin',
   query: { a: areaId, k: publicKey },
-  replace: jest.fn(),
+  replace: jest.fn(async () => true),
 }
 
-beforeEach(() => {
+beforeEach(async () => {
   MockDate.set('2020-05-11T12:30:00.000Z')
-})
 
-it('shows onboarding the first time', async () => {
-  render(withTestRouter(<Checkin />, route))
-  await screen.findByLabelText('Name')
-  await screen.findByLabelText('Telefon')
-  await screen.findByLabelText('Anschrift')
-})
+  fetchMock.get(`path:/areas/${areaId}`, {
+    id: areaId,
+    name: 'Test Tisch',
+    menuLink: null,
+    companyId: 'some-uuid',
+  })
 
-it('encrypts guest data and sends checkin to api', async () => {
-  render(withTestRouter(<Checkin />, route))
   fetchMock.post('path:/tickets', {
     companyName: 'Testlokal',
     enteredAt: '2020-05-11T12:30:00.000Z',
   })
+})
+
+it('encrypts guest data and sends checkin to api', async () => {
+  render(withTestRouter(<Checkin />, route))
 
   await screen.findByLabelText('Name')
+
   fireEvent.change(screen.getByLabelText('Name'), {
     target: { value: 'Donnie' },
   })
