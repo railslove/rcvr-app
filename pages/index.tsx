@@ -1,50 +1,65 @@
 import * as React from 'react'
-import AppLayout from '@ui/layouts/App'
-import Link from 'next/link'
-import { Box, Flex, Button } from '@ui/base'
-import { Arrows } from '@ui/icons'
-import Logo from '@ui/blocks/Logo'
 
-const Home: React.FC<{}> = () => {
+import { Box, Text, ButtonLink, Card } from '@ui/core'
+import { GuestApp } from '@ui/layouts/GuestApp'
+import { ArrowsLeft, ArrowsRight } from '@ui/anicons/Arrows'
+
+const Index: React.FC<{}> = () => {
   return (
-    <AppLayout withHeader={false}>
-      <Flex flexDirection="column" justify="center" flex={1}>
-        <Box mb={6} mx="auto">
-          <Logo width="124px" height="20px" />
-        </Box>
-        <Box px={3} mb={4}>
-          <Link href="/qr">
-            <a css={{ textDeocration: 'none' }}>
-              <Button
-                title="QR Code Scannen"
-                right={<Arrows size="16px" color="pink" />}
-              />
-            </a>
-          </Link>
-        </Box>
-        <Box px={3} mb={4}>
-          <Link href="/my-checkins">
-            <a css={{ textDeocration: 'none' }}>
-              <Button
-                title="Meine Tickets"
-                right={<Arrows size="16px" color="pink" />}
-              />
-            </a>
-          </Link>
-        </Box>
-        <Box px={3}>
-          <Link href="/business">
-            <a css={{ textDeocration: 'none' }}>
-              <Button
-                title="Für Betriebe"
-                right={<Arrows size="16px" color="pink" />}
-              />
-            </a>
-          </Link>
-        </Box>
-      </Flex>
-    </AppLayout>
+    <GuestApp logoVariant="big">
+      <Text as="h2" variant="h2">
+        Checkins per QR-Code.
+        <br />
+        Ohne App, einfach für alle.
+      </Text>
+      <Box height={4} />
+      <Text>
+        <p>
+          recover ist die digitale Kontaktdatenliste für Betriebe und deren
+          Gäste. Einfach, sicher, schnell.
+        </p>
+      </Text>
+      <Box height={4} />
+
+      <Card p={6} mx={-4}>
+        <Text as="h2" variant="h2">
+          Für Gäste
+        </Text>
+        <Box height={4} />
+        <Text>
+          <p>recover schützt Deine Daten besser als jedes Papier.</p>
+        </Text>
+        <Box height={8} />
+
+        <ButtonLink
+          href="/qr"
+          left={<ArrowsRight color="green" />}
+          right={<ArrowsLeft color="green" />}
+          css={{ width: '100%' }}
+        >
+          QR Code scannen
+        </ButtonLink>
+        <Box height={4} />
+        <ButtonLink href="/my-checkins">Deine Tickets</ButtonLink>
+      </Card>
+      <Box height={4} />
+
+      <Card p={6} mx={-4}>
+        <Text as="h2" variant="h2">
+          Für deinen Betrieb
+        </Text>
+        <Box height={4} />
+        <Text>
+          <p>
+            Tschüss, Zettelwirtschaft! recover ist die digitale
+            Kontaktdatenliste deiner Gäste. Einfach, sicher, schnell.
+          </p>
+        </Text>
+        <Box height={8} />
+        <ButtonLink href="/business">Recover für Betriebe</ButtonLink>
+      </Card>
+    </GuestApp>
   )
 }
 
-export default Home
+export default Index

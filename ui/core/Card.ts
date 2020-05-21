@@ -9,7 +9,6 @@ type CardHTMLProps = React.HTMLAttributes<any>
 type CardProps = CardHTMLProps & StyledSystemProps & As
 
 export const Card: React.FC<CardProps> = styled('div')(
-  space,
   css({
     bg: 'white',
     px: 8,
@@ -17,5 +16,6 @@ export const Card: React.FC<CardProps> = styled('div')(
     borderColor: 'bluegrey.300',
     boxShadow:
       '0px 1px 3px 0px rgba(0,0,0,0.1) , 0px 1px 2px 0px rgba(0,0,0,0.06)',
-  })
+  }),
+  space
 )

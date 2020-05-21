@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Link from 'next/link'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { As } from './'
@@ -40,7 +41,7 @@ const Base = styled('button')(
     alignItems: 'center',
     transform: 'scale(1)',
     transition: 'all 130ms',
-    bg: 'transparent',
+    bg: 'white',
 
     '&:hover': {
       bg: 'bluegrey.50',
@@ -85,3 +86,15 @@ const Center = styled('div')(
     top: '1px',
   })
 )
+
+type ButtonLinkProps = ButtonProps & { href: string }
+
+export const ButtonLink: React.FC<ButtonLinkProps> = ({ href, ...rest }) => {
+  return (
+    <Link href={href}>
+      <a>
+        <Button as="div" {...rest} />
+      </a>
+    </Link>
+  )
+}
