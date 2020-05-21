@@ -1,9 +1,30 @@
 import { css } from '@styled-system/css'
-import * as pxToRem from '@lib/px-to-rem'
+
+const sizes = {
+  px: 1,
+  0: 0,
+  1: 4,
+  2: 8,
+  3: 12,
+  4: 16,
+  5: 20,
+  6: 24,
+  8: 32,
+  10: 40,
+  12: 48,
+  16: 64,
+  20: 80,
+  24: 96,
+  32: 128,
+  40: 160,
+  48: 192,
+  56: 224,
+  64: 256,
+}
 
 const theme = {
-  space: pxToRem.withArray([0, 4, 8, 16, 32, 48, 64, 80]),
-  sizes: pxToRem.withArray([0, 4, 8, 16, 32, 48, 64, 80]),
+  sizes,
+  space: sizes,
   borders: {
     card: '1px solid #DFEAEB',
     circle: '2px solid #000000',
@@ -14,10 +35,16 @@ const theme = {
   colors: {
     white: '#FFFFFF',
     bluegrey: {
-      100: '#F8FAFB',
-      300: '#DFEAEB',
-      500: '#ADCDD0',
-      800: '#6b878a',
+      50: '#eff3f6',
+      100: '#d4dbdf',
+      200: '#b7c3ca',
+      300: '#98acb6',
+      400: '#7a95a3',
+      500: '#617b8a',
+      600: '#4c606b',
+      700: '#37454b',
+      800: '#21292e',
+      900: '#090e10',
     },
     black: '#000000',
     green: '#28EE5F',
@@ -28,15 +55,15 @@ const theme = {
   fonts: {
     body: 'Nunito, sans-serif',
   },
-  fontSizes: pxToRem.withObject({
+  fontSizes: {
     xxs: 9,
     xs: 11,
-    s: 13,
+    sm: 14,
     md: 16,
-    l: 21,
+    lg: 21,
     xl: 32,
     xxl: 38,
-  }),
+  },
   fontWeights: {
     xlight: 200,
     light: 300,
@@ -58,11 +85,7 @@ const globalStyles = css({
     fontSize: 16, // baseline for rems
     minHeight: '100vh',
     scrollBehavior: 'smooth',
-    textRendering: 'optimizeSpeed',
-    WebkitFontSmoothing: 'antialiased',
-    MozOsxFontSmoothing: 'grayscale',
-    fontWeight: 'semibold',
-    bg: 'bluegrey.100',
+    bg: 'bluegrey.50',
   },
   a: {
     textDecorationSkipInk: 'auto',
@@ -72,6 +95,11 @@ const globalStyles = css({
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
+  },
+  'body:not(.user-is-tabbing)': {
+    'button:focus, input:focus, select:focus, textarea:focus': {
+      outline: 'none',
+    },
   },
 })
 

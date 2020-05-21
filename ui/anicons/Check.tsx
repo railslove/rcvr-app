@@ -1,23 +1,19 @@
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { Box, BoxProps } from '@ui/base'
 
-type CheckProps = {
+interface CheckProps {
   animated?: boolean
   delay?: number
-} & BoxProps &
-  React.SVGAttributes<{}>
+}
 
-const Check: React.FC<CheckProps> = ({ animated, delay = 0, ...rest }) => {
+export const Check: React.FC<CheckProps> = ({ animated, delay = 0 }) => {
   return (
-    <Box
-      as="svg"
-      width="27px"
-      height="18px"
+    <svg
+      width="27"
+      height="18"
       viewBox="0 0 27 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...rest}
     >
       <motion.path
         d="M2 7.5L10 16L24.5 2"
@@ -29,8 +25,6 @@ const Check: React.FC<CheckProps> = ({ animated, delay = 0, ...rest }) => {
         initial={{ pathLength: animated ? 0 : 1 }}
         transition={{ duration: 0.4, ease: [0.9, 0.79, 0.53, -0.31], delay }}
       />
-    </Box>
+    </svg>
   )
 }
-
-export default Check

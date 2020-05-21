@@ -1,4 +1,4 @@
-import camelcaseKeys from 'camelcase-keys' // eslint-disable-line import/default
+import camelcaseKeys from 'camelcase-keys'
 import snakecaseKeys from 'snakecase-keys'
 import { api, parseDates, CompanyRes, CompanyReq } from './'
 

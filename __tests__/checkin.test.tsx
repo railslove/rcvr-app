@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { render, fireEvent, screen, waitFor } from '@testing-library/react'
 import MockDate from 'mockdate'
-import fetchMock from 'fetch-mock' // eslint-disable-line import/default
+import fetchMock from 'fetch-mock'
 import { decrypt } from '../lib/crypto'
 import { withTestRouter } from '../config/with-test-router'
 import Checkin from '../pages/checkin'
@@ -50,8 +50,8 @@ it('encrypts guest data and sends checkin to api', async () => {
     expect(route.replace).toHaveBeenCalledWith('/my-checkins')
   })
 
-  const reqBodyStr: any = await fetchMock.lastOptions().body // eslint-disable-line @typescript-eslint/no-explicit-any
-  const reqBody: any = JSON.parse(reqBodyStr) // eslint-disable-line @typescript-eslint/no-explicit-any
+  const reqBodyStr: any = await fetchMock.lastOptions().body
+  const reqBody: any = JSON.parse(reqBodyStr)
 
   // ensure request body was sent correctly
   expect(reqBody.ticket.id).toMatch(

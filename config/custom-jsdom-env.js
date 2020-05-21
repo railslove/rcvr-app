@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* global Uint8Array, ArrayBuffer */
 const JsdomEnvironment = require('jest-environment-jsdom')
 const { TextEncoder, TextDecoder } = require('util')

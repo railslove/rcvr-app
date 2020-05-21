@@ -8,6 +8,7 @@ import { useCurrentGuest } from '@lib/hooks/useCurrentGuest'
 import { useArea } from '@lib/hooks/useArea'
 import * as db from '@lib/db'
 import Onboarding from '@ui/blocks/Onboarding'
+import Loading from '@ui/blocks/Loading'
 
 export default function CheckinPage() {
   const idRef = React.useRef<string>(uuidv4())
@@ -87,12 +88,12 @@ export default function CheckinPage() {
   }, [isInitializing, checkinAndRedirect, areaInfo, guestInfo])
 
   return (
-    <div>
+    <>
       <Head>
         <title key="title">Checkin... | recover</title>
       </Head>
-      {!showOnboarding && <div>Loading!</div>}
+      <Loading show={!showOnboarding} />
       {showOnboarding && <Onboarding onSubmit={handleSubmitOnboarding} />}
-    </div>
+    </>
   )
 }

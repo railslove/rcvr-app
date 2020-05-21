@@ -1,4 +1,4 @@
-import Dexie from 'dexie' // eslint-disable-line import/no-named-as-default
+import Dexie from 'dexie'
 import { Checkin, Guest, Owner } from './'
 
 export class RcvrDatabase extends Dexie {

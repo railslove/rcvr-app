@@ -33,6 +33,8 @@ module.exports = {
     ],
     'jsx-a11y/anchor-is-valid': 'off',
     'react/prop-types': 'off',
+    'import/default': 'off',
+    'import/no-named-as-default': 'off',
     'import/newline-after-import': 'warn',
   },
   overrides: [
