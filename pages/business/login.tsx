@@ -1,0 +1,95 @@
+import * as React from 'react'
+import Head from 'next/head'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import { useRouter } from 'next/router'
+
+import { login } from '@lib/actions/login'
+import { MobileApp } from '@ui/layouts/MobileApp'
+import { Input, Button, Box, Text, Card, Row } from '@ui/core'
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().required('Email muss angegeben werden.'),
+  password: Yup.string().required('Password muss angegeben werden.'),
+})
+
+export default function BusinessLoginPage() {
+  const router = useRouter()
+
+  const handleSubmit = async ({ email, password }, bag) => {
+    try {
+      const owner = await login({ email, password })
+
+      if (!owner.publicKey) {
+        // If the owner has no publicKey here, it means the owner didn't finish
+        // the onboarding correctly (or something went wrong). There's no keypair
+        // yet. Send them back to the key setup.
+        router.replace('/business/setup/key-intro')
+      } else {
+        router.replace('/business/dashboard')
+      }
+    } catch (error) {
+      if (error.response?.status === 401) {
+        bag.setFieldError('password', 'Email oder Passwort falsch.')
+      } else {
+        throw error
+      }
+    }
+  }
+
+  return (
+    <MobileApp>
+      <Head>
+        <title key="title">Login | recover</title>
+      </Head>
+      <Text as="h2" variant="h2">
+        Login für Betriebe
+      </Text>
+      <Box height={4} />
+      <Text>
+        <p>
+          Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten
+          deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist
+          die einfachste Lösung für Dich und die sicherste für deine Gäste.
+        </p>
+      </Text>
+      <Box height={4} />
+
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={LoginSchema}
+        onSubmit={handleSubmit}
+      >
+        <Card mx={-4}>
+          <Form>
+            <Input name="email" label="Email" autoComplete="email" />
+            <Box height={4} />
+            <Input
+              name="password"
+              label="Passwort"
+              hint={
+                <>
+                  Dein Passwort hast du während der Registrierung selbst
+                  gewählt. Das ist <strong>nicht</strong> dein privater
+                  Schlüssel.
+                </>
+              }
+              type="password"
+              autoComplete="current-password"
+            />
+            <Box height={5} />
+            <Button type="submit" css={{ width: '100%' }}>
+              Login
+            </Button>
+          </Form>
+        </Card>
+      </Formik>
+
+      <Row justifyContent="center" my={6}>
+        <a href="mailto:team@recoverapp.de">
+          <Text variant="link">Passwort vergessen?</Text>
+        </a>
+      </Row>
+    </MobileApp>
+  )
+}

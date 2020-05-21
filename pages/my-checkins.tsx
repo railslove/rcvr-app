@@ -11,7 +11,7 @@ import { LastCheckin } from '@ui/blocks/LastCheckin'
 import { PastCheckin } from '@ui/blocks/PastCheckin'
 import { Loading } from '@ui/blocks/Loading'
 import { FixedBottomBar } from '@ui/blocks/BottomBar'
-import { GuestApp } from '@ui/layouts/GuestApp'
+import { MobileApp } from '@ui/layouts/MobileApp'
 
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
@@ -28,7 +28,7 @@ export default function MyCheckinsPage() {
   )
 
   return (
-    <GuestApp logoVariant="sticky">
+    <MobileApp logoVariant="sticky">
       <Head>
         <title key="title">Meine Checkins | recover</title>
       </Head>
@@ -70,6 +70,6 @@ export default function MyCheckinsPage() {
         ))}
       </CheckinCardContainer>
       <FixedBottomBar />
-    </GuestApp>
+    </MobileApp>
   )
 }

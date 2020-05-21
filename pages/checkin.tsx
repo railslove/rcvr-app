@@ -7,7 +7,7 @@ import { checkin, checkout } from '@lib/actions'
 import { useCurrentGuest } from '@lib/hooks/useCurrentGuest'
 import { useArea } from '@lib/hooks/useArea'
 import { Guest, updateGuest, addGuest, getLastCheckin } from '@lib/db'
-import { GuestApp } from '@ui/layouts/GuestApp'
+import { MobileApp } from '@ui/layouts/MobileApp'
 import { Onboarding } from '@ui/blocks/Onboarding'
 import { Loading } from '@ui/blocks/Loading'
 
@@ -92,12 +92,12 @@ export default function CheckinPage() {
   }, [isReady, checkinAndRedirect, areaInfo, guestInfo])
 
   return (
-    <GuestApp logoVariant="big">
+    <MobileApp logoVariant="big">
       <Head>
         <title key="title">Checkin... | recover</title>
       </Head>
       <Loading show={showLoading} />
       {showOnboarding && <Onboarding onSubmit={handleSubmitOnboarding} />}
-    </GuestApp>
+    </MobileApp>
   )
 }

@@ -1,12 +1,12 @@
 import * as React from 'react'
 
 import { Box, Text, ButtonLink, Card, Row } from '@ui/core'
-import { GuestApp } from '@ui/layouts/GuestApp'
+import { MobileApp } from '@ui/layouts/MobileApp'
 import { ArrowsLeft, ArrowsRight } from '@ui/anicons/Arrows'
 
-const Index: React.FC<{}> = () => {
+export default function IndexPage() {
   return (
-    <GuestApp logoVariant="big">
+    <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
         Checkins per QR-Code.
         <br />
@@ -35,7 +35,6 @@ const Index: React.FC<{}> = () => {
           href="/qr"
           left={<ArrowsRight color="green" />}
           right={<ArrowsLeft color="green" />}
-          css={{ width: '100%' }}
         >
           QR-Code scannen
         </ButtonLink>
@@ -67,8 +66,6 @@ const Index: React.FC<{}> = () => {
           <Text variant="link">Was ist recover?</Text>
         </a>
       </Row>
-    </GuestApp>
+    </MobileApp>
   )
 }
-
-export default Index

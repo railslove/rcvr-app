@@ -1,13 +1,11 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import * as React from 'react'
 import Head from 'next/head'
-import { GuestApp } from '@ui/layouts/GuestApp'
+import { MobileApp } from '@ui/layouts/MobileApp'
 import { Text, Card, Box } from '@ui/core'
 import { ArrowsLeft, ArrowsRight } from '@ui/anicons/Arrows'
 
-type QRCodePageProps = {}
-
-const QRCodePage: React.FC<QRCodePageProps> = () => {
+export default function QRCodePage() {
   React.useEffect(() => {
     const { BrowserQRCodeReader } = require('@zxing/library')
     const reader = new BrowserQRCodeReader()
@@ -20,7 +18,7 @@ const QRCodePage: React.FC<QRCodePageProps> = () => {
   }, [])
 
   return (
-    <GuestApp logoVariant="big">
+    <MobileApp logoVariant="big">
       <Head>
         <title key="title">QR-Code scannen | recover</title>
       </Head>
@@ -52,8 +50,6 @@ const QRCodePage: React.FC<QRCodePageProps> = () => {
           css={{ position: 'absolute', top: '50%', left: 10, marginTop: -16 }}
         />
       </Card>
-    </GuestApp>
+    </MobileApp>
   )
 }
-
-export default QRCodePage

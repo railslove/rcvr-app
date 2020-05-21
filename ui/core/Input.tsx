@@ -2,22 +2,46 @@ import * as React from 'react'
 import { useField } from 'formik'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+import EyeOpen from '@ui/svg/eye-open.svg'
+import EyeClosed from '@ui/svg/eye-closed.svg'
 import { Text } from './Text'
 
 interface Props {
   name: string
   label: string
+  hint?: React.ReactNode
 }
 type InputProps = JSX.IntrinsicElements['input'] & Props
 
-export const Input: React.FC<InputProps> = ({ label, ...rest }) => {
+export const Input: React.FC<InputProps> = ({ label, hint, ...rest }) => {
+  const [revealPassword, setRevealPassword] = React.useState(false)
   const [field, meta] = useField(rest)
   const showError = Boolean(meta.touched && meta.error)
+  const type = revealPassword ? 'text' : rest.type
+
+  const toggleRevealPassword = React.useCallback(() => {
+    setRevealPassword((value) => !value)
+  }, [])
 
   return (
     <div>
       <InputContainer>
-        <InputElement id={field.name} {...field} {...rest} />
+        <InputElement
+          id={field.name}
+          {...field}
+          {...rest}
+          type={type || 'text'}
+          css={
+            rest.type === 'password' && {
+              paddingRight: 40,
+            }
+          }
+        />
+        {rest.type === 'password' && (
+          <OverlayButton onClick={toggleRevealPassword} type="button">
+            {revealPassword ? <EyeClosed /> : <EyeOpen />}
+          </OverlayButton>
+        )}
         <Text
           as="label"
           variant="label"
@@ -29,6 +53,7 @@ export const Input: React.FC<InputProps> = ({ label, ...rest }) => {
         <Underline asError={showError} />
       </InputContainer>
       {showError && <ErrorText variant="fineprint">{meta.error}</ErrorText>}
+      {!showError && hint && <HintText variant="fineprint">{hint}</HintText>}
     </div>
   )
 }
@@ -36,6 +61,14 @@ export const Input: React.FC<InputProps> = ({ label, ...rest }) => {
 const ErrorText = styled(Text)(
   css({
     color: 'red',
+    py: 2,
+    px: 3,
+  })
+)
+
+const HintText = styled(Text)(
+  css({
+    color: 'bluegrey.500',
     py: 2,
     px: 3,
   })
@@ -76,6 +109,20 @@ const InputElement = styled('input')(
     '&:focus': {
       bg: 'rgba(0, 0, 0, 0.06)',
     },
+  })
+)
+
+const OverlayButton = styled('button')(
+  css({
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: 8,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'bluegrey.700',
   })
 )
 

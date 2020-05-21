@@ -1,16 +1,14 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { Box, Text, Row } from '@ui/core'
-import { GuestApp } from '@ui/layouts/GuestApp'
+import { MobileApp } from '@ui/layouts/MobileApp'
 import { Circle } from '@ui/anicons/Circle'
 import { FixedBottomBar } from '@ui/blocks/BottomBar'
 import Phone from '@ui/svg/phone.svg'
 
-type CoronaPageProps = {}
-
-const CoronaPage: React.FC<{}> = () => {
+export default function CoronaPage() {
   return (
-    <GuestApp>
+    <MobileApp>
       <Head>
         <title key="title">Corona, was nun? | recover</title>
       </Head>
@@ -62,8 +60,6 @@ const CoronaPage: React.FC<{}> = () => {
         </p>
       </Text>
       <FixedBottomBar transparent />
-    </GuestApp>
+    </MobileApp>
   )
 }
-
-export default CoronaPage

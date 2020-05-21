@@ -6,12 +6,12 @@ import { motion } from 'framer-motion'
 import { Box } from '@ui/core'
 import Logo from '@ui/svg/logo.svg'
 
-type GuestAppProps = {
+type MobileAppProps = {
   children: React.ReactNode
   logoVariant?: 'big' | 'small' | 'sticky'
 }
 
-export const GuestApp: React.FC<GuestAppProps> = ({
+export const MobileApp: React.FC<MobileAppProps> = ({
   children,
   logoVariant = 'small',
 }) => {
