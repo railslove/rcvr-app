@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { login } from '@lib/actions/login'
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Input, Button, Box, Text, Card, Row } from '@ui/core'
+import { Loading } from '@ui/blocks/Loading'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required('Email muss angegeben werden.'),
@@ -15,16 +16,18 @@ const LoginSchema = Yup.object().shape({
 
 export default function BusinessLoginPage() {
   const router = useRouter()
+  const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = async ({ email, password }, bag) => {
     try {
+      setLoading(true)
       const owner = await login({ email, password })
 
       if (!owner.publicKey) {
         // If the owner has no publicKey here, it means the owner didn't finish
         // the onboarding correctly (or something went wrong). There's no keypair
         // yet. Send them back to the key setup.
-        router.replace('/business/setup/key-intro')
+        router.replace('/business/setup/success')
       } else {
         router.replace('/business/dashboard')
       }
@@ -34,6 +37,8 @@ export default function BusinessLoginPage() {
       } else {
         throw error
       }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -61,6 +66,7 @@ export default function BusinessLoginPage() {
         onSubmit={handleSubmit}
       >
         <Card mx={-4}>
+          <Loading show={loading} />
           <Form>
             <Input name="email" label="Email" autoComplete="email" />
             <Box height={4} />

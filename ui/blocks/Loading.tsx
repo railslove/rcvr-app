@@ -7,7 +7,7 @@ interface Props {
   show?: boolean
 }
 
-export const Loading: React.FC<Props> = ({ show }) => {
+export const Loading: React.FC<Props> = ({ show = false }) => {
   const transition = {
     ease: 'easeInOut',
     yoyo: Infinity,

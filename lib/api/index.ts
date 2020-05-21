@@ -16,7 +16,7 @@ export const api = ky.create({
         const token = sessionStorage.getItem('rcvr_olt')
 
         if (shouldSetToken && token) {
-          request.headers.set('Authorization', token)
+          request.headers.set('Authorization', `Bearer ${token}`)
         }
       },
     ],

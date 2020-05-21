@@ -10,6 +10,7 @@ type CardProps = CardHTMLProps & StyledSystemProps & As
 
 export const Card: React.FC<CardProps> = styled('div')(
   css({
+    position: 'relative',
     bg: 'white',
     px: 8,
     py: 12,

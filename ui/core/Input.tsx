@@ -38,7 +38,11 @@ export const Input: React.FC<InputProps> = ({ label, hint, ...rest }) => {
           }
         />
         {rest.type === 'password' && (
-          <OverlayButton onClick={toggleRevealPassword} type="button">
+          <OverlayButton
+            onClick={toggleRevealPassword}
+            type="button"
+            tabIndex={-1}
+          >
             {revealPassword ? <EyeClosed /> : <EyeOpen />}
           </OverlayButton>
         )}
