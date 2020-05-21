@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/media-has-caption */
 import * as React from 'react'
 import Head from 'next/head'
 import { MobileApp } from '@ui/layouts/MobileApp'
@@ -31,6 +30,7 @@ export default function QRCodePage() {
         findest.
       </Text>
       <Card p={0} my={8} css={{ position: 'relative' }}>
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
           id="video"
           width="100%"
