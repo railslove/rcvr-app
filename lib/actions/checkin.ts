@@ -27,8 +27,8 @@ export async function checkin(params: Params): Promise<db.Checkin> {
   })
 
   const latestGuest = await db.getCurrentGuest()
-  const checkedInCompanyIds = latestGuest.checkedInCompanyIds || []
-  if (!checkedInCompanyIds.includes(companyId)) {
+  const checkedInCompanyIds = latestGuest?.checkedInCompanyIds || []
+  if (latestGuest && !checkedInCompanyIds.includes(companyId)) {
     await db.updateGuest({
       id: latestGuest.id,
       checkedInCompanyIds: [companyId, ...checkedInCompanyIds],

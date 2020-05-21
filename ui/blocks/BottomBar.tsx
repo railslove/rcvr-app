@@ -1,78 +1,111 @@
 import * as React from 'react'
 import Link from 'next/link'
-import { Flex, Box, Circle, Text } from '@ui/base'
-import { Lock, Ticket, Virus } from '@ui/icons'
+import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
+import { css } from '@styled-system/css'
+import { Box, Text } from '@ui/core'
+import { Circle } from '@ui/anicons/Circle'
+import Lock from '@ui/svg/lock.svg'
+import Ticket from '@ui/svg/ticket.svg'
+import Virus from '@ui/svg/virus.svg'
 
-type BottomBarProps = {
-  currentPath: string
-}
+export const BottomBar: React.FC<{}> = () => {
+  const { route } = useRouter()
 
-const BottomBar: React.FC<BottomBarProps> = ({ currentPath }) => {
   return (
-    <Flex flexDirection="row" height={6} align="flex-start" position="relative">
-      <Box
-        position="absolute"
-        bottom="100%"
-        height="20px"
-        backgroundImage="linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))"
-        left={0}
-        right={0}
-      />
+    <Row>
       <Tab
         href="https://railslove.com/privacy/"
-        icon={<Lock />}
-        title="Datenschutz"
-        color="yellow"
-      />
-      <Tab
-        href="/my-checkins"
-        icon={<Ticket />}
-        title="Tickets"
-        active={currentPath === '/my-checkins'}
-        color="yellow"
-      />
-      <Tab
-        href="/corona"
-        icon={<Virus />}
-        title="Corona"
-        active={currentPath === '/corona'}
-        color="red"
-      />
-    </Flex>
-  )
-}
-
-type TabProps = {
-  href: string
-  icon: React.ReactNode
-  title: string
-  active?: boolean
-  color: string
-}
-
-const Tab: React.FC<TabProps> = ({ href, icon, title, active, color }) => {
-  const isExternal = href.startsWith('http')
-
-  const link = (
-    <Flex
-      as="a"
-      href={isExternal ? href : undefined}
-      align="center"
-      flexDirection="column"
-      flex="1 0 33.333%"
-    >
-      <Box mb={1}>
-        <Circle size="38px" color={active && color}>
-          {icon}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <Circle color="transparent" size={38}>
+          <Lock css={{ marginTop: '-2px' }} />
         </Circle>
-      </Box>
-      <Text fontSize="xs" fontWeight="semibold">
-        {title}
-      </Text>
-    </Flex>
+        <Text variant="fineprint" fontWeight="semibold">
+          Datenschutz
+        </Text>
+      </Tab>
+      <Link href="/my-checkins" passHref>
+        <Tab>
+          <Circle
+            color={route === '/my-checkins' ? 'yellow' : 'transparent'}
+            size={38}
+          >
+            <Ticket />
+          </Circle>
+          <Text variant="fineprint" fontWeight="semibold">
+            Tickets
+          </Text>
+        </Tab>
+      </Link>
+      <Link href="/corona" passHref>
+        <Tab>
+          <Circle color={route === '/corona' ? 'red' : 'transparent'} size={38}>
+            <Virus />
+          </Circle>
+          <Text variant="fineprint" fontWeight="semibold">
+            Corona
+          </Text>
+        </Tab>
+      </Link>
+    </Row>
   )
-
-  return isExternal ? link : <Link href={href}>{link}</Link>
 }
 
-export default BottomBar
+export const FixedBottomBar: React.FC<{}> = () => {
+  return (
+    <>
+      <Box height={16} />
+      <Fix>
+        <BottomBar />
+      </Fix>
+    </>
+  )
+}
+
+const Tab = styled('a')(
+  css({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    px: 4,
+    height: '58px',
+    flex: '1 0 0',
+  })
+)
+
+const Row = styled('div')(
+  css({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 20,
+    px: 4,
+    bg: 'white',
+  })
+)
+
+const Fix = styled('div')(
+  css({
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    maxWidth: '420px',
+    mx: 'auto',
+
+    '&::before': {
+      content: '""',
+      display: 'block',
+      position: 'relative',
+      bottom: '100%',
+      left: 0,
+      right: 0,
+      height: 4,
+      backgroundImage:
+        'linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))',
+    },
+  })
+)

@@ -1,12 +1,18 @@
 import * as React from 'react'
 import { motion } from 'framer-motion'
 
-interface CheckProps {
+interface Props {
   animated?: boolean
   delay?: number
 }
 
-export const Check: React.FC<CheckProps> = ({ animated, delay = 0 }) => {
+type CheckBox = JSX.IntrinsicElements['svg'] & Props
+
+export const Check: React.FC<CheckBox> = ({
+  animated = true,
+  delay = 0,
+  ...rest
+}) => {
   return (
     <svg
       width="27"
@@ -14,15 +20,15 @@ export const Check: React.FC<CheckProps> = ({ animated, delay = 0 }) => {
       viewBox="0 0 27 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <motion.path
         d="M2 7.5L10 16L24.5 2"
         stroke="black"
         strokeWidth="4"
-        strokeLinecap="round"
         strokeLinejoin="round"
-        animate={{ pathLength: 1 }}
-        initial={{ pathLength: animated ? 0 : 1 }}
+        animate={{ pathLength: 1, strokeLinecap: 'round' }}
+        initial={{ pathLength: animated ? 0 : 1, strokeLinecap: 'butt' }}
         transition={{ duration: 0.4, ease: [0.9, 0.79, 0.53, -0.31], delay }}
       />
     </svg>

@@ -5,7 +5,6 @@ import * as Yup from 'yup'
 import { useCurrentGuest } from '@lib/hooks/useCurrentGuest'
 import { Guest } from '@lib/db'
 import { Input, Checkbox, Button, Box, Text, Card } from '@ui/core'
-import { GuestApp } from '@ui/layouts/GuestApp'
 import { ArrowsRight, ArrowsLeft } from '@ui/anicons/Arrows'
 
 type OnboardingProps = {
@@ -19,7 +18,7 @@ const OnboardingSchema = Yup.object().shape({
   rememberMe: Yup.boolean(),
 })
 
-const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
+export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
   const { data: guest } = useCurrentGuest()
 
   const initialValues = {
@@ -30,7 +29,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
   }
 
   return (
-    <GuestApp>
+    <div>
       <Text as="h2" variant="h2">
         Willkommen!
       </Text>
@@ -88,8 +87,6 @@ const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
           </Form>
         </Card>
       </Formik>
-    </GuestApp>
+    </div>
   )
 }
-
-export default Onboarding

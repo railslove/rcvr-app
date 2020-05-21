@@ -5,7 +5,7 @@ import { compose, color, typography, variant } from 'styled-system'
 import type { As } from './'
 
 interface ExtraProps {
-  variant?: 'h2' | 'h3' | 'regular' | 'label' | 'fineprint'
+  variant?: 'h2' | 'h3' | 'h4' | 'h5' | 'regular' | 'label' | 'fineprint'
   htmlFor?: string
 }
 
@@ -15,7 +15,6 @@ type StyledSystemProps = TypographyProps & ColorProps
 type TextProps = As & TextHTMLProps & StyledSystemProps & ExtraProps
 
 export const Text: React.FC<TextProps> = styled('div', { shouldForwardProp })(
-  compose(typography, color),
   variant({
     variants: {
       h2: {
@@ -24,6 +23,14 @@ export const Text: React.FC<TextProps> = styled('div', { shouldForwardProp })(
       },
       h3: {
         fontSize: 'md',
+        fontWeight: 'bold',
+      },
+      h4: {
+        fontSize: 'md',
+        fontWeight: 'regular',
+      },
+      h5: {
+        fontSize: 'sm',
         fontWeight: 'bold',
       },
       regular: {
@@ -42,6 +49,7 @@ export const Text: React.FC<TextProps> = styled('div', { shouldForwardProp })(
       },
     },
   }),
+  compose(typography, color),
   {
     '> p + p': {
       marginTop: '1em',

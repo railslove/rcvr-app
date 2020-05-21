@@ -1,13 +1,14 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+import { As } from './'
 
 interface Props {
   children: React.ReactNode
   left?: React.ReactNode
   right?: React.ReactNode
 }
-type ButtonProps = JSX.IntrinsicElements['button'] & Props
+type ButtonProps = JSX.IntrinsicElements['button'] & Props & As
 
 export const Button: React.FC<ButtonProps> = ({
   children,

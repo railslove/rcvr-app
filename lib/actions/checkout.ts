@@ -9,7 +9,10 @@ export async function checkout(checkin: db.Checkin): Promise<db.Checkin> {
     await api.patchTicket({ id: checkin.id, leftAt })
   } catch (error) {
     // most likely because of auto-checkout
-    console.warn('Could not checkout. Setting checkout date to now.', error)
+    console.warn(
+      'Could not checkout. Most likely the checkin was already auto-checkouted. Setting checkout date to now.',
+      error
+    )
   }
 
   const checkout = await db.updateCheckin({ id: checkin.id, leftAt })

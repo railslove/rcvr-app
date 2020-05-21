@@ -88,6 +88,7 @@ const globalStyles = css({
     bg: 'bluegrey.50',
   },
   a: {
+    color: 'inherit',
     textDecorationSkipInk: 'auto',
     textDecoration: 'none',
   },

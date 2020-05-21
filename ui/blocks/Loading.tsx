@@ -7,7 +7,7 @@ interface Props {
   show?: boolean
 }
 
-const Loading: React.FC<Props> = ({ show }) => {
+export const Loading: React.FC<Props> = ({ show }) => {
   const transition = {
     ease: 'easeInOut',
     yoyo: Infinity,
@@ -44,10 +44,11 @@ const Overlay = styled(motion.div)({
   left: 0,
   right: 0,
   bottom: 0,
-  backgroundColor: 'rgba(255, 255, 255, 0.4)',
+  backgroundColor: 'rgba(255, 255, 255, 0.75)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  zIndex: 1000,
 })
 
 const Dot = styled('div')(
@@ -81,5 +82,3 @@ const Dot = styled('div')(
     },
   })
 )
-
-export default Loading

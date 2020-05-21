@@ -25,7 +25,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({ label, ...rest }) => {
             initial={{ scale: 0 }}
             animate={{ scale: field.checked ? 1 : 0 }}
           />
-          {field.checked && <Check animated />}
+          {field.checked && <Check />}
         </div>
         <Text variant="label">{label}</Text>
       </CheckboxContainer>

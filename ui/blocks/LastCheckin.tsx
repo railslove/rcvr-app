@@ -1,54 +1,84 @@
 import * as React from 'react'
-import { useQuery } from 'react-query'
-import * as api from '@lib/api'
-import * as db from '@lib/db'
-import { Circle, Flex, Text, Box, Button } from '@ui/base'
-import { Check, Arrows, Thumb } from '@ui/icons'
-import CheckinDates from './CheckinDates'
+import styled from '@emotion/styled'
+import { motion, AnimatePresence } from 'framer-motion'
+import { AreaRes } from '@lib/api'
+import { Checkin } from '@lib/db'
+import { Box, Text, Button } from '@ui/core'
+import { ArrowsRight, ArrowsLeft } from '@ui/anicons/Arrows'
+import { Thumb } from '@ui/anicons/Thumb'
+import { Check } from '@ui/anicons/Check'
+import { Circle } from '@ui/anicons/Circle'
+import { CheckinDates } from './CheckinDates'
 
-type LastCheckinProps = {
-  checkin: db.Checkin
-  onCheckout?: (checkin: db.Checkin) => void
+interface Props {
+  checkin: Checkin
+  area: AreaRes
+  onCheckout?: (checkin: Checkin) => void
 }
 
-const LastCheckin: React.FC<LastCheckinProps> = ({ checkin, onCheckout }) => {
+export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
   const checkedOut = !!checkin.leftAt
-  const StatusIcon = checkedOut ? Thumb : Check
-  const { data: area } = useQuery(
-    checkin.areaId && ['area', checkin.areaId],
-    (_key, areaId) => api.fetchArea(areaId)
-  )
 
   return (
-    <Flex flexDirection="column" align="center" py={6}>
-      <Circle color={checkedOut ? 'pink' : 'green'} animated delay={0.8}>
-        <StatusIcon animated delay={0.4} />
+    <Container>
+      <Box height={16} />
+      <Circle animated delay={0.5} color={checkedOut ? 'pink' : 'green'}>
+        {checkedOut ? (
+          <Thumb delay={0.8} />
+        ) : (
+          <Check delay={0.8} css={{ position: 'relative', top: 2 }} />
+        )}
       </Circle>
-      <Text fontSize="l" fontWeight="bold" pt={3}>
-        {checkedOut ? 'Checked out' : 'Welcome'}
-      </Text>
-      <Text fontSize="md" pb={3}>
-        {checkin.business}
-      </Text>
+      <Box height={4} />
+      <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
+      <Box height={1} />
+      <Text variant="h4">{checkin.business}</Text>
+      <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
-      <Box my={4} height={5} width="255px">
-        {!checkedOut && (
-          <Button
-            title="Check out"
-            animateOut
-            left={<Arrows color="pink" left size="16px" />}
-            right={<Arrows color="pink" size="16px" />}
-            onClick={(): void => onCheckout(checkin)}
-          />
+      <AnimatePresence>
+        {!checkin.leftAt && (
+          <motion.div
+            css={{ width: '100%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <Box height={8} />
+            <Button
+              css={{ width: '100%' }}
+              left={<ArrowsRight color="pink" />}
+              right={<ArrowsLeft color="pink" />}
+              onClick={() => onCheckout(checkin)}
+            >
+              Check out
+            </Button>
+          </motion.div>
         )}
-        {!checkedOut && area && area.menuLink && (
-          <a href={area.menuLink} target="_blank" rel="noopener noreferrer">
-            <Button css={{ marginTop: 20 }} as="div" title="Speisekarte" />
-          </a>
+      </AnimatePresence>
+      <AnimatePresence>
+        {!checkin.leftAt && area?.menuLink && (
+          <motion.div
+            css={{ width: '100%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <Box height={4} />
+            <a href={area.menuLink} target="_blank" rel="noopener noreferrer">
+              <Button as="div" css={{ width: '100%' }}>
+                Speisekarte
+              </Button>
+            </a>
+          </motion.div>
         )}
-      </Box>
-    </Flex>
+      </AnimatePresence>
+    </Container>
   )
 }
 
-export default LastCheckin
+const Container = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  height: 400,
+})
