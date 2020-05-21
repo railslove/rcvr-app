@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 
 import { useCurrentGuest } from '@lib/hooks/useCurrentGuest'
 import { Guest } from '@lib/db'
-import { Input, Checkbox, Button, Box, Text, Card } from '@ui/core'
+import { Input, Checkbox, Button, Box, Text, Card, Row } from '@ui/core'
 import { ArrowsRight, ArrowsLeft } from '@ui/anicons/Arrows'
 
 type OnboardingProps = {
@@ -87,6 +87,15 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
           </Form>
         </Card>
       </Formik>
+      <Row justifyContent="center" my={6}>
+        <a
+          href="https://www.recoverapp.de/fuer-gaeste"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <Text variant="link">Wie funktioniert recover?</Text>
+        </a>
+      </Row>
     </div>
   )
 }

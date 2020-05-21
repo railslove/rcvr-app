@@ -82,8 +82,8 @@ const InputElement = styled('input')(
 const InputContainer = styled('div')(
   css({
     position: 'relative',
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 3,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
     overflow: 'hidden',
 
     label: {

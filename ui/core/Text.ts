@@ -6,7 +6,15 @@ import { compose, color, typography, variant } from 'styled-system'
 import type { As } from './'
 
 interface ExtraProps {
-  variant?: 'h2' | 'h3' | 'h4' | 'h5' | 'regular' | 'label' | 'fineprint'
+  variant?:
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'regular'
+    | 'label'
+    | 'fineprint'
+    | 'link'
   htmlFor?: string
 }
 
@@ -47,6 +55,12 @@ export const Text: React.FC<TextProps> = styled('div', { shouldForwardProp })(
         fontSize: 'xs',
         fontWeight: 'regular',
         lineHeight: 1.3,
+      },
+      link: {
+        fontSize: 'xs',
+        fontWeight: 'xbold',
+        textDecoration: 'underline',
+        textTransform: 'uppercase',
       },
     },
   }),

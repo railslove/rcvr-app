@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Box, Text, ButtonLink, Card } from '@ui/core'
+import { Box, Text, ButtonLink, Card, Row } from '@ui/core'
 import { GuestApp } from '@ui/layouts/GuestApp'
 import { ArrowsLeft, ArrowsRight } from '@ui/anicons/Arrows'
 
@@ -58,6 +58,15 @@ const Index: React.FC<{}> = () => {
         <Box height={8} />
         <ButtonLink href="/business">Recover für Betriebe</ButtonLink>
       </Card>
+      <Row justifyContent="center" my={6}>
+        <a
+          href="https://www.recoverapp.de/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <Text variant="link">Was ist recover?</Text>
+        </a>
+      </Row>
     </GuestApp>
   )
 }
