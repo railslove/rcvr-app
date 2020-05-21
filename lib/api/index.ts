@@ -12,7 +12,9 @@ export const api = ky.create({
     beforeRequest: [
       (request) => {
         const protectedPaths = ['/signup', '/login', '/owner']
-        const shouldSetToken = protectedPaths.includes(request.url)
+        const shouldSetToken = protectedPaths.some((path) =>
+          request.url.includes(path)
+        )
         const token = sessionStorage.getItem('rcvr_olt')
 
         if (shouldSetToken && token) {

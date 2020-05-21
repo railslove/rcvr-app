@@ -24,6 +24,7 @@ export interface OwnerRes {
 export interface OwnerReq {
   id?: number
   publicKey?: string
+  foo?: string
 }
 
 export async function postSignup(signup: PostSignup): Promise<OwnerRes> {

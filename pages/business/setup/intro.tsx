@@ -1,11 +1,12 @@
 import * as React from 'react'
 import Head from 'next/head'
+import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Text, Box, Row, ButtonLink } from '@ui/core'
 import { ArrowsRight } from '@ui/anicons/Arrows'
 import Step1 from '@ui/svg/step-1.svg'
 
-export default function SetupIntroPage() {
+const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp logoVariant="big">
       <Head>
@@ -47,3 +48,5 @@ export default function SetupIntroPage() {
     </MobileApp>
   )
 }
+
+export default withOwner({ redirect: 'authorized' })(SetupIntroPage)

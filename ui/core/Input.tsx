@@ -2,6 +2,8 @@ import * as React from 'react'
 import { useField } from 'formik'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+import TextareaAutosize from 'react-textarea-autosize'
+
 import EyeOpen from '@ui/svg/eye-open.svg'
 import EyeClosed from '@ui/svg/eye-closed.svg'
 import { Text } from './Text'
@@ -10,10 +12,16 @@ interface Props {
   name: string
   label: string
   hint?: React.ReactNode
+  multiline?: boolean
 }
 type InputProps = JSX.IntrinsicElements['input'] & Props
 
-export const Input: React.FC<InputProps> = ({ label, hint, ...rest }) => {
+export const Input: React.FC<InputProps> = ({
+  label,
+  hint,
+  multiline,
+  ...rest
+}) => {
   const [revealPassword, setRevealPassword] = React.useState(false)
   const [field, meta] = useField(rest)
   const showError = Boolean(meta.touched && meta.error)
@@ -22,6 +30,12 @@ export const Input: React.FC<InputProps> = ({ label, hint, ...rest }) => {
   const toggleRevealPassword = React.useCallback(() => {
     setRevealPassword((value) => !value)
   }, [])
+
+  const additionalProps: any = {}
+  if (multiline) {
+    additionalProps.as = TextareaAutosize
+    additionalProps.minRows = 3
+  }
 
   return (
     <div>
@@ -36,6 +50,7 @@ export const Input: React.FC<InputProps> = ({ label, hint, ...rest }) => {
               paddingRight: 40,
             }
           }
+          {...additionalProps}
         />
         {rest.type === 'password' && (
           <OverlayButton
@@ -90,7 +105,7 @@ const Underline = styled('div')((props: { asError: boolean }) =>
     transformOrigin: 'bottom center',
     transition: 'all 170ms',
 
-    'input:focus ~ &': {
+    'input:focus ~ &, textarea:focus ~ &': {
       transform: 'scale(1)',
     },
   })
@@ -98,6 +113,7 @@ const Underline = styled('div')((props: { asError: boolean }) =>
 
 const InputElement = styled('input')(
   css({
+    display: 'block',
     width: '100%',
     border: 0,
     bg: 'rgba(0, 0, 0, 0)',
@@ -140,7 +156,7 @@ const InputContainer = styled('div')(
     label: {
       position: 'absolute',
       left: 3,
-      bottom: 3,
+      top: 5,
       pointerEvents: 'none',
       lineHeight: 1.4,
       transform: 'scale(1) translateY(0px)',
@@ -153,7 +169,7 @@ const InputContainer = styled('div')(
       transform: 'scale(0.8) translateY(-26px)',
     },
 
-    'input:focus ~ label': {
+    'input:focus ~ label, textarea:focus ~ label': {
       transform: 'scale(0.8) translateY(-26px)',
       color: 'pink',
     },

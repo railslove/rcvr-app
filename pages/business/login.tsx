@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 
+import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
 import { login } from '@lib/actions/login'
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Input, Button, Box, Text, Card, Row } from '@ui/core'
@@ -14,7 +15,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Password muss angegeben werden.'),
 })
 
-export default function BusinessLoginPage() {
+const BusinessLoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
 
@@ -99,3 +100,5 @@ export default function BusinessLoginPage() {
     </MobileApp>
   )
 }
+
+export default withOwner({ redirect: 'authorized' })(BusinessLoginPage)

@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 
+import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
 import { signup } from '@lib/actions/signup'
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Input, Button, Box, Text, Card, Row } from '@ui/core'
@@ -24,7 +25,7 @@ const LoginSchema = Yup.object().shape({
     .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
 })
 
-export default function SetupSignupPage() {
+const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
 
@@ -123,3 +124,5 @@ export default function SetupSignupPage() {
     </MobileApp>
   )
 }
+
+export default withOwner({ redirect: 'authorized' })(SetupSignupPage)

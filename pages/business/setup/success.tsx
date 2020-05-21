@@ -1,11 +1,13 @@
 import * as React from 'react'
 import Head from 'next/head'
+
+import { withOwner } from '@lib/pageWrappers/withOwner'
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Text, Box, Row, ButtonLink } from '@ui/core'
 import { ArrowsRight } from '@ui/anicons/Arrows'
 import Step3 from '@ui/svg/step-3.svg'
 
-export default function SetupSuccessPage() {
+function SetupSuccessPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
@@ -54,7 +56,7 @@ export default function SetupSuccessPage() {
       <Box height={6} />
 
       <ButtonLink
-        href="/business/setup/signup"
+        href="/business/setup/keys"
         right={<ArrowsRight color="green" />}
       >
         Schlüssel erstellen
@@ -62,3 +64,5 @@ export default function SetupSuccessPage() {
     </MobileApp>
   )
 }
+
+export default withOwner()(SetupSuccessPage)

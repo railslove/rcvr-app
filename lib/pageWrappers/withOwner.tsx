@@ -1,0 +1,61 @@
+import * as React from 'react'
+import { useRouter } from 'next/router'
+import { useOwner } from '@lib/hooks/useOwner'
+import { Loading } from '@ui/blocks/Loading'
+import { Owner } from '@lib/db'
+
+interface WithOwnerConfig {
+  redirect?: 'authorized' | 'unauthorized' | false
+}
+
+const defaultConfig = {
+  redirect: 'unauthorized',
+}
+
+export const withOwner = (userConfig: WithOwnerConfig = {}) => (
+  ComposedComponent: React.FC
+) => {
+  const config = { ...defaultConfig, ...userConfig }
+
+  const WithOwnerComp = (props) => {
+    const [renderPage, setRenderPage] = React.useState(false)
+    const { data, status, error } = useOwner()
+    const router = useRouter()
+
+    React.useEffect(() => {
+      if (status === 'error' && config.redirect === 'unauthorized') {
+        router.replace('/business/login')
+        return
+      }
+
+      if (status === 'error') {
+        setRenderPage(true)
+        return
+      }
+
+      if (status === 'success' && config.redirect === 'authorized') {
+        router.replace('/business/dashboard')
+        return
+      }
+
+      if (status === 'success') {
+        setRenderPage(true)
+        return
+      }
+    }, [router, status, error])
+
+    return renderPage ? (
+      <ComposedComponent {...props} owner={data} />
+    ) : (
+      <Loading show />
+    )
+  }
+
+  WithOwnerComp.displayName = `withOwner(${ComposedComponent.displayName})`
+
+  return WithOwnerComp
+}
+
+export interface WithOwnerProps {
+  owner: Owner
+}

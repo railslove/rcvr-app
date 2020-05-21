@@ -3,19 +3,13 @@ import { db } from './'
 export interface Owner {
   id?: number
   email?: string
+  name?: string
   privateKey?: string
   publicKey?: string
 }
 
 export async function getOwner(ownerId: Owner['id']): Promise<Owner> {
   const owner = await db.owners.get(ownerId)
-  return owner
-}
-
-export async function getCurrentOwner(): Promise<Owner | undefined> {
-  const ownerId = window.sessionStorage.getItem('rcvr_oid')
-  if (!ownerId) return undefined
-  const owner = await getOwner(+ownerId)
   return owner
 }
 
