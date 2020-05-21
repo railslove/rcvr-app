@@ -3,6 +3,7 @@ import Link from 'next/link'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'
+import { variant } from 'styled-system'
 import { Box, Text } from '@ui/core'
 import { Circle } from '@ui/anicons/Circle'
 import Lock from '@ui/svg/lock.svg'
@@ -53,11 +54,15 @@ export const BottomBar: React.FC<{}> = () => {
   )
 }
 
-export const FixedBottomBar: React.FC<{}> = () => {
+interface Props {
+  transparent?: boolean
+}
+
+export const FixedBottomBar: React.FC<Props> = ({ transparent }) => {
   return (
     <>
       <Box height={16} />
-      <Fix>
+      <Fix variant={transparent ? 'transparent' : 'white'}>
         <BottomBar />
       </Fix>
     </>
@@ -83,7 +88,6 @@ const Row = styled('div')(
     justifyContent: 'center',
     height: 20,
     px: 4,
-    bg: 'white',
   })
 )
 
@@ -95,17 +99,24 @@ const Fix = styled('div')(
     right: 0,
     maxWidth: '420px',
     mx: 'auto',
-
-    '&::before': {
-      content: '""',
-      display: 'block',
-      position: 'relative',
-      bottom: '100%',
-      left: 0,
-      right: 0,
-      height: 4,
-      backgroundImage:
-        'linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))',
+  }),
+  variant({
+    variants: {
+      white: {
+        bg: 'white',
+        '&::before': {
+          content: '""',
+          display: 'block',
+          position: 'relative',
+          top: -4,
+          left: 0,
+          right: 0,
+          height: 4,
+          backgroundImage:
+            'linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))',
+        },
+      },
+      transparent: {},
     },
   })
 )

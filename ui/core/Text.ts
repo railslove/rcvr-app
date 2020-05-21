@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import shouldForwardProp from '@styled-system/should-forward-prop'
+import { css } from '@styled-system/css'
 import type { TypographyProps, ColorProps } from 'styled-system'
 import { compose, color, typography, variant } from 'styled-system'
 import type { As } from './'
@@ -50,11 +51,16 @@ export const Text: React.FC<TextProps> = styled('div', { shouldForwardProp })(
     },
   }),
   compose(typography, color),
-  {
+  css({
     '> p + p': {
       marginTop: '1em',
     },
-  }
+    '> p a': {
+      color: '#226EEC',
+      fontWeight: 'semibold',
+      textDecoration: 'underline',
+    },
+  })
 )
 
 Text.defaultProps = {

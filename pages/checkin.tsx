@@ -39,7 +39,7 @@ export default function CheckinPage() {
       const ticket = { id, publicKey, areaId, enteredAt }
       await checkin({ ticket, guest, companyId: areaInfo.data.companyId })
 
-      router.replace('/my-checkins')
+      router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
     },
     [publicKey, areaId, areaInfo, router]
   )
