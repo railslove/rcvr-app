@@ -31,7 +31,7 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
           href="/business/company/[companyId]/checkins"
           as={`/business/company/${companyId}/checkins`}
         >
-          <ActionCard.Main title="Alle Checkins" icon={Right} />
+          <ActionCard.Main title="Aktuelle Checkins" icon={Right} />
         </ActionCard>
       </ActionList>
       <Divider />
