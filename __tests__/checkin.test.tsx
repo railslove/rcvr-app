@@ -2,7 +2,7 @@ import * as React from 'react'
 import { render, fireEvent, screen, waitFor } from '@testing-library/react'
 import MockDate from 'mockdate'
 import { decrypt } from '../lib/crypto'
-import { withTestRouter } from '../config/with-test-router'
+import { withTestRouter } from '../config/withTestRouter'
 import Checkin from '../pages/checkin'
 import fetchMock from 'fetch-mock-jest'
 

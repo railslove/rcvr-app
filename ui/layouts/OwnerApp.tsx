@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 
 import { useCompanies } from '@lib/hooks/useCompanies'
 import { Box, Text, Icon, Row } from '@ui/core'
+import { SharedMeta } from '@ui/blocks/SharedMeta'
 import { FetchingIndicator } from '@ui/blocks/FetchingIndicator'
 import Logo from '@ui/svg/logo.svg'
 import Back from '@ui/svg/back.svg'
@@ -22,12 +23,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
 
   return (
     <Limit>
+      <SharedMeta />
       <Head>
         <title key="title">{title ?? '____'} | recover</title>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"
-        />
       </Head>
       <Top>
         <LogoBox layoutId="appLogo">

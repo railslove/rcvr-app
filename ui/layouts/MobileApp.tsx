@@ -1,9 +1,9 @@
 import * as React from 'react'
-import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 import { motion } from 'framer-motion'
+import { SharedMeta } from '@ui/blocks/SharedMeta'
 import { Box } from '@ui/core'
 import Logo from '@ui/svg/logo.svg'
 
@@ -18,12 +18,7 @@ export const MobileApp: React.FC<Props> = ({
 }) => {
   return (
     <Limit>
-      <Head>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"
-        />
-      </Head>
+      <SharedMeta />
       <LogoBox variant={logoVariant} layoutId="appLogo">
         <Logo />
       </LogoBox>
