@@ -80,14 +80,14 @@
     "singleQuote": true
   },
   "jest": {
-    "testEnvironment": "<rootDir>/config/custom-jsdom-env.js",
+    "testEnvironment": "<rootDir>/lib/testing/customJsdomEnv.js",
     "automock": false,
     "preset": "ts-jest",
     "setupFilesAfterEnv": [
-      "<rootDir>/setup-tests.ts"
+      "<rootDir>/setupTests.ts"
     ],
     "moduleNameMapper": {
-      "\\.svg$": "<rootDir>/__mocks__/svgImportMock.js",
+      "\\.svg$": "<rootDir>/lib/testing/svgImportMock.js",
       "^@ui/(.*)$": "<rootDir>/ui/$1",
       "^@lib/(.*)$": "<rootDir>/lib/$1"
     },
