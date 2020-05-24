@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/router'
+import { queryCache } from 'react-query'
 
 import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
 import { signup } from '@lib/actions/signup'
@@ -34,6 +35,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
       setLoading(true)
       const affiliate = sessionStorage.getItem('rcvr_affiliate')
       await signup({ name, email, password, affiliate })
+      queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
     } catch (error) {
       if (error.response?.status === 422) {
@@ -78,7 +80,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         onSubmit={handleSubmit}
       >
         {({ values }) => (
-          <Card mx={-4}>
+          <Card variant="form" mx={-4}>
             <Loading show={loading} />
             <Form>
               <Input name="name" label="Dein Name" />

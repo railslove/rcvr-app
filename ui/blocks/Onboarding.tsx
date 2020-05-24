@@ -53,7 +53,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
           onSubmit({ name, phone, address }, { rememberMe })
         }}
       >
-        <Card mx={-4}>
+        <Card variant="form" mx={-4}>
           <Form>
             <Input name="name" label="Name" autoComplete="name" />
             <Box height={4} />

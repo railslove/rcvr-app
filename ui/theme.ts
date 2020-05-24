@@ -25,16 +25,11 @@ const sizes = {
 const theme = {
   sizes,
   space: sizes,
-  borders: {
-    card: '1px solid #DFEAEB',
-    circle: '2px solid #000000',
-    checkbox: '2px solid #000000',
-    input: '1px solid #000000',
-    activePage: '3px solid #28EE5F',
-  },
+  breakpoints: ['30em', '48em', '64em'],
   colors: {
     white: '#FFFFFF',
     bluegrey: {
+      10: '#f5f8fa',
       50: '#eff3f6',
       100: '#d4dbdf',
       200: '#b7c3ca',
@@ -49,8 +44,30 @@ const theme = {
     black: '#000000',
     green: '#28EE5F',
     pink: '#EA28EE',
-    yellow: '#EEC228',
-    red: '#EE283F',
+    yellow: {
+      50: '#fff8dc',
+      100: '#faebb2',
+      200: '#f6dd86',
+      300: '#f2d058',
+      400: '#eec32a',
+      500: '#d5a911',
+      600: '#a58409',
+      700: '#765e04',
+      800: '#483800',
+      900: '#1b1300',
+    },
+    red: {
+      50: '#ffe3e8',
+      100: '#feb6bf',
+      200: '#f88894',
+      300: '#f3596b',
+      400: '#ee2a41',
+      500: '#d51128',
+      600: '#a60a1e',
+      700: '#770515',
+      800: '#4a010b',
+      900: '#1f0001',
+    },
   },
   fonts: {
     body: 'Nunito, sans-serif',
@@ -72,10 +89,6 @@ const theme = {
     bold: 700,
     xbold: 800,
     black: 900,
-  },
-  radii: {
-    xl: '2.18rem',
-    l: '1rem',
   },
 }
 
@@ -101,6 +114,9 @@ const globalStyles = css({
     'button:focus, input:focus, select:focus, textarea:focus': {
       outline: 'none',
     },
+  },
+  'body.no-scroll': {
+    overflow: 'hidden',
   },
 })
 

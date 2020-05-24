@@ -1,11 +1,10 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Text, Card, Box, ButtonLink } from '@ui/core'
 import { ArrowsLeft, ArrowsRight } from '@ui/anicons/Arrows'
 
-const BusinessIndexPage: React.FC<WithOwnerProps> = () => {
+export default function BusinessIndexPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
@@ -59,5 +58,3 @@ const BusinessIndexPage: React.FC<WithOwnerProps> = () => {
     </MobileApp>
   )
 }
-
-export default withOwner({ redirect: 'authorized' })(BusinessIndexPage)

@@ -44,13 +44,14 @@ const Base = styled('button')(
     bg: 'white',
 
     '&:hover': {
+      transform: 'scale(1.02)',
       bg: 'bluegrey.50',
       boxShadow:
         '0px 4px 6px -1px rgba(0,0,0,0.1) , 0px 2px 4px -1px rgba(0,0,0,0.06)',
     },
 
     '&:focus': {
-      transform: 'scale(1.02)',
+      transform: 'scale(1)',
       boxShadow:
         '0px 1px 3px 0px rgba(0,0,0,0.1) , 0px 1px 2px 0px rgba(0,0,0,0.06) ',
     },
@@ -59,8 +60,9 @@ const Base = styled('button')(
 
 const Left = styled('div')(
   css({
-    flex: '0 0 auto',
-    width: 6,
+    flex: '0 1 auto',
+    width: 10,
+    pl: 4,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -69,8 +71,9 @@ const Left = styled('div')(
 
 const Right = styled('div')(
   css({
-    flex: '0 0 auto',
-    width: 6,
+    flex: '0 1 auto',
+    width: 10,
+    pr: 4,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

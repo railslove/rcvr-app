@@ -1,20 +1,76 @@
 import * as React from 'react'
-import Head from 'next/head'
+import Link from 'next/link'
 
 import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Text } from '@ui/core'
+import { useModals } from '@lib/hooks/useModals'
+import { useCompanies } from '@lib/hooks/useCompanies'
+import { OwnerApp } from '@ui/layouts/OwnerApp'
+import { IconButton, Box, Text } from '@ui/core'
+import { ActionCard } from '@ui/blocks/ActionCard'
+import { ActionList } from '@ui/blocks/ActionList'
+import { AddCard } from '@ui/blocks/AddCard'
+import { BusinessDataModal } from '@ui/modals/BusinessDataModal'
+import { BusinessDeleteModal } from '@ui/modals/BusinessDeleteModal'
+import Edit from '@ui/svg/edit.svg'
+import Trash from '@ui/svg/trash.svg'
 
-const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
+const DashboardPage: React.FC<WithOwnerProps> = () => {
+  const { data: companies } = useCompanies()
+  const { modals, openModal } = useModals({
+    data: BusinessDataModal,
+    delete: BusinessDeleteModal,
+  })
+
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <title key="title">Dashboard | recover</title>
-      </Head>
-      <Text as="h2" variant="h2">
-        Hallo, {owner.name}!
+    <OwnerApp title="Meine Betriebe">
+      {modals}
+      <ActionList>
+        <AddCard
+          title="Betrieb anlegen..."
+          onClick={() => openModal('data', { type: 'new' })}
+        />
+        {companies?.map((company) => (
+          <ActionCard
+            key={company.id}
+            href="/business/company/[companyId]"
+            as={`/business/company/${company.id}`}
+          >
+            <ActionCard.Main
+              title={company.name}
+              subtitle={'Speisekarte: ' + (company.menuLink || '–')}
+            />
+            <ActionCard.Actions>
+              <IconButton
+                icon={Edit}
+                color="yellow.500"
+                onClick={() =>
+                  openModal('data', {
+                    type: 'edit',
+                    name: company.name,
+                    menuLink: company.menuLink,
+                    companyId: company.id,
+                  })
+                }
+                title="Ändern"
+              />
+              <IconButton
+                icon={Trash}
+                color="red.500"
+                onClick={() => openModal('delete')}
+              />
+            </ActionCard.Actions>
+          </ActionCard>
+        ))}
+      </ActionList>
+      <Box height={10} />
+      <Text textAlign={['center', 'center', 'left']}>
+        <Link href="/business/logout" passHref>
+          <Text variant="h5" as="a" color="bluegrey.400">
+            Logout
+          </Text>
+        </Link>
       </Text>
-    </MobileApp>
+    </OwnerApp>
   )
 }
 

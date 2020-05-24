@@ -90,7 +90,7 @@ const CheckboxCircle = styled(motion.div)(
 
 const ErrorText = styled(Text)(
   css({
-    color: 'red',
+    color: 'red.400',
     py: 2,
     px: 3,
   })

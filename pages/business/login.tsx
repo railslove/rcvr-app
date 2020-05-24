@@ -3,8 +3,8 @@ import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/router'
+import { queryCache } from 'react-query'
 
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
 import { login } from '@lib/actions/login'
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Input, Button, Box, Text, Card, Row } from '@ui/core'
@@ -15,7 +15,7 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Password muss angegeben werden.'),
 })
 
-const BusinessLoginPage: React.FC<WithOwnerProps> = () => {
+export default function BusinessLoginPage() {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
 
@@ -23,6 +23,7 @@ const BusinessLoginPage: React.FC<WithOwnerProps> = () => {
     try {
       setLoading(true)
       const owner = await login({ email, password })
+      queryCache.clear()
 
       if (!owner.publicKey) {
         // If the owner has no publicKey here, it means the owner didn't finish
@@ -66,7 +67,7 @@ const BusinessLoginPage: React.FC<WithOwnerProps> = () => {
         validationSchema={LoginSchema}
         onSubmit={handleSubmit}
       >
-        <Card mx={-4}>
+        <Card variant="form" mx={-4}>
           <Loading show={loading} />
           <Form>
             <Input name="email" label="Email" autoComplete="email" />
@@ -100,5 +101,3 @@ const BusinessLoginPage: React.FC<WithOwnerProps> = () => {
     </MobileApp>
   )
 }
-
-export default withOwner({ redirect: 'authorized' })(BusinessLoginPage)

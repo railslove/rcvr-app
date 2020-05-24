@@ -29,7 +29,7 @@ export default function QRCodePage() {
         Scanne den QR-Code, den Du auf dem Tisch teilnehmender Restaurants
         findest.
       </Text>
-      <Card p={0} my={8} css={{ position: 'relative' }}>
+      <Card my={8} css={{ position: 'relative' }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
           id="video"

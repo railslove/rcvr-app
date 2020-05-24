@@ -1,29 +1,33 @@
 import * as React from 'react'
-import { Card, Input, Button } from '@ui/base'
+import { Card, Row, Text, Icon, Box } from '@ui/core'
+import Add from '@ui/svg/add.svg'
 
-type AddCardProps = {
-  label: string
-  id: string
-  onAdd: (value: string) => void
+interface Props {
+  title?: string
 }
+type AC = React.FC<JSX.IntrinsicElements['button'] & Props>
 
-const AddCard: React.FC<AddCardProps> = ({ label, id, onAdd }) => {
-  const [value, setValue] = React.useState('')
-  const handleChange = React.useCallback((event) => {
-    setValue(event.target.value)
-  }, [])
-
-  const handleSubmit = React.useCallback(() => {
-    onAdd(value)
-    setValue('')
-  }, [value, onAdd])
-
+export const AddCard: AC = ({ title = 'Hinzufügen', ...rest }) => {
   return (
-    <Card>
-      <Input onChange={handleChange} label={label} value={value} id={id} />
-      <Button title="Hinzufügen" onClick={handleSubmit} />
-    </Card>
+    <button {...rest} css={{ textAlign: 'left' }}>
+      <Card>
+        <Row
+          py={3}
+          px={4}
+          alignItems="center"
+          width="100%"
+          css={{
+            cursor: 'pointer',
+            filter: 'grayscale(0.7) opacity(0.5)',
+            transition: 'all 170ms',
+            '&:hover': { filter: 'grayscale(0) opacity(1)' },
+          }}
+        >
+          <Icon icon={Add} size={5} />
+          <Box width={2} />
+          <Text variant="h5">{title}</Text>
+        </Row>
+      </Card>
+    </button>
   )
 }
-
-export default AddCard

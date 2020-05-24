@@ -30,7 +30,7 @@ export default function CoronaPage() {
       </Text>
       <Box height={6} />
       <Row>
-        <Circle size={36} color="red">
+        <Circle size={36} color="red.400">
           <Phone />
         </Circle>
         <Box ml={3}>

@@ -11,11 +11,11 @@ export const api = ky.create({
   hooks: {
     beforeRequest: [
       (request) => {
-        const protectedPaths = ['/signup', '/login', '/owner']
+        const protectedPaths = ['/owner', '/companies', '/areas']
         const shouldSetToken = protectedPaths.some((path) =>
           request.url.includes(path)
         )
-        const token = sessionStorage.getItem('rcvr_olt')
+        const token = localStorage.getItem('rcvr_olt')
 
         if (shouldSetToken && token) {
           request.headers.set('Authorization', `Bearer ${token}`)
@@ -27,7 +27,7 @@ export const api = ky.create({
         const authHeader = response.headers.get('Authorization')
         if (authHeader) {
           const token = authHeader.replace('Bearer ', '')
-          sessionStorage.setItem('rcvr_olt', token)
+          localStorage.setItem('rcvr_olt', token)
         }
 
         return response
@@ -38,7 +38,7 @@ export const api = ky.create({
 
 export function parseDates<T>(obj: object, ...keys: string[]): T {
   const objCopy = { ...obj }
-  for (const key in keys) {
+  for (const key of keys) {
     if (objCopy[key]) objCopy[key] = Date.parse(objCopy[key])
   }
   return objCopy as T

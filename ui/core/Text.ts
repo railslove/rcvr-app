@@ -15,6 +15,8 @@ interface ExtraProps {
     | 'label'
     | 'fineprint'
     | 'link'
+    | 'shy'
+  underline?: 'prominent'
   htmlFor?: string
 }
 
@@ -61,6 +63,20 @@ export const Text: React.FC<TextProps> = styled('div', { shouldForwardProp })(
         fontWeight: 'xbold',
         textDecoration: 'underline',
         textTransform: 'uppercase',
+      },
+      shy: {
+        fontSize: 'sm',
+        fontStyle: 'italic',
+        color: 'bluegrey.300',
+      },
+    },
+  }),
+  variant({
+    prop: 'underline',
+    variants: {
+      prominent: {
+        borderBottom: '4px solid',
+        borderColor: 'green',
       },
     },
   }),

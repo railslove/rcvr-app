@@ -1,5 +1,7 @@
 import * as React from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useMountedState } from 'react-use'
 import { useOwner } from '@lib/hooks/useOwner'
 import { Loading } from '@ui/blocks/Loading'
 import { Owner } from '@lib/db'
@@ -18,11 +20,14 @@ export const withOwner = (userConfig: WithOwnerConfig = {}) => (
   const config = { ...defaultConfig, ...userConfig }
 
   const WithOwnerComp = (props) => {
+    const isMounted = useMountedState()
     const [renderPage, setRenderPage] = React.useState(false)
     const { data, status, error } = useOwner()
     const router = useRouter()
 
     React.useEffect(() => {
+      if (!isMounted()) return
+
       if (status === 'error' && config.redirect === 'unauthorized') {
         router.replace('/business/login')
         return
@@ -42,12 +47,19 @@ export const withOwner = (userConfig: WithOwnerConfig = {}) => (
         setRenderPage(true)
         return
       }
-    }, [router, status, error])
+    }, [router, status, error, isMounted])
 
-    return renderPage ? (
-      <ComposedComponent {...props} owner={data} />
-    ) : (
-      <Loading show />
+    return (
+      <>
+        <Head>
+          <title key="title">recover</title>
+        </Head>
+        {renderPage ? (
+          <ComposedComponent {...props} owner={data} />
+        ) : (
+          <Loading show />
+        )}
+      </>
     )
   }
 

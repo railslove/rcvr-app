@@ -30,7 +30,7 @@ export const BottomBar: React.FC<{}> = () => {
       <Link href="/my-checkins" passHref>
         <Tab>
           <Circle
-            color={route === '/my-checkins' ? 'yellow' : 'transparent'}
+            color={route === '/my-checkins' ? 'yellow.400' : 'transparent'}
             size={38}
           >
             <Ticket />
@@ -42,7 +42,10 @@ export const BottomBar: React.FC<{}> = () => {
       </Link>
       <Link href="/corona" passHref>
         <Tab>
-          <Circle color={route === '/corona' ? 'red' : 'transparent'} size={38}>
+          <Circle
+            color={route === '/corona' ? 'red.400' : 'transparent'}
+            size={38}
+          >
             <Virus />
           </Circle>
           <Text variant="fineprint" fontWeight="semibold">

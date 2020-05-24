@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
@@ -6,17 +7,23 @@ import { motion } from 'framer-motion'
 import { Box } from '@ui/core'
 import Logo from '@ui/svg/logo.svg'
 
-type MobileAppProps = {
+interface Props {
   children: React.ReactNode
   logoVariant?: 'big' | 'small' | 'sticky'
 }
 
-export const MobileApp: React.FC<MobileAppProps> = ({
+export const MobileApp: React.FC<Props> = ({
   children,
   logoVariant = 'small',
 }) => {
   return (
     <Limit>
+      <Head>
+        <meta
+          name="viewport"
+          content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"
+        />
+      </Head>
       <LogoBox variant={logoVariant} layoutId="appLogo">
         <Logo />
       </LogoBox>

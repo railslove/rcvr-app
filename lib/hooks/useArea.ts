@@ -6,5 +6,5 @@ async function fetchArea(_key: unknown, areaId: string): Promise<AreaRes> {
 }
 
 export function useArea(areaId?: string) {
-  return useQuery(areaId && ['area', areaId], fetchArea)
+  return useQuery(areaId && ['areas', areaId], fetchArea)
 }

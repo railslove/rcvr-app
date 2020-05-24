@@ -1,10 +1,14 @@
 import camelcaseKeys from 'camelcase-keys'
 import snakecaseKeys from 'snakecase-keys'
-import { api, parseDates, CompanyRes, CompanyReq } from './'
+import { api } from './'
 
-export interface AreaReq {
+export interface AreaPatch {
   name: string
-  companyId: CompanyRes['id']
+}
+
+export interface AreaPost {
+  name: string
+  companyId: string
 }
 
 export interface AreaRes {
@@ -21,7 +25,7 @@ export async function getArea(id: AreaRes['id']): Promise<AreaRes> {
     .then((res: AreaRes) => camelcaseKeys(res, { deep: true }))
 }
 
-export async function postArea(area: AreaReq): Promise<AreaRes> {
+export async function postArea(area: AreaPost): Promise<AreaRes> {
   const { companyId, ...changes } = area
   const json = snakecaseKeys({ area: changes }, { deep: true })
 
@@ -31,30 +35,11 @@ export async function postArea(area: AreaReq): Promise<AreaRes> {
     .then((res: AreaRes) => camelcaseKeys(res, { deep: true }))
 }
 
-interface AreaTicket<DateT = Date> {
-  id: string
-  enteredAt: DateT
-  leftAt?: DateT
-  areaId: string
-  companyName: string
-  areaName: string
-}
+export async function patchArea(id: string, area: AreaPatch): Promise<AreaRes> {
+  const json = snakecaseKeys({ area }, { deep: true })
 
-interface GetTicketParams {
-  from: Date
-  to: Date
-  companyId: CompanyReq['id']
-}
-
-export async function getTickets(params: GetTicketParams): Promise<AreaTicket> {
   return await api
-    .get(`companies/${params.companyId}/tickets`, {
-      searchParams: {
-        from: params.from.toISOString(),
-        to: params.to.toISOString(),
-      },
-    })
+    .patch(`areas/${id}`, { json })
     .json()
-    .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<AreaTicket>(res, 'enteredAt', 'leftAt'))
+    .then((res: AreaRes) => camelcaseKeys(res, { deep: true }))
 }

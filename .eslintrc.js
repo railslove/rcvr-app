@@ -31,7 +31,8 @@ module.exports = {
         varsIgnorePattern: '^_',
       },
     ],
-    'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/anchor-is-valid': 'off', // not compatible with next/link
+    'jsx-a11y/no-autofocus': 'off',
     'react/prop-types': 'off',
     'import/default': 'off',
     'import/no-named-as-default': 'off',

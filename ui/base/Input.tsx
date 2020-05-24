@@ -92,7 +92,7 @@ const Input: React.FC<InputProps> = ({
           style={{ originX: 0 }}
           transition={{ ease: 'easeOut', duration: 0.5 }}
         >
-          <Box width="100%" bg={error ? 'red' : 'pink'} height="2px" />
+          <Box width="100%" bg={error ? 'red.400' : 'pink'} height="2px" />
         </motion.div>
       </Flex>
       {decorator}

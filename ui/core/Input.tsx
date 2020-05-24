@@ -79,7 +79,7 @@ export const Input: React.FC<InputProps> = ({
 
 const ErrorText = styled(Text)(
   css({
-    color: 'red',
+    color: 'red.400',
     py: 2,
     px: 3,
   })
@@ -100,7 +100,7 @@ const Underline = styled('div')((props: { asError: boolean }) =>
     right: 0,
     bottom: 0,
     height: '2px',
-    bg: props.asError ? 'red' : 'pink',
+    bg: props.asError ? 'red.400' : 'pink',
     transform: props.asError ? 'scale(1)' : 'scale(0)',
     transformOrigin: 'bottom center',
     transition: 'all 170ms',
