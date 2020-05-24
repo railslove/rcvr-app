@@ -36,15 +36,19 @@ When a guest checks in, a random ID will be saved on the guest's device. **recov
 
 ## Background
 
-**recover** was developed during one weekend. We noticed the urgency and needs of business owners and wanted to provide a solution. A special thanks goes to everyone who helped and consulted us to achieve our goal in this short amount of time. Excuse any ugly parts inside this codebase, caused by the rapid development of this product.
+**recover** was initially developed during one weekend. We noticed the urgency and needs of business owners and wanted to provide a solution. A special thanks goes to everyone who helped and consulted us to achieve our goal in this short amount of time.
 
 ## Contribute
 
 **Stack:**
 
-- Next.js
 - Typescript
-- styled-system
+- [Next.js](https://nextjs.org/)
+- [Emotion](https://emotion.sh/)
+- [Styled System](https://styled-system.com/)
+- [Dexie.js](http://dexie.org/)
+- [Formik](https://jaredpalmer.com/formik/)
+- [Framer Motion](https://www.framer.com/motion/)
 
 **Before you can start, you need:**
 
