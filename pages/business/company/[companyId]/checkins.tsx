@@ -16,7 +16,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
   const { data: ticketsByArea } = useLastTicketsGrouped(companyId)
 
   return (
-    <OwnerApp title={`${company?.name ?? '____'} – Checkins`}>
+    <OwnerApp title={`${company?.name ?? ''} – Checkins`}>
       <BackLink
         href="/business/company/[companyId]"
         as={`/business/company/${companyId}`}

@@ -25,7 +25,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   })
 
   return (
-    <OwnerApp title={`${company?.name ?? '____'} – Bereiche`}>
+    <OwnerApp title={`${company?.name ?? ''} – Bereiche`}>
       <BackLink
         href="/business/company/[companyId]"
         as={`/business/company/${companyId}`}
