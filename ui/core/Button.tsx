@@ -11,20 +11,19 @@ interface Props {
 }
 type ButtonProps = JSX.IntrinsicElements['button'] & Props & As
 
-export const Button: React.FC<ButtonProps> = ({
-  children,
-  left,
-  right,
-  ...rest
-}) => {
-  return (
-    <Base {...rest}>
-      {(left || right) && <Left>{left}</Left>}
-      <Center>{children}</Center>
-      {(left || right) && <Right>{right}</Right>}
-    </Base>
-  )
-}
+export const Button: React.FC<ButtonProps> = React.forwardRef(
+  ({ children, left, right, ...rest }, ref) => {
+    return (
+      <Base {...rest} ref={ref}>
+        {(left || right) && <Left>{left}</Left>}
+        <Center>{children}</Center>
+        {(left || right) && <Right>{right}</Right>}
+      </Base>
+    )
+  }
+)
+
+Button.displayName = 'Button'
 
 const Base = styled('button')(
   css({
@@ -83,7 +82,7 @@ const Right = styled('div')(
 const Center = styled('div')(
   css({
     position: 'relative',
-    flex: '0 0 auto',
+    flex: '0 1 auto',
     px: 4,
     py: 3,
     top: '1px',

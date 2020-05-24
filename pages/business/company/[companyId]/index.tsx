@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
 import { useCompany } from '@lib/hooks/useCompany'
 import { OwnerApp, BackLink } from '@ui/layouts/OwnerApp'
-import { Text, Box, Divider } from '@ui/core'
+import { Text, Box, Divider, Callout } from '@ui/core'
 import { ActionList } from '@ui/blocks/ActionList'
 import { ActionCard } from '@ui/blocks/ActionCard'
 import Right from '@ui/svg/right.svg'
@@ -37,6 +37,17 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
       <Divider />
 
       <Text variant="h3">Daten entschlüsseln</Text>
+      <Box height={4} />
+      <Callout>
+        <Text>
+          <p>
+            Anfragen zu Kundenkontaktdaten kannst Du per Email an{' '}
+            <a href="mailto:team@recoverapp.de">team@recoverapp.de</a> stellen.
+            Wir melden uns dann schnellstmöglich bei Dir. Wir arbeiten an einem
+            automatisierten Prozess dafür.
+          </p>
+        </Text>
+      </Callout>
       <Box height={4} />
       <ActionList grid>
         <ActionCard href="/business/decrypt">

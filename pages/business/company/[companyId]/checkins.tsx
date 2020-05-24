@@ -30,8 +30,8 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
       <ActionList grid>
         {company?.areas.map((area) => {
           const tickets = ticketsByArea?.[area.id]
-          const openCount = tickets?.open.length ?? ''
-          const closedCount = tickets?.closed.length ?? ''
+          const openCount = tickets?.open.length ?? 0
+          const closedCount = tickets?.closed.length ?? 0
 
           return (
             <ActionCard

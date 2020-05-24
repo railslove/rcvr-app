@@ -1,5 +1,6 @@
 export * from './Box'
 export * from './Button'
+export * from './Callout'
 export * from './Card'
 export * from './Checkbox'
 export * from './Divider'
