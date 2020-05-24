@@ -8,7 +8,7 @@ import { theme, globalStyles } from '@ui/theme'
 
 import 'modern-normalize'
 import 'typeface-nunito'
-import '@lib/app-reset.css'
+import '@lib/appReset.css'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   useA11yFocusRing()
