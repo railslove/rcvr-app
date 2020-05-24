@@ -23,7 +23,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   return (
     <Limit>
       <Head>
-        <title key="title">{title} | recover</title>
+        <title key="title">{title ?? '____'} | recover</title>
         <meta
           name="viewport"
           content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"
@@ -75,7 +75,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
         </Aside>
         <Main>
           <Text as="h2" variant="h2">
-            {title}
+            {title ?? <>&nbsp;</>}
           </Text>
           <Box height={6} />
           {children}

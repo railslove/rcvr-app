@@ -17,7 +17,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   const { data: tickets } = useLastAreaTickets(companyId, areaId)
 
   return (
-    <OwnerApp title={area?.name ?? ' '}>
+    <OwnerApp title={area?.name}>
       <BackLink
         href="/business/company/[companyId]/checkins"
         as={`/business/company/${companyId}/checkins`}

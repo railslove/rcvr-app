@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
-import { Card, SRText, Row, Text, Box } from '@ui/core'
+import { Card, SRText, Row, Text, Box, Icon } from '@ui/core'
 
 interface Props {
   href: string
@@ -43,18 +43,30 @@ export const ActionCard: AreaCardCmps = ({ href, as, children }) => {
 interface MainProps {
   title: React.ReactNode
   subtitle?: React.ReactNode
+  icon?: React.FC
 }
 type MainCmp = React.FC<MainProps>
-const Main = ({ title, subtitle }) => {
+const Main = ({ title, subtitle, icon }) => {
   return (
-    <Box py={2} pr={2} flex="1 0 auto" maxWidth="100%">
-      <Text variant="h5">{title}</Text>
-      {subtitle && (
-        <Text color="bluegrey.600" fontSize="sm">
-          {subtitle}
-        </Text>
+    <Row py={2} pr={2} flex="1 1 auto" maxWidth="100%">
+      <Box flex="1 0 auto" maxWidth="100%">
+        <Text variant="h5">{title}</Text>
+        {subtitle && (
+          <Text
+            color="bluegrey.600"
+            fontSize="sm"
+            css={{ wordBreak: 'break-word' }}
+          >
+            {subtitle}
+          </Text>
+        )}
+      </Box>
+      {icon && (
+        <Box flex="0 0 auto" mr={-3}>
+          <Icon icon={icon} color="bluegrey.500" size={4} />
+        </Box>
       )}
-    </Box>
+    </Row>
   )
 }
 

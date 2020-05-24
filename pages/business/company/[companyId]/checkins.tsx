@@ -16,7 +16,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
   const { data: ticketsByArea } = useLastTicketsGrouped(companyId)
 
   return (
-    <OwnerApp title={`${company?.name ?? ''} – Checkins`}>
+    <OwnerApp title={`${company?.name ?? '____'} – Checkins`}>
       <BackLink
         href="/business/company/[companyId]"
         as={`/business/company/${companyId}`}
@@ -41,7 +41,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
             >
               <ActionCard.Main
                 title={area.name}
-                subtitle={`Offen: ${openCount} - Fertig: ${closedCount}`}
+                subtitle={`Offen: ${openCount} - Ausgecheckt: ${closedCount}`}
               />
             </ActionCard>
           )
