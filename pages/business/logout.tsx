@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { queryCache } from 'react-query'
 
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Text } from '@ui/core'
@@ -10,6 +11,7 @@ export default function BusinessIndexPage() {
   const router = useRouter()
   React.useEffect(() => {
     localStorage.removeItem('rcvr_olt')
+    queryCache.clear()
     router.replace('/business')
   }, [router])
 
