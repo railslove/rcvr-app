@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { NextPageContext, NextPage } from 'next'
 import { detect as detectBrowser, BrowserInfo } from 'detect-browser'
+import Link from 'next/link'
 
-import { Text, Box, Card } from '~ui/core'
+import { Text, Box, Card, Button } from '~ui/core'
+import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export type ErrorProps = {
@@ -20,18 +22,29 @@ function DefaultError() {
 
 function InvalidPubkeyEncoding() {
   return (
-    <Text>
-      <p>
-        <strong>
-          Scheinbar funktioniert dein QR-Code Scanner nicht korrekt.
-        </strong>
-      </p>
-      <p>
-        Die meisten Handykameras können QR-Codes ohne eine zusätzliche App
-        scannen. Probiere die Kamera-App deines Handys aus, oder installiere
-        eine andere QR-Code Scanner App.
-      </p>
-    </Text>
+    <>
+      <Text>
+        <p>
+          <strong>
+            Scheinbar funktioniert dein QR-Code Scanner nicht korrekt.
+          </strong>
+        </p>
+        <p>
+          Die meisten Handykameras können QR-Codes ohne eine zusätzliche App
+          scannen. Oder nutze unseren QR-Code Scanner:
+        </p>
+      </Text>
+      <Box height={6} />
+      <Link href="/qr" passHref>
+        <Button
+          as="a"
+          left={<ArrowsRight color="green" />}
+          right={<ArrowsLeft color="green" />}
+        >
+          QR-Code scannen
+        </Button>
+      </Link>
+    </>
   )
 }
 
