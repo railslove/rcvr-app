@@ -6,7 +6,7 @@ export interface PostSignup {
   email: string
   password: string
   name: string
-  affiliate: string
+  affiliate?: string
 }
 
 export interface PostLogin {

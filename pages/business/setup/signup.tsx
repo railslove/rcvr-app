@@ -33,7 +33,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const handleSubmit = async ({ name, email, password }, bag) => {
     try {
       setLoading(true)
-      const affiliate = sessionStorage.getItem('rcvr_affiliate')
+      const affiliate = localStorage.getItem('rcvr_affiliate')
       await signup({ name, email, password, affiliate })
       queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
 import { MobileApp } from '@ui/layouts/MobileApp'
 import { Text, Box, Row, ButtonLink } from '@ui/core'
@@ -7,6 +8,14 @@ import { ArrowsRight } from '@ui/anicons/Arrows'
 import Step1 from '@ui/svg/step-1.svg'
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
+  const { query } = useRouter()
+
+  React.useEffect(() => {
+    if (query.affiliate) {
+      localStorage.setItem('rcvr_affiliate', query.affiliate.toString())
+    }
+  }, [query.affiliate])
+
   return (
     <MobileApp logoVariant="big">
       <Head>
