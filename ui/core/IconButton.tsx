@@ -1,7 +1,8 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import { Icon, Text, Row, Box } from '@ui/core'
+
+import { Icon, Text, Row, Box } from '~ui/core'
 
 interface Props {
   icon: React.FC

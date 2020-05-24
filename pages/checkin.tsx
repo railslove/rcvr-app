@@ -3,14 +3,11 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 
-import { useCurrentGuest } from '@lib/hooks/useCurrentGuest'
-import { useCheckin } from '@lib/hooks/useCheckin'
-import { useCheckout } from '@lib/hooks/useCheckout'
-import { useArea } from '@lib/hooks/useArea'
-import { Guest, updateGuest, addGuest, getLastCheckin } from '@lib/db'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Onboarding } from '@ui/blocks/Onboarding'
-import { Loading } from '@ui/blocks/Loading'
+import { useCurrentGuest, useCheckin, useCheckout, useArea } from '~lib/hooks'
+import { Guest, updateGuest, addGuest, getLastCheckin } from '~lib/db'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { Onboarding } from '~ui/blocks/Onboarding'
+import { Loading } from '~ui/blocks/Loading'
 
 export default function CheckinPage() {
   const idRef = React.useRef<string>(uuidv4())

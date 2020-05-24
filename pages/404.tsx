@@ -1,9 +1,8 @@
 import * as React from 'react'
 
-import { Text, Box, Row } from '@ui/core'
-import { Circle } from '@ui/anicons/Circle'
-import { Question } from '@ui/anicons/Question'
-import { MobileApp } from '@ui/layouts/MobileApp'
+import { Text, Box, Row } from '~ui/core'
+import { Circle, Question } from '~ui/anicons'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function Custom404() {
   return (

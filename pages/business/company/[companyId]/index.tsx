@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
 
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { useCompany } from '@lib/hooks/useCompany'
-import { OwnerApp, BackLink } from '@ui/layouts/OwnerApp'
-import { Text, Box, Divider, Callout } from '@ui/core'
-import { ActionList } from '@ui/blocks/ActionList'
-import { ActionCard } from '@ui/blocks/ActionCard'
-import Right from '@ui/svg/right.svg'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { useCompany } from '~lib/hooks'
+import { Text, Box, Divider, Callout } from '~ui/core'
+import { Right } from '~ui/svg'
+import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
+import { ActionList } from '~ui/blocks/ActionList'
+import { ActionCard } from '~ui/blocks/ActionCard'
 
 const CompanyPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()

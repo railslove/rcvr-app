@@ -89,8 +89,8 @@
     ],
     "moduleNameMapper": {
       "\\.svg$": "<rootDir>/lib/testing/svgImportMock.js",
-      "^@ui/(.*)$": "<rootDir>/ui/$1",
-      "^@lib/(.*)$": "<rootDir>/lib/$1"
+      "^~ui/(.*)$": "<rootDir>/ui/$1",
+      "^~lib/(.*)$": "<rootDir>/lib/$1"
     },
     "globals": {
       "ts-jest": {

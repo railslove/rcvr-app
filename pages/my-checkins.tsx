@@ -2,17 +2,19 @@ import * as React from 'react'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
 
-import { useArea } from '@lib/hooks/useArea'
-import { useCheckins } from '@lib/hooks/useCheckins'
-import { useCheckout } from '@lib/hooks/useCheckout'
-import { useDelayedLoading } from '@lib/hooks/useDelayedLoading'
-import { Box, Text } from '@ui/core'
-import { CheckinCard, CheckinCardContainer } from '@ui/blocks/CheckinCard'
-import { LastCheckin } from '@ui/blocks/LastCheckin'
-import { PastCheckin } from '@ui/blocks/PastCheckin'
-import { Loading } from '@ui/blocks/Loading'
-import { FixedBottomBar } from '@ui/blocks/BottomBar'
-import { MobileApp } from '@ui/layouts/MobileApp'
+import {
+  useArea,
+  useCheckins,
+  useCheckout,
+  useDelayedLoading,
+} from '~lib/hooks'
+import { Box, Text } from '~ui/core'
+import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
+import { LastCheckin } from '~ui/blocks/LastCheckin'
+import { PastCheckin } from '~ui/blocks/PastCheckin'
+import { Loading } from '~ui/blocks/Loading'
+import { FixedBottomBar } from '~ui/blocks/BottomBar'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()

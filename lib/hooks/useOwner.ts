@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
-import * as db from '@lib/db'
-import * as api from '@lib/api'
+import * as db from '../db'
+import * as api from '../api'
 
 async function fetchOwner(): Promise<db.Owner> {
   const ownerRes = await api.patchOwner({ foo: 'bar' })

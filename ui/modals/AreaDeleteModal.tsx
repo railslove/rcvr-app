@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import { Text, Box, Button } from '@ui/core'
-import { ModalBase, ModalBaseProps } from '@ui/blocks/ModalBase'
+import { Text, Box, Button } from '~ui/core'
+import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 
 export const AreaDeleteModal: React.FC<ModalBaseProps> = (props) => {
   return (

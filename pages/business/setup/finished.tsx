@@ -1,12 +1,10 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { withOwner } from '@lib/pageWrappers/withOwner'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Text, Box, Row, ButtonLink } from '@ui/core'
-import { Circle } from '@ui/anicons/Circle'
-import { ArrowsRight, ArrowsLeft } from '@ui/anicons/Arrows'
-import { Check } from '@ui/anicons/Check'
+import { withOwner } from '~lib/pageWrappers'
+import { Text, Box, Row, ButtonLink } from '~ui/core'
+import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 function SetupSuccessPage() {
   return (

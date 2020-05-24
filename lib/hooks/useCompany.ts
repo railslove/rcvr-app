@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { getCompany, CompanyRes } from '@lib/api'
+import { getCompany, CompanyRes } from '../api'
 
 async function fetchCompany(_key: unknown, id: string): Promise<CompanyRes> {
   return await getCompany(id)

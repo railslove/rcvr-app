@@ -3,9 +3,10 @@ import styled from '@emotion/styled'
 import { AnimatePresence, motion } from 'framer-motion'
 import { css } from '@styled-system/css'
 import { useClickAway } from 'react-use'
-import { Text, Box, Icon } from '@ui/core'
-import { Loading } from '@ui/blocks/Loading'
-import Close from '@ui/svg/close.svg'
+
+import { Text, Box, Icon } from '~ui/core'
+import { Loading } from '~ui/blocks/Loading'
+import { Close } from '~ui/svg'
 
 interface Props {
   maxWidth?: string | number

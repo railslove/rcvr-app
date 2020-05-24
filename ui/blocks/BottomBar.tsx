@@ -4,11 +4,10 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
-import { Box, Text } from '@ui/core'
-import { Circle } from '@ui/anicons/Circle'
-import Lock from '@ui/svg/lock.svg'
-import Ticket from '@ui/svg/ticket.svg'
-import Virus from '@ui/svg/virus.svg'
+
+import { Box, Text } from '~ui/core'
+import { Circle } from '~ui/anicons'
+import { Lock, Ticket, Virus } from '~ui/svg'
 
 export const BottomBar: React.FC<{}> = () => {
   const { route } = useRouter()

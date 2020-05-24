@@ -4,8 +4,7 @@ import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import TextareaAutosize from 'react-textarea-autosize'
 
-import EyeOpen from '@ui/svg/eye-open.svg'
-import EyeClosed from '@ui/svg/eye-closed.svg'
+import { EyeOpen, EyeClosed } from '~ui/svg'
 import { Text } from './Text'
 
 interface Props {

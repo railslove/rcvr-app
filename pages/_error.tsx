@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { NextPageContext, NextPage } from 'next'
 import { detect as detectBrowser, BrowserInfo } from 'detect-browser'
-import { Text, Box, Card } from '@ui/core'
-import { MobileApp } from '@ui/layouts/MobileApp'
+
+import { Text, Box, Card } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 export type ErrorProps = {
   statusCode: number

@@ -3,9 +3,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Text } from '@ui/core'
-import { Loading } from '@ui/blocks/Loading'
+import { Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { Loading } from '~ui/blocks/Loading'
 
 export default function BusinessIndexPage() {
   const router = useRouter()

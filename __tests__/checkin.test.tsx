@@ -3,8 +3,8 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react'
 import MockDate from 'mockdate'
 import fetchMock from 'fetch-mock-jest'
 
-import { decrypt } from '@lib/crypto'
-import { withTestRouter } from '@lib/testing/withTestRouter'
+import { decrypt } from '~lib/crypto'
+import { withTestRouter } from '~lib/testing/withTestRouter'
 import Checkin from '../pages/checkin'
 
 const privateKey = 'KVITtyAWMy0fKTRyqTAm2r05+FkyibXVSnlsI5v0XqQ='

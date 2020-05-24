@@ -1,13 +1,13 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { generateKeys } from '@lib/crypto'
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { updateOwner } from '@lib/actions/updateOwner'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Text, Box, ButtonLink } from '@ui/core'
-import { KeyViewer } from '@ui/blocks/KeyViewer'
-import { ArrowsRight } from '@ui/anicons/Arrows'
+import { generateKeys } from '~lib/crypto'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { updateOwner } from '~lib/actions'
+import { Text, Box, ButtonLink } from '~ui/core'
+import { ArrowsRight } from '~ui/anicons'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { KeyViewer } from '~ui/blocks/KeyViewer'
 
 const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const didGenerateKeys = React.useRef(false)

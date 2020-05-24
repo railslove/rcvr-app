@@ -1,14 +1,12 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AreaRes } from '@lib/api'
-import { Checkin } from '@lib/db'
-import { Box, Text, Button } from '@ui/core'
-import { ArrowsRight, ArrowsLeft } from '@ui/anicons/Arrows'
-import { Thumb } from '@ui/anicons/Thumb'
-import { Check } from '@ui/anicons/Check'
-import { Circle } from '@ui/anicons/Circle'
-import { CheckinDates } from './CheckinDates'
+
+import { AreaRes } from '~lib/api'
+import { Checkin } from '~lib/db'
+import { Box, Text, Button } from '~ui/core'
+import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
+import { CheckinDates } from '~ui/blocks/CheckinDates'
 
 interface Props {
   checkin: Checkin

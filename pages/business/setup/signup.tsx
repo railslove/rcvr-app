@@ -5,12 +5,12 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { signup } from '@lib/actions/signup'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Input, Button, Box, Text, Card, Row } from '@ui/core'
-import { Loading } from '@ui/blocks/Loading'
-import Step2 from '@ui/svg/step-2.svg'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { signup } from '~lib/actions'
+import { Step2 } from '~ui/svg'
+import { Input, Button, Box, Text, Card, Row } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { Loading } from '~ui/blocks/Loading'
 
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),

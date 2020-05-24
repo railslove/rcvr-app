@@ -1,11 +1,12 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Text, Box, Row, ButtonLink } from '@ui/core'
-import { ArrowsRight } from '@ui/anicons/Arrows'
-import Step1 from '@ui/svg/step-1.svg'
+
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Text, Box, Row, ButtonLink } from '~ui/core'
+import { ArrowsRight } from '~ui/anicons'
+import { Step1 } from '~ui/svg'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()

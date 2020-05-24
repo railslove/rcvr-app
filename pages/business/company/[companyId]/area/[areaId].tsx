@@ -2,12 +2,11 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { useArea } from '@lib/hooks/useArea'
-import { useLastAreaTickets } from '@lib/hooks/useLastTickets'
-import { OwnerApp, BackLink } from '@ui/layouts/OwnerApp'
-import { Text, Box } from '@ui/core'
-import { DataList, DataListItem } from '@ui/blocks/DataList'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { useArea, useLastAreaTickets } from '~lib/hooks'
+import { Text, Box } from '~ui/core'
+import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
+import { DataList, DataListItem } from '~ui/blocks/DataList'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()

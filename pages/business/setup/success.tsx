@@ -1,11 +1,11 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { withOwner } from '@lib/pageWrappers/withOwner'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Text, Box, Row, ButtonLink } from '@ui/core'
-import { ArrowsRight } from '@ui/anicons/Arrows'
-import Step3 from '@ui/svg/step-3.svg'
+import { Text, Box, Row, ButtonLink } from '~ui/core'
+import { ArrowsRight } from '~ui/anicons'
+import { Step3 } from '~ui/svg'
+import { withOwner } from '~lib/pageWrappers'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 function SetupSuccessPage() {
   return (

@@ -3,12 +3,12 @@ import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
 
-import { base64ToHex } from '@lib/crypto'
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Text, Box, Button, ButtonLink, Row, Input } from '@ui/core'
-import { ArrowsRight, ArrowsLeft } from '@ui/anicons/Arrows'
-import Step4 from '@ui/svg/step-4.svg'
+import { base64ToHex } from '~lib/crypto'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Text, Box, Button, ButtonLink, Row, Input } from '~ui/core'
+import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
+import { Step4 } from '~ui/svg'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()

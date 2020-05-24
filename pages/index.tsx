@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import { Box, Text, ButtonLink, Card, Row } from '@ui/core'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { ArrowsLeft, ArrowsRight } from '@ui/anicons/Arrows'
+import { Box, Text, ButtonLink, Card, Row } from '~ui/core'
+import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function IndexPage() {
   return (

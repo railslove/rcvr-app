@@ -1,18 +1,16 @@
 import * as React from 'react'
 import Link from 'next/link'
 
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { useModals } from '@lib/hooks/useModals'
-import { useCompanies } from '@lib/hooks/useCompanies'
-import { OwnerApp } from '@ui/layouts/OwnerApp'
-import { IconButton, Box, Text } from '@ui/core'
-import { ActionCard } from '@ui/blocks/ActionCard'
-import { ActionList } from '@ui/blocks/ActionList'
-import { AddCard } from '@ui/blocks/AddCard'
-import { BusinessDataModal } from '@ui/modals/BusinessDataModal'
-import { BusinessDeleteModal } from '@ui/modals/BusinessDeleteModal'
-import Edit from '@ui/svg/edit.svg'
-import Trash from '@ui/svg/trash.svg'
+import { useModals, useCompanies } from '~lib/hooks'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { IconButton, Box, Text } from '~ui/core'
+import { Edit, Trash } from '~ui/svg'
+import { OwnerApp } from '~ui/layouts/OwnerApp'
+import { ActionCard } from '~ui/blocks/ActionCard'
+import { ActionList } from '~ui/blocks/ActionList'
+import { AddCard } from '~ui/blocks/AddCard'
+import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
+import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
 
 const DashboardPage: React.FC<WithOwnerProps> = () => {
   const { data: companies } = useCompanies()

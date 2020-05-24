@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { css } from '@styled-system/css'
-import { Card, Row, Box } from '@ui/core'
+import { Card, Row, Box } from '~ui/core'
 
 interface ListProps {
   children?: React.ReactNode

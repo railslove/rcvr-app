@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { Checkin } from '@lib/db'
-import { Text, Box } from '@ui/core'
-import { CheckinDates } from './CheckinDates'
+
+import { Checkin } from '~lib/db'
+import { Text, Box } from '~ui/core'
+import { CheckinDates } from '~ui/blocks/CheckinDates'
 
 interface Props {
   checkin: Checkin

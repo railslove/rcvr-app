@@ -1,8 +1,9 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Text, Card, Box } from '@ui/core'
-import { ArrowsLeft, ArrowsRight } from '@ui/anicons/Arrows'
+
+import { Text, Card, Box } from '~ui/core'
+import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function QRCodePage() {
   React.useEffect(() => {

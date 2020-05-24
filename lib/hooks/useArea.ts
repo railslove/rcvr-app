@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { getArea, AreaRes } from '@lib/api'
+import { getArea, AreaRes } from '../api'
 
 async function fetchArea(_key: unknown, areaId: string): Promise<AreaRes> {
   return await getArea(areaId)

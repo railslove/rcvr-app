@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
-import { Card, SRText, Row, Text, Box, Icon } from '@ui/core'
+import { Card, SRText, Row, Text, Box, Icon } from '~ui/core'
 
 interface Props {
   href: string

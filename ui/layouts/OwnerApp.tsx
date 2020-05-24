@@ -6,12 +6,11 @@ import { css } from '@styled-system/css'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
-import { useCompanies } from '@lib/hooks/useCompanies'
-import { Box, Text, Icon, Row } from '@ui/core'
-import { SharedMeta } from '@ui/blocks/SharedMeta'
-import { FetchingIndicator } from '@ui/blocks/FetchingIndicator'
-import Logo from '@ui/svg/logo.svg'
-import Back from '@ui/svg/back.svg'
+import { useCompanies } from '~lib/hooks'
+import { Box, Text, Icon, Row } from '~ui/core'
+import { Logo, Back } from '~ui/svg'
+import { SharedMeta } from '~ui/blocks/SharedMeta'
+import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
 
 interface Props {
   children: React.ReactNode

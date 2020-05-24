@@ -1,8 +1,9 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import { base64ToHex } from '@lib/crypto'
-import { Text, Box } from '@ui/core'
+
+import { base64ToHex } from '~lib/crypto'
+import { Text, Box } from '~ui/core'
 
 interface Props {
   value: string

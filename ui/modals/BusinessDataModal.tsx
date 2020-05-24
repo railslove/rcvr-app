@@ -3,9 +3,9 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { queryCache } from 'react-query'
 
-import { patchCompany, postCompany } from '@lib/api'
-import { Box, Input, Button } from '@ui/core'
-import { ModalBase, ModalBaseProps } from '@ui/blocks/ModalBase'
+import { patchCompany, postCompany } from '~lib/api'
+import { Box, Input, Button } from '~ui/core'
+import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 
 interface Props {
   type: 'new' | 'edit'

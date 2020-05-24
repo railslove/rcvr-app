@@ -3,9 +3,10 @@ import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 import { motion } from 'framer-motion'
-import { SharedMeta } from '@ui/blocks/SharedMeta'
-import { Box } from '@ui/core'
-import Logo from '@ui/svg/logo.svg'
+
+import { Box } from '~ui/core'
+import { Logo } from '~ui/svg'
+import { SharedMeta } from '~ui/blocks/SharedMeta'
 
 interface Props {
   children: React.ReactNode

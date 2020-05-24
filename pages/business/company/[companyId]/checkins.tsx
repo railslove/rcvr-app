@@ -1,13 +1,12 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
 
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { useCompany } from '@lib/hooks/useCompany'
-import { useLastTicketsGrouped } from '@lib/hooks/useLastTickets'
-import { OwnerApp, BackLink } from '@ui/layouts/OwnerApp'
-import { Text, Box } from '@ui/core'
-import { ActionList } from '@ui/blocks/ActionList'
-import { ActionCard } from '@ui/blocks/ActionCard'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { useCompany, useLastTicketsGrouped } from '~lib/hooks'
+import { Text, Box } from '~ui/core'
+import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
+import { ActionList } from '~ui/blocks/ActionList'
+import { ActionCard } from '~ui/blocks/ActionCard'
 
 const CheckinsPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()

@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { getCompanies } from '@lib/api'
+import { getCompanies } from '../api'
 
 export function useCompanies() {
   return useQuery('companies', getCompanies)

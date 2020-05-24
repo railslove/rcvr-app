@@ -5,10 +5,10 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
-import { login } from '@lib/actions/login'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Input, Button, Box, Text, Card, Row } from '@ui/core'
-import { Loading } from '@ui/blocks/Loading'
+import { Input, Button, Box, Text, Card, Row } from '~ui/core'
+import { login } from '~lib/actions/login'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { Loading } from '~ui/blocks/Loading'
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required('Email muss angegeben werden.'),

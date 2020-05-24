@@ -1,10 +1,11 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { Box, Text, Row } from '@ui/core'
-import { MobileApp } from '@ui/layouts/MobileApp'
-import { Circle } from '@ui/anicons/Circle'
-import { FixedBottomBar } from '@ui/blocks/BottomBar'
-import Phone from '@ui/svg/phone.svg'
+
+import { Box, Text, Row } from '~ui/core'
+import { Circle } from '~ui/anicons'
+import { Phone } from '~ui/svg'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { FixedBottomBar } from '~ui/blocks/BottomBar'
 
 export default function CoronaPage() {
   return (

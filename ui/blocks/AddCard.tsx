@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Card, Row, Text, Icon, Box } from '@ui/core'
-import Add from '@ui/svg/add.svg'
+import { Card, Row, Text, Icon, Box } from '~ui/core'
+import { Add } from '~ui/svg'
 
 interface Props {
   title?: string

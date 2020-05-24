@@ -2,10 +2,10 @@ import * as React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
-import { useCurrentGuest } from '@lib/hooks/useCurrentGuest'
-import { Guest } from '@lib/db'
-import { Input, Checkbox, Button, Box, Text, Card, Row } from '@ui/core'
-import { ArrowsRight, ArrowsLeft } from '@ui/anicons/Arrows'
+import { useCurrentGuest } from '~lib/hooks'
+import { Guest } from '~lib/db'
+import { Input, Checkbox, Button, Box, Text, Card, Row } from '~ui/core'
+import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 
 type OnboardingProps = {
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void

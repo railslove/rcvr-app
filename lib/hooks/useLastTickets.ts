@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useQuery } from 'react-query'
 import { subHours } from 'date-fns'
-import { getTickets, CompanyTicketRes } from '@lib/api'
+import { getTickets, CompanyTicketRes } from '../api'
 
 async function fetchLastTickets(
   _key: unknown,

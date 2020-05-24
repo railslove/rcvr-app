@@ -5,11 +5,11 @@ import * as Yup from 'yup'
 import { unparse } from 'papaparse'
 import FileSaver from 'file-saver'
 
-import { base64ToHex, hexToBase64 } from '@lib/crypto'
-import { decrypt } from '@lib/actions/decrypt'
-import { withOwner, WithOwnerProps } from '@lib/pageWrappers/withOwner'
-import { OwnerApp, BackLink } from '@ui/layouts/OwnerApp'
-import { Box, Text, Button, Input, Table } from '@ui/core'
+import { base64ToHex, hexToBase64 } from '~lib/crypto'
+import { decrypt } from '~lib/actions'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Box, Text, Button, Input, Table } from '~ui/core'
+import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 
 const DecryptionSchema = Yup.object().shape({
   hexPrivateKey: Yup.string()

@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Text, Box } from '@ui/core'
 import styled from '@emotion/styled'
 import formatDate from 'intl-dateformat'
 import { addMinutes } from 'date-fns'
-import Slashes from '@ui/svg/slashes.svg'
-import Arrows from '@ui/svg/arrows.svg'
+
+import { Text, Box } from '~ui/core'
+import { Slashes, Arrows } from '~ui/svg'
 
 interface Props {
   from: Date

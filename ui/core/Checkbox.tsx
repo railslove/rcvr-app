@@ -3,8 +3,9 @@ import { useField } from 'formik'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { motion } from 'framer-motion'
+
+import { Check } from '~ui/anicons'
 import { Text } from './Text'
-import { Check } from '@ui/anicons/Check'
 
 interface Props {
   name: string
