@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 
 import { useArea } from '@lib/hooks/useArea'
 import { useCheckins } from '@lib/hooks/useCheckins'
+import { useCheckout } from '@lib/hooks/useCheckout'
 import { useDelayedLoading } from '@lib/hooks/useDelayedLoading'
-import { checkout } from '@lib/actions'
 import { CheckinCard, CheckinCardContainer } from '@ui/blocks/CheckinCard'
 import { LastCheckin } from '@ui/blocks/LastCheckin'
 import { PastCheckin } from '@ui/blocks/PastCheckin'
@@ -17,6 +17,7 @@ export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
   const areaInfo = useArea(checkinsInfo.data?.[0]?.areaId)
   const [isLoading, setIsLoading] = useDelayedLoading(false)
+  const checkout = useCheckout()
 
   const handleCheckout = React.useCallback(
     async (checkin) => {
@@ -24,7 +25,7 @@ export default function MyCheckinsPage() {
       await checkout({ id: checkin.id })
       setIsLoading(false)
     },
-    [setIsLoading]
+    [setIsLoading, checkout]
   )
 
   return (

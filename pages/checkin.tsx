@@ -3,8 +3,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 
-import { checkin, checkout } from '@lib/actions'
 import { useCurrentGuest } from '@lib/hooks/useCurrentGuest'
+import { useCheckin } from '@lib/hooks/useCheckin'
+import { useCheckout } from '@lib/hooks/useCheckout'
 import { useArea } from '@lib/hooks/useArea'
 import { Guest, updateGuest, addGuest, getLastCheckin } from '@lib/db'
 import { MobileApp } from '@ui/layouts/MobileApp'
@@ -17,6 +18,8 @@ export default function CheckinPage() {
   const [showOnboarding, setShowOnboarding] = React.useState(false)
   const [showLoading, setShowLoading] = React.useState(true)
   const router = useRouter()
+  const checkin = useCheckin()
+  const checkout = useCheckout()
 
   const publicKey = router.query.k?.toString()
   const areaId = router.query.a?.toString()
@@ -41,7 +44,7 @@ export default function CheckinPage() {
 
       router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
     },
-    [publicKey, areaId, areaInfo, router]
+    [publicKey, areaId, areaInfo, router, checkin, checkout]
   )
 
   const handleSubmitOnboarding = React.useCallback(
@@ -51,7 +54,7 @@ export default function CheckinPage() {
         else await addGuest(guest)
       }
 
-      checkinAndRedirect(guest)
+      await checkinAndRedirect(guest)
     },
     [guestInfo, checkinAndRedirect]
   )
