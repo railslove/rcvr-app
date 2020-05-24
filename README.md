@@ -49,6 +49,7 @@ When a guest checks in, a random ID will be saved on the guest's device. **recov
 - [Dexie.js](http://dexie.org/)
 - [Formik](https://jaredpalmer.com/formik/)
 - [Framer Motion](https://www.framer.com/motion/)
+- [SVGR](https://react-svgr.com/)
 
 **Before you can start, you need:**
 
