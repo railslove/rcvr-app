@@ -6,6 +6,7 @@ import { useArea } from '@lib/hooks/useArea'
 import { useCheckins } from '@lib/hooks/useCheckins'
 import { useCheckout } from '@lib/hooks/useCheckout'
 import { useDelayedLoading } from '@lib/hooks/useDelayedLoading'
+import { Box, Text } from '@ui/core'
 import { CheckinCard, CheckinCardContainer } from '@ui/blocks/CheckinCard'
 import { LastCheckin } from '@ui/blocks/LastCheckin'
 import { PastCheckin } from '@ui/blocks/PastCheckin'
@@ -34,10 +35,14 @@ export default function MyCheckinsPage() {
         <title key="title">Meine Checkins | recover</title>
       </Head>
       {checkinsInfo.status === 'success' && checkinsInfo.data.length === 0 && (
-        <div>Du hast noch keine Checkins.</div>
+        <Box my={10}>
+          <Text variant="h2" as="h2" color="bluegrey.500" textAlign="center">
+            Du hast noch keine Checkins.
+          </Text>
+        </Box>
       )}
       <CheckinCardContainer>
-        {(checkinsInfo.data || []).map((checkin, i) => (
+        {checkinsInfo.data?.map((checkin, i) => (
           <motion.div
             key={checkin.id}
             initial={{
