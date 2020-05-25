@@ -47,7 +47,7 @@ export async function postLogin(login: PostLogin): Promise<OwnerRes> {
 
 export async function getOwner(): Promise<OwnerRes> {
   return await api
-    .get('owner')
+    .patch('owner', { json: { owner: { foo: 'bar' } } })
     .json()
     .then((res: OwnerRes) => camelcaseKeys(res, { deep: true }))
 }

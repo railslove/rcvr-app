@@ -3,7 +3,7 @@ import * as db from '../db'
 import * as api from '../api'
 
 async function fetchOwner(): Promise<db.Owner> {
-  const ownerRes = await api.patchOwner({ foo: 'bar' })
+  const ownerRes = await api.getOwner()
   let owner = await db.getOwner(ownerRes.id)
 
   if (!owner) {
