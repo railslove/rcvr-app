@@ -11,6 +11,7 @@ interface Props {
 interface Composition {
   Main: MainCmp
   Actions: ActionsCmp
+  Below: BelowCmp
 }
 
 type AreaCardCmps = React.FC<Props> & Composition
@@ -91,5 +92,18 @@ const Actions = ({ children }) => {
   )
 }
 
+interface BelowProps {
+  children?: React.ReactNode
+}
+type BelowCmp = React.FC<BelowProps>
+const Below = ({ children }) => {
+  return (
+    <Box minWidth={0} width="100%">
+      {children}
+    </Box>
+  )
+}
+
 ActionCard.Main = Main
 ActionCard.Actions = Actions
+ActionCard.Below = Below

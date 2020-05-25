@@ -23,12 +23,7 @@ export const DataListItem: React.FC<ItemProps> = ({ left, right, color }) => {
       css={css({ borderBottom: '1px solid', borderColor: 'bluegrey.50' })}
       alignItems="center"
     >
-      <Box
-        width={2}
-        alignSelf="stretch"
-        my="-1px"
-        css={css({ bg: color, opacity: 0.6 })}
-      />
+      <Box width={2} alignSelf="stretch" my="-1px" css={css({ bg: color })} />
       <Box flex="1 1 auto" px={4} py={2}>
         {left}
       </Box>

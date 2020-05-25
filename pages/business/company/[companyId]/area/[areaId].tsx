@@ -38,7 +38,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
                 {ticket.leftAt && ' – ' + formatDate(ticket.leftAt, 'HH:mm')}
               </Text>
             }
-            right={<Text>{ticket.leftAt ? 'ausgecheckt' : 'offen'}</Text>}
+            right={<Text>{ticket.leftAt ? 'ausgecheckt' : 'am Tisch'}</Text>}
           />
         ))}
       </DataList>
