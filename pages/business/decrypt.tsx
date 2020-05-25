@@ -15,7 +15,7 @@ const DecryptionSchema = Yup.object().shape({
   hexPrivateKey: Yup.string()
     .required('Privater Schlüssel muss eingegeben werden.')
     .matches(
-      /^[A-Fa-f0-9]+$/,
+      /^[A-Fa-f0-9\s]+$/,
       'Der private Schlüssel darf nur Zahlen und Buchstaben von A - F beinhalten.'
     ),
 })
