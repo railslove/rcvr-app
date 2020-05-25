@@ -1,0 +1,4 @@
+multipass: true
+
+plugins:
+  - removeViewBox: false

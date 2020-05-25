@@ -1,133 +1,106 @@
 import * as React from 'react'
-import * as db from '@lib/db'
-import { Box, Flex, Input, Button, Text, Checkbox } from '@ui/base'
-import { Arrows } from '@ui/icons'
-import Logo from '@ui/blocks/Logo'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
 
-type OnFinishOptions = {
-  rememberMe: boolean
-}
+import { useCurrentGuest } from '~lib/hooks'
+import { Guest } from '~lib/db'
+import { Input, Checkbox, Button, Box, Text, Card, Row } from '~ui/core'
+import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
+
 type OnboardingProps = {
-  onFinish: (guest: db.Guest, options: OnFinishOptions) => void
+  title: string
+  onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
 }
 
-const Onboarding: React.FC<OnboardingProps> = ({ onFinish }) => {
-  const [name, setName] = React.useState('')
-  const [phone, setPhone] = React.useState('')
-  const [address, setAddress] = React.useState('')
-  const [rememberMe, setRememberMe] = React.useState(false)
-  const [nameError, setNameError] = React.useState(false)
-  const [phoneError, setPhoneError] = React.useState(false)
-  const [addressError, setAddressError] = React.useState(false)
+const OnboardingSchema = Yup.object().shape({
+  name: Yup.string().required('Name muss angegeben werden.'),
+  phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
+  address: Yup.string().required('Adresse muss angegeben werden.'),
+  rememberMe: Yup.boolean(),
+})
 
-  React.useEffect(() => {
-    /*
-      Check if a guest was already created, then prefill form
-      This occurs if guest is checking in a new company
-    */
-    db.getGuest().then((guest) => {
-      if (guest) {
-        setName(guest.name)
-        setPhone(guest.phone)
-        setAddress(guest.address)
-        setRememberMe(true)
-      }
-    })
-  }, [])
+export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit, title }) => {
+  const { data: guest } = useCurrentGuest()
 
-  function handleSubmit(event): void {
-    event.preventDefault()
-    if (!name || !phone || !address) {
-      !name && setNameError(true)
-      !phone && setPhoneError(true)
-      !address && setAddressError(true)
-      return
-    }
-    onFinish({ name, phone, address }, { rememberMe })
+  const initialValues = {
+    name: guest?.name || '',
+    phone: guest?.phone || '',
+    address: guest?.address || '',
+    rememberMe: guest ? true : false,
   }
 
-  const handleNameChange = React.useCallback((event) => {
-    setNameError(false)
-    setName(event.target.value)
-  }, [])
-
-  const handlePhoneChange = React.useCallback((event) => {
-    setPhoneError(false)
-    setPhone(event.target.value)
-  }, [])
-
-  const handleAddressChange = React.useCallback((event) => {
-    setAddressError(false)
-    setAddress(event.target.value)
-  }, [])
-
-  const handleRememberMeChange = React.useCallback((event) => {
-    setRememberMe(event.target.checked)
-  }, [])
-
   return (
-    <Flex
-      width="255px"
-      mx="auto"
-      flexDirection="column"
-      align="center"
-      justify="center"
-      flex={1}
-    >
-      <Box mb={6}>
-        <Logo width="124px" height="20px" />
-      </Box>
-      <form onSubmit={handleSubmit}>
-        <Input
-          id="name"
-          type="text"
-          label="Name"
-          value={name}
-          onChange={handleNameChange}
-          error={nameError && 'Name muss ausgefüllt werden.'}
-          autoComplete="name"
-        />
-        <Input
-          id="phone"
-          type="tel"
-          label="Telefon"
-          value={phone}
-          onChange={handlePhoneChange}
-          error={phoneError && 'Telefonnummer muss ausgefüllt werden.'}
-          autoComplete="tel"
-        />
-        <Input
-          id="address"
-          type="text"
-          label="Anschrift"
-          value={address}
-          onChange={handleAddressChange}
-          error={addressError && 'Anschrift muss ausgefüllt werden.'}
-          autoComplete="street-address"
-        />
-        <Checkbox
-          checked={rememberMe}
-          onChange={handleRememberMeChange}
-          label="Daten auf meinem Handy speichern"
-          name="rememberMe"
-        />
-        <Box mt={6}>
-          <Button
-            type="submit"
-            title="Check in"
-            animateIn
-            left={<Arrows color="green" size="16px" />}
-            right={<Arrows color="green" left size="16px" />}
-          />
-        </Box>
-        <Text fontSize="xs" mt={3}>
-          Mit dem betätigen des Buttons erkläre ich mich einverstanden, dass
-          meine Daten zur Erfüllung der Verpflichtung der Hygiene- und
-          Infektionsschutzstandards für 4 Wochen gespeichert werden.
-        </Text>
-      </form>
-    </Flex>
+    <div>
+      <Text as="h2" variant="h2">
+        {title}
+      </Text>
+      <Box height={5} />
+      <Text as="h3" variant="h5">
+        Willkommen!
+      </Text>
+      <Box height={1} />
+      <Text>
+        <p>
+          Durch die aktuellen Corona-Verordnungen musst Du Deine Kontaktdaten
+          hinterlegen, wenn Du in einem Gastronomiebetrieb bist.
+        </p>
+        <p>So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.</p>
+        <p>
+          Datenschutz ist uns dabei sehr wichtig! <strong>recover</strong>{' '}
+          speichert Deine Daten verschlüsselt und sicher.
+        </p>
+      </Text>
+      <Box height={6} />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={OnboardingSchema}
+        onSubmit={({ name, phone, address, rememberMe }) => {
+          onSubmit({ name, phone, address }, { rememberMe })
+        }}
+      >
+        <Card variant="form" mx={-4}>
+          <Form>
+            <Input name="name" label="Name" autoComplete="name" />
+            <Box height={4} />
+            <Input name="phone" label="Telefon" type="tel" autoComplete="tel" />
+            <Box height={4} />
+            <Input
+              name="address"
+              label="Anschrift"
+              autoComplete="street-address"
+            />
+            <Box height={3} />
+            <Checkbox
+              name="rememberMe"
+              label="Daten auf meinem Handy speichern"
+            />
+            <Box height={5} />
+            <Button
+              type="submit"
+              css={{ width: '100%' }}
+              left={<ArrowsRight color="green" />}
+              right={<ArrowsLeft color="green" />}
+            >
+              Check in
+            </Button>
+            <Box height={6} />
+            <Text variant="fineprint">
+              Mit dem betätigen des Buttons erkläre ich mich einverstanden, dass
+              meine Daten zur Erfüllung der Verpflichtung der Hygiene- und
+              Infektionsschutzstandards für 4 Wochen gespeichert werden.
+            </Text>
+          </Form>
+        </Card>
+      </Formik>
+      <Row justifyContent="center" my={6}>
+        <a
+          href="https://www.recoverapp.de/fuer-gaeste"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <Text variant="link">Wie funktioniert recover?</Text>
+        </a>
+      </Row>
+    </div>
   )
 }
-
-export default Onboarding

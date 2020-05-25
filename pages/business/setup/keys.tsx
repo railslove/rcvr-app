@@ -1,130 +1,115 @@
 import * as React from 'react'
 import Head from 'next/head'
-import Link from 'next/link'
-import { useMutation } from 'react-query'
-import { useRouter } from 'next/router'
-import { generateKeys, base64ToHex } from '@lib/crypto'
-import * as db from '@lib/db'
-import * as api from '@lib/api'
-import { Flex, Text, Button, Box } from '@ui/base'
-import { Arrows } from '@ui/icons'
-import KeyViewer from '@ui/blocks/KeyViewer'
-import Loading from '@ui/blocks/Loading'
-import BusinessLayout from '@ui/layouts/Business'
 
-type KeysPageProps = {}
+import { generateKeys } from '~lib/crypto'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { updateOwner } from '~lib/actions'
+import { Text, Box, ButtonLink } from '~ui/core'
+import { ArrowsRight } from '~ui/anicons'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { KeyViewer } from '~ui/blocks/KeyViewer'
 
-const KeysPage: React.FC<KeysPageProps> = () => {
-  const router = useRouter()
-  const { owner } = db.useOwner()
+const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const didGenerateKeys = React.useRef(false)
-  const [isLoading, setIsLoading] = React.useState(true)
-  const [hexPrivateKey, setHexPrivateKey] = React.useState<string | undefined>()
-  const [update] = useMutation(api.updateOwner, {
-    throwOnError: true,
-  })
-
-  const handleNext = React.useCallback(() => {
-    if (confirm('Hast du dir den Schlüssel notiert?')) {
-      router.push('/business/setup/verify-key')
-    }
-  }, [router])
+  const [privateKey, setPrivateKey] = React.useState<string>()
+  const [wasGenerated, setWasGenerated] = React.useState(false)
 
   React.useEffect(() => {
     if (!owner) return
 
-    async function main(): Promise<void> {
-      if (owner.privateKey) {
-        await update({ id: owner.id, publicKey: owner.publicKey })
-        setHexPrivateKey(base64ToHex(owner.privateKey))
-        setIsLoading(false)
-        return
-      }
-
-      if (!owner.publicKey && didGenerateKeys.current === false) {
-        const { privateKey, publicKey } = generateKeys()
-        didGenerateKeys.current = true
-        await update({ id: owner.id, publicKey })
-        await db.updateOwner(owner.id, { privateKey, publicKey })
-        setHexPrivateKey(base64ToHex(privateKey))
-        setIsLoading(false)
-      }
+    if (owner.publicKey && owner.privateKey) {
+      setPrivateKey(owner.privateKey)
+      return
     }
 
-    main()
-  }, [owner, update])
+    if (!owner.publicKey && !owner.privateKey && !didGenerateKeys.current) {
+      didGenerateKeys.current = true
+      const { privateKey, publicKey } = generateKeys()
+      updateOwner({ ...owner, privateKey, publicKey }).then(() => {
+        setPrivateKey(privateKey)
+      })
+      return
+    }
 
-  if (owner?.publicKey && !owner?.privateKey) {
-    return (
-      <BusinessLayout>
-        <Text fontSize="l" fontWeight="bold" mb={5}>
-          Du hast schonmal einen Schlüssel generiert.
-        </Text>
-        <Link href="/business/dashboard">
-          <a css={{ textDeocration: 'none' }}>
-            <Button
-              title="Zum Dashboard"
-              right={<Arrows size="16px" color="pink" />}
-            />
-          </a>
-        </Link>
-      </BusinessLayout>
-    )
-  }
+    // When we can't display the privateKey, it was already generated and is not
+    // stored on the device anymore.
+    setWasGenerated(true)
+  }, [owner])
 
   return (
-    <BusinessLayout>
+    <MobileApp>
       <Head>
         <title key="title">Dein Schlüssel | recover</title>
       </Head>
-      <Text fontSize="xl" fontWeight="bold" mb={4}>
-        Dein geheimer Schlüssel.
+      <Text as="h2" variant="h2">
+        Dein geheimer Schlüssel
       </Text>
-      {isLoading && (
-        <Flex mt="120px" align="center" flexDirection="column">
-          <Loading />
-          <Text fonSize="m" mt={3}>
-            Schlüssel wird vorbereitet...
-          </Text>
-        </Flex>
-      )}
-      {hexPrivateKey && (
+      <Box height={6} />
+      {wasGenerated ? (
         <>
-          <Text fontSize="m" fontWeight="xbold" mb={2}>
-            Hier ist dein privater Schlüssel. Er ist {hexPrivateKey.length}{' '}
-            Zeichen lang, in {hexPrivateKey.length / 2} Blöcken.
-            <br />
-            Er beinhaltet nur Zahlen von 0 bis 9 und Großbuchstaben von A bis F.
+          <Text>
+            <p>
+              Du hast schonmal einen Schlüssel generiert. Wir können ihn nicht
+              mehr anzeigen.
+            </p>
           </Text>
-          <Flex my={3} justify="center" mx={-4}>
-            <KeyViewer value={hexPrivateKey} />
-          </Flex>
+          <Box height={6} />
+          <ButtonLink
+            href="/business/setup/finished"
+            right={<ArrowsRight color="green" />}
+          >
+            Fertig
+          </ButtonLink>
+        </>
+      ) : (
+        <>
+          <Text>
+            <p>
+              <strong>
+                Es ist sehr wichtig, dass Du diesen Schlüssel notierst.
+              </strong>
+            </p>
+            <p>
+              Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre
+              ihn sorgfältig. Oder mach einen Screenshot davon und speichere ihn
+              sicher. Du kannst ihn auch in einem Passwortmanager speichern.
+            </p>
+          </Text>
+          <Box height={4} />
+
+          {privateKey ? (
+            <Box mx={-6}>
+              <KeyViewer value={privateKey} />
+            </Box>
+          ) : (
+            <Box py={8}>
+              <Text fontFamily="monospace" textAlign="center">
+                Schlüssel wird erstellt...
+              </Text>
+            </Box>
+          )}
+
+          <Box height={6} />
+          <Text>
+            <p>
+              Im nächsten Schritt musst Du den Schlüssel eingeben. Damit gehen
+              wir sicher, dass Du ihn korrekt notiert hast.
+            </p>
+          </Text>
+          <Box height={6} />
+
+          {privateKey && (
+            <ButtonLink
+              href="/business/setup/verify-key"
+              right={<ArrowsRight color="green" />}
+            >
+              Schlüssel prüfen
+            </ButtonLink>
+          )}
         </>
       )}
-      {!isLoading && (
-        <>
-          <Text fontSize="m" fontWeight="xbold" color="red" mb={3}>
-            Es ist sehr wichtig, dass Du diesen Schlüssel notierst.
-          </Text>
-          <Text fontSize="m" fontWeight="semibold" mb={3}>
-            Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre ihn
-            sorgfältig. Du kannst ihn auch in einem Passwortmanager speichern.
-          </Text>
-          <Text fontSize="m" fontWeight="semibold" mb={4}>
-            Im nächsten Schritt stellen wir sicher, dass Du den Schlüssel auch
-            korrekt notiert hast.
-          </Text>
-          <Box mb={4}>
-            <Button
-              title="Schlüssel ist notiert"
-              onClick={handleNext}
-              right={<Arrows size="16px" color="pink" />}
-            />
-          </Box>
-        </>
-      )}
-    </BusinessLayout>
+    </MobileApp>
   )
 }
 
-export default KeysPage
+export default withOwner()(SetupKeysPage)

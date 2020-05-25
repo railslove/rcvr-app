@@ -1,0 +1,202 @@
+import * as React from 'react'
+import { useRouter } from 'next/router'
+import Head from 'next/head'
+import styled from '@emotion/styled'
+import { css } from '@styled-system/css'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+
+import { useCompanies } from '~lib/hooks'
+import { Box, Text, Icon, Row } from '~ui/core'
+import { Logo, Back } from '~ui/svg'
+import { SharedMeta } from '~ui/blocks/SharedMeta'
+import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+
+interface Props {
+  children: React.ReactNode
+  title: React.ReactNode
+}
+
+export const OwnerApp: React.FC<Props> = ({ children, title }) => {
+  const { data: companies } = useCompanies()
+
+  return (
+    <Limit>
+      <SharedMeta />
+      <Head>
+        <title key="title">{title ?? '____'} | recover</title>
+      </Head>
+      <Top>
+        <LogoBox layoutId="appLogo">
+          <Logo />
+        </LogoBox>
+        <FetchingIndicator />
+      </Top>
+      <Wrapper>
+        <Aside>
+          <ul>
+            <li>
+              <NavLink href="/business/dashboard">Meine Betriebe</NavLink>
+            </li>
+            {companies?.map((company) => (
+              <li key={company.id}>
+                <NavLink
+                  href="/business/company/[companyId]"
+                  as={`/business/company/${company.id}`}
+                >
+                  {company.name}
+                </NavLink>
+                <ul>
+                  <li>
+                    <NavLink
+                      href="/business/company/[companyId]/area"
+                      as={`/business/company/${company.id}/area`}
+                      sub
+                    >
+                      Bereiche
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      href="/business/company/[companyId]/checkins"
+                      as={`/business/company/${company.id}/checkins`}
+                      sub
+                    >
+                      Checkins
+                    </NavLink>
+                  </li>
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </Aside>
+        <Main>
+          <Text as="h2" variant="h2">
+            {title ?? <>&nbsp;</>}
+          </Text>
+          <Box height={6} />
+          {children}
+        </Main>
+      </Wrapper>
+    </Limit>
+  )
+}
+
+interface BackProps {
+  href: string
+  as?: string
+  children?: React.ReactNode
+}
+export const BackLink: React.FC<BackProps> = ({ href, as, children }) => {
+  return (
+    <Box mt={-4} mb={6} display={['block', 'block', 'none']}>
+      <Link href={href} as={as} passHref>
+        <Row as="a" alignItems="center" css={{ display: 'inline-flex' }}>
+          <Icon
+            icon={Back}
+            size={4}
+            css={{ marginTop: -2 }}
+            color="bluegrey.400"
+          />
+          <Box width={1} />
+          <Text variant="h5" color="bluegrey.400">
+            {children}
+          </Text>
+        </Row>
+      </Link>
+    </Box>
+  )
+}
+
+interface NavLinkProps {
+  href: string
+  as?: string
+  sub?: boolean
+  children: React.ReactNode
+}
+const NavLink = ({ href, as, sub, children }: NavLinkProps) => {
+  const router = useRouter()
+  const routeMatches = router.asPath.includes(as || href)
+
+  return (
+    <Link href={href} as={as} passHref>
+      <Text
+        variant={sub ? 'h5' : 'h3'}
+        underline={routeMatches ? 'prominent' : undefined}
+        as="a"
+      >
+        {children}
+      </Text>
+    </Link>
+  )
+}
+
+const Limit = styled('div')(
+  css({
+    py: 8,
+    px: [4, 4, 8],
+    width: '100%',
+    maxWidth: '1024px',
+    mx: 'auto',
+  })
+)
+
+const Wrapper = styled('div')(
+  css({
+    display: 'flex',
+  })
+)
+
+const Top = styled('div')(
+  css({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    pb: 6,
+  })
+)
+
+const Aside = styled('aside')(
+  css({
+    display: ['none', 'none', 'block'],
+    pr: 6,
+    mr: 6,
+    flex: '1 0 auto',
+    maxWidth: '220px',
+    borderRight: '1px solid',
+    borderColor: 'bluegrey.100',
+
+    '> ul > li': {
+      mb: 6,
+    },
+
+    'ul ul': {
+      mt: 2,
+      ml: 4,
+    },
+
+    'ul ul li': {
+      mb: 2,
+    },
+  })
+)
+
+const Main = styled('main')(
+  css({
+    flex: '1 1 auto',
+    maxWidth: '100%',
+  })
+)
+
+const LogoBox = styled(motion.div)(
+  css({
+    width: ['61px', '61px', '120px'],
+    height: ['10px', '10px', '20px'],
+
+    svg: {
+      display: 'block',
+      width: '100%',
+      height: '100%',
+    },
+  })
+)

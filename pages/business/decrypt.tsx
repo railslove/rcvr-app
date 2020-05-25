@@ -1,35 +1,47 @@
 import * as React from 'react'
 import { useDropzone } from 'react-dropzone'
-import { parse, unparse } from 'papaparse'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import { unparse } from 'papaparse'
 import FileSaver from 'file-saver'
-import { useOwner, updateOwner } from '@lib/db'
-import { decrypt, hexToBase64 } from '@lib/crypto'
-import { Box, Text, Card, Button, Callout } from '@ui/base'
-import KeyInput from '@ui/blocks/KeyInput'
-import BusinessLayout from '@ui/layouts/Business'
 
-type DecryptProps = {}
+import { base64ToHex, hexToBase64 } from '~lib/crypto'
+import { decrypt } from '~lib/actions'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Box, Text, Button, Input, Table } from '~ui/core'
+import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 
-type DecryptionResult = {
-  data: string[][]
-  correct: number
-  wrong: number
-}
+const DecryptionSchema = Yup.object().shape({
+  hexPrivateKey: Yup.string()
+    .required('Privater Schlüssel muss eingegeben werden.')
+    .matches(
+      /^[A-Fa-f0-9\s]+$/,
+      'Der private Schlüssel darf nur Zahlen und Buchstaben von A - F beinhalten.'
+    ),
+})
 
-const Decrypt: React.FC<DecryptProps> = () => {
-  const { owner, refetch } = useOwner()
-  const [encrypted, setEncrypted] = React.useState('')
-  const [result, setResult] = React.useState<DecryptionResult | undefined>()
-  const [tmpPrivateKey, setTmpPrivateKey] = React.useState('')
+const DecryptPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const [fileContents, setFileContents] = React.useState<string>()
+  const [decrypted, setDecrypted] = React.useState<string[][]>()
+  const [decryptedMeta, setDecryptedMeta] = React.useState({
+    success: 0,
+    failed: 0,
+  })
 
-  const handleKeyInputChange = React.useCallback((value) => {
-    setTmpPrivateKey(value)
-  }, [])
+  const initialPrivateKey = React.useMemo(() => {
+    if (!owner.privateKey) return ''
+    try {
+      return base64ToHex(owner.privateKey)
+    } catch (error) {
+      return ''
+    }
+  }, [owner])
 
   const onDrop = React.useCallback((acceptedFiles) => {
     if (acceptedFiles.length < 1) {
       alert(
-        'Du musst die .csv Datei auswählen, die wir dir geschickt haben. Du kannst nur eine Datei gleichzeitig auswählen.'
+        'Du musst die .csv Datei auswählen, die wir dir geschickt haben.' +
+          ' Du kannst nur eine Datei gleichzeitig auswählen.'
       )
       return
     }
@@ -45,71 +57,51 @@ const Decrypt: React.FC<DecryptProps> = () => {
     }
 
     reader.onload = (): void => {
-      setResult(undefined)
-      setEncrypted(reader.result as string)
+      setFileContents(reader.result as string)
     }
 
     reader.readAsText(file, 'UTF-8')
   }, [])
 
-  const handleDecrypt = React.useCallback(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    setResult(undefined)
-    const { data: rows } = parse(encrypted, { delimiter: ',' })
-    const privateKey =
-      owner.privateKey || hexToBase64(tmpPrivateKey.replace(/\s/g, ''))
-    let correctCount = 0
-    let wrongCount = 0
+  const handleSubmit = React.useCallback(
+    async ({ hexPrivateKey }, bag) => {
+      if (!fileContents) {
+        alert('Du hast noch keine Datei ausgewählt.')
+        return
+      }
 
-    const decryptedRows = rows.map((row) => {
-      const encrypted = row[row.length - 1]
-      let decrypted
+      let privateKey
       try {
-        decrypted = decrypt(encrypted, owner.publicKey, privateKey)
-      } catch (error) {
-        console.error(error)
+        privateKey = hexToBase64(hexPrivateKey.toUpperCase().replace(/\s/g, ''))
+      } catch (_e) {
+        bag.setFieldError(
+          'hexPrivateKey',
+          'Dein privater Schlüssel kann nicht eingelesen werden.' +
+            ' Bitte wende dich an den Support.'
+        )
+        return
       }
 
-      let newRow = [...row]
+      const { data, success, failed } = await decrypt(
+        fileContents,
+        privateKey,
+        owner
+      )
 
-      if (!decrypted) {
-        wrongCount++
-        newRow[row.length - 1] = 'Nicht lesbar, Schlüssel falsch'
-      } else {
-        correctCount++
-        const { data: decryptedCsv } = parse(decrypted, { delimiter: ',' })
-        newRow[row.length - 1] = decryptedCsv[0]
-        newRow = newRow.flat()
-      }
+      setDecryptedMeta({ success, failed })
+      setDecrypted(data)
+    },
+    [owner, fileContents]
+  )
 
-      return newRow
-    })
-
-    if (correctCount === 0 && wrongCount > 0) {
-      // key was most likely wrong
-    } else {
-      setEncrypted('')
-    }
-
-    setResult({
-      data: decryptedRows,
-      correct: correctCount,
-      wrong: wrongCount,
-    })
-  }, [encrypted, tmpPrivateKey, owner])
-
-  const handleSafe = React.useCallback(() => {
-    const fileContents = unparse(result.data)
-    const blob = new Blob([fileContents], { type: 'text/plain;charset=utf-8' })
-    FileSaver.saveAs(blob, `recover_data_${new Date().toISOString()}.txt`)
-  }, [result])
-
-  const handleStoreKey = React.useCallback(async () => {
-    const b64privateKey = hexToBase64(tmpPrivateKey.replace(/\s/g, ''))
-    await updateOwner(owner.id, { privateKey: b64privateKey })
-    await refetch()
-    alert('Schlüssel wurde gespeichert.')
-  }, [owner, tmpPrivateKey, refetch])
+  const handleDownload = React.useCallback(() => {
+    const text = unparse(decrypted)
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+    FileSaver.saveAs(
+      blob,
+      `recover_kontaktdaten_${new Date().toISOString()}.txt`
+    )
+  }, [decrypted])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -117,91 +109,100 @@ const Decrypt: React.FC<DecryptProps> = () => {
   })
 
   return (
-    <BusinessLayout title="Daten entschlüsseln">
-      <Text>
-        Wenn du von uns ein Datenpaket bekommen hast, kannst du es hier
-        entschlüsseln.
+    <OwnerApp title="Daten entschlüsseln">
+      <BackLink href="/business/dashboard">Meine Betriebe</BackLink>
+      <Text variant="shy">
+        Wenn Du ein Datenpaket mit verschlüsselten Kundenkontaktdaten von uns
+        bekommen hast, kannst du es hier entschlüsseln.
       </Text>
-      <Box mt={3} />
-      {!encrypted && (
-        <Card {...getRootProps()} mb={3}>
+
+      <Box mt={6}>
+        <Button as="div" {...getRootProps()} css={{ display: 'inline-block' }}>
           <input {...getInputProps()} />
-          {isDragActive ? 'Hier fallen lassen' : 'Datenpaket auswählen (*.csv)'}
-        </Card>
-      )}
-      {result && (
-        <>
-          <Card mb={3}>
-            <Text>{result.correct} Checkins entschlüsselt</Text>
-            <Text>
-              {result.wrong} Checkins konnten nicht entschlüsselt werden
-            </Text>
-          </Card>
-          {result.correct === 0 && result.wrong > 0 && (
-            <Callout variant="danger" mb={3}>
-              Scheinbar konnten keine Checkins entschlüsselt werden. Dein
-              privater Schlüssel scheint nicht richtig zu sein. Bitte
-              kontrolliere ihn auf Richtigkeit und versuche es erneut.
-            </Callout>
-          )}
-          <Box mb={3}>
-            <Button title="Liste speichern" onClick={handleSafe} />
-          </Box>
-          {result.correct > 0 && !owner.privateKey && (
-            <Box mb={3}>
-              <Text mb={3}>
-                Dein Schlüssel ist nicht auf deinem Gerät gespeichert. Möchtest
-                du ihn speichern? Dann musst du ihn beim nächsten Mal nicht
-                nochmal eingeben.
+          {fileContents
+            ? 'Datei ausgewählt'
+            : isDragActive
+            ? 'Hier fallen lassen'
+            : 'Datenpaket auswählen (*.csv)'}
+        </Button>
+      </Box>
+
+      <Formik
+        initialValues={{ hexPrivateKey: initialPrivateKey }}
+        validationSchema={DecryptionSchema}
+        onSubmit={handleSubmit}
+        enableReinitialize
+      >
+        <Form>
+          <Box height={6} />
+          {!owner.privateKey && (
+            <Box mb={4}>
+              <Text variant="h3" as="h3">
+                Dein privater Schlüssel
               </Text>
-              <Button title="Schlüssel speichern" onClick={handleStoreKey} />
+              <Box height={4} />
+              <Text>
+                <p>
+                  Dein privater Schlüssel ist nicht mehr auf Deinem Gerät
+                  gespeichert. Zum Entschlüsseln musst du ihn eingeben.
+                </p>
+                <p>
+                  Dein Schlüssel beinhaltet nur Zahlen von 0 - 9 und Buchstaben
+                  von A - F. Du kannst ihn mit oder ohne Leerzeichen eingeben,
+                  mit Groß- oder Kleinbuchstaben.
+                </p>
+              </Text>
+              <Box height={4} />
+              <Input
+                name="hexPrivateKey"
+                label="Privater Schlüssel"
+                multiline
+              />
             </Box>
           )}
-        </>
-      )}
-      {encrypted && (
-        <Card mb={3}>
-          <Text>
-            {encrypted.split('\n').length} verschlüsselte Einträge geladen
+          <Button type="submit">Jetzt entschlüsseln</Button>
+        </Form>
+      </Formik>
+
+      {decrypted && (
+        <Box mt={10}>
+          <Text variant="h2" as="h3">
+            Entschlüsselte Daten
           </Text>
-        </Card>
-      )}
-      {encrypted && !owner.privateKey && (
-        <>
-          <Box>
-            <Text>
-              Dein privater Schlüssel ist nicht mehr auf deinem Gerät
-              gespeichert. Bitte gib ihn jetzt ein:
+          <Box height={6} />
+          <Text>Erfolgreich entschlüsselt: {decryptedMeta.success}</Text>
+          {decryptedMeta.failed > 0 && (
+            <Text>Nicht entschlüsselbar: {decryptedMeta.failed}</Text>
+          )}
+          {decryptedMeta.failed > 0 && decryptedMeta.success === 0 && (
+            <Text color="red.500" fontWeight="bold">
+              Keine Einträge konnten entschlüsselt werden. Dein privater
+              Schlüssel passt nicht zu den verschlüsselten Daten. Bitte gib
+              deinen privaten Schlüssel neu ein und prüfe, dass du die richtige
+              Datei ausgewählt hast.
             </Text>
+          )}
+          <Box height={6} />
+          <Button type="button" onClick={handleDownload}>
+            Herunterladen
+          </Button>
+          <Box mx={-4} p={4} css={{ overflow: 'scroll' }}>
+            <Table css={{ maxWidth: '100%' }}>
+              <tbody>
+                {decrypted.map((row, i) => (
+                  <tr key={i}>
+                    {row.map((cell, k) => (
+                      <td key={k}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           </Box>
-          <Box mt={3} mb={4} mx={-4}>
-            <KeyInput onChange={handleKeyInputChange} />
-          </Box>
-        </>
+        </Box>
       )}
-      {encrypted && (
-        <Button
-          title="Jetzt entschlüsseln"
-          disabled={!owner.privateKey && !tmpPrivateKey}
-          onClick={handleDecrypt}
-        />
-      )}
-      {result && result.data && (
-        <>
-          <Text as="h2" fontSize="m" my={3}>
-            Entschlüsselter Inhalt
-          </Text>
-          <ul>
-            {result.data.map((row, i) => (
-              <Box as="li" key={i} py={2} borderBottom="input">
-                {row.join(', ')}
-              </Box>
-            ))}
-          </ul>
-        </>
-      )}
-    </BusinessLayout>
+    </OwnerApp>
   )
 }
 
-export default Decrypt
+export default withOwner()(DecryptPage)

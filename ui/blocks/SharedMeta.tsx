@@ -1,9 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-type SharedMetaProps = {}
-
-const SharedMeta: React.FC<SharedMetaProps> = () => {
+export const SharedMeta: React.FC<{}> = () => {
   return (
     <Head>
       <link
@@ -27,8 +25,10 @@ const SharedMeta: React.FC<SharedMetaProps> = () => {
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="theme-color" content="#ffffff" />
+      <meta
+        name="viewport"
+        content="initial-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"
+      />
     </Head>
   )
 }
-
-export default SharedMeta

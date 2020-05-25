@@ -1,195 +1,130 @@
 import * as React from 'react'
-import { useMutation } from 'react-query'
+import Head from 'next/head'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
 import { useRouter } from 'next/router'
+import { queryCache } from 'react-query'
 
-import * as api from '@lib/api'
-import * as db from '@lib/db'
-import passwordStrength from '@lib/password-strength'
-import AppLayout from '@ui/layouts/App'
-import { Box, Flex, Input, Button, Text } from '@ui/base'
-import StrengthMeter from '@ui/blocks/StrengthMeter'
-import Loading from '@ui/blocks/Loading'
-import { Arrows } from '@ui/icons'
-import Logo from '@ui/blocks/Logo'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { signup } from '~lib/actions'
+import { Step2 } from '~ui/svg'
+import { Input, Button, Box, Text, Card, Row } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { Loading } from '~ui/blocks/Loading'
 
-type errorState = string | undefined
-type strengthState = -1 | 0 | 1 | 2
+const LoginSchema = Yup.object().shape({
+  name: Yup.string().required('Name muss angegeben werden.'),
+  email: Yup.string().required('Email muss angegeben werden.'),
+  password: Yup.string()
+    .required('Password muss angegeben werden.')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.^*()%!-[\]{}])[A-Za-z\d$&+,:;=?@#|'<>.^*()%!-[\]{}]{8,}$/,
+      'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
+    ),
+  confirmPassword: Yup.string()
+    .required('Passwordwiederholung muss angegeben werden.')
+    .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
+})
 
-const SignupPage: React.FC<{}> = () => {
+const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
-  const { owner } = db.useOwner({ redirect: false })
-  const [name, setName] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [strength, setStrength] = React.useState<strengthState>(-1)
-  const [passwordVerify, setPasswordVerify] = React.useState('')
-  const [affiliate, setAffiliate] = React.useState('')
-  const [nameError, setNameError] = React.useState<errorState>()
-  const [emailError, setEmailError] = React.useState<errorState>()
-  const [passwordError, setPasswordError] = React.useState<errorState>()
-  const [passwordVerifyError, setPasswordVerifyError] = React.useState<
-    errorState
-  >()
+  const [loading, setLoading] = React.useState(false)
 
-  React.useEffect(() => {
-    router.query.affiliate && setAffiliate(router.query.affiliate?.toString())
-  }, [router])
-
-  React.useEffect(() => {
-    if (owner) router.replace('/business/dashboard')
-  }, [owner, router])
-
-  const [signup, { status, error }] = useMutation(api.createOwner, {
-    throwOnError: true,
-  })
-
-  async function handleSubmit(event): Promise<void> {
-    event.preventDefault()
-    let valid = true
-
-    if (!name) {
-      valid = false
-      setNameError('Name muss ausgefüllt werden.')
+  const handleSubmit = async ({ name, email, password }, bag) => {
+    try {
+      setLoading(true)
+      const affiliate = localStorage.getItem('rcvr_affiliate')
+      await signup({ name, email, password, affiliate })
+      queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
+      router.replace('/business/setup/success')
+    } catch (error) {
+      if (error.response?.status === 422) {
+        bag.setFieldError('email', 'Diese Email ist bereits registriert.')
+      } else {
+        throw error
+      }
+    } finally {
+      setLoading(false)
     }
-
-    if (!email) {
-      valid = false
-      setEmailError('Email muss ausgefüllt werden.')
-    }
-
-    if (strength < 2) {
-      valid = false
-      setPasswordError('Passwort muss sicherer sein.')
-    }
-
-    if (!password) {
-      valid = false
-      setStrength
-      setPasswordError('Passwort muss ausgefüllt werden.')
-    }
-
-    if (!passwordVerify) {
-      valid = false
-      setPasswordVerifyError('Passwort muss ausgefüllt werden.')
-    }
-
-    if (password !== passwordVerify) {
-      valid = false
-      setPasswordVerifyError('Passwörter müssen übereinstimmen.')
-    }
-
-    if (!valid) return
-
-    await signup({ email, name, password, affiliate })
-    router.replace('/business/setup/success')
-  }
-
-  const handleNameChange = React.useCallback((event) => {
-    setNameError(undefined)
-    setName(event.target.value)
-  }, [])
-
-  const handleEmailChange = React.useCallback((event) => {
-    setEmailError(undefined)
-    setEmail(event.target.value)
-  }, [])
-
-  const handlePasswordChange = React.useCallback((event) => {
-    setPasswordError(undefined)
-    setPasswordVerifyError(undefined)
-    setStrength(passwordStrength(event.target.value))
-    setPassword(event.target.value)
-  }, [])
-
-  const handlePasswordVerifyChange = React.useCallback((event) => {
-    setPasswordVerifyError(undefined)
-    setPasswordVerify(event.target.value)
-  }, [])
-
-  if (status === 'loading') {
-    return (
-      <AppLayout withHeader={false} withTabs={false}>
-        <Flex flex={1} align="center" justify="center">
-          <Loading />
-        </Flex>
-      </AppLayout>
-    )
-  }
-
-  if (status === 'error') {
-    return (
-      <AppLayout withHeader={false} withTabs={false}>
-        {error.toString()}
-      </AppLayout>
-    )
   }
 
   return (
-    <AppLayout withHeader={false} withTabs={false}>
-      <Flex
-        width="255px"
-        mx="auto"
-        flexDirection="column"
-        align="center"
-        justify="center"
-        flex={1}
-        py={6}
+    <MobileApp>
+      <Head>
+        <title key="title">Account erstellen | recover</title>
+      </Head>
+      <Text as="h2" variant="h2">
+        Account erstellen
+      </Text>
+      <Box height={6} />
+      <Row justifyContent="center">
+        <Step2 />
+      </Row>
+      <Box height={6} />
+      <Text>
+        <p>
+          Mit deinem Account kannst du QR Codes erstellen und Checkins deiner
+          Gäste verwalten.
+        </p>
+      </Text>
+      <Box height={6} />
+
+      <Formik
+        initialValues={{
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }}
+        validationSchema={LoginSchema}
+        onSubmit={handleSubmit}
       >
-        <Box mb={5}>
-          <Logo width="124px" height="20px" />
-        </Box>
-        <form onSubmit={handleSubmit}>
-          <Input
-            id="name"
-            type="text"
-            label="Dein Name"
-            value={name}
-            onChange={handleNameChange}
-            error={nameError}
-          />
-          <Input
-            id="email"
-            type="email"
-            label="Email"
-            value={email}
-            onChange={handleEmailChange}
-            error={emailError}
-          />
-          <Input
-            id="password"
-            type="password"
-            label="Passwort"
-            value={password}
-            onChange={handlePasswordChange}
-            error={passwordError}
-            decorator={<StrengthMeter strength={strength} />}
-          />
-          <Input
-            id="passwordrepeat"
-            type="password"
-            label="Passwort wiederholen"
-            value={passwordVerify}
-            onChange={handlePasswordVerifyChange}
-            error={passwordVerifyError}
-          />
-          <Box mt={5}>
-            <Button
-              type="submit"
-              title="Registrieren"
-              right={<Arrows color="green" size="16px" />}
-            />
-          </Box>
-          <Text fontSize="xs" mt={3}>
-            Mit dem betätigen des Buttons erkläre ich mich mit den{' '}
-            <a className="link" href="https://railslove.com/privacy/">
-              Datenschutzbestimmungen
-            </a>{' '}
-            einverstanden.
-          </Text>
-        </form>
-      </Flex>
-    </AppLayout>
+        {({ values }) => (
+          <Card variant="form" mx={-4}>
+            <Loading show={loading} />
+            <Form>
+              <Input name="name" label="Dein Name" />
+              <Box height={4} />
+              <Input name="email" label="Email" autoComplete="email" />
+              <Box height={4} />
+              <Input
+                name="password"
+                label="Passwort"
+                type="password"
+                autoComplete="new-password"
+                hint={
+                  values.password !== ''
+                    ? undefined
+                    : 'Dein Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
+                }
+              />
+              <Box height={4} />
+              <Input
+                name="confirmPassword"
+                label="Passwort wiederholen"
+                type="password"
+                autoComplete="new-password"
+              />
+              <Box height={5} />
+              <Button type="submit" css={{ width: '100%' }}>
+                Registrieren
+              </Button>
+              <Box height={6} />
+              <Text variant="fineprint">
+                <p>
+                  Mit dem betätigen des Buttons erkläre ich mich mit den{' '}
+                  <a href="https://railslove.com/privacy/">
+                    Datenschutzbestimmungen
+                  </a>{' '}
+                  einverstanden.
+                </p>
+              </Text>
+            </Form>
+          </Card>
+        )}
+      </Formik>
+    </MobileApp>
   )
 }
 
-export default SignupPage
+export default withOwner({ redirect: 'authorized' })(SetupSignupPage)

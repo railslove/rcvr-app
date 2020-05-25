@@ -1,131 +1,106 @@
 import * as React from 'react'
-import { useMutation } from 'react-query'
+import Head from 'next/head'
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
 import { useRouter } from 'next/router'
+import { queryCache } from 'react-query'
 
-import * as db from '@lib/db'
-import * as api from '@lib/api'
-import AppLayout from '@ui/layouts/App'
-import { Box, Flex, Input, Button } from '@ui/base'
-import Loading from '@ui/blocks/Loading'
-import { Arrows } from '@ui/icons'
-import Logo from '@ui/blocks/Logo'
+import { Input, Button, Box, Text, Card, Row } from '~ui/core'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { login } from '~lib/actions/login'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { Loading } from '~ui/blocks/Loading'
 
-const LoginPage: React.FC<{}> = () => {
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().required('Email muss angegeben werden.'),
+  password: Yup.string().required('Password muss angegeben werden.'),
+})
+
+const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
-  const { owner } = db.useOwner({ redirect: false })
-  const [email, setEmail] = React.useState('')
-  const [emailError, setEmailError] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [passwordError, setPasswordError] = React.useState('')
-  const [isRedirecting, setIsRedirecting] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
 
-  React.useEffect(() => {
-    if (owner) router.replace('/business/dashboard')
-  }, [owner, router])
+  const handleSubmit = async ({ email, password }, bag) => {
+    try {
+      setLoading(true)
+      const owner = await login({ email, password })
+      queryCache.clear()
 
-  const [login, { status, error }] = useMutation(api.loginOwner, {
-    throwOnError: true,
-  })
-
-  async function handleSubmit(event): Promise<void> {
-    event.preventDefault()
-    let valid = true
-
-    if (!email) {
-      valid = false
-      setEmailError('Email muss ausgefüllt werden.')
+      if (!owner.publicKey) {
+        // If the owner has no publicKey here, it means the owner didn't finish
+        // the onboarding correctly (or something went wrong). There's no keypair
+        // yet. Send them back to the key setup.
+        router.replace('/business/setup/success')
+      } else {
+        router.replace('/business/dashboard')
+      }
+    } catch (error) {
+      if (error.response?.status === 401) {
+        bag.setFieldError('password', 'Email oder Passwort falsch.')
+      } else {
+        throw error
+      }
+    } finally {
+      setLoading(false)
     }
-
-    if (!password) {
-      valid = false
-      setPasswordError('Passwort muss ausgefüllt werden.')
-    }
-
-    if (!valid) return
-
-    const owner = await login({ email, password })
-    setIsRedirecting(true)
-
-    if (!owner.publicKey) {
-      // If the owner has no publicKey here, it means the owner didn't finish
-      // the onboarding correctly (or something went wrong). There's no keypair
-      // yet. Send them back to the key setup.
-      router.replace('/business/setup/key-intro')
-    } else {
-      router.replace('/business/dashboard')
-    }
-  }
-
-  const handleEmailChange = React.useCallback((event) => {
-    setEmailError(undefined)
-    setEmail(event.target.value)
-  }, [])
-
-  const handlePasswordChange = React.useCallback((event) => {
-    setPasswordError(undefined)
-    setPassword(event.target.value)
-  }, [])
-
-  if (status === 'loading' || isRedirecting) {
-    return (
-      <AppLayout withHeader={false} withTabs={false}>
-        <Flex flex={1} align="center" justify="center">
-          <Loading />
-        </Flex>
-      </AppLayout>
-    )
-  }
-
-  if (status === 'error') {
-    return (
-      <AppLayout withHeader={false} withTabs={false}>
-        {error.toString()}
-      </AppLayout>
-    )
   }
 
   return (
-    <AppLayout withHeader={false} withTabs={false}>
-      <Flex
-        width="255px"
-        mx="auto"
-        flexDirection="column"
-        align="center"
-        justify="center"
-        flex={1}
-        py={6}
+    <MobileApp>
+      <Head>
+        <title key="title">Login | recover</title>
+      </Head>
+      <Text as="h2" variant="h2">
+        Login für Betriebe
+      </Text>
+      <Box height={4} />
+      <Text>
+        <p>
+          Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten
+          deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist
+          die einfachste Lösung für Dich und die sicherste für deine Gäste.
+        </p>
+      </Text>
+      <Box height={4} />
+
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={LoginSchema}
+        onSubmit={handleSubmit}
       >
-        <Box mb={5}>
-          <Logo width="124px" height="20px" />
-        </Box>
-        <form onSubmit={handleSubmit} css={{ width: '255px' }}>
-          <Input
-            id="email"
-            type="email"
-            label="Email"
-            value={email}
-            onChange={handleEmailChange}
-            error={emailError}
-          />
-          <Input
-            id="password"
-            type="password"
-            label="Passwort"
-            value={password}
-            onChange={handlePasswordChange}
-            error={passwordError}
-          />
-          <Box mt={5}>
-            <Button
-              type="submit"
-              title="Login"
-              right={<Arrows color="green" size="16px" />}
+        <Card variant="form" mx={-4}>
+          <Loading show={loading} />
+          <Form>
+            <Input name="email" label="Email" autoComplete="email" />
+            <Box height={4} />
+            <Input
+              name="password"
+              label="Passwort"
+              hint={
+                <>
+                  Dein Passwort hast du während der Registrierung selbst
+                  gewählt. Das ist <strong>nicht</strong> dein privater
+                  Schlüssel.
+                </>
+              }
+              type="password"
+              autoComplete="current-password"
             />
-          </Box>
-        </form>
-      </Flex>
-    </AppLayout>
+            <Box height={5} />
+            <Button type="submit" css={{ width: '100%' }}>
+              Login
+            </Button>
+          </Form>
+        </Card>
+      </Formik>
+
+      <Row justifyContent="center" my={6}>
+        <a href="mailto:team@recoverapp.de">
+          <Text variant="link">Passwort vergessen?</Text>
+        </a>
+      </Row>
+    </MobileApp>
   )
 }
 
-export default LoginPage
+export default withOwner({ redirect: 'authorized' })(LoginPage)

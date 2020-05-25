@@ -1,52 +1,45 @@
 import * as React from 'react'
-import { Flex, Text } from '@ui/base'
-import { Arrows, Slashes } from '@ui/icons'
+import styled from '@emotion/styled'
 import formatDate from 'intl-dateformat'
 import { addMinutes } from 'date-fns'
 
-type CheckinDatesProps = {
+import { Text, Box } from '~ui/core'
+import { Slashes, Arrows } from '~ui/svg'
+
+interface Props {
   from: Date
   to?: Date
-  autoCheckout?: boolean
+  isPast?: boolean
 }
 
 const AUTOCHECKOUT_AFTER_MINUTES = 240
 
-const CheckinDates: React.FC<CheckinDatesProps> = ({
-  from,
-  to,
-  autoCheckout,
-}) => {
+export const CheckinDates: React.FC<Props> = ({ from, to, isPast }) => {
   return (
-    <Flex align="baseline">
-      <Text as="div" fontSize="s">
-        {formatDate(from, 'DD.MM.YYYY')}
-      </Text>
-      <Slashes mx={1} />
-      <Text as="div" fontSize="s">
-        {formatDate(from, 'HH:mm')}
-      </Text>
-      {to ? (
+    <Row>
+      <Text>{formatDate(from, 'DD.MM.YYYY')}</Text>
+      <Box width={1} />
+      <Slashes />
+      <Box width={1} />
+      <Text>{formatDate(from, 'HH:mm')}</Text>
+      {(to || isPast) && (
         <>
-          <Arrows mx={1} />
-          <Text as="div" fontSize="s">
-            {formatDate(to, 'HH:mm')}
+          <Box width={1} />
+          <Arrows />
+          <Box width={1} />
+          <Text>
+            {formatDate(
+              to || addMinutes(from, AUTOCHECKOUT_AFTER_MINUTES),
+              'HH:mm'
+            )}
           </Text>
         </>
-      ) : autoCheckout ? (
-        <>
-          <Arrows mx={1} />
-          <Text as="div" fontSize="s" opacity="0.5">
-            {formatDate(addMinutes(from, AUTOCHECKOUT_AFTER_MINUTES), 'HH:mm')}
-            {'  '}
-            <Text as="span" fontSize="xxs">
-              auto checkout
-            </Text>
-          </Text>
-        </>
-      ) : null}
-    </Flex>
+      )}
+    </Row>
   )
 }
 
-export default CheckinDates
+const Row = styled('div')({
+  display: 'flex',
+  alignItems: 'baseline',
+})

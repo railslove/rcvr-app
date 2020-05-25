@@ -1,19 +1,24 @@
+import 'modern-normalize'
+import 'typeface-nunito'
+import '~lib/appReset.css'
+
 import * as React from 'react'
 import { AppProps } from 'next/app'
 import { Global } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
-import { theme, globalcss, pagecss } from '@ui/theme'
+import { AnimateSharedLayout } from 'framer-motion'
 
-import 'modern-normalize'
-import 'typeface-nunito'
-import '@lib/app-reset.css'
+import { useA11yFocusRing } from '~lib/hooks'
+import { theme, globalStyles } from '~ui/theme'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
+  useA11yFocusRing()
   return (
     <ThemeProvider theme={theme}>
-      <Global styles={globalcss} />
-      <Global styles={pagecss} />
-      <Component {...pageProps} />
+      <Global styles={globalStyles} />
+      <AnimateSharedLayout>
+        <Component {...pageProps} />
+      </AnimateSharedLayout>
     </ThemeProvider>
   )
 }

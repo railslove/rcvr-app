@@ -1,41 +1,76 @@
 import * as React from 'react'
-import { Box, Flex } from '@ui/base'
+import styled from '@emotion/styled'
+import { css } from '@styled-system/css'
 
-type KeyViewerProps = {
+import { base64ToHex } from '~lib/crypto'
+import { Text, Box } from '~ui/core'
+
+interface Props {
   value: string
 }
 
-const KeyViewer: React.FC<KeyViewerProps> = ({ value }) => {
+export const KeyViewer: React.FC<Props> = ({ value }) => {
+  const hex = React.useMemo(() => base64ToHex(value), [value])
+  const groups = React.useMemo(() => hex.match(/.{1,2}/g), [hex])
+
   return (
-    <Flex wrap="wrap" fontSize="l" fontFamily="monospace" justify="center">
-      {value.match(/.{1,2}/g).map((group, i) => (
-        <Box
-          key={i}
-          px={3}
-          pt={3}
-          pb={4}
-          flexShrink={0}
-          border="1px solid rgba(0,0,0,0.1)"
-          position="relative"
-          bg="bluegrey.300"
-        >
-          {group}
-          <Box
-            position="absolute"
-            fontSize="s"
-            bottom="8px"
-            left={0}
-            right={0}
-            textAlign="center"
-            opacity="0.3"
-            css={{ userSelect: 'none' }}
-          >
-            {i + 1}
-          </Box>
-        </Box>
-      ))}
-    </Flex>
+    <div>
+      <Box px={6} mb={4}>
+        <Text>
+          Dein Schlüssel ist <strong>{hex.length} Zeichen</strong> lang.
+          <br />
+          Er beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben
+          von
+          <strong> A bis F</strong>.
+        </Text>
+      </Box>
+      <RowGrid>
+        {groups.map((group, i) => (
+          <Cell key={i}>
+            {group}
+            <Small>{i + 1}</Small>
+          </Cell>
+        ))}
+      </RowGrid>
+    </div>
   )
 }
 
-export default KeyViewer
+const RowGrid = styled('div')(
+  css({
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  })
+)
+
+const Cell = styled('div')(
+  css({
+    position: 'relative',
+    px: 6,
+    pt: 4,
+    pb: 8,
+    fontFamily: 'monospace',
+    fontSize: '18px',
+    bg: 'white',
+    borderColor: 'bluegrey.50',
+    borderWidth: 0,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderStyle: 'solid',
+  })
+)
+
+const Small = styled('div')(
+  css({
+    fontSize: 'xs',
+    fontWeight: 'regular',
+    color: 'bluegrey.100',
+    userSelect: 'none',
+    position: 'absolute',
+    bottom: 2,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+  })
+)

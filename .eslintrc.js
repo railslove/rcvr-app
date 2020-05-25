@@ -13,7 +13,9 @@ module.exports = {
     'plugin:react-hooks/recommended',
   ],
   rules: {
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/member-delimiter-style': [
       'warn',
       {
@@ -29,8 +31,11 @@ module.exports = {
         varsIgnorePattern: '^_',
       },
     ],
-    'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/anchor-is-valid': 'off', // not compatible with next/link
+    'jsx-a11y/no-autofocus': 'off',
     'react/prop-types': 'off',
+    'import/default': 'off',
+    'import/no-named-as-default': 'off',
     'import/newline-after-import': 'warn',
   },
   overrides: [

@@ -16,10 +16,10 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@ui/*": ["ui/*"],
-      "@lib/*": ["lib/*"]
+      "~ui/*": ["ui/*"],
+      "~lib/*": ["lib/*"]
     }
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.svg"]
 }

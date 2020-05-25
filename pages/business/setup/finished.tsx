@@ -1,52 +1,51 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { useOwner } from '@lib/db'
-import Link from 'next/link'
-import { Text, Button, Flex, Circle, Box } from '@ui/base'
-import { Arrows, Check } from '@ui/icons'
-import BusinessLayout from '@ui/layouts/Business'
 
-type FinishedPageProps = {}
+import { withOwner } from '~lib/pageWrappers'
+import { Text, Box, Row, ButtonLink } from '~ui/core'
+import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
-const FinishedPage: React.FC<FinishedPageProps> = () => {
-  useOwner()
-
+function SetupSuccessPage() {
   return (
-    <BusinessLayout>
+    <MobileApp logoVariant="big">
       <Head>
         <title key="title">Fertig | recover</title>
       </Head>
-      <Text fontSize="xl" fontWeight="bold" mb={5}>
-        Du bist fertig!
+      <Text as="h2" variant="h2">
+        Alles fertig!
       </Text>
-      <Flex justify="center" mb={6}>
-        <Circle color="green" animated>
-          <Check animated />
+      <Box height={10} />
+      <Row justifyContent="center">
+        <Circle animated delay={0.5} color="green">
+          <Check delay={0.8} css={{ position: 'relative', top: 2 }} />
         </Circle>
-      </Flex>
-      <Text fontSize="m" fontWeight="semibold" mb={3}>
-        Super, dein Schlüssel wurde erfolgreich eingerichtet und dein Account
-        wurde registriert.
+      </Row>
+      <Box height={10} />
+      <Text>
+        <p>
+          Wir freuen uns, dass Du dabei bist! Dein Account ist jetzt vollständig
+          eingerichtet.
+        </p>
+        <p>
+          Wir melden uns bald bei Dir, um gemeinsam deine Daten zu überprüfen.
+        </p>
+        <p>
+          In der Zwischenzeit kannst du schon Betriebe, Tische und QR Codes
+          erstellen.
+        </p>
       </Text>
-      <Text fontSize="m" fontWeight="semibold" mb={3}>
-        Wir melden uns bald bei Dir, um gemeinsam deine Daten zu überprüfen.
-      </Text>
-      <Text fontSize="m" fontWeight="semibold" mb={4}>
-        In der Zwischenzeit kannst du schon Betriebe, Tische und QR Codes
-        erstellen.
-      </Text>
-      <Box mb={4}>
-        <Link href="/business/dashboard">
-          <a css={{ textDeocration: 'none' }}>
-            <Button
-              title="Zur Übersicht"
-              right={<Arrows size="16px" color="pink" />}
-            />
-          </a>
-        </Link>
-      </Box>
-    </BusinessLayout>
+      <Box height={6} />
+
+      <ButtonLink
+        href="/business/dashboard"
+        right={<ArrowsLeft color="green" />}
+        left={<ArrowsRight color="green" />}
+      >
+        Starten
+      </ButtonLink>
+    </MobileApp>
   )
 }
 
-export default FinishedPage
+export default withOwner()(SetupSuccessPage)

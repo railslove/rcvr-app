@@ -1,60 +1,66 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { Text, Box, Flex, Circle } from '@ui/base'
-import { Phone } from '@ui/icons'
-import AppLayout from '@ui/layouts/App'
 
-type CoronaPageProps = {}
+import { Box, Text, Row } from '~ui/core'
+import { Circle } from '~ui/anicons'
+import { Phone } from '~ui/svg'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { FixedBottomBar } from '~ui/blocks/BottomBar'
 
-const CoronaPage: React.FC<CoronaPageProps> = () => {
+export default function CoronaPage() {
   return (
-    <AppLayout sticky={false}>
+    <MobileApp>
       <Head>
         <title key="title">Corona, was nun? | recover</title>
       </Head>
-      <Box px={4} py={4}>
-        <Text fontSize="l" fontWeight="bold" mb={2}>
-          Was sollte ich tun, wenn ich Kontaktperson bin?
-        </Text>
-        <Text mb={3}>Zu allererst: ruhig bleiben.</Text>
-        <Text mb={2}>
+      <Text as="h2" variant="h2">
+        Was sollte ich tun, wenn ich Kontaktperson bin?
+      </Text>
+      <Box height={5} />
+      <Text>
+        <p>Zu allererst: ruhig bleiben.</p>
+        <p>
           Wenn Du eine bestätigte Kontaktperson bist, wird sich das
           Gesundheitsamt bei dir telefonisch innerhalb von 48 Stunden melden.
-        </Text>
-        <Text mb={4}>
+        </p>
+        <p>
           Falls Du bereits typische Symptome wie Fieber, Müdigkeit und trockenen
           Husten hast, solltest du vorsichtshalber in Haus-Quarantäne bleiben
           und das Gesundheitsamt informieren.
-        </Text>
-        <Flex mb={4}>
-          <Circle color="red" size={5}>
-            <Phone />
-          </Circle>
-          <Box ml={3}>
-            <Text fontWeight="bold">Bürgertelefon zum Coronavirus</Text>
-            <a href="tel:021191191001">
-              <Text fontSize="l" fontWeight="xbold">
-                0211 / 9119 1001
-              </Text>
-            </a>
-          </Box>
-        </Flex>
-        <Text fontWeight="bold" mb={2}>
-          Noch Fragen?
-        </Text>
-        <Text fontSize="s" lineHeight={1.5}>
+        </p>
+      </Text>
+      <Box height={6} />
+      <Row>
+        <Circle size={36} color="red.400">
+          <Phone />
+        </Circle>
+        <Box ml={3}>
+          <Text variant="h3">Bürgertelefon zum Coronavirus</Text>
+          <Text variant="h2">
+            <a href="tel:021191191001">0211 / 9119 1001</a>
+          </Text>
+        </Box>
+      </Row>
+      <Box height={6} />
+      <Text variant="h3">Noch Fragen?</Text>
+      <Box height={2} />
+      <Text>
+        <p>
           Eine Vielzahl von ständig aktualisierten Informationen gibt es auf der
           Internetseite des nordrhein-westfälischen Gesundheitsministeriums:{' '}
-          <a href="https://www.mags.nrw/coronavirus" className="link">
+          <a
+            href="https://www.mags.nrw/coronavirus"
+            target="blank"
+            rel="noopener noreferrer"
+          >
             www.mags.nrw/coronavirus
           </a>
           . Dort finden sich insbesondere auch Links zu den
           Informationsangeboten der Bundeszentrale für gesundheitliche
           Aufklärung und des Robert-Koch-Instituts.
-        </Text>
-      </Box>
-    </AppLayout>
+        </p>
+      </Text>
+      <FixedBottomBar transparent />
+    </MobileApp>
   )
 }
-
-export default CoronaPage

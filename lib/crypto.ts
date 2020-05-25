@@ -1,8 +1,13 @@
 import { seal, open } from 'tweetnacl-sealedbox-js'
 import { box } from 'tweetnacl'
+import { AppError } from './error'
 
 function binKey(key: string): Uint8Array {
-  return Uint8Array.from(atob(key), (c) => c.charCodeAt(0))
+  try {
+    return Uint8Array.from(atob(key), (c) => c.charCodeAt(0))
+  } catch (error) {
+    throw new AppError(error.name, error.message, 10010)
+  }
 }
 
 export function encrypt(publicKey: string, plain: string): string {

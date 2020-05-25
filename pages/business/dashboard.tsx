@@ -1,94 +1,75 @@
 import * as React from 'react'
-import { useMutation, useQuery } from 'react-query'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useOwner } from '@lib/db'
-import { postCompany, fetchCompanies } from '@lib/api'
-import { Box, Text, Button } from '@ui/base'
-import BusinessLayout from '@ui/layouts/Business'
-import AddCard from '@ui/blocks/AddCard'
-import CompanyCard from '@ui/blocks/CompanyCard'
 
-type DashboardProps = {}
+import { useModals, useCompanies } from '~lib/hooks'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { IconButton, Box, Text } from '~ui/core'
+import { Edit, Trash } from '~ui/svg'
+import { OwnerApp } from '~ui/layouts/OwnerApp'
+import { ActionCard } from '~ui/blocks/ActionCard'
+import { ActionList } from '~ui/blocks/ActionList'
+import { AddCard } from '~ui/blocks/AddCard'
+import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
+import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
 
-const Dashboard: React.FC<DashboardProps> = () => {
-  const { owner } = useOwner()
-  const router = useRouter()
-  const { data: companies = [], refetch } = useQuery(
-    'companies',
-    fetchCompanies
-  )
-  const [addCompany] = useMutation(postCompany)
-  const [tmpNewCompany, setTmpNewCompany] = React.useState<string | undefined>()
-
-  const handleAddNewCompany = React.useCallback(
-    async (name) => {
-      setTmpNewCompany(name)
-      await addCompany({ name })
-      await refetch()
-      setTmpNewCompany(undefined)
-    },
-    [addCompany, refetch]
-  )
-
-  const handleLogout = React.useCallback(() => {
-    sessionStorage.removeItem('rcvr_olt')
-    sessionStorage.removeItem('rcvr_oid')
-    router.replace('/')
-  }, [router])
+const DashboardPage: React.FC<WithOwnerProps> = () => {
+  const { data: companies } = useCompanies()
+  const { modals, openModal } = useModals({
+    data: BusinessDataModal,
+    delete: BusinessDeleteModal,
+  })
 
   return (
-    <BusinessLayout title="Meine Betriebe">
-      {owner && !owner.publicKey && (
-        <>
-          <Text fontWeight="xbold" color="red" mb={3}>
-            Du hast noch keinen Schlüssel eingerichtet. Ohne Schlüssel kannst du
-            keine QR Codes erstellen.
-          </Text>
-          <Link href="/business/setup/key-intro">
-            <a css={{ textDeocration: 'none' }}>
-              <Button title="Schlüssel erstellen" />
-            </a>
-          </Link>
-        </>
-      )}
-      {companies.map((company) => (
-        <Link
-          key={company.id}
-          href="/business/company/[companyId]/areas"
-          as={`/business/company/${company.id}/areas`}
-        >
-          <a>
-            <CompanyCard name={company.name} />
-          </a>
-        </Link>
-      ))}
-      {tmpNewCompany && <CompanyCard name={tmpNewCompany} loading />}
-      {owner && owner.publicKey && (
+    <OwnerApp title="Meine Betriebe">
+      {modals}
+      <ActionList>
         <AddCard
-          label="Betriebsname"
-          onAdd={handleAddNewCompany}
-          id="companyName"
+          title="Betrieb anlegen..."
+          onClick={() => openModal('data', { type: 'new' })}
         />
-      )}
-
-      <Box
-        textAlign="center"
-        fontSize="s"
-        fontWeight="bold"
-        color="bluegrey.800"
-        mt={4}
-      >
-        <button
-          type="button"
-          css={{ color: 'inherit', textDecoration: 'none', fontWeight: 700 }}
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-      </Box>
-    </BusinessLayout>
+        {companies?.map((company) => (
+          <ActionCard
+            key={company.id}
+            href="/business/company/[companyId]"
+            as={`/business/company/${company.id}`}
+          >
+            <ActionCard.Main
+              title={company.name}
+              subtitle={'Speisekarte: ' + (company.menuLink || '–')}
+            />
+            <ActionCard.Actions>
+              <IconButton
+                icon={Edit}
+                color="yellow.500"
+                onClick={() =>
+                  openModal('data', {
+                    type: 'edit',
+                    name: company.name,
+                    menuLink: company.menuLink,
+                    companyId: company.id,
+                  })
+                }
+                title="Ändern"
+              />
+              <IconButton
+                icon={Trash}
+                color="red.500"
+                onClick={() => openModal('delete')}
+              />
+            </ActionCard.Actions>
+          </ActionCard>
+        ))}
+      </ActionList>
+      <Box height={10} />
+      <Text textAlign={['center', 'center', 'left']}>
+        <Link href="/business/logout" passHref>
+          <Text variant="h5" as="a" color="bluegrey.400">
+            Logout
+          </Text>
+        </Link>
+      </Text>
+    </OwnerApp>
   )
 }
 
-export default Dashboard
+export default withOwner()(DashboardPage)
