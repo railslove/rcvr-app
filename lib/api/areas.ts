@@ -15,6 +15,7 @@ export interface AreaRes {
   id: string
   name: string
   companyId: string
+  companyName: string
   menuLink?: string
 }
 

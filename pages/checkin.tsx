@@ -97,7 +97,12 @@ export default function CheckinPage() {
         <title key="title">Checkin... | recover</title>
       </Head>
       <Loading show={showLoading} />
-      {showOnboarding && <Onboarding onSubmit={handleSubmitOnboarding} />}
+      {showOnboarding && (
+        <Onboarding
+          onSubmit={handleSubmitOnboarding}
+          title={areaInfo.data.companyName}
+        />
+      )}
     </MobileApp>
   )
 }

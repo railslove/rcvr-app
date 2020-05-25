@@ -8,6 +8,7 @@ import { Input, Checkbox, Button, Box, Text, Card, Row } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 
 type OnboardingProps = {
+  title: string
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
 }
 
@@ -18,7 +19,7 @@ const OnboardingSchema = Yup.object().shape({
   rememberMe: Yup.boolean(),
 })
 
-export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
+export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit, title }) => {
   const { data: guest } = useCurrentGuest()
 
   const initialValues = {
@@ -31,9 +32,13 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
   return (
     <div>
       <Text as="h2" variant="h2">
-        Willkommen!
+        {title}
       </Text>
       <Box height={5} />
+      <Text as="h3" variant="h5">
+        Willkommen!
+      </Text>
+      <Box height={1} />
       <Text>
         <p>
           Durch die aktuellen Corona-Verordnungen musst Du Deine Kontaktdaten
