@@ -41,7 +41,17 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
             >
               <ActionCard.Main
                 title={area.name}
-                subtitle={`am Tisch: ${openCount} – ausgecheckt: ${closedCount}`}
+                subtitle={
+                  <>
+                    <span css={{ whiteSpace: 'nowrap' }}>
+                      am Tisch: {openCount}
+                    </span>
+                    {' – '}
+                    <span css={{ whiteSpace: 'nowrap' }}>
+                      ausgecheckt: {closedCount}
+                    </span>
+                  </>
+                }
               />
               <ActionCard.Below>
                 <Row flexWrap="wrap" flex="1 0">
