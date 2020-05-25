@@ -46,6 +46,7 @@ When a guest checks in, a random ID will be saved on the guest's device. **recov
 - [Next.js](https://nextjs.org/)
 - [Emotion](https://emotion.sh/)
 - [Styled System](https://styled-system.com/)
+- [React Query](https://github.com/tannerlinsley/react-query/)
 - [Dexie.js](http://dexie.org/)
 - [Formik](https://jaredpalmer.com/formik/)
 - [Framer Motion](https://www.framer.com/motion/)
