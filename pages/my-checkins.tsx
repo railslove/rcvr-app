@@ -1,14 +1,11 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
+import { useMutation } from 'react-query'
 
-import {
-  useArea,
-  useCheckins,
-  useCheckout,
-  useDelayedLoading,
-} from '~lib/hooks'
-import { Box, Text } from '~ui/core'
+import { checkout } from '~lib/actions'
+import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
+import { Box, Text, Callout } from '~ui/core'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
 import { LastCheckin } from '~ui/blocks/LastCheckin'
 import { PastCheckin } from '~ui/blocks/PastCheckin'
@@ -20,15 +17,15 @@ export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
   const areaInfo = useArea(checkinsInfo.data?.[0]?.areaId)
   const [isLoading, setIsLoading] = useDelayedLoading(false)
-  const checkout = useCheckout()
+  const [checkoutFn, { error }] = useMutation(checkout)
 
   const handleCheckout = React.useCallback(
     async (checkin) => {
       setIsLoading(true)
-      await checkout({ id: checkin.id })
+      await checkoutFn({ id: checkin.id })
       setIsLoading(false)
     },
-    [setIsLoading, checkout]
+    [setIsLoading, checkoutFn]
   )
 
   return (
@@ -69,6 +66,24 @@ export default function MyCheckinsPage() {
                     area={areaInfo.data}
                     onCheckout={handleCheckout}
                   />
+                  {error && (
+                    <Callout variant="danger">
+                      <Text>
+                        {error instanceof TypeError ? (
+                          <p>
+                            Wir konnten dich nicht auschecken. Hast du
+                            vielleicht gerade kein Internet?
+                          </p>
+                        ) : (
+                          <p>Wir konnten dich nicht auschecken.</p>
+                        )}
+                        <p>
+                          Sollte das Problem weiterhin bestehen, keine Sorge:
+                          wir checken dich später automatisch aus.
+                        </p>
+                      </Text>
+                    </Callout>
+                  )}
                 </>
               ) : (
                 <PastCheckin checkin={checkin} />

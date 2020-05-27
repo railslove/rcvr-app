@@ -2,9 +2,12 @@ import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
+import { useMutation } from 'react-query'
 
-import { useCurrentGuest, useCheckin, useCheckout, useArea } from '~lib/hooks'
+import { checkin, checkout } from '~lib/actions'
+import { useCurrentGuest, useArea } from '~lib/hooks'
 import { Guest, updateGuest, addGuest, getLastCheckin } from '~lib/db'
+import { Row, Text, Box, Callout } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Onboarding } from '~ui/blocks/Onboarding'
 import { Loading } from '~ui/blocks/Loading'
@@ -12,11 +15,19 @@ import { Loading } from '~ui/blocks/Loading'
 export default function CheckinPage() {
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())
+  const [checkinFn, { error }] = useMutation(checkin, {
+    throwOnError: true,
+  })
+  const [checkoutFn] = useMutation(checkout)
   const [showOnboarding, setShowOnboarding] = React.useState(false)
   const [showLoading, setShowLoading] = React.useState(true)
   const router = useRouter()
-  const checkin = useCheckin()
-  const checkout = useCheckout()
+
+  if (error && !(error instanceof TypeError)) {
+    // Something went very wrong during the checkin and we can't
+    // recover ( ☜(ﾟヮﾟ☜) ayyyy) from it
+    throw error
+  }
 
   const publicKey = router.query.k?.toString()
   const areaId = router.query.a?.toString()
@@ -33,15 +44,21 @@ export default function CheckinPage() {
       // auto checkout
       const lastCheckin = await getLastCheckin()
       if (lastCheckin && !lastCheckin.leftAt) {
-        await checkout({ id: lastCheckin.id, leftAt: enteredAt })
+        await checkoutFn({ id: lastCheckin.id, leftAt: enteredAt })
       }
 
-      const ticket = { id, publicKey, areaId, enteredAt }
-      await checkin({ ticket, guest, companyId: areaInfo.data.companyId })
-
-      router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
+      try {
+        const ticket = { id, publicKey, areaId, enteredAt }
+        await checkinFn({ ticket, guest, companyId: areaInfo.data.companyId })
+        router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
+      } catch (error) {
+        if (error instanceof TypeError) {
+          setShowLoading(false)
+          setShowOnboarding(true)
+        }
+      }
     },
-    [publicKey, areaId, areaInfo, router, checkin, checkout]
+    [publicKey, areaId, areaInfo, router, checkinFn, checkoutFn]
   )
 
   const handleSubmitOnboarding = React.useCallback(
@@ -75,9 +92,9 @@ export default function CheckinPage() {
     // Check if a guest was already created, then do the checkin cha cha cha.
     if (guest) {
       const hasData = guest.name && guest.phone && guest.address
-      const hasAcceptedPrivacy =
-        guest.checkedInCompanyIds &&
-        guest.checkedInCompanyIds.includes(areaInfo.data.companyId)
+      const hasAcceptedPrivacy = guest.checkedInCompanyIds?.includes(
+        areaInfo.data.companyId
+      )
 
       if (hasData && hasAcceptedPrivacy) {
         checkinAndRedirect(guest)
@@ -98,10 +115,52 @@ export default function CheckinPage() {
       </Head>
       <Loading show={showLoading} />
       {showOnboarding && (
-        <Onboarding
-          onSubmit={handleSubmitOnboarding}
-          title={areaInfo.data.companyName}
-        />
+        <div>
+          <Text as="h2" variant="h2">
+            {areaInfo.data.companyName}
+          </Text>
+          <Box height={5} />
+          <Text as="h3" variant="h5">
+            Willkommen!
+          </Text>
+          <Box height={1} />
+          <Text>
+            <p>
+              Durch die aktuellen Corona-Verordnungen musst Du Deine
+              Kontaktdaten hinterlegen, wenn Du in einem Gastronomiebetrieb
+              bist.
+            </p>
+            <p>
+              So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.
+            </p>
+            <p>
+              Datenschutz ist uns dabei sehr wichtig! <strong>recover</strong>{' '}
+              speichert Deine Daten verschlüsselt und sicher.
+            </p>
+          </Text>
+          <Box height={6} />
+
+          {error && (
+            <Box mb={6} mx={-4}>
+              <Callout variant="danger">
+                <Text>
+                  Wir konnten keine Verbindung herstellen. Hast du vielleicht
+                  gerade kein Internet?
+                </Text>
+              </Callout>
+            </Box>
+          )}
+          <Onboarding onSubmit={handleSubmitOnboarding} />
+          <Row justifyContent="center" my={6}>
+            <a
+              href="https://www.recoverapp.de/fuer-gaeste"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Text variant="link">Wie funktioniert recover?</Text>
+            </a>
+          </Row>
+        </div>
       )}
     </MobileApp>
   )
