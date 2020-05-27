@@ -63,9 +63,9 @@ const Main = ({ title, subtitle, icon }) => {
         )}
       </Box>
       {icon && (
-        <Box flex="0 0 auto" mr={-3}>
+        <Row flex="0 0 auto" mr={-3} alignItems="center">
           <Icon icon={icon} color="bluegrey.500" size={4} />
-        </Box>
+        </Row>
       )}
     </Row>
   )
