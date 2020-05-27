@@ -4,11 +4,10 @@ import * as Yup from 'yup'
 
 import { useCurrentGuest } from '~lib/hooks'
 import { Guest } from '~lib/db'
-import { Input, Checkbox, Button, Box, Text, Card, Row } from '~ui/core'
+import { Input, Checkbox, Button, Box, Text, Card } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 
 type OnboardingProps = {
-  title: string
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
 }
 
@@ -19,7 +18,7 @@ const OnboardingSchema = Yup.object().shape({
   rememberMe: Yup.boolean(),
 })
 
-export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit, title }) => {
+export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
   const { data: guest } = useCurrentGuest()
 
   const initialValues = {
@@ -31,26 +30,6 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit, title }) => {
 
   return (
     <div>
-      <Text as="h2" variant="h2">
-        {title}
-      </Text>
-      <Box height={5} />
-      <Text as="h3" variant="h5">
-        Willkommen!
-      </Text>
-      <Box height={1} />
-      <Text>
-        <p>
-          Durch die aktuellen Corona-Verordnungen musst Du Deine Kontaktdaten
-          hinterlegen, wenn Du in einem Gastronomiebetrieb bist.
-        </p>
-        <p>So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.</p>
-        <p>
-          Datenschutz ist uns dabei sehr wichtig! <strong>recover</strong>{' '}
-          speichert Deine Daten verschlüsselt und sicher.
-        </p>
-      </Text>
-      <Box height={6} />
       <Formik
         initialValues={initialValues}
         validationSchema={OnboardingSchema}
@@ -92,15 +71,6 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit, title }) => {
           </Form>
         </Card>
       </Formik>
-      <Row justifyContent="center" my={6}>
-        <a
-          href="https://www.recoverapp.de/fuer-gaeste"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <Text variant="link">Wie funktioniert recover?</Text>
-        </a>
-      </Row>
     </div>
   )
 }

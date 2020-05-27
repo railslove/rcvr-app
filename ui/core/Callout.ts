@@ -5,7 +5,7 @@ import { space, variant } from 'styled-system'
 import { As } from './'
 
 interface Props {
-  variant?: 'info'
+  variant?: 'info' | 'danger'
 }
 type StyledSystemProps = SpaceProps
 type CalloutHTMLProps = React.HTMLAttributes<any>
@@ -25,6 +25,11 @@ export const Callout: React.FC<CalloutProps> = styled('div')(
         bg: 'blue.100',
         borderColor: 'blue.200',
         color: 'blue.500',
+      },
+      danger: {
+        bg: 'red.100',
+        borderColor: 'red.400',
+        color: 'red.600',
       },
     },
   }),
