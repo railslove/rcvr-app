@@ -68,6 +68,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                 </ul>
               </li>
             ))}
+            <li>
+              <NavLink href="/business/profile">Mein Profil</NavLink>
+            </li>
           </ul>
         </Aside>
         <Main>

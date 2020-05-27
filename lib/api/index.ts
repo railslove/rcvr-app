@@ -4,6 +4,7 @@ export * from './areas'
 export * from './owner'
 export * from './tickets'
 export * from './companies'
+export * from './checkouts'
 
 export const api = ky.create({
   prefixUrl: process.env.apiBase,
@@ -11,7 +12,7 @@ export const api = ky.create({
   hooks: {
     beforeRequest: [
       (request) => {
-        const protectedPaths = ['/owner', '/companies', '/areas']
+        const protectedPaths = ['/owner', '/companies', '/areas', '/checkout']
         const shouldSetToken = protectedPaths.some((path) =>
           request.url.includes(path)
         )
