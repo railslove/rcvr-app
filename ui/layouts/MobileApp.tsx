@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
@@ -19,6 +20,9 @@ export const MobileApp: React.FC<Props> = ({
 }) => {
   return (
     <Limit>
+      <Head>
+        <title key="title">recover</title>
+      </Head>
       <SharedMeta />
       <LogoBox variant={logoVariant} layoutId="appLogo">
         <Logo />
