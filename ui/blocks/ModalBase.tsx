@@ -48,6 +48,7 @@ export const ModalBase: React.FC<ModalBaseProps & Props> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
+          css={{ pointerEvents: open ? 'initial' : 'none' }}
         >
           <ModalBox
             ref={ref}
