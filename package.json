@@ -71,7 +71,6 @@
     "jest": "^26.0.1",
     "mockdate": "^2.0.5",
     "prettier": "^2.0.5",
-    "storybook-dark-mode": "^0.4.1",
     "ts-jest": "^26.0.0",
     "typescript": "^3.8.3"
   },
