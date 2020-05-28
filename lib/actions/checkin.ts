@@ -1,6 +1,6 @@
 import * as db from '../db'
 import * as api from '../api'
-import { encrypt } from '../crypto'
+import { encrypt, toCSV } from '../crypto'
 
 interface Params {
   ticket: api.TicketReq
@@ -8,14 +8,10 @@ interface Params {
   companyId: api.CompanyRes['id']
 }
 
-function toCSV(values: string[]): string {
-  return values.map((v) => JSON.stringify(v)).join()
-}
-
 export async function checkin(params: Params): Promise<db.Checkin> {
   const { ticket, guest, companyId } = params
 
-  const csv = toCSV([guest.name, guest.phone, guest.address])
+  const csv = toCSV(guest)
   const encryptedData = encrypt(ticket.publicKey, csv)
 
   const ticketRes = await api.postTicket({ ...ticket, encryptedData })

@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
+import formatDate from 'intl-dateformat'
 
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { useCompany } from '~lib/hooks'
+import { useCompany, useDataRequests } from '~lib/hooks'
 import { Text, Box, Divider, Callout } from '~ui/core'
-import { Right } from '~ui/svg'
+import { Lock, Unlock, Right } from '~ui/svg'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 import { ActionList } from '~ui/blocks/ActionList'
 import { ActionCard } from '~ui/blocks/ActionCard'
@@ -13,6 +14,7 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)
+  const { data: dataRequests } = useDataRequests(companyId)
 
   return (
     <OwnerApp title={company?.name}>
@@ -36,23 +38,46 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
       </ActionList>
       <Divider />
 
-      <Text variant="h3">Daten entschlüsseln</Text>
+      <Text variant="h3">Kundenkontaktdaten</Text>
       <Box height={4} />
       <Callout>
         <Text>
           <p>
             Anfragen zu Kundenkontaktdaten kannst Du per Email an{' '}
             <a href="mailto:team@recoverapp.de">team@recoverapp.de</a> stellen.
-            Wir melden uns dann schnellstmöglich bei Dir. Wir arbeiten an einem
-            automatisierten Prozess dafür.
+            Wir melden uns dann schnellstmöglich bei Dir.
           </p>
         </Text>
       </Callout>
       <Box height={4} />
+      {dataRequests?.length === 0 && (
+        <Text variant="shy">
+          Du hast noch keine freigegebenen Kundenkontaktdaten.
+        </Text>
+      )}
       <ActionList grid>
-        <ActionCard href="/business/decrypt">
-          <ActionCard.Main title="Datenpaket hochladen" icon={Right} />
-        </ActionCard>
+        {dataRequests?.map((dataRequest) => (
+          <ActionCard
+            key={dataRequest.id}
+            href="/business/company/[companyId]/data-request/[dataRequestId]"
+            as={`/business/company/${companyId}/data-request/${dataRequest.id}`}
+          >
+            <ActionCard.Main
+              title={
+                formatDate(dataRequest.from, 'DD.MM.YYYY HH:mm') +
+                ' – ' +
+                formatDate(dataRequest.to, 'DD.MM.YYYY HH:mm')
+              }
+              subtitle={
+                dataRequest.acceptedAt
+                  ? 'Freigegeben am: ' +
+                    formatDate(dataRequest.acceptedAt, 'DD.MM.YYYY HH:mm')
+                  : 'Noch nicht freigegeben'
+              }
+              icon={dataRequest.acceptedAt ? Unlock : Lock}
+            />
+          </ActionCard>
+        ))}
         <div />
       </ActionList>
     </OwnerApp>
