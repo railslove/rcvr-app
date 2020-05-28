@@ -6,6 +6,8 @@
     { "source": "/qrcode", "destination": "/qr" },
     { "source": "/business/signup", "destination": "/business/setup/intro" },
     { "source": "/business/setup", "destination": "/business/setup/intro" },
-    { "source": "/business/company", "destination": "/business/dashboard" }
+    { "source": "/business/setup/", "destination": "/business/setup/intro" },
+    { "source": "/business/company", "destination": "/business/dashboard" },
+    { "source": "/business/company/", "destination": "/business/dashboard" }
   ]
 }
