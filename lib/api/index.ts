@@ -12,7 +12,7 @@ export const api = ky.create({
   hooks: {
     beforeRequest: [
       (request) => {
-        const protectedPaths = ['/owner', '/companies', '/areas', '/checkout']
+        const protectedPaths = ['/owner', '/companies', '/areas', '/checkout', '/stripe_billing_portal_session']
         const shouldSetToken = protectedPaths.some((path) =>
           request.url.includes(path)
         )
