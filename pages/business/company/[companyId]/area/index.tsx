@@ -52,6 +52,17 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
                     '_blank'
                   )
                 }
+                title="QR Schild"
+              />
+              <IconButton
+                icon={Download}
+                color="bluegrey.700"
+                onClick={() =>
+                  window.open(
+                    process.env.apiBase + 'areas/' + area.id + '.png',
+                    '_blank'
+                  )
+                }
                 title="QR Code"
               />
               <IconButton
