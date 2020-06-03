@@ -8,7 +8,7 @@ async function fetchLastTickets(
   companyId: string
 ): Promise<CompanyTicketRes[]> {
   const to = new Date()
-  const from = new Date(subHours(to, 6))
+  const from = new Date(subHours(to, 24))
   return await getTickets({ companyId, from, to })
 }
 

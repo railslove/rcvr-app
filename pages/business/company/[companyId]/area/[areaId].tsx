@@ -24,7 +24,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
         Checkins
       </BackLink>
       <Text variant="shy">
-        Checkins der letzten 6 Stunden. Aktualisiert sich automatisch.
+        Checkins der letzten 24 Stunden. Aktualisiert sich automatisch.
       </Text>
       <Box height={2} />
       <DataList>
