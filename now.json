@@ -1,9 +1,0 @@
-{
-  "github": {
-    "silent": true
-  },
-  "redirects": [
-    { "source": "/qrcode", "destination": "/qr" },
-    { "source": "/business/signup", "destination": "/business/setup/intro" }
-  ]
-}

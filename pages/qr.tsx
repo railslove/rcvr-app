@@ -6,15 +6,30 @@ import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function QRCodePage() {
+  const videoEl = React.useRef<HTMLVideoElement>()
+
   React.useEffect(() => {
-    const { BrowserQRCodeReader } = require('@zxing/library')
-    const reader = new BrowserQRCodeReader()
-    reader
-      .decodeOnceFromVideoDevice(undefined, 'video')
-      .then((result) => {
-        window.location.href = result.text
-      })
-      .catch((err) => console.warn(err))
+    let qrCodeReader: any
+
+    async function mountAndWaitForScan() {
+      // @zxing/library doesn't play nicely with Next's SSR, thus we need to
+      // import it on mount.
+      try {
+        const { BrowserQRCodeReader } = await import('@zxing/library')
+        qrCodeReader = new BrowserQRCodeReader()
+        const result = await qrCodeReader.decodeFromInputVideoDevice(
+          undefined,
+          videoEl.current
+        )
+        window.location.href = result.getText()
+      } catch (error) {
+        console.error('Failed mountAndWaitForScan:', error)
+      }
+    }
+
+    mountAndWaitForScan()
+
+    return () => qrCodeReader?.reset()
   }, [])
 
   return (
@@ -27,13 +42,12 @@ export default function QRCodePage() {
       </Text>
       <Box height={4} />
       <Text>
-        Scanne den QR-Code, den Du auf dem Tisch teilnehmender Restaurants
-        findest.
+        Scanne den QR-Code, den Du auf dem Tisch teilnehmender Betriebe findest.
       </Text>
       <Card my={8} css={{ position: 'relative' }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
-          id="video"
+          ref={videoEl}
           width="100%"
           height="100%"
           css={{ display: 'block' }}

@@ -5,6 +5,7 @@ export * from './owner'
 export * from './tickets'
 export * from './companies'
 export * from './checkouts'
+export * from './dataRequests'
 
 export const api = ky.create({
   prefixUrl: process.env.apiBase,
@@ -12,7 +13,12 @@ export const api = ky.create({
   hooks: {
     beforeRequest: [
       (request) => {
-        const protectedPaths = ['/owner', '/companies', '/areas', '/checkout', '/stripe_billing_portal_session']
+        const protectedPaths = [
+          '/owner',
+          '/companies',
+          '/areas',
+          '/data_requests',
+        ]
         const shouldSetToken = protectedPaths.some((path) =>
           request.url.includes(path)
         )

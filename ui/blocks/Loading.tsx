@@ -21,6 +21,7 @@ export const Loading: React.FC<Props> = ({ show = false }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          css={{ pointerEvents: show ? 'initial' : 'none' }}
         >
           {[0, 1, 2].map((i) => (
             <motion.div
