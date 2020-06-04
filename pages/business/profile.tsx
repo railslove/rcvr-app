@@ -135,7 +135,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return owner.stripeSubscriptionStatus
   }, [owner])
 
-  if (status === 'free')
+  if (status === 'free') {
     return (
       <Callout>
         <Text>
@@ -146,21 +146,9 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
         </Text>
       </Callout>
     )
+  }
 
-  if (status === 'active')
-    return (
-      <Callout>
-        <Text>
-          <strong>Deine Mitgliedschaft ist aktiv.</strong>{' '}
-          <span role="img" aria-label="Hurra!">
-            🎉
-          </span>{' '}
-          Wir freuen uns, dass du recover nutzt!
-        </Text>
-      </Callout>
-    )
-
-  if (status === 'trialing_internal')
+  if (status === 'trialing_internal') {
     return (
       <Callout>
         <Text>
@@ -172,8 +160,9 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
         </Text>
       </Callout>
     )
+  }
 
-  if (status === 'trialing')
+  if (status === 'trialing') {
     return (
       <Callout>
         <Text>
@@ -181,15 +170,17 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
         </Text>
       </Callout>
     )
+  }
 
-  if (status === 'incomplete')
+  if (status === 'incomplete') {
     return (
       <Callout>
-        <Text>Deine Zahlung wird gerade verarbeitet...</Text>
+        <Text>Deine Zahlung wird verarbeitet...</Text>
       </Callout>
     )
+  }
 
-  if (status === 'incomplete_expired')
+  if (status === 'incomplete_expired') {
     return (
       <Callout variant="danger">
         <Text>
@@ -198,20 +189,23 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
         </Text>
       </Callout>
     )
+  }
 
-  if (status === 'unpaid')
+  if (status === 'unpaid') {
     return (
       <Callout variant="danger">
         <Text>Deine letzte Rechnung wurde noch nicht bezahlt.</Text>
       </Callout>
     )
+  }
 
-  if (status === 'canceled')
+  if (status === 'canceled') {
     return (
       <Callout variant="danger">
         <Text>Du hast deine Mitgliedschaft gekündigt.</Text>
       </Callout>
     )
+  }
 }
 
 export default withOwner()(ProfilePage)
