@@ -7,7 +7,7 @@ export * from './companies'
 export * from './dataRequests'
 
 export const api = ky.create({
-  prefixUrl: process.env.apiBase,
+  prefixUrl: process.env.NEXT_PUBLIC_API_BASE,
   timeout: false,
   hooks: {
     beforeRequest: [

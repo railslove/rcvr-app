@@ -48,7 +48,10 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
                 color="bluegrey.700"
                 onClick={() =>
                   window.open(
-                    process.env.apiBase + 'areas/' + area.id + '.pdf',
+                    process.env.NEXT_PUBLIC_API_BASE +
+                      'areas/' +
+                      area.id +
+                      '.pdf',
                     '_blank'
                   )
                 }

@@ -21,7 +21,9 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   const openCheckout = React.useCallback(async () => {
     try {
       setRedirecting(true)
-      const stripe = await loadStripe(process.env.stripePublishableKey)
+      const stripe = await loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+      )
       const checkout = await postOwnerCheckout()
       stripe.redirectToCheckout({ sessionId: checkout.id })
     } catch (error) {
