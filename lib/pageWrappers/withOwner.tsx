@@ -2,9 +2,8 @@ import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useMountedState } from 'react-use'
-import { useOwner } from '~lib/hooks'
+import { useOwner, CurrentOwner } from '~lib/hooks'
 import { Loading } from '~ui/blocks/Loading'
-import { Owner } from '~lib/db'
 
 interface WithOwnerConfig {
   redirect?: 'authorized' | 'unauthorized' | false
@@ -69,5 +68,5 @@ export const withOwner = (userConfig: WithOwnerConfig = {}) => (
 }
 
 export interface WithOwnerProps {
-  owner: Owner
+  owner: CurrentOwner
 }

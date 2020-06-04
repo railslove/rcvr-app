@@ -3,8 +3,9 @@ import Link from 'next/link'
 import { Card, SRText, Row, Text, Box, Icon } from '~ui/core'
 
 interface Props {
-  href: string
+  href?: string
   as?: string
+  onClick?: () => void
   children: React.ReactNode
 }
 
@@ -16,27 +17,33 @@ interface Composition {
 
 type AreaCardCmps = React.FC<Props> & Composition
 
-export const ActionCard: AreaCardCmps = ({ href, as, children }) => {
+export const ActionCard: AreaCardCmps = ({ href, as, onClick, children }) => {
   return (
-    <Card css={{ position: 'relative' }}>
+    <Card
+      css={{ position: 'relative', textAlign: 'left' }}
+      as={onClick ? 'button' : 'div'}
+      onClick={onClick}
+    >
       <Row flexWrap="wrap" alignItems="center" px={4} py={2}>
         {children}
       </Row>
-      <Link href={href} as={as}>
-        <a
-          css={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 1,
-            cursor: 'pointer',
-          }}
-        >
-          <SRText>Zur Seite navigieren</SRText>
-        </a>
-      </Link>
+      {href && (
+        <Link href={href} as={as}>
+          <a
+            css={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 1,
+              cursor: 'pointer',
+            }}
+          >
+            <SRText>Zur Seite navigieren</SRText>
+          </a>
+        </Link>
+      )}
     </Card>
   )
 }

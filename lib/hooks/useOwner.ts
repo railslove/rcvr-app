@@ -2,8 +2,10 @@ import { useQuery } from 'react-query'
 import * as db from '../db'
 import * as api from '../api'
 
-async function fetchOwner(): Promise<db.Owner> {
-  const ownerRes = await api.getOwner()
+export type CurrentOwner = db.Owner & api.OwnerRes
+
+async function fetchOwner(): Promise<CurrentOwner> {
+  let ownerRes = await api.getOwner()
   let owner = await db.getOwner(ownerRes.id)
 
   if (!owner) {
@@ -12,7 +14,10 @@ async function fetchOwner(): Promise<db.Owner> {
 
   // update publicKey in api if it exists locally but not in api
   if (owner.publicKey && !ownerRes.publicKey) {
-    await api.patchOwner({ id: owner.id, publicKey: owner.publicKey })
+    ownerRes = await api.patchOwner({
+      id: owner.id,
+      publicKey: owner.publicKey,
+    })
   }
 
   // update publicKey locally if it's missing locally but exists in api
@@ -21,7 +26,7 @@ async function fetchOwner(): Promise<db.Owner> {
     owner = await db.updateOwner(owner)
   }
 
-  return owner
+  return { ...owner, ...ownerRes }
 }
 
 export function useOwner() {
