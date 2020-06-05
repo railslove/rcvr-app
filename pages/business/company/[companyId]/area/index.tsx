@@ -23,6 +23,11 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
     qrCode: QrInfoModal,
   })
 
+  const handleDownload = (areaId: string) => () => {
+    window.location.href = process.env.apiBase + 'areas/' + areaId + '.png'
+    openModal('qrCode')
+  }
+
   return (
     <OwnerApp title={`${company?.name ?? ''} – Bereiche`}>
       <BackLink
@@ -48,12 +53,8 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
               <IconButton
                 icon={Download}
                 color="bluegrey.700"
-                onClick={() => {
-                  window.location.href =
-                    process.env.apiBase + 'areas/' + area.id + '.png'
-                  openModal('qrCode')
-                }}
-                title="QR Code"
+                onClick={handleDownload(area.id)}
+                title="QR-Code"
               />
               <IconButton
                 icon={Edit}

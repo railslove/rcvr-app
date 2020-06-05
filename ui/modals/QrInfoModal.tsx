@@ -5,38 +5,35 @@ import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 
 export const QrInfoModal: React.FC<ModalBaseProps> = (props) => {
   return (
-    <ModalBase {...props} maxWidth={400} title="QR Code">
+    <ModalBase {...props} maxWidth={400} title="QR-Code wurde heruntergeladen!">
       <Text>
         <p>
-          Wir haben den QR Code generiert. Der Download sollte gleich starten.
-          Speichere und drucke den Code am besten zusammen mit Info über den
-          Bereich und einer Erklärung über die Schritte zum Einschecken aus.
+          Der QR-Code wurde in deinen Downloads gespeichert. Drucke ihn am
+          besten zusammen mit einer kurzen Erklärung zum Checkin aus.
         </p>
-        <p>Du kannst den unteren Text als Beispiel nehmen:</p>
-        <ol
-          style={{
-            listStyle: 'decimal',
-            margin: '14px 0',
-            paddingLeft: '40px',
-          }}
-        >
-          <li>
-            Scanne diesen QR Code mit Deiner Kamera. Sollte deine Kamera den
-            Code nicht erkennen, gib
-            <a href="https://rcvr.app/qr">rcvr.app/qr</a> in deinem Browser ein.
-          </li>
-          <li>
-            Beim ersten Checkin gibst Du deinen Namen und deine Telefonnummer
-            an. Deine Daten legen wir natürlich verschlüsselt und sicher ab!
-          </li>
-          <li>
-            Wenn Du gehst, kannst Du dich im Browser auschecken. So können wir
-            noch besser herausfinden, ob Du im Zweifel eine mögliche
-            Kontaktperson bist oder nicht. Wir wünschen dir eine gute Zeit.
-            Bleib gesund!
-          </li>
-        </ol>
+        <p>Du kannst auch einfach unsere Vorlage nutzen:</p>
       </Text>
+      <Box height={4} />
+      <Box as="ol" css={{ listStyle: 'decimal' }} pl={5}>
+        <Text as="li">
+          Scanne diesen QR-Code mit Deiner Kamera. Sollte deine Kamera den Code
+          nicht erkennen, gib <strong>rcvr.app/qr</strong> in deinem Browser
+          ein.
+          <Box height={2} />
+        </Text>
+        <Text as="li">
+          <strong>Beim ersten Checkin</strong> gibst Du deinen Namen,
+          Telefonnummer und Adresse an. Deine Daten legen wir natürlich
+          verschlüsselt und sicher ab!
+          <Box height={2} />
+        </Text>
+        <Text as="li">
+          <strong>Wenn Du gehst</strong>, kannst Du dich auf deinem Handy wieder
+          auschecken. So können wir noch besser herausfinden, ob Du im Zweifel
+          eine mögliche Kontaktperson bist oder nicht.
+          <Box height={2} />
+        </Text>
+      </Box>
       <Box height={6} />
       <Button onClick={props.onClose} css={{ width: '100%' }}>
         Schließen
