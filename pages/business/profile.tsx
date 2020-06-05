@@ -2,8 +2,9 @@ import * as React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import formatDate from 'intl-dateformat'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-import { useCompanies } from '~lib/hooks'
+import { useCompanies, useModals } from '~lib/hooks'
 import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Box, Button, Text, Divider, Callout } from '~ui/core'
@@ -13,10 +14,28 @@ import { OwnerApp } from '~ui/layouts/OwnerApp'
 import { Loading } from '~ui/blocks/Loading'
 import { ActionList } from '~ui/blocks/ActionList'
 import { ActionCard } from '~ui/blocks/ActionCard'
+import { SubscribedModal } from '~ui/modals/SubscribedModal'
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()
+  const { query } = useRouter()
+  const status = React.useMemo(() => {
+    if (query.success?.toString() === 'true') return 'success'
+  }, [query])
+
+  const didOpenSuccessModal = React.useRef(false)
+  const { modals, openModal } = useModals({
+    success: SubscribedModal,
+  })
+
+  React.useEffect(() => {
+    if (didOpenSuccessModal.current) return
+    if (status === 'success') {
+      didOpenSuccessModal.current = true
+      openModal('success')
+    }
+  }, [status, openModal])
 
   const openCheckout = React.useCallback(async () => {
     try {
@@ -52,6 +71,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   return (
     <OwnerApp title="Mein Profil">
+      {modals}
       <Loading show={redirecting} />
       <Divider />
       <Text as="h3" variant="h2">
@@ -88,17 +108,6 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 
       {hasSubscription && !owner.canUseForFree && (
         <>
-          <ActionList grid>
-            <ActionCard onClick={openCheckout}>
-              <ActionCard.Main title="Rechnungsdaten ändern" icon={Right} />
-            </ActionCard>
-            <ActionCard onClick={openSelfService}>
-              <ActionCard.Main title="Deine Rechnungen" icon={Right} />
-            </ActionCard>
-          </ActionList>
-
-          <Divider />
-
           <ActionList grid>
             <ActionCard onClick={openSelfService}>
               <ActionCard.Main title="Mitgliedschaft verwalten" icon={Right} />
@@ -168,7 +177,8 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout>
         <Text>
-          <strong>Du bist im Probezeitraum deiner Mitgliedschaft.</strong>
+          <strong>Du bist im Probezeitraum deiner Mitgliedschaft.</strong>{' '}
+          Danach wird deine Mitgliedschaft automatisch verlängert.
         </Text>
       </Callout>
     )
