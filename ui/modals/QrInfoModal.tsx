@@ -8,9 +8,9 @@ export const QrInfoModal: React.FC<ModalBaseProps> = (props) => {
     <ModalBase {...props} maxWidth={400} title="QR Code">
       <Text>
         <p>
-          Wir haben den QR Code generiert. Der Download soll gleich starten.
-          Speichere und drucke es aus mit Info über den Bereich und eine
-          Erklärung über die Schritte zum Einschecken.
+          Wir haben den QR Code generiert. Der Download sollte gleich starten.
+          Speichere und drucke den Code am besten zusammen mit Info über den
+          Bereich und einer Erklärung über die Schritte zum Einschecken aus.
         </p>
         <p>Du kannst den unteren Text als Beispiel nehmen:</p>
         <ol
@@ -21,13 +21,13 @@ export const QrInfoModal: React.FC<ModalBaseProps> = (props) => {
           }}
         >
           <li>
-            Scanne diesen QR Code mit Deiner Kamera. Sollte eine Kamera den Code
-            nicht erkennen, gib <a href="https://rcvr.app/qr">rcvr.app/qr</a> in
-            deinem Browser ein.
+            Scanne diesen QR Code mit Deiner Kamera. Sollte deine Kamera den
+            Code nicht erkennen, gib
+            <a href="https://rcvr.app/qr">rcvr.app/qr</a> in deinem Browser ein.
           </li>
           <li>
-            Beim ersten Checkin gibst Du Deinen Namen und Telefonnummer an.
-            Deine Daten legen wir natürlich verschlüsselt und sicher ab!
+            Beim ersten Checkin gibst Du deinen Namen und deine Telefonnummer
+            an. Deine Daten legen wir natürlich verschlüsselt und sicher ab!
           </li>
           <li>
             Wenn Du gehst, kannst Du dich im Browser auschecken. So können wir
