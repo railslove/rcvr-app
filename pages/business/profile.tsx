@@ -229,6 +229,8 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
       </Callout>
     )
   }
+
+  return null
 }
 
 export default withOwner()(ProfilePage)
