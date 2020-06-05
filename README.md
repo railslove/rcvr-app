@@ -79,7 +79,7 @@ You can also choose a different port, e.g. when you're running [rcvr-api](https:
 npm run dev -- -p 3333
 ```
 
-If you want to change environment variables locally, you can duplicate `.env` to `.env.local` and change them in your local file. Read more about environment variables [here](https://nextjs.org/docs/basic-features/environment-variables).
+If you want to change environment variables locally, for example the API URL, you can duplicate `.env` to `.env.local` and change the variables in your local copy. Read more about environment variables [here](https://nextjs.org/docs/basic-features/environment-variables).
 
 ## License
 
