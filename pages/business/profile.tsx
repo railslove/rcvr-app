@@ -109,6 +109,17 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       {hasSubscription && !owner.canUseForFree && (
         <>
           <ActionList grid>
+            <ActionCard onClick={openCheckout}>
+              <ActionCard.Main title="Rechnungsdaten ändern" icon={Right} />
+            </ActionCard>
+            <ActionCard onClick={openSelfService}>
+              <ActionCard.Main title="Deine Rechnungen" icon={Right} />
+            </ActionCard>
+          </ActionList>
+
+          <Divider />
+
+          <ActionList grid>
             <ActionCard onClick={openSelfService}>
               <ActionCard.Main title="Mitgliedschaft verwalten" icon={Right} />
             </ActionCard>
