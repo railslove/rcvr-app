@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { queryCache } from 'react-query'
 
 import { patchCompany, postCompany } from '~lib/api'
-import { Box, Input, FileInput, Button } from '~ui/core'
+import { Box, Input, FileInput, Button, Text } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 
 interface Props {
@@ -87,10 +87,14 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <Box height={4} />
           <Input name="menuLink" label="Link zur Speisekarte" />
           <Box height={4} />
+          <Text variant="shy" textAlign="center">
+            – oder –
+          </Text>
+          <Box height={2} />
           <FileInput
             name="menuPdf"
             type="file"
-            label="Speisekarte"
+            label="Speisekarte als PDF"
             hint="Es können nur pdf-Dateien hochgeladen werden."
             accept="application/pdf"
           />
