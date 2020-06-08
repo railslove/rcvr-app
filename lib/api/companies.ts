@@ -39,12 +39,10 @@ export async function postCompany(company: CompanyReq): Promise<CompanyRes> {
 
 export async function patchCompany(
   id: string,
-  company: CompanyReq
+  formData: FormData
 ): Promise<CompanyRes> {
-  const json = snakecaseKeys({ company }, { deep: true })
-
   return await api
-    .patch(`companies/${id}`, { json })
+    .patch(`companies/${id}`, { body: formData })
     .json()
     .then((res: CompanyRes) => camelcaseKeys(res, { deep: true }))
 }
