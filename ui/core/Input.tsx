@@ -79,7 +79,13 @@ export const Input: React.FC<InputProps> = ({
   )
 }
 
-export const FileInput: React.FC<InputProps> = ({ label, hint, ...rest }) => {
+type FileInputProps = InputProps & { accept?: string }
+export const FileInput: React.FC<FileInputProps> = ({
+  label,
+  hint,
+  accept,
+  ...rest
+}) => {
   const [{ onChange: _, value, ...field }, meta, helpers] = useField(rest)
   const [error, setError] = React.useState<string>()
   const showError = Boolean(meta.touched && error)
@@ -104,7 +110,7 @@ export const FileInput: React.FC<InputProps> = ({ label, hint, ...rest }) => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false,
-    accept: 'application/pdf',
+    accept,
   })
 
   const resetValue = React.useCallback(

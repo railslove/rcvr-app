@@ -92,6 +92,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
             type="file"
             label="Speisekarte"
             hint="Es können nur pdf-Dateien hochgeladen werden."
+            accept="application/pdf"
           />
           <Box height={4} />
           <Button type="submit" css={{ width: '100%' }}>
