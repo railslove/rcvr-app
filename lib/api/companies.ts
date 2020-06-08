@@ -1,16 +1,17 @@
 import camelcaseKeys from 'camelcase-keys'
-import snakecaseKeys from 'snakecase-keys'
 import { api, AreaRes } from './'
 
-export interface CompanyReq {
-  name?: string
-  menuLink?: string
+export interface CompanyReq extends FormData {
+  'company[name]'?: FormDataEntryValue
+  'company[menu_link]'?: FormDataEntryValue
+  'company[menu_pdf]'?: File
 }
 
 export interface CompanyRes {
   id: string
   name: string
   menuLink?: string
+  menuPdfLink?: string
   areas: AreaRes[]
 }
 
@@ -29,20 +30,18 @@ export async function getCompany(id: string): Promise<CompanyRes> {
 }
 
 export async function postCompany(company: CompanyReq): Promise<CompanyRes> {
-  const json = snakecaseKeys({ company }, { deep: true })
-
   return await api
-    .post('companies', { json })
+    .post('companies', { body: company })
     .json()
     .then((res: CompanyRes) => camelcaseKeys(res, { deep: true }))
 }
 
 export async function patchCompany(
   id: string,
-  formData: FormData
+  company: CompanyReq
 ): Promise<CompanyRes> {
   return await api
-    .patch(`companies/${id}`, { body: formData })
+    .patch(`companies/${id}`, { body: company })
     .json()
     .then((res: CompanyRes) => camelcaseKeys(res, { deep: true }))
 }

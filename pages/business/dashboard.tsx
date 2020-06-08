@@ -46,6 +46,7 @@ const DashboardPage: React.FC<WithOwnerProps> = () => {
                     type: 'edit',
                     name: company.name,
                     menuLink: company.menuLink,
+                    menuPdfLink: company.menuPdfLink,
                     companyId: company.id,
                   })
                 }

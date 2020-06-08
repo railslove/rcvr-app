@@ -1,16 +1,17 @@
 import * as React from 'react'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { queryCache } from 'react-query'
 
 import { patchCompany, postCompany } from '~lib/api'
-import { Box, Input, Button } from '~ui/core'
+import { Box, Input, FileInput, Button } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 
 interface Props {
   type: 'new' | 'edit'
   name?: string
   menuLink?: string
+  menuPdfLink?: string
   companyId?: string
 }
 type MProps = ModalBaseProps & Props
@@ -18,12 +19,14 @@ type MProps = ModalBaseProps & Props
 const BusinessSchema = Yup.object().shape({
   name: Yup.string().required('Du musst einen Namen angeben.'),
   menuLink: Yup.string(),
+  menuPdf: Yup.mixed(),
 })
 
 export const BusinessDataModal: React.FC<MProps> = ({
   type = 'new',
   name,
   menuLink,
+  menuPdfLink,
   companyId,
   ...baseProps
 }) => {
@@ -38,13 +41,12 @@ export const BusinessDataModal: React.FC<MProps> = ({
         safeMenuLink = 'https://' + menuLink
       }
 
-      debugger
-
       const formData = new FormData()
-
       formData.append('company[name]', name)
-      formData.append('company[menu_link]', menuLink)
-      formData.append('company[menu_pdf]', menuPdf)
+      formData.append('company[menu_link]', safeMenuLink)
+      if (menuPdf !== menuPdfLink) {
+        formData.append('company[menu_pdf]', menuPdf)
+      }
 
       try {
         setLoading(true)
@@ -52,7 +54,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           await patchCompany(companyId, formData)
         }
         if (type === 'new') {
-          await postCompany({ name, menuLink: safeMenuLink })
+          await postCompany(formData)
         }
         queryCache.refetchQueries('companies')
         baseProps.onClose()
@@ -66,7 +68,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [type, companyId, baseProps]
+    [type, companyId, baseProps, menuPdfLink]
   )
 
   return (
@@ -75,7 +77,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         initialValues={{
           name: name || '',
           menuLink: menuLink || '',
-          menuPdf: '',
+          menuPdf: menuPdfLink,
         }}
         validationSchema={BusinessSchema}
         onSubmit={handleSubmit}
@@ -85,19 +87,12 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <Box height={4} />
           <Input name="menuLink" label="Link zur Speisekarte" />
           <Box height={4} />
-          <Field name="menuPdf">
-            {({ field, form }) => (
-              <Input
-                {...field}
-                type="file"
-                label="Speisekarte als PDF"
-                onChange={(event) => {
-                  debugger
-                  form.setFieldValue('menuPdf', event.currentTarget.files[0])
-                }}
-              />
-            )}
-          </Field>
+          <FileInput
+            name="menuPdf"
+            type="file"
+            label="Speisekarte"
+            hint="Es können nur pdf-Dateien hochgeladen werden."
+          />
           <Box height={4} />
           <Button type="submit" css={{ width: '100%' }}>
             {button}
