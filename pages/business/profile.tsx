@@ -97,6 +97,11 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               Danach kostet die Mitgliedschaft 15€ zzgl. USt. pro Monat und
               Betrieb. Du kannst deine Mitgliedschaft jederzeit zum Monatsende
               kündigen.
+              <br />
+              Wenn du Anspruch auf eine kostenlose oder reduzierte Nutzung von
+              der Recover App hast, melde dich gerne bei unserem Support, damit
+              wir deinen Laden überprüfen und freischalten können:{' '}
+              <a href="mailto:team@recover.de">team@recover.de</a>
             </p>
           </Text>
           <Box height={4} />
