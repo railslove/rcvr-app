@@ -3,14 +3,13 @@ import Link from 'next/link'
 
 import { useModals, useCompanies } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { IconButton, Box, Text } from '~ui/core'
-import { Edit, Trash } from '~ui/svg'
 import { OwnerApp } from '~ui/layouts/OwnerApp'
-import { ActionCard } from '~ui/blocks/ActionCard'
+import { Box, Text } from '~ui/core'
 import { ActionList } from '~ui/blocks/ActionList'
 import { AddCard } from '~ui/blocks/AddCard'
 import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
 import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
+import { CompanyCard } from '~ui/blocks/CompanyCard'
 
 const DashboardPage: React.FC<WithOwnerProps> = () => {
   const { data: companies } = useCompanies()
@@ -18,6 +17,8 @@ const DashboardPage: React.FC<WithOwnerProps> = () => {
     data: BusinessDataModal,
     delete: BusinessDeleteModal,
   })
+
+  const menuPdfFileName = (company) => company.menuPdfLink?.split('/')?.pop()
 
   return (
     <OwnerApp title="Meine Betriebe">
@@ -28,36 +29,20 @@ const DashboardPage: React.FC<WithOwnerProps> = () => {
           onClick={() => openModal('data', { type: 'new' })}
         />
         {companies?.map((company) => (
-          <ActionCard
+          <CompanyCard
             key={company.id}
-            href="/business/company/[companyId]"
-            as={`/business/company/${company.id}`}
-          >
-            <ActionCard.Main
-              title={company.name}
-              subtitle={'Speisekarte: ' + (company.menuLink || '–')}
-            />
-            <ActionCard.Actions>
-              <IconButton
-                icon={Edit}
-                color="yellow.500"
-                onClick={() =>
-                  openModal('data', {
-                    type: 'edit',
-                    name: company.name,
-                    menuLink: company.menuLink,
-                    companyId: company.id,
-                  })
-                }
-                title="Ändern"
-              />
-              <IconButton
-                icon={Trash}
-                color="red.500"
-                onClick={() => openModal('delete')}
-              />
-            </ActionCard.Actions>
-          </ActionCard>
+            company={company}
+            onEdit={() =>
+              openModal('data', {
+                type: 'edit',
+                name: company.name,
+                menuLink: company.menuLink,
+                menuPdfLink: menuPdfFileName(company),
+                companyId: company.id,
+              })
+            }
+            onDelete={() => openModal('delete')}
+          />
         ))}
       </ActionList>
       <Box height={10} />
