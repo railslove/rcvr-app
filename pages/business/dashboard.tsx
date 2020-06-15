@@ -3,55 +3,13 @@ import Link from 'next/link'
 
 import { useModals, useCompanies } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { IconButton, Box, Text } from '~ui/core'
-import { Edit, Trash } from '~ui/svg'
 import { OwnerApp } from '~ui/layouts/OwnerApp'
-import { ActionCard } from '~ui/blocks/ActionCard'
+import { Box, Text } from '~ui/core'
 import { ActionList } from '~ui/blocks/ActionList'
 import { AddCard } from '~ui/blocks/AddCard'
 import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
 import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
-
-const CompanyCard = ({ company, openModal }) => {
-  const menuText = React.useMemo(() => {
-    if (company.menuPdfLink) return 'PDF Anhang'
-
-    return company.menuLink || '–'
-  }, [company])
-
-  return (
-    <ActionCard
-      href="/business/company/[companyId]"
-      as={`/business/company/${company.id}`}
-    >
-      <ActionCard.Main
-        title={company.name}
-        subtitle={'Speisekarte: ' + menuText}
-      />
-      <ActionCard.Actions>
-        <IconButton
-          icon={Edit}
-          color="yellow.500"
-          onClick={() =>
-            openModal('data', {
-              type: 'edit',
-              name: company.name,
-              menuLink: company.menuLink,
-              menuPdfLink: company.menuPdfLink,
-              companyId: company.id,
-            })
-          }
-          title="Ändern"
-        />
-        <IconButton
-          icon={Trash}
-          color="red.500"
-          onClick={() => openModal('delete')}
-        />
-      </ActionCard.Actions>
-    </ActionCard>
-  )
-}
+import { CompanyCard } from '~ui/blocks/CompanyCard'
 
 const DashboardPage: React.FC<WithOwnerProps> = () => {
   const { data: companies } = useCompanies()
@@ -72,7 +30,16 @@ const DashboardPage: React.FC<WithOwnerProps> = () => {
           <CompanyCard
             key={company.id}
             company={company}
-            openModal={openModal}
+            onEdit={() =>
+              openModal('data', {
+                type: 'edit',
+                name: company.name,
+                menuLink: company.menuLink,
+                menuPdfLink: company.menuPdfLink,
+                companyId: company.id,
+              })
+            }
+            onDelete={() => openModal('delete')}
           />
         ))}
       </ActionList>
