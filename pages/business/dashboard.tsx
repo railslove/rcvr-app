@@ -26,7 +26,7 @@ const CompanyCard = ({ company, openModal }) => {
     >
       <ActionCard.Main
         title={company.name}
-        subtitle={'SpeiseKarte ' + menuText}
+        subtitle={'Speisekarte: ' + menuText}
       />
       <ActionCard.Actions>
         <IconButton
