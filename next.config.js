@@ -1,6 +1,6 @@
 module.exports = {
   env: {
-    apiBase: 'http://172.16.0.90:3000/',
+    apiBase: 'https://api.rcvr.app/',
   },
   typescript: {
     ignoreDevErrors: true,
