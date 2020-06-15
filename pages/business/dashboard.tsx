@@ -18,6 +18,8 @@ const DashboardPage: React.FC<WithOwnerProps> = () => {
     delete: BusinessDeleteModal,
   })
 
+  const menuPdfFileName = (company) => company.menuPdfLink?.split('/')?.pop()
+
   return (
     <OwnerApp title="Meine Betriebe">
       {modals}
@@ -35,7 +37,7 @@ const DashboardPage: React.FC<WithOwnerProps> = () => {
                 type: 'edit',
                 name: company.name,
                 menuLink: company.menuLink,
-                menuPdfLink: company.menuPdfLink?.split('/')?.slice(-1)[0],
+                menuPdfLink: menuPdfFileName(company),
                 companyId: company.id,
               })
             }
