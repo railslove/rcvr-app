@@ -5,6 +5,7 @@ import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 import { motion } from 'framer-motion'
 
+import { isCareEnv } from '~lib/config'
 import { Box } from '~ui/core'
 import { Logo } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
@@ -21,7 +22,7 @@ export const MobileApp: React.FC<Props> = ({
   return (
     <Limit>
       <Head>
-        <title key="title">recover</title>
+        <title key="title">{isCareEnv ? 'recover care' : 'recover'}</title>
       </Head>
       <SharedMeta />
       <LogoBox variant={logoVariant} layoutId="appLogo">
@@ -57,17 +58,17 @@ const LogoBox = styled(motion.div)(
   variant({
     variants: {
       big: {
-        width: '124px',
+        width: isCareEnv ? '180px' : '124px',
         height: '20px',
       },
       small: {
-        width: '61px',
+        width: isCareEnv ? '90px' : '61px',
         height: '10px',
       },
       sticky: {
         top: 8,
         position: 'fixed',
-        width: '61px',
+        width: isCareEnv ? '90px' : '61px',
         height: '10px',
       },
     },
