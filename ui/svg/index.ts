@@ -1,6 +1,6 @@
 import { isCareEnv } from '~lib/config'
-import { default as LogoRcvr } from './logo-rcvr.svg'
-import { default as LogoCare } from './logo-care.svg'
+import LogoRcvr from './logo-rcvr.svg'
+import LogoCare from './logo-care.svg'
 
 export { default as Add } from './add.svg'
 export { default as ArrowLeft } from './arrow-left.svg'
