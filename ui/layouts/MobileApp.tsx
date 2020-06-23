@@ -58,17 +58,17 @@ const LogoBox = styled(motion.div)(
   variant({
     variants: {
       big: {
-        width: isCareEnv ? '180px' : '124px',
+        width: isCareEnv ? '183px' : '124px',
         height: '20px',
       },
       small: {
-        width: isCareEnv ? '90px' : '61px',
+        width: isCareEnv ? '92px' : '61px',
         height: '10px',
       },
       sticky: {
         top: 8,
         position: 'fixed',
-        width: isCareEnv ? '90px' : '61px',
+        width: isCareEnv ? '92px' : '61px',
         height: '10px',
       },
     },
