@@ -1,4 +1,5 @@
 import { css } from '@styled-system/css'
+import { isCareEnv } from '~lib/config'
 
 const sizes = {
   px: 1,
@@ -42,7 +43,7 @@ const theme = {
       900: '#090e10',
     },
     black: '#000000',
-    green: process.env.BUILD_VARIANT === 'care' ? '#4DB6AC' : '#28EE5F',
+    green: isCareEnv ? '#4DB6AC' : '#28EE5F',
     pink: '#EA28EE',
     yellow: {
       50: '#fff8dc',

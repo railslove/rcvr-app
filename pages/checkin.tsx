@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from 'react-query'
 
+import { isCareEnv } from '~lib/config'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
@@ -11,6 +12,7 @@ import { Guest, updateGuest, addGuest, getLastCheckin } from '~lib/db'
 import { Row, Text, Box, Callout } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Onboarding } from '~ui/blocks/Onboarding'
+import { Confirmation } from '~ui/blocks/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
 
 export default function CheckinPage() {
@@ -21,6 +23,7 @@ export default function CheckinPage() {
   })
   const [checkoutFn] = useMutation(checkout)
   const [showOnboarding, setShowOnboarding] = React.useState(false)
+  const [showConfirmation, setShowConfirmation] = React.useState(false)
   const [showLoading, setShowLoading] = React.useState(true)
   const router = useRouter()
 
@@ -74,6 +77,30 @@ export default function CheckinPage() {
     [guestInfo, checkinAndRedirect]
   )
 
+  const tryAutoCheckin = React.useCallback(() => {
+    const guest = guestInfo.data
+
+    // Check if a guest was already created, then do the checkin cha cha cha.
+    if (guest) {
+      const hasData = guest.name && guest.phone && guest.address
+      const hasAcceptedPrivacy = guest.checkedInCompanyIds?.includes(
+        areaInfo.data.companyId
+      )
+
+      if (hasData && hasAcceptedPrivacy) {
+        checkinAndRedirect(guest)
+      } else {
+        setShowConfirmation(false)
+        setShowOnboarding(true)
+        setShowLoading(false)
+      }
+    } else {
+      setShowConfirmation(false)
+      setShowOnboarding(true)
+      setShowLoading(false)
+    }
+  }, [guestInfo, areaInfo, checkinAndRedirect])
+
   const isReady =
     publicKey &&
     areaId &&
@@ -91,27 +118,13 @@ export default function CheckinPage() {
     // Checks if the publicKey is decodable. Throws an error and shows the
     // corresponding error page if not.
     binKey(publicKey)
-
-    const guest = guestInfo.data
-
-    // Check if a guest was already created, then do the checkin cha cha cha.
-    if (guest) {
-      const hasData = guest.name && guest.phone && guest.address
-      const hasAcceptedPrivacy = guest.checkedInCompanyIds?.includes(
-        areaInfo.data.companyId
-      )
-
-      if (hasData && hasAcceptedPrivacy) {
-        checkinAndRedirect(guest)
-      } else {
-        setShowOnboarding(true)
-        setShowLoading(false)
-      }
-    } else {
-      setShowOnboarding(true)
+    if (isCareEnv) {
+      setShowConfirmation(true)
       setShowLoading(false)
+    } else {
+      tryAutoCheckin()
     }
-  }, [isReady, checkinAndRedirect, areaInfo, guestInfo, publicKey])
+  }, [isReady, publicKey, tryAutoCheckin])
 
   return (
     <MobileApp logoVariant="big">
@@ -134,7 +147,7 @@ export default function CheckinPage() {
           </Callout>
         </div>
       )}
-      {!areaInfo.data?.ownerIsBlocked && showOnboarding && (
+      {!areaInfo.data?.ownerIsBlocked && (showOnboarding || showConfirmation) && (
         <div>
           <Text as="h2" variant="h2">
             {areaInfo.data.companyName}
@@ -172,7 +185,8 @@ export default function CheckinPage() {
               </Callout>
             </Box>
           )}
-          <Onboarding onSubmit={handleSubmitOnboarding} />
+          {showOnboarding && <Onboarding onSubmit={handleSubmitOnboarding} />}
+          {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
             <a
               href="https://www.recoverapp.de/fuer-gaeste"

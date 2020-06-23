@@ -1,0 +1,37 @@
+import * as React from 'react'
+
+import { Button, Box, Text, Card } from '~ui/core'
+import { ArrowsRight } from '~ui/anicons'
+
+type ConfirmationProps = {
+  onSubmit: () => void
+}
+
+export const Confirmation: React.FC<ConfirmationProps> = ({ onSubmit }) => {
+  return (
+    <Card variant="form" mx={-4}>
+      <Text variant="h3" as="h3">
+        Checkin nur ohne Symptome
+      </Text>
+      <Box height={5} />
+      <Text>
+        <p>
+          Du darfst hier nur einchecken, wenn du keine Symptome von COVID19
+          aufweist.
+        </p>
+        <p>
+          Klicke auf Weiter um zu bestätigen, dass du keine Symptome aufweist.
+        </p>
+      </Text>
+      <Box height={5} />
+      <Button
+        type="button"
+        onClick={onSubmit}
+        css={{ width: '100%' }}
+        right={<ArrowsRight color="green" />}
+      >
+        Weiter
+      </Button>
+    </Card>
+  )
+}
