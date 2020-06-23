@@ -24,7 +24,8 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   })
 
   const handleDownload = (areaId: string) => () => {
-    window.location.href = process.env.apiBase + 'areas/' + areaId + '.png'
+    window.location.href =
+      process.env.NEXT_PUBLIC_API_BASE + 'areas/' + areaId + '.png'
 
     openModal('qrCode')
   }
