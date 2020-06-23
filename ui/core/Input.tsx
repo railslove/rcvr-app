@@ -3,9 +3,12 @@ import { useField } from 'formik'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import TextareaAutosize from 'react-textarea-autosize'
+import { useDropzone } from 'react-dropzone'
 
-import { EyeOpen, EyeClosed } from '~ui/svg'
+import { EyeOpen, EyeClosed, Trash } from '~ui/svg'
 import { Text } from './Text'
+import { Icon } from './Icon'
+import type { As } from './'
 
 interface Props {
   name: string
@@ -76,6 +79,79 @@ export const Input: React.FC<InputProps> = ({
   )
 }
 
+type FileInputProps = InputProps & { accept?: string }
+export const FileInput: React.FC<FileInputProps> = ({
+  label,
+  hint,
+  accept,
+  ...rest
+}) => {
+  const [{ onChange: _, value, ...field }, meta, helpers] = useField(rest)
+  const [error, setError] = React.useState<string>()
+  const showError = Boolean(meta.touched && error)
+
+  const onDrop = React.useCallback(
+    (acceptedFiles, rejectedFiles) => {
+      helpers.setTouched(true)
+      setError(undefined)
+
+      if (acceptedFiles.length > 0) {
+        helpers.setValue(acceptedFiles[0])
+      }
+
+      if (rejectedFiles.length > 0) {
+        helpers.setTouched(true)
+        setError('Es können nur pdf-Dateien hochgeladen werden.')
+      }
+    },
+    [helpers]
+  )
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    multiple: false,
+    accept,
+  })
+
+  const resetValue = React.useCallback(
+    (event) => {
+      event.stopPropagation()
+      helpers.setTouched(true)
+      helpers.setValue(undefined)
+      setError(undefined)
+    },
+    [helpers]
+  )
+
+  return (
+    <div>
+      <InputContainer>
+        <InputElement as="div" css={{ paddingRight: 40 }} {...getRootProps()}>
+          <input type="file" {...field} {...rest} {...getInputProps()} />
+          <Text
+            as="label"
+            variant="label"
+            htmlFor={field.name}
+            className={!!value && 'active'}
+          >
+            {label}
+          </Text>
+          <Text>
+            {typeof value === 'string' ? value : value?.name}
+            &nbsp;
+          </Text>
+          <OverlayButton onClick={resetValue} type="button" tabIndex={-1}>
+            <Icon icon={Trash} size={5} />
+          </OverlayButton>
+        </InputElement>
+        <Underline asError={showError} />
+      </InputContainer>
+      {showError && <ErrorText variant="fineprint">{error}</ErrorText>}
+      {!showError && hint && <HintText variant="fineprint">{hint}</HintText>}
+    </div>
+  )
+}
+
 const ErrorText = styled(Text)(
   css({
     color: 'red.400',
@@ -110,7 +186,7 @@ const Underline = styled('div')((props: { asError: boolean }) =>
   })
 )
 
-const InputElement = styled('input')(
+const InputElement: React.FC<React.HTMLAttributes<any> & As> = styled('input')(
   css({
     display: 'block',
     width: '100%',

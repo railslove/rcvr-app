@@ -126,9 +126,11 @@ export default function CheckinPage() {
           <Box height={1} />
           <Text>
             <p>
-              Durch die aktuellen Corona-Verordnungen musst Du Deine
-              Kontaktdaten hinterlegen, wenn Du in einem Gastronomiebetrieb
-              bist.
+              Durch die aktuellen Corona-Verordnungen musst du deine
+              Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu
+              Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App
+              kann auch freiwillig genutzt werden, um die Nachverfolgung zu
+              unterstützen.
             </p>
             <p>
               So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.

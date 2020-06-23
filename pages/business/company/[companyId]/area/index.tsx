@@ -11,6 +11,7 @@ import { ActionCard } from '~ui/blocks/ActionCard'
 import { AddCard } from '~ui/blocks/AddCard'
 import { AreaDeleteModal } from '~ui/modals/AreaDeleteModal'
 import { AreaDataModal } from '~ui/modals/AreaDataModal'
+import { QrInfoModal } from '~ui/modals/QrInfoModal'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
@@ -19,7 +20,15 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   const { modals, openModal } = useModals({
     delete: AreaDeleteModal,
     data: AreaDataModal,
+    qrCode: QrInfoModal,
   })
+
+  const handleDownload = (areaId: string) => () => {
+    window.location.href =
+      process.env.NEXT_PUBLIC_API_BASE + 'areas/' + areaId + '.png'
+
+    openModal('qrCode')
+  }
 
   return (
     <OwnerApp title={`${company?.name ?? ''} – Bereiche`}>
@@ -46,16 +55,8 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
               <IconButton
                 icon={Download}
                 color="bluegrey.700"
-                onClick={() =>
-                  window.open(
-                    process.env.NEXT_PUBLIC_API_BASE +
-                      'areas/' +
-                      area.id +
-                      '.pdf',
-                    '_blank'
-                  )
-                }
-                title="QR Code"
+                onClick={handleDownload(area.id)}
+                title="QR-Code"
               />
               <IconButton
                 icon={Edit}
