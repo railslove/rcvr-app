@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
+import { isCareEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
 import { Step2 } from '~ui/svg'
@@ -33,7 +34,10 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const handleSubmit = async ({ name, email, password }, bag) => {
     try {
       setLoading(true)
-      const affiliate = localStorage.getItem('rcvr_affiliate')
+      const affiliate = isCareEnv
+        ? 'CARE'
+        : localStorage.getItem('rcvr_affiliate')
+
       await signup({ name, email, password, affiliate })
       queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
