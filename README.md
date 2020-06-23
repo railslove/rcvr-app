@@ -81,6 +81,16 @@ npm run dev -- -p 3333
 
 If you want to change environment variables locally, for example the API URL, you can duplicate `.env` to `.env.local` and change the variables in your local copy. Read more about environment variables [here](https://nextjs.org/docs/basic-features/environment-variables).
 
+### Build variants
+
+_[recover care](https://care.rcvr.app/)_ has slight differences in theming and behavior. To switch to recover care, set the environment variable `BUILD_VARIANT=care`.
+
+```
+BUILD_VARIANT=care npm run dev
+```
+
+**Branches** with the prefix `care/` will automatically have deployment previews using the _recover care_ build variant.
+
 ## License
 
 AGPL, © 2020 Railslove GmbH
