@@ -73,6 +73,14 @@ npm run dev
 
 The app is now available here: http://localhost:3000
 
+You can also choose a different port, e.g. when you're running [rcvr-api](https://github.com/railslove/rcvr-api/) already on port 3000.
+
+```
+npm run dev -- -p 3333
+```
+
+If you want to change environment variables locally, for example the API URL, you can duplicate `.env` to `.env.local` and change the variables in your local copy. Read more about environment variables [here](https://nextjs.org/docs/basic-features/environment-variables).
+
 ## License
 
 AGPL, © 2020 Railslove GmbH
