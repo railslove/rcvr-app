@@ -42,7 +42,7 @@ const theme = {
       900: '#090e10',
     },
     black: '#000000',
-    green: '#28EE5F',
+    green: process.env.BUILD_VARIANT === 'care' ? '#4DB6AC' : '#28EE5F',
     pink: '#EA28EE',
     yellow: {
       50: '#fff8dc',
