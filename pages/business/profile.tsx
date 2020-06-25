@@ -101,7 +101,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               Wenn du Anspruch auf eine kostenlose oder reduzierte Nutzung von
               der Recover App hast, melde dich gerne bei unserem Support, damit
               wir deinen Laden überprüfen und freischalten können:{' '}
-              <a href="mailto:team@recover.de">team@recover.de</a>
+              <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
             </p>
           </Text>
           <Box height={4} />
