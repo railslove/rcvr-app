@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from 'react-query'
 
+import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
 import { Guest, updateGuest, addGuest, getLastCheckin } from '~lib/db'
@@ -87,6 +88,10 @@ export default function CheckinPage() {
     if (hasStarted.current) return
     hasStarted.current = true
 
+    // Checks if the publicKey is decodable. Throws an error and shows the
+    // corresponding error page if not.
+    binKey(publicKey)
+
     const guest = guestInfo.data
 
     // Check if a guest was already created, then do the checkin cha cha cha.
@@ -106,7 +111,7 @@ export default function CheckinPage() {
       setShowOnboarding(true)
       setShowLoading(false)
     }
-  }, [isReady, checkinAndRedirect, areaInfo, guestInfo])
+  }, [isReady, checkinAndRedirect, areaInfo, guestInfo, publicKey])
 
   return (
     <MobileApp logoVariant="big">

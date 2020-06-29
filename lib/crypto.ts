@@ -5,7 +5,7 @@ import { parse } from 'papaparse'
 import { AppError } from './error'
 import { Guest } from './db'
 
-function binKey(key: string): Uint8Array {
+export function binKey(key: string): Uint8Array {
   try {
     return Uint8Array.from(atob(key), (c) => c.charCodeAt(0))
   } catch (error) {
