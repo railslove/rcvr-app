@@ -43,7 +43,7 @@ const theme = {
       900: '#090e10',
     },
     black: '#000000',
-    green: isCareEnv ? '#4DB6AC' : '#28EE5F',
+    green: isCareEnv ? '#F5B743' : '#28EE5F',
     pink: '#EA28EE',
     yellow: {
       50: '#fff8dc',
