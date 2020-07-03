@@ -38,7 +38,7 @@ export interface OwnerReq {
 }
 
 export async function postSignup(signup: PostSignup): Promise<OwnerRes> {
-  const frontend = { url: 'https://rcvr.app' }
+  const frontend = { url: process.env.NEXT_PUBLIC_FRONTEND_URL }
   const json = snakecaseKeys({ owner: signup, frontend }, { deep: true })
 
   return await api
