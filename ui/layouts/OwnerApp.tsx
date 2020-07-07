@@ -81,7 +81,7 @@ const OwnerAppThing: React.FC<WithOwnerProps & Props> = ({
         </Aside>
         <Main>
           {owner.blockAt && (
-            <Callout variant="danger">
+            <Callout variant="warn">
               <Text>
                 Sie haben aktuell keine aktive Subscription. Bitte gehen Sie auf
                 Ihre Profil Seite um Ihre Zahlungsinformationen zu überprüfen.
