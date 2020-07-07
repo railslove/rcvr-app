@@ -31,7 +31,7 @@ export default function CoronaPage() {
       </Text>
       <Box height={6} />
       <Row>
-        <Circle size={36} color="red.400">
+        <Circle size={36} color="yellow">
           <Phone />
         </Circle>
         <Box ml={3}>
@@ -42,7 +42,7 @@ export default function CoronaPage() {
         </Box>
       </Row>
       <Row>
-        <Circle size={36} color="green">
+        <Circle size={36} color="yellow">
           <Phone />
         </Circle>
         <Box ml={3}>
@@ -58,9 +58,9 @@ export default function CoronaPage() {
       <Text>
         <p>
           Eine Vielzahl von ständig aktualisierten Informationen gibt es auf der
-          Internetseite des nordrhein-westfälischen Gesundheitsministeriums:{' '}
+          Internetseite des Bundesgesundheitsministerium:{' '}
           <a
-            href="https://www.mags.nrw/coronavirus"
+            href="https://www.bundesgesundheitsministerium.de/coronavirus.html"
             target="blank"
             rel="noopener noreferrer"
           >
