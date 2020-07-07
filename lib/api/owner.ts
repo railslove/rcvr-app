@@ -22,6 +22,7 @@ export interface OwnerRes {
   publicKey?: string
   affiliate?: string
   trialEndsAt?: Date
+  blockAt?: Date
   stripeSubscriptionStatus?:
     | 'trialing'
     | 'active'

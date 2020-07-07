@@ -5,9 +5,11 @@ import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import formatDate from 'intl-dateformat'
 
 import { useCompanies } from '~lib/hooks'
-import { Box, Text, Icon, Row } from '~ui/core'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Box, Text, Icon, Row, Callout } from '~ui/core'
 import { Logo, Back } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
@@ -17,7 +19,11 @@ interface Props {
   title: React.ReactNode
 }
 
-export const OwnerApp: React.FC<Props> = ({ children, title }) => {
+const OwnerAppThing: React.FC<WithOwnerProps & Props> = ({
+  owner,
+  children,
+  title,
+}) => {
   const { data: companies } = useCompanies()
 
   return (
@@ -74,6 +80,15 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           </ul>
         </Aside>
         <Main>
+          {owner.blockAt && (
+            <Callout variant="danger">
+              <Text>
+                Sie haben aktuell keine aktive Subscription. Bitte gehen Sie auf
+                Ihre Profil Seite um Ihre Zahlungsinformationen zu überprüfen.
+              </Text>
+            </Callout>
+          )}
+          <Box height={6} />
           <Text as="h2" variant="h2">
             {title ?? <>&nbsp;</>}
           </Text>
@@ -203,3 +218,5 @@ const LogoBox = styled(motion.div)(
     },
   })
 )
+
+export const OwnerApp = withOwner()(OwnerAppThing)
