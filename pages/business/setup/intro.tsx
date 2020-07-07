@@ -33,8 +33,8 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       <Text>
         <p>
           Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Sie eine Liste
-          der Kontaktdaten Ihrer Gäste führen. Mit recover führen Sie diese
-          Liste digital. Um die Daten Ihrer Gäste zu schützen, werden sie von
+          der Kontaktdaten Ihrer Besucher und Gäste führen. Mit recover führen Sie diese
+          Liste digital. Um die Daten Ihrer Besucher und Gäste zu schützen, werden sie von
           der App verschlüsselt. Während des Onboardings erstellen Sie daher in
           wenigen Schritten ein digitales Schlüsselpaar.
         </p>

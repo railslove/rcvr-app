@@ -64,7 +64,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
       <Text>
         <p>
           Mit deinem Account können Sie QR Codes erstellen und Checkins Ihrer
-          Gäste verwalten.
+          Besucher und Gäste verwalten.
         </p>
       </Text>
       <Box height={6} />

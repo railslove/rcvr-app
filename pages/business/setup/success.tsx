@@ -44,7 +44,7 @@ function SetupSuccessPage() {
         </p>
         <p>
           Mit diesem Schlüssel können Sie bei einer Anfrage durch das
-          Gesundheitsamt die Kontaktdaten Ihrer Gäste entschlüsseln.
+          Gesundheitsamt die Kontaktdaten Ihrer Besucher und Gäste entschlüsseln.
         </p>
         <p>
           <strong>

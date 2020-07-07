@@ -16,14 +16,14 @@ export default function IndexPage() {
       <Text>
         <p>
           recover ist die digitale Kontaktdatenliste für Betriebe und deren
-          Gäste. Einfach, sicher, schnell.
+          Besucher und Gäste. Einfach, sicher, schnell.
         </p>
       </Text>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          Für Gäste
+          Für Besucher und Gäste
         </Text>
         <Box height={4} />
         <Text>
@@ -51,7 +51,7 @@ export default function IndexPage() {
         <Text>
           <p>
             Tschüss, Zettelwirtschaft! recover ist die digitale
-            Kontaktdatenliste Ihrer Gäste. Einfach, sicher, schnell.
+            Kontaktdatenliste Ihrer Besucher und Gäste. Einfach, sicher, schnell.
           </p>
         </Text>
         <Box height={8} />

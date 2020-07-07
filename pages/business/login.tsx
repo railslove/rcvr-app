@@ -57,8 +57,8 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
       <Text>
         <p>
           Seit Corona sind Sie als Gastronom*In verpflichtet die Kontaktdaten
-          Ihrer Gäste zu erfassen. Erspar Ihnen die Zettelwirtschaft! recover ist
-          die einfachste Lösung für Dich und die sicherste für Ihre Gäste.
+          Ihrer Besucher und Gäste zu erfassen. Erspar Ihnen die Zettelwirtschaft! recover ist
+          die einfachste Lösung für Dich und die sicherste für Ihre Besucher und Gäste.
         </p>
       </Text>
       <Box height={4} />

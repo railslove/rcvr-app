@@ -41,6 +41,17 @@ export default function CoronaPage() {
           </Text>
         </Box>
       </Row>
+      <Row>
+        <Circle size={36} color="green">
+          <Phone />
+        </Circle>
+        <Box ml={3}>
+          <Text variant="h3">Hotline zum Coronavirus</Text>
+          <Text variant="h2">
+            <a href="tel:030346465100">030 346465100</a>
+          </Text>
+        </Box>
+      </Row>
       <Box height={6} />
       <Text variant="h3">Noch Fragen?</Text>
       <Box height={2} />
