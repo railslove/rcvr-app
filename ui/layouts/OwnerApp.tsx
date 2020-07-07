@@ -7,8 +7,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
 
-import { useCompanies } from '~lib/hooks'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { useCompanies, useOwner } from '~lib/hooks'
 import { Box, Text, Icon, Row, Callout } from '~ui/core'
 import { Logo, Back } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
@@ -19,12 +18,9 @@ interface Props {
   title: React.ReactNode
 }
 
-const OwnerAppThing: React.FC<WithOwnerProps & Props> = ({
-  owner,
-  children,
-  title,
-}) => {
+export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
+  const { data: owner } = useOwner()
 
   return (
     <Limit>
@@ -81,12 +77,39 @@ const OwnerAppThing: React.FC<WithOwnerProps & Props> = ({
         </Aside>
         <Main>
           {owner.blockAt && (
-            <Callout variant="warn">
-              <Text>
-                Sie haben aktuell keine aktive Subscription. Bitte gehen Sie auf
-                Ihre Profil Seite um Ihre Zahlungsinformationen zu überprüfen.
-              </Text>
-            </Callout>
+            <>
+              {owner.blockAt < new Date() ? (
+                <Callout variant="danger">
+                  <Text>
+                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
+                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
+                    überprüfen.
+                  </Text>
+                  <Text>
+                    Seit dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} sind
+                    keine neuen Checkins mehr möglich. Selbstverständlich haben
+                    Sie weiterhin Zugriff auf Ihr Konto und können Informationen
+                    zu alten Checkins anfordern und ans Gesundheitsamt
+                    weiterleiten.
+                  </Text>
+                </Callout>
+              ) : (
+                <Callout variant="warn">
+                  <Text>
+                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
+                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
+                    überprüfen.
+                  </Text>
+                  <Text>
+                    Ab dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} werden
+                    keine neuen Checkins mehr möglich sein. Selbstverständlich
+                    werden Sie weiterhin Zugriff auf Ihr Konto haben und
+                    Informationen zu alten Checkins anfordern und ans
+                    Gesundheitsamt weiterleiten können.
+                  </Text>
+                </Callout>
+              )}
+            </>
           )}
           <Box height={6} />
           <Text as="h2" variant="h2">
@@ -218,5 +241,3 @@ const LogoBox = styled(motion.div)(
     },
   })
 )
-
-export const OwnerApp = withOwner()(OwnerAppThing)

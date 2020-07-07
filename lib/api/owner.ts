@@ -46,7 +46,7 @@ export async function postSignup(signup: PostSignup): Promise<OwnerRes> {
     .post('signup', { json })
     .json()
     .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt'))
+    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt', 'blockAt'))
 }
 
 export async function postLogin(login: PostLogin): Promise<OwnerRes> {
@@ -56,7 +56,7 @@ export async function postLogin(login: PostLogin): Promise<OwnerRes> {
     .post('login', { json })
     .json()
     .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt'))
+    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt', 'blockAt'))
 }
 
 export async function getOwner(): Promise<OwnerRes> {
@@ -64,7 +64,7 @@ export async function getOwner(): Promise<OwnerRes> {
     .get('owner')
     .json()
     .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt'))
+    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt', 'blockAt'))
 }
 
 export async function patchOwner(owner: OwnerReq): Promise<OwnerRes> {
@@ -74,7 +74,7 @@ export async function patchOwner(owner: OwnerReq): Promise<OwnerRes> {
     .patch('owner', { json })
     .json()
     .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt'))
+    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt', 'blockAt'))
 }
 
 export interface OwnerCheckoutRes {
