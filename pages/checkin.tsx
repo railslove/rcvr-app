@@ -133,8 +133,8 @@ export default function CheckinPage() {
             <p>
               Durch die aktuellen Corona-Verordnungen müssen Sie Ihre
               Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind, der zu
-              Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App
-              kann auch freiwillig genutzt werden, um die Nachverfolgung zu
+              Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die
+              App kann auch freiwillig genutzt werden, um die Nachverfolgung zu
               unterstützen.
             </p>
             <p>

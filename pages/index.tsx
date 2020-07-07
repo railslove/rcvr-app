@@ -39,13 +39,13 @@ export default function IndexPage() {
           QR-Code scannen
         </ButtonLink>
         <Box height={4} />
-        <ButtonLink href="/my-checkins">Ihre Tickets</ButtonLink>
+        <ButtonLink href="/my-checkins">Ihre Checkins</ButtonLink>
       </Card>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          Für Ihren Betrieb
+          Für Ihre Einrichtung
         </Text>
         <Box height={4} />
         <Text>

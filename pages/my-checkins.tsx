@@ -36,7 +36,7 @@ export default function MyCheckinsPage() {
       {checkinsInfo.status === 'success' && checkinsInfo.data.length === 0 && (
         <Box my={10}>
           <Text variant="h2" as="h2" color="bluegrey.500" textAlign="center">
-            Sie habennoch keine Checkins.
+            Sie haben noch keine Checkins.
           </Text>
         </Box>
       )}
