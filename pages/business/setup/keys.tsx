@@ -39,17 +39,17 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">Dein Schlüssel | recover</title>
+        <title key="title">Ihr Schlüssel | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Dein geheimer Schlüssel
+        Ihr geheimer Schlüssel
       </Text>
       <Box height={6} />
       {wasGenerated ? (
         <>
           <Text>
             <p>
-              Du hast schonmal einen Schlüssel generiert. Wir können ihn nicht
+              Sie haben schonmal einen Schlüssel generiert. Wir können ihn nicht
               mehr anzeigen.
             </p>
           </Text>
@@ -66,13 +66,13 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <Text>
             <p>
               <strong>
-                Es ist sehr wichtig, dass Du diesen Schlüssel notierst.
+                Es ist sehr wichtig, dass Sie diesen Schlüssel notieren.
               </strong>
             </p>
             <p>
               Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre
-              ihn sorgfältig. Oder mach einen Screenshot davon und speichere ihn
-              sicher. Du kannst ihn auch in einem Passwortmanager speichern.
+              ihn sorgfältig. Oder machen Sie einen Screenshot davon und speichere ihn
+              sicher. Sie können ihn auch in einem Passwortmanager speichern.
             </p>
           </Text>
           <Box height={4} />
@@ -92,8 +92,8 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <Box height={6} />
           <Text>
             <p>
-              Im nächsten Schritt musst Du den Schlüssel eingeben. Damit gehen
-              wir sicher, dass Du ihn korrekt notiert hast.
+              Im nächsten Schritt müssen Sie den Schlüssel eingeben. Damit gehen
+              wir sicher, dass Sie ihn korrekt notiert haben.
             </p>
           </Text>
           <Box height={6} />

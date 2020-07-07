@@ -43,16 +43,16 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
       <Callout>
         <Text>
           <p>
-            Anfragen zu Kundenkontaktdaten kannst Du per Email an{' '}
+            Anfragen zu Kundenkontaktdaten können Sie per Email an{' '}
             <a href="mailto:team@recoverapp.de">team@recoverapp.de</a> stellen.
-            Wir melden uns dann schnellstmöglich bei Dir.
+            Wir melden uns dann schnellstmöglich bei Ihnen.
           </p>
         </Text>
       </Callout>
       <Box height={4} />
       {dataRequests?.length === 0 && (
         <Text variant="shy">
-          Du hast noch keine freigegebenen Kundenkontaktdaten.
+          Sie haben noch keine freigegebenen Kundenkontaktdaten.
         </Text>
       )}
       <ActionList grid>

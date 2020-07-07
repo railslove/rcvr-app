@@ -27,7 +27,7 @@ export default function IndexPage() {
         </Text>
         <Box height={4} />
         <Text>
-          <p>recover schützt Deine Daten besser als jedes Papier.</p>
+          <p>recover schützt Ihre Daten besser als jedes Papier.</p>
         </Text>
         <Box height={8} />
 
@@ -39,19 +39,19 @@ export default function IndexPage() {
           QR-Code scannen
         </ButtonLink>
         <Box height={4} />
-        <ButtonLink href="/my-checkins">Deine Tickets</ButtonLink>
+        <ButtonLink href="/my-checkins">Ihre Tickets</ButtonLink>
       </Card>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          Für deinen Betrieb
+          Für Ihren Betrieb
         </Text>
         <Box height={4} />
         <Text>
           <p>
             Tschüss, Zettelwirtschaft! recover ist die digitale
-            Kontaktdatenliste deiner Gäste. Einfach, sicher, schnell.
+            Kontaktdatenliste Ihrer Gäste. Einfach, sicher, schnell.
           </p>
         </Text>
         <Box height={8} />

@@ -23,7 +23,7 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
         <title key="title">Für Betriebe | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        So nutzt Du recover für deinen Betrieb
+        So nutzten Sie recover für Ihren Betrieb
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
@@ -32,18 +32,18 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       <Box height={6} />
       <Text>
         <p>
-          Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
-          der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese
-          Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von
-          der App verschlüsselt. Während des Onboardings erstellst Du daher in
+          Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Sie eine Liste
+          der Kontaktdaten Ihrer Gäste führen. Mit recover führen Sie diese
+          Liste digital. Um die Daten Ihrer Gäste zu schützen, werden sie von
+          der App verschlüsselt. Während des Onboardings erstellen Sie daher in
           wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
-          Nach dem Onboarding wird sich unser Team bei Dir melden und die
-          Echtheit deiner Daten mit Dir gemeinsam überprüfen.
+          Nach dem Onboarding wird sich unser Team bei Ihnen melden und die
+          Echtheit Ihrer Daten mit Ihnen gemeinsam überprüfen.
         </p>
         <p>
-          Die Einrichtung von recover dauert ca. 10 Min. Bist Du bereit? Dann
+          Die Einrichtung von recover dauert ca. 10 Min. sind Sie bereit? Dann
           lass uns starten.
         </p>
       </Text>

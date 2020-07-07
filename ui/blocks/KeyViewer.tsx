@@ -17,7 +17,7 @@ export const KeyViewer: React.FC<Props> = ({ value }) => {
     <div>
       <Box px={6} mb={4}>
         <Text>
-          Dein Schlüssel ist <strong>{hex.length} Zeichen</strong> lang.
+          Ihr Schlüssel ist <strong>{hex.length} Zeichen</strong> lang.
           <br />
           Er beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben
           von

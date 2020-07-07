@@ -17,9 +17,9 @@ export default function BusinessIndexPage() {
       <Box height={4} />
       <Text>
         <p>
-          Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten
-          deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist
-          die einfachste Lösung für Dich und die sicherste für deine Gäste.
+          Seit Corona sind Sie als Gastronom*In verpflichtet die Kontaktdaten
+          Ihrer Gäste zu erfassen. Erspar Ihnen die Zettelwirtschaft! recover ist
+          die einfachste Lösung für Dich und die sicherste für Ihre Gäste.
         </p>
       </Text>
       <Box height={4} />
@@ -30,7 +30,7 @@ export default function BusinessIndexPage() {
         </Text>
         <Box height={4} />
         <Text>
-          <p>Mit recover bist Du startklar in 10 Minuten.</p>
+          <p>Mit recover sind Sie startklar in 10 Minuten.</p>
         </Text>
         <Box height={4} />
         <ButtonLink
@@ -50,7 +50,7 @@ export default function BusinessIndexPage() {
         <Box height={4} />
         <Text>
           <p>
-            Verwalte deine Betriebe, drucke QR Codes und sehe aktuelle Checkins.
+            Verwalte Ihre Betriebe, drucke QR Codes und sehe aktuelle Checkins.
           </p>
         </Text>
         <Box height={4} />

@@ -14,7 +14,7 @@ function SetupSuccessPage() {
         <title key="title">Account erstellt | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Toll, dass du dabei bist!
+        Toll, dass Sie dabei sind!
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
@@ -23,32 +23,32 @@ function SetupSuccessPage() {
       <Box height={6} />
       <Text>
         <p>
-          Wir freuen uns, dass du recover nutzt!{' '}
+          Wir freuen uns, dass Sie recover nutzten!{' '}
           <span role="img" aria-label="Hurra!">
             🎉
           </span>{' '}
-          Du kannst nun mit der Einrichtung fortsetzen.
+          Sie können nun mit der Einrichtung fortsetzen.
         </p>
         <p>
-          Um die Echtheit deiner Daten mit Dir zu überprüfen, werden wir uns
-          bald per Email bei dir melden.
+          Um die Echtheit Ihrer Daten mit Ihnen zu überprüfen, werden wir uns
+          bald per Email bei Ihnen melden.
         </p>
         <p>
           <strong>Im nächsten Schritt</strong> kümmern wir uns um die
-          Verschlüsselung deiner Kundendaten.
+          Verschlüsselung Ihrer Kundendaten.
         </p>
         <p>
-          Dafür siehst du gleich einen <strong>privaten Schlüssel</strong>. Das
+          Dafür sehen Sie gleich einen <strong>privaten Schlüssel</strong>. Das
           passiert komplett auf deinem Handy, wir können diesen Schlüssel nicht
           sehen.
         </p>
         <p>
-          Mit diesem Schlüssel kannst du bei einer Anfrage durch das
-          Gesundheitsamt die Kontaktdaten deiner Gäste entschlüsseln.
+          Mit diesem Schlüssel können Sie bei einer Anfrage durch das
+          Gesundheitsamt die Kontaktdaten Ihrer Gäste entschlüsseln.
         </p>
         <p>
           <strong>
-            Den Schlüssel musst du dir aufschreiben und gut bewahren. Er darf
+            Den Schlüssel müssen Sie Ihnen aufschreiben und gut bewahren. Er darf
             nicht verloren gehen.
           </strong>
         </p>

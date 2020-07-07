@@ -36,7 +36,7 @@ export default function MyCheckinsPage() {
       {checkinsInfo.status === 'success' && checkinsInfo.data.length === 0 && (
         <Box my={10}>
           <Text variant="h2" as="h2" color="bluegrey.500" textAlign="center">
-            Du hast noch keine Checkins.
+            Sie habennoch keine Checkins.
           </Text>
         </Box>
       )}
@@ -71,7 +71,7 @@ export default function MyCheckinsPage() {
                       <Text>
                         {error instanceof TypeError ? (
                           <p>
-                            Wir konnten dich nicht auschecken. Hast du
+                            Wir konnten dich nicht auschecken. Haben Sie
                             vielleicht gerade kein Internet?
                           </p>
                         ) : (

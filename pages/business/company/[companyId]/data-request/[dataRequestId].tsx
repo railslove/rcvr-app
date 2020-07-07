@@ -119,8 +119,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       {dataRequest?.tickets && !owner.privateKey && (
         <Box mb={4}>
           <Text>
-            Dein privater Schlüssel ist nicht mehr auf deinem Gerät gespeichert.
-            Um die Daten zu entschlüsseln, musst du ihn neu eingeben.
+            Ihr privater Schlüssel ist nicht mehr auf deinem Gerät gespeichert.
+            Um die Daten zu entschlüsseln, müssen Sie ihn neu eingeben.
           </Text>
           <Box height={4} />
           <Button onClick={handleEnterKey}>Schlüssel eingeben</Button>
@@ -141,7 +141,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <Callout variant="danger">
                 <Text>
                   Keine Daten konnten entschlüsselt werden. Wahrscheinlich ist
-                  dein privater Schlüssel nicht korrekt. Bitte gib ihn neu ein.
+                  Ihr privater Schlüssel nicht korrekt. Bitte gib ihn neu ein.
                 </Text>
               </Callout>
               <Box height={4} />

@@ -39,7 +39,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
       } catch (error) {
         bag.setFieldError(
           'hexPrivateKey',
-          'Dein privater Schlüssel konnte nicht eingelesen werden. Bitte kontrolliere ihn nochmal. ' +
+          'Ihr privater Schlüssel konnte nicht eingelesen werden. Bitte kontrolliere ihn nochmal. ' +
             error.toString()
         )
         console.error(error)
@@ -55,7 +55,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
       {...baseProps}
       maxWidth={400}
       loading={loading}
-      title="Dein privater Schlüssel"
+      title="Ihr privater Schlüssel"
     >
       <Formik
         initialValues={{ hexPrivateKey: '' }}
@@ -65,19 +65,19 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         <Form>
           <Text>
             <p>
-              Bitte gib deinen privaten Schlüssel ein, den du während der
-              Registrierung notiert hast.
+              Bitte gib Ihren privaten Schlüssel ein, den Sie während der
+              Registrierung notiert haben.
             </p>
             <p>
-              Er enthält nur Zahlen von 0 - 9 und Buchstaben von A - F. Du
-              kannst ihn mit oder ohne Leerzeichen eingeben, mit Groß- oder
+              Er enthält nur Zahlen von 0 - 9 und Buchstaben von A - F. Sie
+              können ihn mit oder ohne Leerzeichen eingeben, mit Groß- oder
               Kleinbuchstaben.
             </p>
           </Text>
           <Box height={6} />
           <Input
             name="hexPrivateKey"
-            label="Dein privater Schlüssel"
+            label="Ihr privater Schlüssel"
             multiline
             autoFocus
           />

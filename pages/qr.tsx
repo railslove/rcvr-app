@@ -42,7 +42,7 @@ export default function QRCodePage() {
       </Text>
       <Box height={4} />
       <Text>
-        Scanne den QR-Code, den Du auf dem Tisch teilnehmender Betriebe findest.
+        Scannen Sie den QR-Code, der auf dem Tisch teilnehmender Betriebe befindet.
       </Text>
       <Card my={8} css={{ position: 'relative' }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}

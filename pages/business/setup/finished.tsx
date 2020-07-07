@@ -24,14 +24,14 @@ function SetupSuccessPage() {
       <Box height={10} />
       <Text>
         <p>
-          Wir freuen uns, dass Du dabei bist! Dein Account ist jetzt vollständig
+          Wir freuen uns, dass Sie dabei sind! Ihr Account ist jetzt vollständig
           eingerichtet.
         </p>
         <p>
-          Wir melden uns bald bei Dir, um gemeinsam deine Daten zu überprüfen.
+          Wir melden uns bald bei Ihnen, um gemeinsam Ihre Daten zu überprüfen.
         </p>
         <p>
-          In der Zwischenzeit kannst du schon Betriebe, Tische und QR Codes
+          In der Zwischenzeit können Sie schon Betriebe, Tische und QR Codes
           erstellen.
         </p>
       </Text>

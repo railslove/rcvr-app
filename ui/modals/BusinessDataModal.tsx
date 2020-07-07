@@ -17,7 +17,7 @@ interface Props {
 type MProps = ModalBaseProps & Props
 
 const BusinessSchema = Yup.object().shape({
-  name: Yup.string().required('Du musst einen Namen angeben.'),
+  name: Yup.string().required('Sie müssen einen Namen angeben.'),
   menuLink: Yup.string(),
   menuPdf: Yup.mixed(),
 })

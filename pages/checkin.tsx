@@ -131,18 +131,18 @@ export default function CheckinPage() {
           <Box height={1} />
           <Text>
             <p>
-              Durch die aktuellen Corona-Verordnungen musst du deine
-              Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu
+              Durch die aktuellen Corona-Verordnungen müssen Sie Ihre
+              Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind, der zu
               Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App
               kann auch freiwillig genutzt werden, um die Nachverfolgung zu
               unterstützen.
             </p>
             <p>
-              So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.
+              So kann das Gesundheitsamt Sie anrufen, wenn es notwendig ist.
             </p>
             <p>
               Datenschutz ist uns dabei sehr wichtig! <strong>recover</strong>{' '}
-              speichert Deine Daten verschlüsselt und sicher.
+              speichert Ihre Daten verschlüsselt und sicher.
             </p>
           </Text>
           <Box height={6} />
@@ -151,7 +151,7 @@ export default function CheckinPage() {
             <Box mb={6} mx={-4}>
               <Callout variant="danger">
                 <Text>
-                  Wir konnten keine Verbindung herstellen. Hast du vielleicht
+                  Wir konnten keine Verbindung herstellen. Haben Sie vielleicht
                   gerade kein Internet?
                 </Text>
               </Callout>

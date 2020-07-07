@@ -33,7 +33,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">Dein Schlüssel | recover</title>
+        <title key="title">Ihr Schlüssel | recover</title>
       </Head>
       <Text as="h2" variant="h2">
         Schlüssel bestätigen
@@ -44,12 +44,12 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       </Row>
       <Box height={6} />
       <Text>
-        Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn
-        korrekt notiert hast.
+        Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Sie ihn
+        korrekt notiert haben.
       </Text>
       <Box height={4} />
       <Text>
-        Denk dran: Dein Schlüssel ist{' '}
+        Denk dran: Ihr Schlüssel ist{' '}
         <strong>{base64ToHex(owner.publicKey).length} Zeichen</strong> lang. Er
         beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben von
         <strong> A bis F</strong>.
@@ -71,7 +71,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       </Formik>
       <Box height={8} />
       <Text>
-        Du kannst auch nochmal zurück gehen und den Schlüssel erneut sehen.
+        Sie können auch nochmal zurück gehen und den Schlüssel erneut sehen.
       </Text>
       <Box height={4} />
       <ButtonLink

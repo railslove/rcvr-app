@@ -20,7 +20,7 @@ export default function Custom404() {
       <Box height={8} />
       <Text textAlign="center">
         <p>
-          Die Seite, die du aufgerufen hast, existiert nicht. Hätte das nicht
+          Die Seite, die Sie aufgerufen haben, existiert nicht. Hätte das nicht
           passieren sollen? Dann schreib uns eine Mail an{' '}
           <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>.
         </p>

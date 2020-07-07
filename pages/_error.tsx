@@ -26,7 +26,7 @@ function InvalidPubkeyEncoding() {
       <Text>
         <p>
           <strong>
-            Scheinbar funktioniert dein QR-Code Scanner nicht korrekt.
+            Scheinbar funktioniert Ihr QR-Code Scanner nicht korrekt.
           </strong>
         </p>
         <p>
@@ -78,12 +78,12 @@ const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
             übermittelt.
           </p>
           <p>
-            Wenn Du glaubst, dass dieser Fehler nicht hätte passieren sollen,
-            oder du diesen Fehler öfter siehst, schreib uns bitte eine Mail an{' '}
+            Wenn Sie glauben, dass dieser Fehler nicht hätte passieren sollen,
+            oder Sie diesen Fehler öfter sehen, schreib uns bitte eine Mail an{' '}
             <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>.
           </p>
           <p>
-            Damit wir dir besser helfen können, schicke uns außerdem folgende
+            Damit wir Ihnen besser helfen können, schicke uns außerdem folgende
             Fehlerdetails:
           </p>
         </Text>

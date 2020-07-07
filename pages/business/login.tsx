@@ -56,9 +56,9 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
       <Box height={4} />
       <Text>
         <p>
-          Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten
-          deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist
-          die einfachste Lösung für Dich und die sicherste für deine Gäste.
+          Seit Corona sind Sie als Gastronom*In verpflichtet die Kontaktdaten
+          Ihrer Gäste zu erfassen. Erspar Ihnen die Zettelwirtschaft! recover ist
+          die einfachste Lösung für Dich und die sicherste für Ihre Gäste.
         </p>
       </Text>
       <Box height={4} />
@@ -78,8 +78,8 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
               label="Passwort"
               hint={
                 <>
-                  Dein Passwort hast du während der Registrierung selbst
-                  gewählt. Das ist <strong>nicht</strong> dein privater
+                  Ihr Passwort haben Sie während der Registrierung selbst
+                  gewählt. Das ist <strong>nicht</strong> Ihr privater
                   Schlüssel.
                 </>
               }

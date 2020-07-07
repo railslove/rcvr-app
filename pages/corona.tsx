@@ -20,12 +20,12 @@ export default function CoronaPage() {
       <Text>
         <p>Zu allererst: ruhig bleiben.</p>
         <p>
-          Wenn Du eine bestätigte Kontaktperson bist, wird sich das
-          Gesundheitsamt bei dir telefonisch innerhalb von 48 Stunden melden.
+          Wenn Sie eine bestätigte Kontaktperson sind, wird sich das
+          Gesundheitsamt bei Ihnen telefonisch innerhalb von 48 Stunden melden.
         </p>
         <p>
-          Falls Du bereits typische Symptome wie Fieber, Müdigkeit und trockenen
-          Husten hast, solltest du vorsichtshalber in Haus-Quarantäne bleiben
+          Falls Sie bereits typische Symptome wie Fieber, Müdigkeit und trockenen
+          Husten haben, solltesn Sie vorsichtshalber in Haus-Quarantäne bleiben
           und das Gesundheitsamt informieren.
         </p>
       </Text>

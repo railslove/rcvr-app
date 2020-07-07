@@ -63,7 +63,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
       <Box height={6} />
       <Text>
         <p>
-          Mit deinem Account kannst du QR Codes erstellen und Checkins deiner
+          Mit deinem Account können Sie QR Codes erstellen und Checkins Ihrer
           Gäste verwalten.
         </p>
       </Text>
@@ -83,7 +83,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
             <Form>
-              <Input name="name" label="Dein Name" />
+              <Input name="name" label="Ihr Name" />
               <Box height={4} />
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={4} />
@@ -95,7 +95,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                 hint={
                   values.password !== ''
                     ? undefined
-                    : 'Dein Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
+                    : 'Ihr Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
                 }
               />
               <Box height={4} />

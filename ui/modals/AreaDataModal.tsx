@@ -16,7 +16,7 @@ interface Props {
 type MProps = ModalBaseProps & Props
 
 const AreaSchema = Yup.object().shape({
-  name: Yup.string().required('Du musst einen Namen angeben.'),
+  name: Yup.string().required('Sie müssen einen Namen angeben.'),
 })
 
 export const AreaDataModal: React.FC<MProps> = ({
@@ -65,8 +65,8 @@ export const AreaDataModal: React.FC<MProps> = ({
       >
         <Form>
           <Text>
-            Der Name des Bereichs wird über dem QR Code angezeigt. Falls du
-            bereits einen Saalplan hast, kannst du die Nummerierung in gleicher
+            Der Name des Bereichs wird über dem QR Code angezeigt. Falls Sie
+            bereits einen Saalplan haben, können Sie die Nummerierung in gleicher
             Weise abbilden.
           </Text>
           <Box height={6} />
