@@ -119,7 +119,22 @@ export default function CheckinPage() {
         <title key="title">Checkin... | recover</title>
       </Head>
       <Loading show={showLoading} />
-      {showOnboarding && (
+      {areaInfo.data?.ownerIsBlocked && (
+        <div>
+          <Text as="h2" variant="h2">
+            {areaInfo.data.companyName}
+          </Text>
+          <Box height={5} />
+          <Callout variant="danger">
+            <Text>
+              Die Kontaktdatenerfassung mit recover ist für diesen Betrieb
+              leider nicht mehr aktiv. Bitte frag vor Ort nach einer anderen Art
+              der Kontaktdatenerfassung.
+            </Text>
+          </Callout>
+        </div>
+      )}
+      {!areaInfo.data?.ownerIsBlocked && showOnboarding && (
         <div>
           <Text as="h2" variant="h2">
             {areaInfo.data.companyName}

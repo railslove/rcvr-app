@@ -17,6 +17,7 @@ export interface AreaRes {
   companyId: string
   companyName: string
   menuLink?: string
+  ownerIsBlocked: boolean
 }
 
 export async function getArea(id: AreaRes['id']): Promise<AreaRes> {
