@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 
+import { isCareEnv } from '~lib/config'
 import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Lock, Ticket, Virus } from '~ui/svg'
@@ -35,7 +36,7 @@ export const BottomBar: React.FC<{}> = () => {
             <Ticket />
           </Circle>
           <Text variant="fineprint" fontWeight="semibold">
-            Tickets
+            {isCareEnv ? 'Checkins' : 'Tickets'}
           </Text>
         </Tab>
       </Link>

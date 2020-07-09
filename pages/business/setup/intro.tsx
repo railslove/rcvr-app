@@ -2,6 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { isCareEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Text, Box, Row, ButtonLink } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
@@ -23,7 +24,9 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
         <title key="title">Für Betriebe | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        So nutzt Du recover für deinen Betrieb
+        {isCareEnv
+          ? 'So nutzen Sie recover für Ihre Betrieb'
+          : 'So nutzt Du recover für deinen Betrieb'}
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
@@ -32,19 +35,19 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       <Box height={6} />
       <Text>
         <p>
-          Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
-          der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese
-          Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von
-          der App verschlüsselt. Während des Onboardings erstellst Du daher in
-          wenigen Schritten ein digitales Schlüsselpaar.
+          {isCareEnv
+            ? 'Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Sie eine Liste der Kontaktdaten deiner Gäste führen. Mit recover führen Sie diese Liste digital. Um die Daten Ihrer Gäste zu schützen, werden sie von der App verschlüsselt. Während des Onboardings erstellen Sie daher in wenigen Schritten ein digitales Schlüsselpaar.'
+            : 'Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von der App verschlüsselt. Während des Onboardings erstellst Du daher in wenigen Schritten ein digitales Schlüsselpaar.'}
         </p>
         <p>
-          Nach dem Onboarding wird sich unser Team bei Dir melden und die
-          Echtheit deiner Daten mit Dir gemeinsam überprüfen.
+          {isCareEnv
+            ? 'Nach dem Onboarding können Sie sich bei uns melden um zusammen mit unserem Team die echtheit Ihrer Daten zu prüfen'
+            : 'Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit unserem Team die echtheit deiner Daten zu prüfen'}
         </p>
         <p>
-          Die Einrichtung von recover dauert ca. 10 Min. Bist Du bereit? Dann
-          lass uns starten.
+          {isCareEnv
+            ? 'Die Einrichtung von recover dauert ca. 10 Min. Sind Sie bereit? Dann lasst uns starten.'
+            : 'Die Einrichtung von recover dauert ca. 10 Min. Bist Du bereit? Dann lass uns starten.'}
         </p>
       </Text>
       <Box height={6} />

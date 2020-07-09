@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
 
+import { isCareEnv } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Text, Box, Button, ButtonLink, Row, Input } from '~ui/core'
@@ -33,7 +34,9 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">Dein Schlüssel | recover</title>
+        <title key="title">
+          {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel | recover
+        </title>
       </Head>
       <Text as="h2" variant="h2">
         Schlüssel bestätigen
@@ -44,12 +47,13 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       </Row>
       <Box height={6} />
       <Text>
-        Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn
-        korrekt notiert hast.
+        {isCareEnv
+          ? 'Geben Sie den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Sie ihn korrekt notiert hast.'
+          : 'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
       </Text>
       <Box height={4} />
       <Text>
-        Denk dran: Dein Schlüssel ist{' '}
+        Zur Erinnerung: {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel ist{' '}
         <strong>{base64ToHex(owner.publicKey).length} Zeichen</strong> lang. Er
         beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben von
         <strong> A bis F</strong>.
@@ -71,7 +75,8 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       </Formik>
       <Box height={8} />
       <Text>
-        Du kannst auch nochmal zurück gehen und den Schlüssel erneut sehen.
+        {isCareEnv ? 'Sie können' : 'Du kannst'} auch nochmal zurück gehen und
+        den Schlüssel erneut sehen.
       </Text>
       <Box height={4} />
       <ButtonLink

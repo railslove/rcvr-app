@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useMutation } from 'react-query'
 
 import { checkout } from '~lib/actions'
+import { isCareEnv } from '~lib/config'
 import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
 import { Box, Text, Callout } from '~ui/core'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
@@ -36,7 +37,9 @@ export default function MyCheckinsPage() {
       {checkinsInfo.status === 'success' && checkinsInfo.data.length === 0 && (
         <Box my={10}>
           <Text variant="h2" as="h2" color="bluegrey.500" textAlign="center">
-            Du hast noch keine Checkins.
+            {isCareEnv
+              ? 'Sie haben noch keine Checkins'
+              : 'Du hast noch keine Checkins.'}
           </Text>
         </Box>
       )}

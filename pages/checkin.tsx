@@ -141,8 +141,8 @@ export default function CheckinPage() {
           <Callout variant="danger">
             <Text>
               Die Kontaktdatenerfassung mit recover ist für diesen Betrieb
-              leider nicht mehr aktiv. Bitte frag vor Ort nach einer anderen Art
-              der Kontaktdatenerfassung.
+              leider nicht mehr aktiv. Bitte {isCareEnv ? 'fragen Sie' : 'frag'}{' '}
+              vor Ort nach einer anderen Art der Kontaktdatenerfassung.
             </Text>
           </Callout>
         </div>
@@ -159,18 +159,19 @@ export default function CheckinPage() {
           <Box height={1} />
           <Text>
             <p>
-              Durch die aktuellen Corona-Verordnungen musst du deine
-              Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu
-              Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App
-              kann auch freiwillig genutzt werden, um die Nachverfolgung zu
-              unterstützen.
+              {isCareEnv
+                ? 'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.'
+                : 'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.'}
             </p>
             <p>
-              So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.
+              {isCareEnv
+                ? 'So kann das Gesundheitsamt Sie anrufen, wenn es notwendig ist.'
+                : 'So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.'}
             </p>
             <p>
               Datenschutz ist uns dabei sehr wichtig! <strong>recover</strong>{' '}
-              speichert Deine Daten verschlüsselt und sicher.
+              speichert {isCareEnv ? 'Ihre' : 'Deine'} Daten verschlüsselt und
+              sicher.
             </p>
           </Text>
           <Box height={6} />
@@ -179,8 +180,9 @@ export default function CheckinPage() {
             <Box mb={6} mx={-4}>
               <Callout variant="danger">
                 <Text>
-                  Wir konnten keine Verbindung herstellen. Hast du vielleicht
-                  gerade kein Internet?
+                  {isCareEnv
+                    ? 'Wir konnten keine Verbindung herstellen. Haben Sie vielleicht gerade kein Internet?'
+                    : 'Wir konnten keine Verbindung herstellen. Hast du vielleicht gerade kein Internet?'}
                 </Text>
               </Callout>
             </Box>

@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 
+import { isCareEnv } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { Text, Box } from '~ui/core'
 
@@ -17,7 +18,8 @@ export const KeyViewer: React.FC<Props> = ({ value }) => {
     <div>
       <Box px={6} mb={4}>
         <Text>
-          Dein Schlüssel ist <strong>{hex.length} Zeichen</strong> lang.
+          {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel ist{' '}
+          <strong>{hex.length} Zeichen</strong> lang.
           <br />
           Er beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben
           von
