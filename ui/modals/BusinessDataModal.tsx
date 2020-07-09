@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { queryCache } from 'react-query'
 
+import { isCareEnv } from '~lib/config'
 import { patchCompany, postCompany } from '~lib/api'
 import { Box, Input, FileInput, Button, Text } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
@@ -85,20 +86,24 @@ export const BusinessDataModal: React.FC<MProps> = ({
         <Form>
           <Input name="name" label="Name des Betriebs" autoFocus />
           <Box height={4} />
-          <Input name="menuLink" label="Link zur Speisekarte" />
-          <Box height={4} />
-          <Text variant="shy" textAlign="center">
-            – oder –
-          </Text>
-          <Box height={2} />
-          <FileInput
-            name="menuPdf"
-            type="file"
-            label="Speisekarte als PDF"
-            hint="Es können nur pdf-Dateien hochgeladen werden."
-            accept="application/pdf"
-          />
-          <Box height={4} />
+          {!isCareEnv && (
+            <>
+              <Input name="menuLink" label="Link zur Speisekarte" />
+              <Box height={4} />
+              <Text variant="shy" textAlign="center">
+                – oder –
+              </Text>
+              <Box height={2} />
+              <FileInput
+                name="menuPdf"
+                type="file"
+                label="Speisekarte als PDF"
+                hint="Es können nur pdf-Dateien hochgeladen werden."
+                accept="application/pdf"
+              />
+              <Box height={4} />
+            </>
+          )}
           <Button type="submit" css={{ width: '100%' }}>
             {button}
           </Button>
