@@ -48,7 +48,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Box height={6} />
       <Text>
         {isCareEnv
-          ? 'Geben Sie den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Sie ihn korrekt notiert hast.'
+          ? 'Geben Sie den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
           : 'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
       </Text>
       <Box height={4} />
