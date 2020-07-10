@@ -16,8 +16,8 @@ export const Confirmation: React.FC<ConfirmationProps> = ({ onSubmit }) => {
       <Box height={5} />
       <Text>
         <p>
-          Du darfst hier nur einchecken, wenn du keine Symptome von COVID19
-          aufweist.
+          Sie dürfen hier nur einchecken, wenn Sie keine Symptome von COVID19
+          aufweisen.
         </p>
         <p>
           Klicken Sie auf Weiter um zu bestätigen, dass Sie keine Symptome aufweisen.
