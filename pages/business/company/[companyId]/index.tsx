@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 
+import { isCareEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany, useDataRequests } from '~lib/hooks'
 import { Text, Box, Divider, Callout } from '~ui/core'
@@ -43,16 +44,19 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
       <Callout>
         <Text>
           <p>
-            Anfragen zu Kundenkontaktdaten kannst Du per Email an{' '}
+            Anfragen zu Kundenkontaktdaten{' '}
+            {isCareEnv ? 'können Sie' : 'kannst Du'} per Email an{' '}
             <a href="mailto:team@recoverapp.de">team@recoverapp.de</a> stellen.
-            Wir melden uns dann schnellstmöglich bei Dir.
+            Wir melden uns dann schnellstmöglich bei{' '}
+            {isCareEnv ? 'Ihnen' : 'Dir'}.
           </p>
         </Text>
       </Callout>
       <Box height={4} />
       {dataRequests?.length === 0 && (
         <Text variant="shy">
-          Du hast noch keine freigegebenen Kundenkontaktdaten.
+          {isCareEnv ? 'Sie haben' : 'Du hast'} noch keine freigegebenen
+          Kundenkontaktdaten.
         </Text>
       )}
       <ActionList grid>

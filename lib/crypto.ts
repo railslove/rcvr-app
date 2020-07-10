@@ -65,7 +65,7 @@ export function hexToBase64(hex: string): string {
 }
 
 export function toCSV(guest: Guest): string {
-  const values = [guest.name, guest.phone, guest.address]
+  const values = [guest.name, guest.phone, guest.address, guest.resident]
   return values.map((v) => JSON.stringify(v)).join(',')
 }
 
@@ -73,10 +73,16 @@ interface DecryptedGuest {
   name: string
   phone: string
   address: string
+  resident?: string
 }
 
 export function fromCSV(csv: string): DecryptedGuest {
   const { data: rows } = parse(csv)
   const values = rows[0]
-  return { name: values[0], phone: values[1], address: values[2] }
+  return {
+    name: values[0],
+    phone: values[1],
+    address: values[2],
+    resident: values[3],
+  }
 }

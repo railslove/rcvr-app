@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 import { useEffectOnce } from 'react-use'
 
+import { isCareEnv } from '~lib/config'
 import { decryptTickets, DecryptedTicket } from '~lib/actions'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany, useDataRequest, useModals } from '~lib/hooks'
@@ -19,6 +20,7 @@ function ticketsToExcel(tickets: DecryptedTicket[]) {
     name: ticket.guest?.name ?? '-',
     address: ticket.guest?.address ?? '-',
     phone: ticket.guest?.phone ?? '-',
+    resident: ticket.guest?.resident ?? undefined,
   }))
   const header = {
     enteredAt: 'Eingecheckt um',
@@ -28,6 +30,8 @@ function ticketsToExcel(tickets: DecryptedTicket[]) {
     address: 'Adresse',
     phone: 'Telefon',
   }
+
+  if (isCareEnv) header['resident'] = 'Bewohnername'
 
   return [header, ...downloadableTickets]
 }
@@ -72,7 +76,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     const { writeFile, utils: xlsx } = await import('xlsx')
     const book = xlsx.book_new()
     const sheet = xlsx.json_to_sheet(rows, { skipHeader: true })
-    const colWidths = [20, 20, 10, 20, 30, 15]
+    const colWidths = [20, 20, 10, 20, 30, 15, isCareEnv && 20]
     sheet['!cols'] = colWidths.map((wch) => ({ wch }))
     const date = formatDate(dataRequest.from, 'DD.MM')
     const sheetname = date
@@ -110,7 +114,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       {dataRequest && !dataRequest.acceptedAt && (
         <Callout>
           <Text>
-            Die Daten für diesen Zeitraum wurden noch nicht für Dich
+            Die Daten für diesen Zeitraum wurden noch nicht für{' '}
+            {isCareEnv ? 'Sie' : 'Dich'}
             freigegeben.
           </Text>
         </Callout>
@@ -119,8 +124,9 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       {dataRequest?.tickets && !owner.privateKey && (
         <Box mb={4}>
           <Text>
-            Dein privater Schlüssel ist nicht mehr auf deinem Gerät gespeichert.
-            Um die Daten zu entschlüsseln, musst du ihn neu eingeben.
+            {isCareEnv
+              ? 'Dein privater Schlüssel ist nicht mehr auf deinem Gerät gespeichert. Um die Daten zu entschlüsseln, musst du ihn neu eingeben.'
+              : 'Ihr privater Schlüssel ist nicht mehr auf Ihrem Gerät gespeichert. Um die Daten zu entschlüsseln, müssen Sie ihn neu eingeben.'}
           </Text>
           <Box height={4} />
           <Button onClick={handleEnterKey}>Schlüssel eingeben</Button>
@@ -141,7 +147,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <Callout variant="danger">
                 <Text>
                   Keine Daten konnten entschlüsselt werden. Wahrscheinlich ist
-                  dein privater Schlüssel nicht korrekt. Bitte gib ihn neu ein.
+                  {isCareEnv ? 'Ihre' : 'dein'} privater Schlüssel nicht
+                  korrekt. Bitte {isCareEnv ? 'geben Sie' : 'gib'} ihn neu ein.
                 </Text>
               </Callout>
               <Box height={4} />
@@ -165,6 +172,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <th>Name</th>
               <th>Adresse</th>
               <th>Telefon</th>
+              {isCareEnv && <th>Bewohner</th>}
             </tr>
           </thead>
           <tbody>
@@ -188,6 +196,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
                     <td>{ticket.guest.name}</td>
                     <td>{ticket.guest.address}</td>
                     <td>{ticket.guest.phone}</td>
+                    {isCareEnv && <td>{ticket.guest.resident}</td>}
                   </>
                 )}
               </tr>

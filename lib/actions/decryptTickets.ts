@@ -7,6 +7,7 @@ interface DecryptionResult {
     name: string
     phone: string
     address: string
+    resident?: string
   }
 }
 
