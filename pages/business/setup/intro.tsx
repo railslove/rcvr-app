@@ -25,7 +25,7 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       </Head>
       <Text as="h2" variant="h2">
         {isCareEnv
-          ? 'So nutzen Sie recover für Ihre Betrieb'
+          ? 'So nutzen Sie recover für Ihren Betrieb'
           : 'So nutzt Du recover für deinen Betrieb'}
       </Text>
       <Box height={6} />
