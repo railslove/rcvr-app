@@ -1,7 +1,6 @@
 import camelcaseKeys from 'camelcase-keys'
 import snakecaseKeys from 'snakecase-keys'
 import { api, parseDates } from './'
-import { isCareEnv } from '~lib/config';
 
 export interface PostSignup {
   email: string
