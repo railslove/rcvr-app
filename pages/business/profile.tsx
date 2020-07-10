@@ -103,7 +103,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               gekündigt werden.
               <br />
               Wenn {isCareEnv ? 'Sie' : 'Du'} Anspruch auf eine kostenlose oder
-              reduzierte Nutzung von der Recover App
+              reduzierte Nutzung von der Recover App{' '}
               {isCareEnv ? 'haben, melden Sie sich' : 'hast, melde dich'}, gerne
               bei unserem Support, damit wir
               {isCareEnv ? 'Ihren' : 'deinen'} Laden überprüfen und freischalten
