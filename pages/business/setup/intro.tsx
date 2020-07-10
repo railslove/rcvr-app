@@ -41,8 +41,8 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
         </p>
         <p>
           {isCareEnv
-            ? 'Nach dem Onboarding können Sie sich bei uns melden um zusammen mit unserem Team die echtheit Ihrer Daten zu prüfen'
-            : 'Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit unserem Team die echtheit deiner Daten zu prüfen'}
+            ? 'Nach dem Onboarding können Sie sich bei uns melden um zusammen mit unserem Team die Echtheit Ihrer Daten zu prüfen'
+            : 'Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit unserem Team die Echtheit deiner Daten zu prüfen'}
         </p>
         <p>
           {isCareEnv
