@@ -43,9 +43,11 @@ export async function postSignup(signup: PostSignup): Promise<OwnerRes> {
     rcvr: 'https://rcvr.app',
     care: 'https://care.rcvr.app',
   }
-  const frontend =
-    process.env.NEXT_PUBLIC_OVERWRITE_FRONTEND_URL ||
-    FRONTEND_URLS[process.env.NEXT_PUBLIC_BUILD_VARIANT]
+  const frontend = {
+    url:
+      process.env.NEXT_PUBLIC_OVERWRITE_FRONTEND_URL ||
+      FRONTEND_URLS[process.env.NEXT_PUBLIC_BUILD_VARIANT],
+  }
   const json = snakecaseKeys({ owner: signup, frontend }, { deep: true })
 
   return await api
