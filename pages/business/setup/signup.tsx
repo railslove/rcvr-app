@@ -35,7 +35,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
     try {
       setLoading(true)
       const affiliate = isCareEnv
-        ? 'CARE'
+        ? 'care'
         : localStorage.getItem('rcvr_affiliate')
 
       await signup({ name, email, password, affiliate })
