@@ -40,7 +40,7 @@ export interface OwnerReq {
 }
 
 export async function postSignup(signup: PostSignup): Promise<OwnerRes> {
-  const frontend = isCareEnv ? 'care.rcvr.app' : 'rcvr.app';
+  const frontend = isCareEnv ? 'care.rcvr.app' : 'rcvr.app'
   const json = snakecaseKeys({ owner: signup, frontend }, { deep: true })
 
   return await api
