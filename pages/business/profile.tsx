@@ -104,11 +104,10 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               <br />
               Wenn {isCareEnv ? 'Sie' : 'Du'} Anspruch auf eine kostenlose oder
               reduzierte Nutzung von der Recover App
-              {isCareEnv ? 'haben, melden Sie sich' : 'hast, melde dich'},
-              gerne bei unserem Support, damit wir
-              {isCareEnv ? 'Ihren' : 'deinen'} Laden überprüfen und
-              freischalten können:{' '}
-              <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+              {isCareEnv ? 'haben, melden Sie sich' : 'hast, melde dich'}, gerne
+              bei unserem Support, damit wir
+              {isCareEnv ? 'Ihren' : 'deinen'} Laden überprüfen und freischalten
+              können: <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
             </p>
           </Text>
           <Box height={4} />
