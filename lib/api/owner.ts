@@ -1,6 +1,7 @@
 import camelcaseKeys from 'camelcase-keys'
 import snakecaseKeys from 'snakecase-keys'
 import { api, parseDates } from './'
+import { isCareEnv } from '~lib/config';
 
 export interface PostSignup {
   email: string
@@ -39,7 +40,7 @@ export interface OwnerReq {
 }
 
 export async function postSignup(signup: PostSignup): Promise<OwnerRes> {
-  const frontend = { url: process.env.NEXT_PUBLIC_FRONTEND_URL }
+  const frontend = isCareEnv ? 'care.rcvr.app' : 'rcvr.app';
   const json = snakecaseKeys({ owner: signup, frontend }, { deep: true })
 
   return await api
