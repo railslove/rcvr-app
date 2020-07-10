@@ -20,7 +20,7 @@ function ticketsToExcel(tickets: DecryptedTicket[]) {
     name: ticket.guest?.name ?? '-',
     address: ticket.guest?.address ?? '-',
     phone: ticket.guest?.phone ?? '-',
-    resident: ticket.guest?.resident ?? undefined,
+    resident: isCareEnv ? ticket.guest?.resident ?? '-' : undefined,
   }))
   const header = {
     enteredAt: 'Eingecheckt um',
@@ -76,7 +76,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     const { writeFile, utils: xlsx } = await import('xlsx')
     const book = xlsx.book_new()
     const sheet = xlsx.json_to_sheet(rows, { skipHeader: true })
-    const colWidths = [20, 20, 10, 20, 30, 15, isCareEnv && 20]
+    const colWidths = [20, 20, 10, 20, 30, 15]
+    if (isCareEnv) colWidths.push(20)
     sheet['!cols'] = colWidths.map((wch) => ({ wch }))
     const date = formatDate(dataRequest.from, 'DD.MM')
     const sheetname = date
