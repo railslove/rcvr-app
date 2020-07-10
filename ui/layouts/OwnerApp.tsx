@@ -9,6 +9,7 @@ import formatDate from 'intl-dateformat'
 
 import { useCompanies, useOwner } from '~lib/hooks'
 import { Box, Text, Icon, Row, Callout } from '~ui/core'
+import { isCareEnv } from '~lib/config'
 import { Logo, Back } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
@@ -26,7 +27,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
     <Limit>
       <SharedMeta />
       <Head>
-        <title key="title">{title ?? '____'} | recover</title>
+        <title key="title">
+          {title ?? '____'} | {isCareEnv ? 'recover care' : 'recover'}
+        </title>
       </Head>
       <Top>
         <LogoBox layoutId="appLogo">

@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { isCareEnv } from '~lib/config'
 import { ActionCard } from '~ui/blocks/ActionCard'
 import { IconButton } from '~ui/core'
 import { Edit, Trash } from '~ui/svg'
@@ -18,7 +19,7 @@ export const CompanyCard = ({ company, onEdit, onDelete }) => {
     >
       <ActionCard.Main
         title={company.name}
-        subtitle={'Speisekarte: ' + menuText}
+        subtitle={!isCareEnv && 'Speisekarte: ' + menuText}
       />
       <ActionCard.Actions>
         <IconButton

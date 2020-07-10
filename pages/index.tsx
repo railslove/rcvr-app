@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { Box, Text, ButtonLink, Card, Row } from '~ui/core'
+import { isCareEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
@@ -15,19 +16,24 @@ export default function IndexPage() {
       <Box height={4} />
       <Text>
         <p>
-          recover ist die digitale Kontaktdatenliste für Betriebe und deren
-          Gäste. Einfach, sicher, schnell.
+          {isCareEnv
+            ? 'recover ist die digitale Kontaktdatenliste für Plfegeeinrichtungen deren Besucher und Gäste. Einfach, sicher, schnell.'
+            : 'recover ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.'}
         </p>
       </Text>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          Für Gäste
+          {isCareEnv ? 'Für Besucher und Gäste' : 'Für Gäste'}
         </Text>
         <Box height={4} />
         <Text>
-          <p>recover schützt Deine Daten besser als jedes Papier.</p>
+          <p>
+            {isCareEnv
+              ? 'recover schützt Ihre Daten besser als Papier'
+              : 'recover schützt Deine Daten besser als jedes Papier.'}
+          </p>
         </Text>
         <Box height={8} />
 
@@ -39,19 +45,22 @@ export default function IndexPage() {
           QR-Code scannen
         </ButtonLink>
         <Box height={4} />
-        <ButtonLink href="/my-checkins">Deine Tickets</ButtonLink>
+        <ButtonLink href="/my-checkins">
+          {isCareEnv ? 'Ihre Tickets' : 'Deine Ticket'}
+        </ButtonLink>
       </Card>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          Für deinen Betrieb
+          {isCareEnv ? 'Für Ihre Einrichtung' : 'Für deinen Betrieb'}
         </Text>
         <Box height={4} />
         <Text>
           <p>
-            Tschüss, Zettelwirtschaft! recover ist die digitale
-            Kontaktdatenliste deiner Gäste. Einfach, sicher, schnell.
+            {isCareEnv
+              ? 'Tschüss, Zettelwirtschaft! recover ist die digitale Kontaktdatenliste Ihrer Besucher und Gäste. Einfach, sicher, schnell.'
+              : 'Tschüss, Zettelwirtschaft! recover ist die digitale Kontaktdatenliste deiner Gäste. Einfach, sicher, schnell.'}
           </p>
         </Text>
         <Box height={8} />

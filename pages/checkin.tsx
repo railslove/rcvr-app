@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from 'react-query'
 
+import { isCareEnv } from '~lib/config'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
@@ -11,6 +12,7 @@ import { Guest, updateGuest, addGuest, getLastCheckin } from '~lib/db'
 import { Row, Text, Box, Callout } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Onboarding } from '~ui/blocks/Onboarding'
+import { Confirmation } from '~ui/blocks/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
 
 export default function CheckinPage() {
@@ -21,6 +23,7 @@ export default function CheckinPage() {
   })
   const [checkoutFn] = useMutation(checkout)
   const [showOnboarding, setShowOnboarding] = React.useState(false)
+  const [showConfirmation, setShowConfirmation] = React.useState(false)
   const [showLoading, setShowLoading] = React.useState(true)
   const router = useRouter()
 
@@ -74,6 +77,30 @@ export default function CheckinPage() {
     [guestInfo, checkinAndRedirect]
   )
 
+  const tryAutoCheckin = React.useCallback(() => {
+    const guest = guestInfo.data
+
+    // Check if a guest was already created, then do the checkin cha cha cha.
+    if (guest) {
+      const hasData = guest.name && guest.phone && guest.address
+      const hasAcceptedPrivacy = guest.checkedInCompanyIds?.includes(
+        areaInfo.data.companyId
+      )
+
+      if (hasData && hasAcceptedPrivacy) {
+        checkinAndRedirect(guest)
+      } else {
+        setShowConfirmation(false)
+        setShowOnboarding(true)
+        setShowLoading(false)
+      }
+    } else {
+      setShowConfirmation(false)
+      setShowOnboarding(true)
+      setShowLoading(false)
+    }
+  }, [guestInfo, areaInfo, checkinAndRedirect])
+
   const isReady =
     publicKey &&
     areaId &&
@@ -91,27 +118,13 @@ export default function CheckinPage() {
     // Checks if the publicKey is decodable. Throws an error and shows the
     // corresponding error page if not.
     binKey(publicKey)
-
-    const guest = guestInfo.data
-
-    // Check if a guest was already created, then do the checkin cha cha cha.
-    if (guest) {
-      const hasData = guest.name && guest.phone && guest.address
-      const hasAcceptedPrivacy = guest.checkedInCompanyIds?.includes(
-        areaInfo.data.companyId
-      )
-
-      if (hasData && hasAcceptedPrivacy) {
-        checkinAndRedirect(guest)
-      } else {
-        setShowOnboarding(true)
-        setShowLoading(false)
-      }
-    } else {
-      setShowOnboarding(true)
+    if (isCareEnv) {
+      setShowConfirmation(true)
       setShowLoading(false)
+    } else {
+      tryAutoCheckin()
     }
-  }, [isReady, checkinAndRedirect, areaInfo, guestInfo, publicKey])
+  }, [isReady, publicKey, tryAutoCheckin])
 
   return (
     <MobileApp logoVariant="big">
@@ -128,13 +141,13 @@ export default function CheckinPage() {
           <Callout variant="danger">
             <Text>
               Die Kontaktdatenerfassung mit recover ist für diesen Betrieb
-              leider nicht mehr aktiv. Bitte frag vor Ort nach einer anderen Art
-              der Kontaktdatenerfassung.
+              leider nicht mehr aktiv. Bitte {isCareEnv ? 'fragen Sie' : 'frag'}{' '}
+              vor Ort nach einer anderen Art der Kontaktdatenerfassung.
             </Text>
           </Callout>
         </div>
       )}
-      {!areaInfo.data?.ownerIsBlocked && showOnboarding && (
+      {!areaInfo.data?.ownerIsBlocked && (showOnboarding || showConfirmation) && (
         <div>
           <Text as="h2" variant="h2">
             {areaInfo.data.companyName}
@@ -146,18 +159,19 @@ export default function CheckinPage() {
           <Box height={1} />
           <Text>
             <p>
-              Durch die aktuellen Corona-Verordnungen musst du deine
-              Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu
-              Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App
-              kann auch freiwillig genutzt werden, um die Nachverfolgung zu
-              unterstützen.
+              {isCareEnv
+                ? 'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.'
+                : 'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.'}
             </p>
             <p>
-              So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.
+              {isCareEnv
+                ? 'So kann das Gesundheitsamt Sie anrufen, wenn es notwendig ist.'
+                : 'So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.'}
             </p>
             <p>
               Datenschutz ist uns dabei sehr wichtig! <strong>recover</strong>{' '}
-              speichert Deine Daten verschlüsselt und sicher.
+              speichert {isCareEnv ? 'Ihre' : 'Deine'} Daten verschlüsselt und
+              sicher.
             </p>
           </Text>
           <Box height={6} />
@@ -166,13 +180,15 @@ export default function CheckinPage() {
             <Box mb={6} mx={-4}>
               <Callout variant="danger">
                 <Text>
-                  Wir konnten keine Verbindung herstellen. Hast du vielleicht
-                  gerade kein Internet?
+                  {isCareEnv
+                    ? 'Wir konnten keine Verbindung herstellen. Haben Sie vielleicht gerade kein Internet?'
+                    : 'Wir konnten keine Verbindung herstellen. Hast du vielleicht gerade kein Internet?'}
                 </Text>
               </Callout>
             </Box>
           )}
-          <Onboarding onSubmit={handleSubmitOnboarding} />
+          {showOnboarding && <Onboarding onSubmit={handleSubmitOnboarding} />}
+          {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
             <a
               href="https://www.recoverapp.de/fuer-gaeste"

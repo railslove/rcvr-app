@@ -5,6 +5,7 @@ export interface Guest {
   name?: string
   phone?: string
   address?: string
+  resident?: string
   checkedInCompanyIds?: string[]
 }
 

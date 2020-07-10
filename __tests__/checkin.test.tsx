@@ -70,5 +70,5 @@ it('encrypts guest data and sends checkin to api', async () => {
     publicKey,
     privateKey
   )
-  expect(decrypted).toBe('"Donnie","+11880","Täststr. 3, Köln"')
+  expect(decrypted).toBe('"Donnie","+11880","Täststr. 3, Köln",')
 })

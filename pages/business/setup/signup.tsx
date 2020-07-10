@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
+import { isCareEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
 import { Step2 } from '~ui/svg'
@@ -33,7 +34,10 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const handleSubmit = async ({ name, email, password }, bag) => {
     try {
       setLoading(true)
-      const affiliate = localStorage.getItem('rcvr_affiliate')
+      const affiliate = isCareEnv
+        ? 'care'
+        : localStorage.getItem('rcvr_affiliate')
+
       await signup({ name, email, password, affiliate })
       queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
@@ -63,8 +67,9 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
       <Box height={6} />
       <Text>
         <p>
-          Mit deinem Account kannst du QR Codes erstellen und Checkins deiner
-          Gäste verwalten.
+          {isCareEnv
+            ? 'Mit Ihrem Account können Sie QR Codes erstellen und Checkins Ihrer Gäste verwalten.'
+            : 'Mit deinem Account kannst du QR Codes erstellen und Checkins deiner Gäste verwalten.'}
         </p>
       </Text>
       <Box height={6} />
@@ -83,7 +88,10 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
             <Form>
-              <Input name="name" label="Dein Name" />
+              <Input
+                name="name"
+                label={isCareEnv ? 'Ihre Name' : 'Dein Name'}
+              />
               <Box height={4} />
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={4} />
@@ -95,7 +103,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                 hint={
                   values.password !== ''
                     ? undefined
-                    : 'Dein Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
+                    : 'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
                 }
               />
               <Box height={4} />

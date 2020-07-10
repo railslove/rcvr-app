@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
 
+import { isCareEnv } from '~lib/config'
 import { withOwner } from '~lib/pageWrappers'
 import { Text, Box, Row, ButtonLink } from '~ui/core'
 import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'
@@ -24,15 +25,19 @@ function SetupSuccessPage() {
       <Box height={10} />
       <Text>
         <p>
-          Wir freuen uns, dass Du dabei bist! Dein Account ist jetzt vollständig
-          eingerichtet.
+          {isCareEnv
+            ? 'Wir freuen uns, dass Sie dabei sind! Ihr Account ist jetzt vollständig eingerichtet.'
+            : 'Wir freuen uns, dass Du dabei bist! Dein Account ist jetzt vollständig eingerichtet.'}
         </p>
         <p>
-          Wir melden uns bald bei Dir, um gemeinsam deine Daten zu überprüfen.
+          {isCareEnv
+            ? 'Sie können sich gern bei uns melden um gemeinsam Ihre Daten zu prüfen'
+            : 'Du kannst dich gern bei uns melden um gemeinsam deine Daten zu prüfen'}
         </p>
         <p>
-          In der Zwischenzeit kannst du schon Betriebe, Tische und QR Codes
-          erstellen.
+          {isCareEnv
+            ? 'Jetzt können Sie schon Betriebe, Tische und QR Codes erstellen.'
+            : 'Jetzt kannst du schon Betriebe, Tische und QR Codes erstellen.'}
         </p>
       </Text>
       <Box height={6} />

@@ -1,3 +1,7 @@
+import { isCareEnv } from '~lib/config'
+import LogoRcvr from './logo-rcvr.svg'
+import LogoCare from './logo-care.svg'
+
 export { default as Add } from './add.svg'
 export { default as ArrowLeft } from './arrow-left.svg'
 export { default as ArrowRefresh } from './arrow-refresh.svg'
@@ -10,7 +14,6 @@ export { default as Edit } from './edit.svg'
 export { default as EyeClosed } from './eye-closed.svg'
 export { default as EyeOpen } from './eye-open.svg'
 export { default as Lock } from './lock.svg'
-export { default as Logo } from './logo.svg'
 export { default as Phone } from './phone.svg'
 export { default as Right } from './right.svg'
 export { default as Slashes } from './slashes.svg'
@@ -23,3 +26,6 @@ export { default as Trash } from './trash.svg'
 export { default as TinyCheck } from './tiny-check.svg'
 export { default as Unlock } from './unlock.svg'
 export { default as Virus } from './virus.svg'
+
+export const Logo = isCareEnv ? LogoCare : LogoRcvr
+export { LogoCare, LogoRcvr }

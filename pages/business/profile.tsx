@@ -4,6 +4,7 @@ import formatDate from 'intl-dateformat'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
+import { isCareEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
 import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
@@ -82,7 +83,10 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
         <SubscriptionMessage owner={owner} />
       ) : (
         <Callout>
-          <Text>Du musst zuerst einen Betrieb anlegen.</Text>
+          <Text>
+            {isCareEnv ? 'Sie müssen' : 'Du musst'} zuerst einen Betrieb
+            anlegen.
+          </Text>
         </Callout>
       )}
       <Box height={4} />
@@ -91,17 +95,19 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
         <>
           <Text>
             <p>
-              Du darfst recover 14 Tage lang kostenlos auf Herz und Nieren
-              testen.
+              {isCareEnv ? 'Sie dürfen' : 'Du darfst'} recover 14 Tage lang
+              kostenlos auf Herz und Nieren testen.
               <br />
               Danach kostet die Mitgliedschaft 15€ zzgl. USt. pro Monat und
-              Betrieb. Du kannst deine Mitgliedschaft jederzeit zum Monatsende
-              kündigen.
+              Betrieb. Die Mitgliedschaft kann jederzeit zum Monatsende
+              gekündigt werden.
               <br />
-              Wenn du Anspruch auf eine kostenlose oder reduzierte Nutzung von
-              der Recover App hast, melde dich gerne bei unserem Support, damit
-              wir deinen Laden überprüfen und freischalten können:{' '}
-              <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+              Wenn {isCareEnv ? 'Sie' : 'Du'} Anspruch auf eine kostenlose oder
+              reduzierte Nutzung von der Recover App
+              {isCareEnv ? 'haben, melden Sie sich' : 'hast, melde dich'}, gerne
+              bei unserem Support, damit wir
+              {isCareEnv ? 'Ihren' : 'deinen'} Laden überprüfen und freischalten
+              können: <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
             </p>
           </Text>
           <Box height={4} />
@@ -118,7 +124,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               <ActionCard.Main title="Rechnungsdaten ändern" icon={Right} />
             </ActionCard>
             <ActionCard onClick={openSelfService}>
-              <ActionCard.Main title="Deine Rechnungen" icon={Right} />
+              <ActionCard.Main title="Rechnungen" icon={Right} />
             </ActionCard>
           </ActionList>
 
@@ -132,7 +138,8 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
           </ActionList>
           <Box height={4} />
           <Text variant="shy">
-            Du kannst deine Mitgliedschaft jederzeit zum Monatsende kündigen.
+            {isCareEnv ? 'Sie können ihre' : 'Du kannst deine'} Mitgliedschaft
+            jederzeit zum Monatsende kündigen.
           </Text>
         </>
       )}
@@ -166,7 +173,8 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout>
         <Text>
-          Du darfst <strong>recover kostenlos</strong> nutzen.{' '}
+          {isCareEnv ? 'Sie dürfen' : 'Du darfst'}{' '}
+          <strong>recover kostenlos</strong> nutzen.{' '}
           <span role="img" aria-label="Hurra!">
             🎉
           </span>
@@ -179,7 +187,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout>
         <Text>
-          Du darfst recover noch bis zum{' '}
+          {isCareEnv ? 'Sie dürfen' : 'Du darfst'} recover noch bis zum{' '}
           <strong>
             {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')} kostenlos testen
           </strong>
@@ -193,8 +201,11 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout>
         <Text>
-          <strong>Du bist im Probezeitraum deiner Mitgliedschaft.</strong>{' '}
-          Danach wird deine Mitgliedschaft automatisch verlängert.
+          <strong>
+            {isCareEnv ? 'Sie sind' : 'Du bist'} im Probezeitraum deiner
+            Mitgliedschaft.
+          </strong>{' '}
+          Danach wird die Mitgliedschaft automatisch verlängert.
         </Text>
       </Callout>
     )
@@ -203,7 +214,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
   if (status === 'incomplete') {
     return (
       <Callout>
-        <Text>Deine Zahlung wird verarbeitet...</Text>
+        <Text>{isCareEnv ? 'Ihre' : 'Deine'} Zahlung wird verarbeitet...</Text>
       </Callout>
     )
   }
@@ -212,8 +223,9 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout variant="danger">
         <Text>
-          Deine Zahlung konnte nicht verarbeitet werden. Es wurden keine
-          Zahlungen veranlasst. <strong>Bitte führe es erneut aus.</strong>
+          {isCareEnv ? 'Ihre' : 'Deine'} Zahlung konnte nicht verarbeitet
+          werden. Es wurden keine Zahlungen veranlasst.{' '}
+          <strong>Bitte erneut versuchen.</strong>
         </Text>
       </Callout>
     )
@@ -222,7 +234,10 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
   if (status === 'unpaid') {
     return (
       <Callout variant="danger">
-        <Text>Deine letzte Rechnung wurde noch nicht bezahlt.</Text>
+        <Text>
+          {isCareEnv ? 'Ihre' : 'Deine'} letzte Rechnung wurde noch nicht
+          bezahlt.
+        </Text>
       </Callout>
     )
   }
@@ -230,7 +245,10 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
   if (status === 'canceled') {
     return (
       <Callout variant="danger">
-        <Text>Du hast deine Mitgliedschaft gekündigt.</Text>
+        <Text>
+          {isCareEnv ? 'Sie haben ihre' : 'Du hast deine'} Mitgliedschaft
+          gekündigt.
+        </Text>
       </Callout>
     )
   }
