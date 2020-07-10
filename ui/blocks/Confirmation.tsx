@@ -20,7 +20,7 @@ export const Confirmation: React.FC<ConfirmationProps> = ({ onSubmit }) => {
           aufweist.
         </p>
         <p>
-          Klicke auf Weiter um zu bestätigen, dass du keine Symptome aufweist.
+          Klicken Sie auf Weiter um zu bestätigen, dass Sie keine Symptome aufweisen.
         </p>
       </Text>
       <Box height={5} />
