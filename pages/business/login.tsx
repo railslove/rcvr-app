@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { queryCache } from 'react-query'
 
 import { Input, Button, Box, Text, Card, Row } from '~ui/core'
@@ -95,9 +96,9 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
       </Formik>
 
       <Row justifyContent="center" my={6}>
-        <a href="mailto:team@recoverapp.de">
+        <Link href="/business/password-reset/request" as="a" passHref>
           <Text variant="link">Passwort vergessen?</Text>
-        </a>
+        </Link>
       </Row>
     </MobileApp>
   )
