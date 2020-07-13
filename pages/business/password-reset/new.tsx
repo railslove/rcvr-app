@@ -28,7 +28,7 @@ export default function PasswordResetNewPage() {
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
 
-  const handleSubmit = async ({ password }, bag) => {
+  const handleSubmit = async ({ password }) => {
     setLoading(true)
     setError(null)
 
