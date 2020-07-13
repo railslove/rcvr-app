@@ -32,7 +32,7 @@ export default function PasswordResetNewPage() {
     setLoading(true)
     setError(null)
 
-    postResetPassword({ password, token: router.query.token })
+    postResetPassword(password, router.query.token)
       .then(() => router.replace('/business/login'))
       .catch((e) => {
         setError(

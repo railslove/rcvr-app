@@ -6,7 +6,7 @@ export async function postRequestPasswordReset(email: string) {
   return await api.post('request-password-reset', { json })
 }
 
-export async function postResetPassword(password: string, token: string) {
+export async function postResetPassword(password, token) {
   const json = { password, token }
 
   return await api.post('reset-password', { json })
