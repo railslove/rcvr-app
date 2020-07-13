@@ -5,6 +5,7 @@ export * from './owner'
 export * from './tickets'
 export * from './companies'
 export * from './dataRequests'
+export * from './passwords'
 
 export const api = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_BASE,
