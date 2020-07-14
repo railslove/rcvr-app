@@ -44,7 +44,7 @@ const theme = {
     },
     black: '#000000',
     green: isCareEnv ? '#F5B743' : '#28EE5F',
-    pink: '#EA28EE',
+    pink: isCareEnv ? '#F5B743' : '#EA28EE',
     yellow: {
       50: '#fff8dc',
       100: '#faebb2',
