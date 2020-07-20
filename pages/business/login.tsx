@@ -80,10 +80,13 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
               label="Passwort"
               hint={
                 <>
-                  {isCareEnv ? 'Ihr' : 'Dein'} Passwort{' '}
-                  {isCareEnv ? 'haben Sie' : 'hast du'} während der
-                  Registrierung selbst gewählt. Das ist <strong>nicht</strong>{' '}
-                  {isCareEnv ? 'Ihr' : 'dein'} privater Schlüssel.
+                  {isCareEnv
+                    ? 'Ihr Passwort haben Sie während der Registrierung selbst gewählt. Das ist '
+                    : 'Dein Password hast du während der Registrierung selbst gewählt. Das ist '}
+                  <strong>nicht</strong>
+                  {isCareEnv
+                    ? ' Ihr privater Schlüssel.'
+                    : ' dein privater Schlüssel.'}
                 </>
               }
               type="password"
