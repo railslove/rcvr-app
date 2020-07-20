@@ -120,7 +120,8 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Box height={6} />
               <Text variant="fineprint">
                 <p>
-                  Mit dem betätigen des Buttons erkläre ich mich mit den{' '}
+                  Mit dem Betätigen des Buttons{' '}
+                  {isCareEnv ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
                   <a href="https://railslove.com/privacy/">
                     Datenschutzbestimmungen
                   </a>{' '}

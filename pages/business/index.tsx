@@ -13,13 +13,13 @@ export default function BusinessIndexPage() {
         <title key="title">Für Betriebe | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        für Betriebe
+        Für Betriebe
       </Text>
       <Box height={4} />
       <Text>
         <p>
           {isCareEnv
-            ? 'Seit Corona sind Sie als Gastronom*In verpflichtet die Kontaktdaten Ihrer Besucher und Gäste zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie und die sicherste für Ihre Besucher und Gäste.'
+            ? 'Seit Corona sind Sie als Pflegeeinrichtung verpflichtet die Kontaktdaten Ihrer Besucher und Gäste zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie und die sicherste für Ihre Besucher und Gäste.'
             : 'Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für deine Gäste.'}
         </p>
       </Text>

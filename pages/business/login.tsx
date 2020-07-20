@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { queryCache } from 'react-query'
 
+import { isCareEnv } from '~lib/config'
 import { Input, Button, Box, Text, Card, Row } from '~ui/core'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { login } from '~lib/actions/login'
@@ -57,9 +58,9 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
       <Box height={4} />
       <Text>
         <p>
-          Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten
-          deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist
-          die einfachste Lösung für Dich und die sicherste für deine Gäste.
+          {isCareEnv
+            ? 'Seit Corona sind Pflegeeinrichtungen verpflichtet die Kontaktdaten von Gästen zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie - und die sicherste für Ihre Besucher.'
+            : 'Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für deine Gäste.'}
         </p>
       </Text>
       <Box height={4} />
@@ -79,9 +80,13 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
               label="Passwort"
               hint={
                 <>
-                  Dein Passwort hast du während der Registrierung selbst
-                  gewählt. Das ist <strong>nicht</strong> dein privater
-                  Schlüssel.
+                  {isCareEnv
+                    ? 'Ihr Passwort haben Sie während der Registrierung selbst gewählt. Das ist '
+                    : 'Dein Password hast du während der Registrierung selbst gewählt. Das ist '}
+                  <strong>nicht</strong>
+                  {isCareEnv
+                    ? ' Ihr privater Schlüssel.'
+                    : ' dein privater Schlüssel.'}
                 </>
               }
               type="password"

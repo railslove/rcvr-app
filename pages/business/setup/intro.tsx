@@ -25,7 +25,7 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       </Head>
       <Text as="h2" variant="h2">
         {isCareEnv
-          ? 'So nutzen Sie recover für Ihren Betrieb'
+          ? 'So nutzen Sie recover für Ihre Pflegeeinrichtung'
           : 'So nutzt Du recover für deinen Betrieb'}
       </Text>
       <Box height={6} />
@@ -36,7 +36,7 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       <Text>
         <p>
           {isCareEnv
-            ? 'Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Sie eine Liste der Kontaktdaten deiner Gäste führen. Mit recover führen Sie diese Liste digital. Um die Daten Ihrer Gäste zu schützen, werden sie von der App verschlüsselt. Während des Onboardings erstellen Sie daher in wenigen Schritten ein digitales Schlüsselpaar.'
+            ? 'Die Corona-Verordnungen schreiben vor, dass Sie eine Liste der Kontaktdaten Ihrer Gäste führen. Mit recover führen Sie diese Liste digital. Um die Daten Ihrer Gäste zu schützen, werden sie von der App verschlüsselt. Während des Onboardings erstellen Sie daher in wenigen Schritten ein digitales Schlüsselpaar.'
             : 'Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von der App verschlüsselt. Während des Onboardings erstellst Du daher in wenigen Schritten ein digitales Schlüsselpaar.'}
         </p>
         <p>
@@ -46,7 +46,7 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
         </p>
         <p>
           {isCareEnv
-            ? 'Die Einrichtung von recover dauert ca. 10 Min. Sind Sie bereit? Dann lasst uns starten.'
+            ? 'Die Einrichtung von recover dauert ca. 10 Min. Sind Sie bereit? Dann lassen Sie uns starten.'
             : 'Die Einrichtung von recover dauert ca. 10 Min. Bist Du bereit? Dann lass uns starten.'}
         </p>
       </Text>
