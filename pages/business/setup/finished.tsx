@@ -36,7 +36,7 @@ function SetupSuccessPage() {
         </p>
         <p>
           {isCareEnv
-            ? 'Jetzt können Sie schon Betriebe, Tische und QR Codes erstellen.'
+            ? 'Jetzt können Sie schon Betriebe, Häuser und Bereiche sowie QR Codes erstellen.'
             : 'Jetzt kannst du schon Betriebe, Tische und QR Codes erstellen.'}
         </p>
       </Text>

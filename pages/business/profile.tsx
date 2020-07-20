@@ -98,16 +98,22 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               {isCareEnv ? 'Sie dürfen' : 'Du darfst'} recover 14 Tage lang
               kostenlos auf Herz und Nieren testen.
               <br />
-              Danach kostet die Mitgliedschaft 15€ zzgl. USt. pro Monat und
-              Betrieb. Die Mitgliedschaft kann jederzeit zum Monatsende
-              gekündigt werden.
-              <br />
-              Wenn {isCareEnv ? 'Sie' : 'Du'} Anspruch auf eine kostenlose oder
-              reduzierte Nutzung von der Recover App{' '}
-              {isCareEnv ? 'haben, melden Sie sich' : 'hast, melde dich'}, gerne
-              bei unserem Support, damit wir
-              {isCareEnv ? 'Ihren' : 'deinen'} Laden überprüfen und freischalten
-              können: <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+              Danach kostet die Mitgliedschaft {isCareEnv
+                ? '29.90€'
+                : '15€'}{' '}
+              inkl. USt. pro Monat und
+              {isCareEnv ? 'Pflegeeinrichtung' : 'Betrieb'}. Die Mitgliedschaft
+              kann jederzeit zum Monatsende gekündigt werden.
+              {!isCareEnv && (
+                <>
+                  <br />
+                  Wenn Du Anspruch auf eine kostenlose oder reduzierte Nutzung
+                  von der Recover App hast, melde dich gerne bei unserem
+                  Support, damit wir deinen Laden überprüfen und freischalten
+                  können:{' '}
+                  <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+                </>
+              )}
             </p>
           </Text>
           <Box height={4} />

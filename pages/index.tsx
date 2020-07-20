@@ -17,7 +17,7 @@ export default function IndexPage() {
       <Text>
         <p>
           {isCareEnv
-            ? 'recover ist die digitale Kontaktdatenliste für Plfegeeinrichtungen deren Besucher und Gäste. Einfach, sicher, schnell.'
+            ? 'recover ist die digitale Kontaktdatenliste für Pflegeeinrichtungen deren Besucher und Gäste. Einfach, sicher, schnell.'
             : 'recover ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.'}
         </p>
       </Text>

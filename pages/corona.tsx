@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
 
+import { isCareEnv } from '~lib/config'
 import { Box, Text, Row } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Phone } from '~ui/svg'
@@ -20,13 +21,17 @@ export default function CoronaPage() {
       <Text>
         <p>Zu allererst: ruhig bleiben.</p>
         <p>
-          Wenn Du eine bestätigte Kontaktperson bist, wird sich das
-          Gesundheitsamt bei dir telefonisch innerhalb von 48 Stunden melden.
+          Wenn {isCareEnv ? 'Sie' : 'Du'} eine bestätigte Kontaktperson{' '}
+          {isCareEnv ? 'sind' : 'bist'}, wird sich das Gesundheitsamt bei{' '}
+          {isCareEnv ? 'Ihnen' : 'dir'} telefonisch innerhalb von 48 Stunden
+          melden.
         </p>
         <p>
-          Falls Du bereits typische Symptome wie Fieber, Müdigkeit und trockenen
-          Husten hast, solltest du vorsichtshalber in Haus-Quarantäne bleiben
-          und das Gesundheitsamt informieren.
+          Falls {isCareEnv ? 'Sie' : 'Du'} bereits typische Symptome wie Fieber,
+          Müdigkeit und trockenen Husten{' '}
+          {isCareEnv ? 'haben, sollten Sie' : 'hast, solltest du'}{' '}
+          vorsichtshalber in häuslicher Quarantäne bleiben und das
+          Gesundheitsamt informieren.
         </p>
       </Text>
       <Box height={6} />
@@ -35,9 +40,9 @@ export default function CoronaPage() {
           <Phone />
         </Circle>
         <Box ml={3}>
-          <Text variant="h3">Bürgertelefon zum Coronavirus</Text>
+          <Text variant="h3">Hotline zum Coronavirus</Text>
           <Text variant="h2">
-            <a href="tel:021191191001">0211 / 9119 1001</a>
+            <a href="tel:021191191001">030 346465100</a>
           </Text>
         </Box>
       </Row>
@@ -47,13 +52,13 @@ export default function CoronaPage() {
       <Text>
         <p>
           Eine Vielzahl von ständig aktualisierten Informationen gibt es auf der
-          Internetseite des nordrhein-westfälischen Gesundheitsministeriums:{' '}
+          Internetseite des Bundesgesundheitsministeriums:{' '}
           <a
-            href="https://www.mags.nrw/coronavirus"
+            href="https://www.bundesgesundheitsministerium.de/coronavirus.html"
             target="blank"
             rel="noopener noreferrer"
           >
-            www.mags.nrw/coronavirus
+            www.bundesgesundheitsministerium.de/coronavirus
           </a>
           . Dort finden sich insbesondere auch Links zu den
           Informationsangeboten der Bundeszentrale für gesundheitliche
