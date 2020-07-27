@@ -64,11 +64,15 @@ export default function IndexPage() {
           </p>
         </Text>
         <Box height={8} />
-        <ButtonLink href="/business">Recover für Betriebe</ButtonLink>
+        <ButtonLink href="/business">
+          Recover für Pflegeeinrichtungen
+        </ButtonLink>
       </Card>
       <Row justifyContent="center" my={6}>
         <a
-          href="https://www.recoverapp.de/"
+          href={
+            isCareEnv ? 'https://recovercare.de/' : 'https://www.recoverapp.de/'
+          }
           target="_blank"
           rel="noreferrer noopener"
         >

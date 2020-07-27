@@ -191,7 +191,11 @@ export default function CheckinPage() {
           {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
             <a
-              href="https://www.recoverapp.de/fuer-gaeste"
+              href={
+                isCareEnv
+                  ? 'https://www.recovercare.de/fur-besucher'
+                  : 'https://www.recoverapp.de/fuer-gaeste'
+              }
               target="_blank"
               rel="noreferrer noopener"
             >

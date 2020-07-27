@@ -33,7 +33,7 @@ function SetupSuccessPage() {
             🎉
           </span>{' '}
           {isCareEnv
-            ? 'Sie können nun mit der Einrichtung fortsetzen.'
+            ? 'Sie können nun mit der Einrichtung der App fortsetzen.'
             : 'Du kannst nun mit der Einrichtung fortsetzen.'}
         </p>
         <p>

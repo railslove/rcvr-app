@@ -10,10 +10,12 @@ export default function BusinessIndexPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">Für Betriebe | recover</title>
+        <title key="title">
+          Für {isCareEnv ? 'Pflegeeinrichtungen' : 'Betriebe'} | recover
+        </title>
       </Head>
       <Text as="h2" variant="h2">
-        Für Betriebe
+        Für {isCareEnv ? 'Pflegeeinrichtungen' : 'Betriebe'}
       </Text>
       <Box height={4} />
       <Text>
@@ -27,7 +29,7 @@ export default function BusinessIndexPage() {
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          Betrieb registrieren
+          {isCareEnv ? 'Pflegeeinrichtung' : 'Betrieb'} registrieren
         </Text>
         <Box height={4} />
         <Text>
@@ -56,7 +58,7 @@ export default function BusinessIndexPage() {
         <Text>
           <p>
             {isCareEnv
-              ? 'Hier können Sie Betriebe verwalten, QR Codes ausdrucken und aktuelle Checkins sehen.'
+              ? 'Hier können Sie ihre Pflegeeinrichtungen verwalten, QR Codes ausdrucken und aktuelle Checkins sehen.'
               : 'Verwalte deine Betriebe, drucke QR Codes aus und sehe aktuelle Checkins.'}
           </p>
         </Text>

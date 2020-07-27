@@ -21,7 +21,9 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">Für Betriebe | recover</title>
+        <title key="title">
+          Für {isCareEnv ? 'Pflegeeinrichtungen' : 'Betriebe'} | recover
+        </title>
       </Head>
       <Text as="h2" variant="h2">
         {isCareEnv

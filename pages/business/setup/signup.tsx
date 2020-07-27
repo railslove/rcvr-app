@@ -88,10 +88,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
             <Form>
-              <Input
-                name="name"
-                label={isCareEnv ? 'Ihre Name' : 'Dein Name'}
-              />
+              <Input name="name" label={isCareEnv ? 'Ihr Name' : 'Dein Name'} />
               <Box height={4} />
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={4} />
