@@ -76,7 +76,7 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
             </p>
             <p>
               {isCareEnv
-                ? 'Schreiben Sie den Schlüssel zum Beispiel auf einen Zettel und verwahren ihn sorgfältig. Oder machen Sie einen Screenshot davon und speichere ihn sicher. Sie können ihn auch in einem Passwortmanager speichern.'
+                ? 'Schreiben Sie den Schlüssel zum Beispiel auf einen Zettel und verwahren ihn sorgfältig. Oder machen Sie einen Screenshot und speichern ihn. Sie können ihn auch in einem Passwortmanager speichern.'
                 : 'Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre ihn sorgfältig. Oder mach einen Screenshot davon und speichere ihn sicher. Du kannst ihn auch in einem Passwortmanager speichern.'}
             </p>
           </Text>
