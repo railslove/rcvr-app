@@ -65,7 +65,7 @@ export default function IndexPage() {
         </Text>
         <Box height={8} />
         <ButtonLink href="/business">
-          Recover für Pflegeeinrichtungen
+          Recover für {isCareEnv ? 'Pflegeeinrichtungen' : 'Betriebe'}
         </ButtonLink>
       </Card>
       <Row justifyContent="center" my={6}>
