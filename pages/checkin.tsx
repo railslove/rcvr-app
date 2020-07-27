@@ -43,9 +43,6 @@ export default function CheckinPage() {
     async (guest: Guest) => {
       const id = idRef.current
       const enteredAt = enteredAtRef.current
-
-      if (showLoading) return // Make sure we don't try to save duplicate tickets
-
       setShowLoading(true)
 
       // auto checkout
@@ -65,7 +62,7 @@ export default function CheckinPage() {
         }
       }
     },
-    [publicKey, areaId, areaInfo, router, checkinFn, checkoutFn, showLoading]
+    [publicKey, areaId, areaInfo, router, checkinFn, checkoutFn]
   )
 
   const handleSubmitOnboarding = React.useCallback(
