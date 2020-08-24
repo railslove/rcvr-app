@@ -3,13 +3,13 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
 import { isCareEnv } from '~lib/config'
-import { useCurrentGuest } from '~lib/hooks'
 import { Guest } from '~lib/db'
 import { Input, Checkbox, Button, Box, Text, Card } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 
 type OnboardingProps = {
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
+  prefilledGuest: Guest
 }
 
 const yupShape = {
@@ -26,14 +26,15 @@ if (isCareEnv)
 
 const OnboardingSchema = Yup.object().shape(yupShape)
 
-export const Onboarding: React.FC<OnboardingProps> = ({ onSubmit }) => {
-  const { data: guest } = useCurrentGuest()
-
+export const Onboarding: React.FC<OnboardingProps> = ({
+  onSubmit,
+  prefilledGuest,
+}) => {
   const initialValues = {
-    name: guest?.name || '',
-    phone: guest?.phone || '',
-    address: guest?.address || '',
-    rememberMe: guest ? true : false,
+    name: prefilledGuest?.name || '',
+    phone: prefilledGuest?.phone || '',
+    address: prefilledGuest?.address || '',
+    rememberMe: prefilledGuest ? true : false,
   }
 
   if (isCareEnv) initialValues['resident'] = ''

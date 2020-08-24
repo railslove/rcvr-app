@@ -42,14 +42,11 @@ export default function CheckinPage() {
   const prefillName = router.query.name?.toString()
   const prefillPhone = router.query.phone?.toString()
   const prefillAddress = router.query.address?.toString()
-  if (prefillName && prefillPhone && prefillAddress) {
-    const prefilledGuest = {
-      name: prefillName,
-      phone: prefillPhone,
-      address: prefillAddress,
-    }
-    if (guestInfo.data) updateGuest(prefilledGuest)
-    else addGuest(prefilledGuest)
+
+  const prefilledGuest = {
+    name: prefillName || guestInfo.data?.name,
+    phone: prefillPhone || guestInfo.data?.phone,
+    address: prefillAddress || guestInfo.data?.address,
   }
 
   const checkinAndRedirect = React.useCallback(
@@ -200,7 +197,12 @@ export default function CheckinPage() {
               </Callout>
             </Box>
           )}
-          {showOnboarding && <Onboarding onSubmit={handleSubmitOnboarding} />}
+          {showOnboarding && (
+            <Onboarding
+              onSubmit={handleSubmitOnboarding}
+              prefilledGuest={prefilledGuest}
+            />
+          )}
           {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
             <a
