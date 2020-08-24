@@ -39,6 +39,16 @@ export default function CheckinPage() {
   const guestInfo = useCurrentGuest()
   const areaInfo = useArea(areaId)
 
+  const prefillName = router.query.name?.toString()
+  const prefillPhone = router.query.phone?.toString()
+  const prefillAddress = router.query.address?.toString()
+
+  const prefilledGuest = {
+    name: prefillName || guestInfo.data?.name,
+    phone: prefillPhone || guestInfo.data?.phone,
+    address: prefillAddress || guestInfo.data?.address,
+  }
+
   const checkinAndRedirect = React.useCallback(
     async (guest: Guest) => {
       const id = idRef.current
@@ -187,7 +197,12 @@ export default function CheckinPage() {
               </Callout>
             </Box>
           )}
-          {showOnboarding && <Onboarding onSubmit={handleSubmitOnboarding} />}
+          {showOnboarding && (
+            <Onboarding
+              onSubmit={handleSubmitOnboarding}
+              prefilledGuest={prefilledGuest}
+            />
+          )}
           {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
             <a
