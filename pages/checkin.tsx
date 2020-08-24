@@ -39,6 +39,19 @@ export default function CheckinPage() {
   const guestInfo = useCurrentGuest()
   const areaInfo = useArea(areaId)
 
+  const prefillName = router.query.name?.toString()
+  const prefillPhone = router.query.phone?.toString()
+  const prefillAddress = router.query.address?.toString()
+  if (prefillName && prefillPhone && prefillAddress) {
+    const prefilledGuest = {
+      name: prefillName,
+      phone: prefillPhone,
+      address: prefillAddress,
+    }
+    if (guestInfo.data) updateGuest(prefilledGuest)
+    else addGuest(prefilledGuest)
+  }
+
   const checkinAndRedirect = React.useCallback(
     async (guest: Guest) => {
       const id = idRef.current
