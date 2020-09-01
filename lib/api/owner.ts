@@ -23,6 +23,7 @@ export interface OwnerRes {
   affiliate?: string
   trialEndsAt?: Date
   blockAt?: Date
+  menuAlias?: string
   stripeSubscriptionStatus?:
     | 'trialing'
     | 'active'

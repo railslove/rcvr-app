@@ -17,6 +17,7 @@ export interface AreaRes {
   companyId: string
   companyName: string
   menuLink?: string
+  menuAlias?: string
   ownerIsBlocked: boolean
 }
 

@@ -13,6 +13,7 @@ interface Props {
   name?: string
   menuLink?: string
   menuPdfLink?: string
+  menuAlias?: string
   companyId?: string
 }
 type MProps = ModalBaseProps & Props
@@ -28,6 +29,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
   name,
   menuLink,
   menuPdfLink,
+  menuAlias,
   companyId,
   ...baseProps
 }) => {
@@ -88,7 +90,10 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <Box height={4} />
           {!isCareEnv && (
             <>
-              <Input name="menuLink" label="Link zur Speisekarte" />
+              <Input
+                name="menuLink"
+                label={`${menuAlias || 'Speisekarte'} als Link`}
+              />
               <Box height={4} />
               <Text variant="shy" textAlign="center">
                 – oder –
@@ -97,7 +102,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
               <FileInput
                 name="menuPdf"
                 type="file"
-                label="Speisekarte als PDF"
+                label={`${menuAlias || 'Speisekarte'} als PDF`}
                 hint="Es können nur pdf-Dateien hochgeladen werden."
                 accept="application/pdf"
               />
