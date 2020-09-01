@@ -64,7 +64,7 @@ export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
             <Box height={4} />
             <a href={area.menuLink} target="_blank" rel="noopener noreferrer">
               <Button as="div" css={{ width: '100%' }}>
-                Speisekarte
+                {area.menuAlias || 'Speisekarte'}
               </Button>
             </a>
           </motion.div>
