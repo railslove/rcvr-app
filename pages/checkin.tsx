@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from 'react-query'
 
-import { isCareEnv } from '~lib/config'
+import { isCareEnv, isFreseniusEnv, isRcvrEnv } from '~lib/config'
+import { introText } from '~ui/whitelabels'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
@@ -168,20 +169,18 @@ export default function CheckinPage() {
           </Text>
           <Box height={1} />
           <Text>
+            <p>{introText}</p>
             <p>
-              {isCareEnv
-                ? 'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.'
-                : 'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.'}
-            </p>
-            <p>
-              {isCareEnv
+              {isCareEnv || isFreseniusEnv
                 ? 'So kann das Gesundheitsamt Sie anrufen, wenn es notwendig ist.'
                 : 'So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.'}
             </p>
             <p>
-              Datenschutz ist uns dabei sehr wichtig! <strong>recover</strong>{' '}
-              speichert {isCareEnv ? 'Ihre' : 'Deine'} Daten verschlüsselt und
-              sicher.
+              Datenschutz ist uns dabei sehr wichtig!{' '}
+              {isRcvrEnv
+                ? <strong>recover</strong> +
+                  ' speichert Deine Daten verschlüsselt und sicher.'
+                : 'Ihre Daten werden verschlüsselt und sicher gespeichert.'}
             </p>
           </Text>
           <Box height={6} />
