@@ -1,5 +1,6 @@
 import { css } from '@styled-system/css'
-import { isCareEnv } from '~lib/config'
+import { isRcvrEnv } from '~lib/config'
+import { backgroundColor, highlightColor } from '~ui/whitelabels'
 
 const sizes = {
   px: 1,
@@ -43,8 +44,8 @@ const theme = {
       900: '#090e10',
     },
     black: '#000000',
-    green: isCareEnv ? '#F5B743' : '#28EE5F',
-    pink: isCareEnv ? '#F5B743' : '#EA28EE',
+    green: isRcvrEnv ? '#28EE5F' : highlightColor,
+    pink: isRcvrEnv ? '#EA28EE' : highlightColor,
     yellow: {
       50: '#fff8dc',
       100: '#faebb2',
@@ -111,7 +112,7 @@ const globalStyles = css({
     fontSize: 16, // baseline for rems
     minHeight: '100vh',
     scrollBehavior: 'smooth',
-    bg: 'bluegrey.50',
+    bg: isRcvrEnv ?  'bluegrey.50' : backgroundColor,
   },
   a: {
     color: 'inherit',
