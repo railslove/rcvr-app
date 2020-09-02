@@ -15,7 +15,7 @@ const envs = {
       'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
   },
   care: {
-    backgroundColor: '#eff3f6',
+    backgroundColor: '#f2f2f2',
     highLightColor: '##F5B743',
     Logo: LogoCare,
     logoSmallWidth: '92px',
