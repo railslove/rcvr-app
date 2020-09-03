@@ -49,4 +49,16 @@ const {
   logoSmallHeight,
 } = envs[process.env.NEXT_PUBLIC_BUILD_VARIANT]
 
-export { introText, Logo, backgroundColor, highlightColor, logoBigWidth, logoBigHeight, logoSmallWidth, logoSmallHeight, LogoCare, LogoRcvr, LogoFresenius }
+export {
+  introText,
+  Logo,
+  backgroundColor,
+  highlightColor,
+  logoBigWidth,
+  logoBigHeight,
+  logoSmallWidth,
+  logoSmallHeight,
+  LogoCare,
+  LogoRcvr,
+  LogoFresenius,
+}
