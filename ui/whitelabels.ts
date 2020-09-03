@@ -47,7 +47,7 @@ const {
   logoBigHeight,
   logoSmallWidth,
   logoSmallHeight,
-} = envs[process.env.NEXT_PUBLIC_BUILD_VARIANT]
+} = envs[process.env.NEXT_PUBLIC_BUILD_VARIANT || 'rcvr']
 
 export {
   introText,
