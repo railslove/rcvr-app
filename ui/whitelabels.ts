@@ -1,7 +1,6 @@
 import LogoRcvr from './svg/logo-rcvr.svg'
 import LogoCare from './svg/logo-care.svg'
 import LogoFresenius from './svg/logo-fresenius.svg'
-import { buildEnv } from '~lib/config'
 
 const envs = {
   rcvr: {
@@ -48,7 +47,7 @@ const {
   logoBigHeight,
   logoSmallWidth,
   logoSmallHeight,
-} = envs[buildEnv]
+} = envs[process.env.NEXT_PUBLIC_BUILD_VARIANT || 'rcvr']
 
 export {
   introText,

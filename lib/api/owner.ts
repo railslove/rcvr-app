@@ -1,7 +1,6 @@
 import camelcaseKeys from 'camelcase-keys'
 import snakecaseKeys from 'snakecase-keys'
 import { api, parseDates } from './'
-import { buildEnv } from '~lib/config'
 
 export interface PostSignup {
   email: string
@@ -48,7 +47,7 @@ export async function postSignup(signup: PostSignup): Promise<OwnerRes> {
   const frontend = {
     url:
       process.env.NEXT_PUBLIC_OVERWRITE_FRONTEND_URL ||
-      FRONTEND_URLS[buildEnv],
+      FRONTEND_URLS[process.env.NEXT_PUBLIC_BUILD_VARIANT],
   }
   const json = snakecaseKeys({ owner: signup, frontend }, { deep: true })
 
