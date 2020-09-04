@@ -26,7 +26,7 @@ const envs = {
       'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
   },
   fresenius: {
-    backgroundColor: '#DEE2E6',
+    backgroundColor: '#A6D7D7',
     highlightColor: '#009EE0',
     Logo: LogoFresenius,
     logoSmallWidth: '150px',
