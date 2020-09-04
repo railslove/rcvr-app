@@ -7,6 +7,8 @@ const isCareEnvBranch =
   process.env.VERCEL_GITHUB_COMMIT_REF &&
   process.env.VERCEL_GITHUB_COMMIT_REF === 'env/care'
 
+console.log('VERCEL_URL: ' + process.env.VERCEL_URL)
+
 if (isCareFeatureBranch || isCareEnvBranch) {
   console.log('Using BUILD_VARIANT: care')
   process.env.BUILD_VARIANT = 'care'
