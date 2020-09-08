@@ -4,7 +4,7 @@ import LogoFresenius from './svg/logo-fresenius.svg'
 
 const envs = {
   rcvr: {
-    backgroundColor: '',
+    backgroundColor: 'bluegrey.50',
     highlightColor: '',
     Logo: LogoRcvr,
     logoSmallWidth: '61px',
@@ -35,7 +35,8 @@ const envs = {
     logoSmallHeight: '66px',
     logoBigWidth: '300px',
     logoBigHeight: '130px',
-    privacyUrl: 'https://www.hs-fresenius.de/datenschutzerklaerung-recover-app/',
+    privacyUrl:
+      'https://www.hs-fresenius.de/datenschutzerklaerung-recover-app/',
     introText:
       'Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.',
   },

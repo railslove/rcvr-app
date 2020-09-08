@@ -112,7 +112,7 @@ const globalStyles = css({
     fontSize: 16, // baseline for rems
     minHeight: '100vh',
     scrollBehavior: 'smooth',
-    bg: isRcvrEnv ? 'bluegrey.50' : backgroundColor,
+    bg: backgroundColor,
   },
   a: {
     color: 'inherit',
