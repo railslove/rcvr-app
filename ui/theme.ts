@@ -1,6 +1,5 @@
 import { css } from '@styled-system/css'
-import { isRcvrEnv } from '~lib/config'
-import { backgroundColor, highlightColor } from '~ui/whitelabels'
+import { backgroundColor, primaryHighlightColor, secondaryHighlightColor } from '~ui/whitelabels'
 
 const sizes = {
   px: 1,
@@ -44,8 +43,8 @@ const theme = {
       900: '#090e10',
     },
     black: '#000000',
-    green: isRcvrEnv ? '#28EE5F' : highlightColor,
-    pink: isRcvrEnv ? '#EA28EE' : highlightColor,
+    green: primaryHighlightColor,
+    pink: secondaryHighlightColor,
     yellow: {
       50: '#fff8dc',
       100: '#faebb2',
