@@ -178,8 +178,7 @@ export default function CheckinPage() {
             <p>
               Datenschutz ist uns dabei sehr wichtig!{' '}
               {isRcvrEnv
-                ? <strong>recover</strong> +
-                  ' speichert Deine Daten verschlüsselt und sicher.'
+                ? <><strong>recover</strong> speichert Deine Daten verschlüsselt und sicher.</>
                 : 'Ihre Daten werden verschlüsselt und sicher gespeichert.'}
             </p>
           </Text>
