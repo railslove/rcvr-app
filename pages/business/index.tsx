@@ -10,9 +10,7 @@ export default function BusinessIndexPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">
-          Für {isCareEnv ? 'Pflegeeinrichtungen' : 'Betriebe'} | recover
-        </title>
+        <title key="title">format</title>
       </Head>
       <Text as="h2" variant="h2">
         Für {isCareEnv ? 'Pflegeeinrichtungen' : 'Betriebe'}

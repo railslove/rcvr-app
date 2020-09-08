@@ -4,8 +4,8 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from 'react-query'
 
-import { isCareEnv, isFreseniusEnv, isRcvrEnv } from '~lib/config'
-import { introText } from '~ui/whitelabels'
+import { isCareEnv, isRcvrEnv } from '~lib/config'
+import { introText, formalAddress } from '~ui/whitelabels'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
@@ -152,7 +152,7 @@ export default function CheckinPage() {
           <Callout variant="danger">
             <Text>
               Die Kontaktdatenerfassung mit recover ist für diesen Betrieb
-              leider nicht mehr aktiv. Bitte {isCareEnv ? 'fragen Sie' : 'frag'}{' '}
+              leider nicht mehr aktiv. Bitte {formalAddress ? 'fragen Sie' : 'frag'}{' '}
               vor Ort nach einer anderen Art der Kontaktdatenerfassung.
             </Text>
           </Callout>
@@ -171,7 +171,7 @@ export default function CheckinPage() {
           <Text>
             <p>{introText}</p>
             <p>
-              {isCareEnv || isFreseniusEnv
+              {formalAddress
                 ? 'So kann das Gesundheitsamt Sie anrufen, wenn es notwendig ist.'
                 : 'So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.'}
             </p>

@@ -13,6 +13,7 @@ const envs = {
     logoBigWidth: '182px',
     logoBigHeight: '20px',
     privacyUrl: '',
+    formalAddress: false,
     introText:
       'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
   },
@@ -26,6 +27,7 @@ const envs = {
     logoBigWidth: '120px',
     logoBigHeight: '20px',
     privacyUrl: '',
+    formalAddress: true,
     introText:
       'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
   },
@@ -40,6 +42,7 @@ const envs = {
     logoBigHeight: '130px',
     privacyUrl:
       'https://www.hs-fresenius.de/datenschutzerklaerung-recover-app/',
+    formalAddress: true,
     introText:
       'Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.',
   },
@@ -47,6 +50,7 @@ const envs = {
 
 const {
   introText,
+  formalAddress,
   privacyUrl,
   backgroundColor,
   primaryHighlightColor,
@@ -60,6 +64,7 @@ const {
 
 export {
   introText,
+  formalAddress,
   privacyUrl,
   Logo,
   backgroundColor,
