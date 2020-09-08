@@ -5,7 +5,8 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
-import { isCareEnv } from '~lib/config'
+import { isCareEnv, isFreseniusEnv } from '~lib/config'
+import { privacyUrl } from '~ui/whitelabels'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
 import { Step2 } from '~ui/svg'
@@ -119,7 +120,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                 <p>
                   Mit dem Betätigen des Buttons{' '}
                   {isCareEnv ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
-                  <a href="https://railslove.com/privacy/">
+                  <a href={ isFreseniusEnv ? privacyUrl : 'https://railslove.com/privacy/' }>
                     Datenschutzbestimmungen
                   </a>{' '}
                   einverstanden.
