@@ -17,7 +17,7 @@ const envs = {
   },
   care: {
     backgroundColor: '#f2f2f2',
-    highLightColor: '##F5B743',
+    highlightColor: '#F5B743',
     Logo: LogoCare,
     logoSmallWidth: '92px',
     logoSmallHeight: '10px',
