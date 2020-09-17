@@ -49,6 +49,19 @@ export default function CheckinPage() {
     address: prefillAddress || guestInfo.data?.address,
   }
 
+  React.useEffect(() => {
+    if (!areaInfo?.data?.frontendUrl) return
+
+    const url = new URL(areaInfo.data.frontendUrl)
+
+    if (window.location.origin === url.origin) return
+
+    url.pathname = window.location.pathname
+    url.search = window.location.search
+
+    window.location.replace(url.toString())
+  }, [areaInfo])
+
   const checkinAndRedirect = React.useCallback(
     async (guest: Guest) => {
       const id = idRef.current
