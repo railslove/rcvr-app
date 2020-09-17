@@ -4,7 +4,7 @@ import { queryCache } from 'react-query'
 
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany, useLastTicketsGrouped } from '~lib/hooks'
-import { patchTicket } from '~lib/api'
+import { patchTicket, AreaRes } from '~lib/api'
 import { Text, Box, Row, Icon } from '~ui/core'
 import { TinyCheck } from '~ui/svg'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
@@ -41,7 +41,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
 
 const CheckinsActionCard: React.FC<{
   area: AreaRes
-  companyId: number
+  companyId: string
 }> = ({ area, companyId }) => {
   const { data: ticketsByArea } = useLastTicketsGrouped(companyId)
 
