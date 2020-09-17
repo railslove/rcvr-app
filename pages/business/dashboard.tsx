@@ -11,7 +11,7 @@ import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
 import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
 import { CompanyCard } from '~ui/blocks/CompanyCard'
 
-const DashboardPage: React.FC<WithOwnerProps> = () => {
+const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { data: companies } = useCompanies()
   const { modals, openModal } = useModals({
     data: BusinessDataModal,
@@ -26,18 +26,22 @@ const DashboardPage: React.FC<WithOwnerProps> = () => {
       <ActionList>
         <AddCard
           title="Betrieb anlegen..."
-          onClick={() => openModal('data', { type: 'new' })}
+          onClick={() =>
+            openModal('data', { type: 'new', menuAlias: owner.menuAlias })
+          }
         />
         {companies?.map((company) => (
           <CompanyCard
             key={company.id}
             company={company}
+            menuAlias={owner.menuAlias}
             onEdit={() =>
               openModal('data', {
                 type: 'edit',
                 name: company.name,
                 menuLink: company.menuLink,
                 menuPdfLink: menuPdfFileName(company),
+                menuAlias: owner.menuAlias,
                 companyId: company.id,
               })
             }
