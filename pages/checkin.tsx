@@ -54,7 +54,7 @@ export default function CheckinPage() {
 
     const url = new URL(areaInfo.data.frontendUrl)
 
-    if (window.location.origin === areaInfo.data.frontendUrl) return
+    if (window.location.origin === url.origin) return
 
     url.pathname = window.location.pathname
     url.search = window.location.search
