@@ -29,6 +29,25 @@ export default function MyCheckinsPage() {
     [setIsLoading, checkoutFn]
   )
 
+  const groupedCheckins = React.useCallback(
+    checkinsInfo.data?.reverse().reduce(
+      (result, checkin) => {
+        if (checkin.proxyCheckin && result.length > 0) {
+          result[0].push(checkin)
+        } else {
+          result.unshift([checkin])
+        }
+
+        return result
+      },
+      []
+    ),
+    [checkinsInfo.data]
+  )
+
+  console.log(checkinsInfo.data)
+  console.log(groupedCheckins)
+
   return (
     <MobileApp logoVariant="sticky">
       <Head>
@@ -44,9 +63,9 @@ export default function MyCheckinsPage() {
         </Box>
       )}
       <CheckinCardContainer>
-        {checkinsInfo.data?.map((checkin, i) => (
+        {groupedCheckins?.map((checkins, i) => (
           <motion.div
-            key={checkin.id}
+            key={checkins[0].id}
             initial={{
               // only animate the first 25 checkins. The other's will be outside the viewport anyways.
               y: i < 25 ? window.innerHeight + i * -50 : 0,
@@ -60,12 +79,12 @@ export default function MyCheckinsPage() {
               delay: i > 0 && 0.75,
             }}
           >
-            <CheckinCard key={checkin.id} css={{ flexGrow: i > 0 ? 0 : 1 }}>
+            <CheckinCard css={{ flexGrow: i > 0 ? 0 : 1 }}>
               {i === 0 ? (
                 <>
                   <Loading show={isLoading} />
                   <LastCheckin
-                    checkin={checkin}
+                    checkins={checkins}
                     area={areaInfo.data}
                     onCheckout={handleCheckout}
                   />
@@ -89,7 +108,7 @@ export default function MyCheckinsPage() {
                   )}
                 </>
               ) : (
-                <PastCheckin checkin={checkin} />
+                <PastCheckin checkins={checkins} />
               )}
             </CheckinCard>
           </motion.div>

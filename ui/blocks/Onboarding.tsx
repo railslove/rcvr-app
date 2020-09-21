@@ -9,7 +9,8 @@ import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 
 type OnboardingProps = {
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
-  prefilledGuest: Guest
+  prefilledGuest?: Guest,
+  hideRememberMe?: boolean,
 }
 
 const yupShape = {
@@ -29,6 +30,7 @@ const OnboardingSchema = Yup.object().shape(yupShape)
 export const Onboarding: React.FC<OnboardingProps> = ({
   onSubmit,
   prefilledGuest,
+  hideRememberMe,
 }) => {
   const initialValues = {
     name: prefilledGuest?.name || '',
@@ -66,11 +68,15 @@ export const Onboarding: React.FC<OnboardingProps> = ({
                 <Input name="resident" label="Bewohnername" />
               </>
             )}
-            <Box height={3} />
-            <Checkbox
-              name="rememberMe"
-              label="Daten auf meinem Handy speichern"
-            />
+            {hideRememberMe || (
+              <>
+                <Box height={3} />
+                <Checkbox
+                  name="rememberMe"
+                  label="Daten auf meinem Handy speichern"
+                />
+              </>
+            )}
             <Box height={5} />
             <Button
               type="submit"

@@ -1,21 +1,52 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
+import { useMutation } from 'react-query'
 import { motion, AnimatePresence } from 'framer-motion'
+import { v4 as uuidv4 } from 'uuid'
 
+import { Onboarding } from '~ui/blocks/Onboarding'
 import { AreaRes } from '~lib/api'
+import { checkin as checkinAction } from '~lib/actions'
 import { Checkin } from '~lib/db'
 import { Box, Text, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 
 interface Props {
-  checkin: Checkin
+  checkins: Checkin[]
   area: AreaRes
-  onCheckout?: (checkin: Checkin) => void
+  onCheckout: (checkin: Checkin) => void
 }
 
-export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
+export const LastCheckin: React.FC<Props> = ({ checkins, area, onCheckout }) => {
+  const checkin = checkins[0]
   const checkedOut = !!checkin.leftAt
+  const idRef = React.useRef<string>(uuidv4())
+  const [showProxyCheckin, setShowProxyCheckin] = React.useState(false)
+
+  const [checkinFn, { error }] = useMutation(checkinAction, {
+    throwOnError: true,
+  })
+
+  const handleShowProxyCheckin = () => {
+    setShowProxyCheckin(true)
+  }
+
+  const proxyCheckin = React.useCallback(
+    async (guest: Guest) => {
+      const id = idRef.current
+
+      try {
+        const ticket = { ...checkin, id, publicKey: area.publicKey, encryptedData: null }
+        await checkinFn({ ticket, guest, proxyCheckin: true })
+
+        setShowProxyCheckin(false)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [checkin, checkinFn, setShowProxyCheckin, area]
+  )
 
   return (
     <Container>
@@ -31,6 +62,12 @@ export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
       <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
       <Box height={1} />
       <Text variant="h4">{checkin.business}</Text>
+      {checkins.length > 1 && (
+        <>
+          <Box height={1} />
+          <Text variant="h4">{checkins.length} Personen</Text>
+        </>
+      )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
       <AnimatePresence>
@@ -50,6 +87,13 @@ export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
             >
               Check out
             </Button>
+            <Button
+              css={{ width: '100%', marginTop: '10px' }}
+              onClick={handleShowProxyCheckin}
+            >
+              Check Friend in
+            </Button>
+          {showProxyCheckin && <Onboarding hideRememberMe={true} onSubmit={proxyCheckin} />}
           </motion.div>
         )}
       </AnimatePresence>
@@ -78,5 +122,4 @@ const Container = styled.div({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  height: 400,
 })
