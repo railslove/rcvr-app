@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from '@emotion/styled'
-import { useMutation } from 'react-query'
+import { useMutation, queryCache } from 'react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -47,8 +47,12 @@ export const LastCheckin: React.FC<Props> = ({
           id,
           publicKey: area.publicKey,
           encryptedData: null,
+          proxyCheckin: true,
         }
-        await checkinFn({ ticket, guest, proxyCheckin: true })
+
+        await checkinFn({ ticket, guest })
+
+        queryCache.refetchQueries('checkins')
 
         setShowProxyCheckin(false)
       } catch (error) {

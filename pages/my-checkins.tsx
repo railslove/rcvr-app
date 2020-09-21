@@ -35,6 +35,8 @@ export default function MyCheckinsPage() {
   const groupedCheckins = React.useMemo(() => {
     const reversedCheckins: Checkin[] = checkinsInfo.data?.reverse()
 
+    if (reversedCheckins == null) return []
+
     return reversedCheckins.reduce((result: Checkin[][], checkin: Checkin) => {
       if (checkin.proxyCheckin && result.length > 0) {
         result[0].push(checkin)
@@ -45,9 +47,6 @@ export default function MyCheckinsPage() {
       return result
     }, [])
   }, [checkinsInfo.data])
-
-  console.log(checkinsInfo.data)
-  console.log(groupedCheckins)
 
   return (
     <MobileApp logoVariant="sticky">

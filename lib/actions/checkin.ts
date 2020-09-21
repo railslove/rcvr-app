@@ -6,11 +6,10 @@ interface Params {
   ticket: api.TicketReq
   guest: db.Guest
   companyId?: api.CompanyRes['id']
-  proxyCheckin?: boolean
 }
 
 export async function checkin(params: Params): Promise<db.Checkin> {
-  const { ticket, guest, companyId, proxyCheckin } = params
+  const { ticket, guest, companyId } = params
 
   const csv = toCSV(guest)
   const encryptedData = encrypt(ticket.publicKey, csv)
@@ -21,7 +20,7 @@ export async function checkin(params: Params): Promise<db.Checkin> {
     areaId: ticket.areaId,
     business: ticketRes.companyName,
     enteredAt: ticket.enteredAt,
-    proxyCheckin: proxyCheckin,
+    proxyCheckin: ticket.proxyCheckin,
   })
 
   const latestGuest = await db.getCurrentGuest()
