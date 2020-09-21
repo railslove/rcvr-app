@@ -4,6 +4,7 @@ import { useMutation } from 'react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { v4 as uuidv4 } from 'uuid'
 
+import { Guest } from '~lib/db/guest'
 import { Onboarding } from '~ui/blocks/Onboarding'
 import { AreaRes } from '~lib/api'
 import { checkin as checkinAction } from '~lib/actions'
@@ -15,16 +16,20 @@ import { CheckinDates } from '~ui/blocks/CheckinDates'
 interface Props {
   checkins: Checkin[]
   area: AreaRes
-  onCheckout: (checkin: Checkin) => void
+  onCheckout: (checkins: Checkin[]) => void
 }
 
-export const LastCheckin: React.FC<Props> = ({ checkins, area, onCheckout }) => {
+export const LastCheckin: React.FC<Props> = ({
+  checkins,
+  area,
+  onCheckout,
+}) => {
   const checkin = checkins[0]
   const checkedOut = !!checkin.leftAt
   const idRef = React.useRef<string>(uuidv4())
   const [showProxyCheckin, setShowProxyCheckin] = React.useState(false)
 
-  const [checkinFn, { error }] = useMutation(checkinAction, {
+  const [checkinFn] = useMutation(checkinAction, {
     throwOnError: true,
   })
 
@@ -37,7 +42,12 @@ export const LastCheckin: React.FC<Props> = ({ checkins, area, onCheckout }) => 
       const id = idRef.current
 
       try {
-        const ticket = { ...checkin, id, publicKey: area.publicKey, encryptedData: null }
+        const ticket = {
+          ...checkin,
+          id,
+          publicKey: area.publicKey,
+          encryptedData: null,
+        }
         await checkinFn({ ticket, guest, proxyCheckin: true })
 
         setShowProxyCheckin(false)
@@ -83,7 +93,7 @@ export const LastCheckin: React.FC<Props> = ({ checkins, area, onCheckout }) => 
               css={{ width: '100%' }}
               left={<ArrowsRight color="pink" />}
               right={<ArrowsLeft color="pink" />}
-              onClick={() => onCheckout(checkin)}
+              onClick={() => onCheckout(checkins)}
             >
               Check out
             </Button>
@@ -93,7 +103,9 @@ export const LastCheckin: React.FC<Props> = ({ checkins, area, onCheckout }) => 
             >
               Check Friend in
             </Button>
-          {showProxyCheckin && <Onboarding hideRememberMe={true} onSubmit={proxyCheckin} />}
+            {showProxyCheckin && (
+              <Onboarding hideRememberMe={true} onSubmit={proxyCheckin} />
+            )}
           </motion.div>
         )}
       </AnimatePresence>

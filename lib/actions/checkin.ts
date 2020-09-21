@@ -5,7 +5,7 @@ import { encrypt, toCSV } from '../crypto'
 interface Params {
   ticket: api.TicketReq
   guest: db.Guest
-  companyId: api.CompanyRes['id']
+  companyId?: api.CompanyRes['id']
   proxyCheckin?: boolean
 }
 

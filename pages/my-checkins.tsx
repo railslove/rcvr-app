@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { motion } from 'framer-motion'
 import { useMutation } from 'react-query'
 
+import { Checkin } from '~lib/db'
 import { checkout } from '~lib/actions'
 import { isCareEnv } from '~lib/config'
 import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
@@ -21,29 +22,29 @@ export default function MyCheckinsPage() {
   const [checkoutFn, { error }] = useMutation(checkout)
 
   const handleCheckout = React.useCallback(
-    async (checkin) => {
+    async (checkins: Checkin[]) => {
       setIsLoading(true)
-      await checkoutFn({ id: checkin.id })
+      await Promise.all(
+        checkins.map((checkin) => checkoutFn({ id: checkin.id }))
+      )
       setIsLoading(false)
     },
     [setIsLoading, checkoutFn]
   )
 
-  const groupedCheckins = React.useCallback(
-    checkinsInfo.data?.reverse().reduce(
-      (result, checkin) => {
-        if (checkin.proxyCheckin && result.length > 0) {
-          result[0].push(checkin)
-        } else {
-          result.unshift([checkin])
-        }
+  const groupedCheckins = React.useMemo(() => {
+    const reversedCheckins: Checkin[] = checkinsInfo.data?.reverse()
 
-        return result
-      },
-      []
-    ),
-    [checkinsInfo.data]
-  )
+    return reversedCheckins.reduce((result: Checkin[][], checkin: Checkin) => {
+      if (checkin.proxyCheckin && result.length > 0) {
+        result[0].push(checkin)
+      } else {
+        result.unshift([checkin])
+      }
+
+      return result
+    }, [])
+  }, [checkinsInfo.data])
 
   console.log(checkinsInfo.data)
   console.log(groupedCheckins)
@@ -63,7 +64,7 @@ export default function MyCheckinsPage() {
         </Box>
       )}
       <CheckinCardContainer>
-        {groupedCheckins?.map((checkins, i) => (
+        {groupedCheckins?.map((checkins: Checkin[], i) => (
           <motion.div
             key={checkins[0].id}
             initial={{
