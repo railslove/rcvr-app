@@ -55,7 +55,8 @@ const CheckinsActionCard: React.FC<{
 
     const leftAt = new Date()
 
-    await tickets?.open.map(({ id }) => patchTicket({ id, leftAt }))
+    const openTickets = tickets?.open || []
+    await Promise.all(openTickets.map(({ id }) => patchTicket({ id, leftAt })))
 
     await queryCache.refetchQueries(['tickets', companyId])
 
