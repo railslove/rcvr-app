@@ -12,6 +12,7 @@ import { Checkin } from '~lib/db'
 import { Box, Text, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
+import { Loading } from '~ui/blocks/Loading'
 
 interface Props {
   checkins: Checkin[]
@@ -19,7 +20,7 @@ interface Props {
   onCheckout: (checkins: Checkin[]) => void
 }
 
-export const LastCheckin: React.FC<Props> = ({
+export const LastCheckins: React.FC<Props> = ({
   checkins,
   area,
   onCheckout,
@@ -28,20 +29,19 @@ export const LastCheckin: React.FC<Props> = ({
   const checkedOut = !!checkin.leftAt
   const idRef = React.useRef<string>(uuidv4())
   const [showProxyCheckin, setShowProxyCheckin] = React.useState(false)
+  const [isLoading, setLoading] = React.useState(false)
 
   const [checkinFn] = useMutation(checkinAction, {
     throwOnError: true,
   })
-
-  const handleShowProxyCheckin = () => {
-    setShowProxyCheckin(true)
-  }
 
   const proxyCheckin = React.useCallback(
     async (guest: Guest) => {
       const id = idRef.current
 
       try {
+        setLoading(true)
+
         const ticket = {
           ...checkin,
           id,
@@ -57,6 +57,8 @@ export const LastCheckin: React.FC<Props> = ({
         queryCache.refetchQueries('checkins')
 
         setShowProxyCheckin(false)
+
+        setLoading(false)
       } catch (error) {
         console.log(error)
       }
@@ -103,14 +105,25 @@ export const LastCheckin: React.FC<Props> = ({
             >
               Check out
             </Button>
-            <Button
-              css={{ width: '100%', marginTop: '10px' }}
-              onClick={handleShowProxyCheckin}
-            >
-              Check Friend in
-            </Button>
-            {showProxyCheckin && (
-              <Onboarding hideRememberMe={true} onSubmit={proxyCheckin} />
+            {isLoading && (<Loading />)}
+            {showProxyCheckin ? (
+              <>
+                <Box height={4} />
+                <Text variant="h3">Wen willst du mit dir einchecken?</Text>
+                <Box height={2} />
+                <Onboarding
+                  hideRememberMe={true}
+                  onSubmit={proxyCheckin}
+                  onAbort={() => setShowProxyCheckin(false)}
+                />
+              </>
+            ) : (
+              <Button
+                css={{ width: '100%', marginTop: '10px' }}
+                onClick={() => setShowProxyCheckin(true)}
+              >
+                Person hinzufügen
+              </Button>
             )}
           </motion.div>
         )}

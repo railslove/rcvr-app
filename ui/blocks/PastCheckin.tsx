@@ -19,7 +19,7 @@ export const PastCheckin: React.FC<Props> = ({ checkins }) => {
       {checkins.length > 1 && (
         <>
           <Box height={1} />
-          <Text variant="h4">{checkins.length}</Text>
+          <Text variant="h4">{checkins.length} Personen</Text>
         </>
       )}
     </div>

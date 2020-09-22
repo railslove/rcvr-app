@@ -9,7 +9,7 @@ import { isCareEnv } from '~lib/config'
 import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
 import { Box, Text, Callout } from '~ui/core'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
-import { LastCheckin } from '~ui/blocks/LastCheckin'
+import { LastCheckins } from '~ui/blocks/LastCheckins'
 import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Loading } from '~ui/blocks/Loading'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
@@ -84,7 +84,7 @@ export default function MyCheckinsPage() {
               {i === 0 ? (
                 <>
                   <Loading show={isLoading} />
-                  <LastCheckin
+                  <LastCheckins
                     checkins={checkins}
                     area={areaInfo.data}
                     onCheckout={handleCheckout}
