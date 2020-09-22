@@ -105,7 +105,7 @@ export const LastCheckins: React.FC<Props> = ({
             >
               Check out
             </Button>
-            {isLoading && (<Loading />)}
+            {isLoading && <Loading />}
             {showProxyCheckin ? (
               <>
                 <Box height={4} />
