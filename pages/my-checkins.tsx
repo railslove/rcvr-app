@@ -32,13 +32,12 @@ export default function MyCheckinsPage() {
     [setIsLoading, checkoutFn]
   )
 
-  const sortedCheckins = React.useMemo(() => {
-    return checkinsInfo.data?.sort(
+  // Sorts checkins by time and groups proxy checkins together with their "main" checkins
+  const groupedCheckins = React.useMemo(() => {
+    const sortedCheckins = checkinsInfo.data?.sort(
       (c1, c2) => c1.enteredAt.getTime() - c2.enteredAt.getTime()
     )
-  }, [checkinsInfo.data])
 
-  const groupedCheckins = React.useMemo(() => {
     return sortedCheckins?.reduce((result: Checkin[][], checkin: Checkin) => {
       if (checkin.proxyCheckin && result.length > 0) {
         result[0].push(checkin)
@@ -48,21 +47,7 @@ export default function MyCheckinsPage() {
 
       return result
     }, [])
-  }, [sortedCheckins])
-
-  React.useEffect(() => {
-    const formatCheckins = ({ id, leftAt, proxyCheckin }: Checkin): any => ({
-      id,
-      leftAt,
-      proxyCheckin,
-    })
-
-    console.log('ungrouped:', checkinsInfo.data?.map(formatCheckins))
-    console.log(
-      'grouped:',
-      groupedCheckins?.map((checkins) => checkins.map(formatCheckins))
-    )
-  }, [groupedCheckins, checkinsInfo.data])
+  }, [checkinsInfo.data])
 
   return (
     <MobileApp logoVariant="sticky">
