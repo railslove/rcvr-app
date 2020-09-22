@@ -52,6 +52,8 @@ export const LastCheckin: React.FC<Props> = ({
 
         await checkinFn({ ticket, guest })
 
+        idRef.current = uuidv4()
+
         queryCache.refetchQueries('checkins')
 
         setShowProxyCheckin(false)

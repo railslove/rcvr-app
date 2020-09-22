@@ -32,12 +32,14 @@ export default function MyCheckinsPage() {
     [setIsLoading, checkoutFn]
   )
 
+  const sortedCheckins = React.useMemo(() => {
+    return checkinsInfo.data?.sort(
+      (c1, c2) => c1.enteredAt.getTime() - c2.enteredAt.getTime()
+    )
+  }, [checkinsInfo.data])
+
   const groupedCheckins = React.useMemo(() => {
-    const reversedCheckins: Checkin[] = checkinsInfo.data?.reverse()
-
-    if (reversedCheckins == null) return []
-
-    return reversedCheckins.reduce((result: Checkin[][], checkin: Checkin) => {
+    return sortedCheckins?.reduce((result: Checkin[][], checkin: Checkin) => {
       if (checkin.proxyCheckin && result.length > 0) {
         result[0].push(checkin)
       } else {
@@ -46,7 +48,21 @@ export default function MyCheckinsPage() {
 
       return result
     }, [])
-  }, [checkinsInfo.data])
+  }, [sortedCheckins])
+
+  React.useEffect(() => {
+    const formatCheckins = ({ id, leftAt, proxyCheckin }: Checkin): any => ({
+      id,
+      leftAt,
+      proxyCheckin,
+    })
+
+    console.log('ungrouped:', checkinsInfo.data?.map(formatCheckins))
+    console.log(
+      'grouped:',
+      groupedCheckins?.map((checkins) => checkins.map(formatCheckins))
+    )
+  }, [groupedCheckins, checkinsInfo.data])
 
   return (
     <MobileApp logoVariant="sticky">
