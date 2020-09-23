@@ -120,7 +120,13 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                 <p>
                   Mit dem Betätigen des Buttons{' '}
                   {isCareEnv ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
-                  <a href={ isFreseniusEnv ? privacyUrl : 'https://railslove.com/privacy/' }>
+                  <a
+                    href={
+                      isFreseniusEnv
+                        ? privacyUrl
+                        : 'https://railslove.com/privacy/'
+                    }
+                  >
                     Datenschutzbestimmungen
                   </a>{' '}
                   einverstanden.

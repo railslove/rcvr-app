@@ -1,5 +1,9 @@
 import { css } from '@styled-system/css'
-import { backgroundColor, primaryHighlightColor, secondaryHighlightColor } from '~ui/whitelabels'
+import {
+  backgroundColor,
+  primaryHighlightColor,
+  secondaryHighlightColor,
+} from '~ui/whitelabels'
 
 const sizes = {
   px: 1,

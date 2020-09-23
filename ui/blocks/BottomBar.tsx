@@ -17,7 +17,7 @@ export const BottomBar: React.FC<{}> = () => {
   return (
     <Row>
       <Tab
-        href={ isFreseniusEnv ? privacyUrl : 'https://railslove.com/privacy/' }
+        href={isFreseniusEnv ? privacyUrl : 'https://railslove.com/privacy/'}
         target="_blank"
         rel="noreferrer noopener"
       >

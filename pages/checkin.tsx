@@ -165,8 +165,9 @@ export default function CheckinPage() {
           <Callout variant="danger">
             <Text>
               Die Kontaktdatenerfassung mit recover ist für diesen Betrieb
-              leider nicht mehr aktiv. Bitte {formalAddress ? 'fragen Sie' : 'frag'}{' '}
-              vor Ort nach einer anderen Art der Kontaktdatenerfassung.
+              leider nicht mehr aktiv. Bitte{' '}
+              {formalAddress ? 'fragen Sie' : 'frag'} vor Ort nach einer anderen
+              Art der Kontaktdatenerfassung.
             </Text>
           </Callout>
         </div>
@@ -190,9 +191,14 @@ export default function CheckinPage() {
             </p>
             <p>
               Datenschutz ist uns dabei sehr wichtig!{' '}
-              {isRcvrEnv
-                ? <><strong>recover</strong> speichert Deine Daten verschlüsselt und sicher.</>
-                : 'Ihre Daten werden verschlüsselt und sicher gespeichert.'}
+              {isRcvrEnv ? (
+                <>
+                  <strong>recover</strong> speichert Deine Daten verschlüsselt
+                  und sicher.
+                </>
+              ) : (
+                'Ihre Daten werden verschlüsselt und sicher gespeichert.'
+              )}
             </p>
           </Text>
           <Box height={6} />
