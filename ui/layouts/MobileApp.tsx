@@ -7,7 +7,13 @@ import { motion } from 'framer-motion'
 
 import { isCareEnv } from '~lib/config'
 import { Box } from '~ui/core'
-import { Logo } from '~ui/svg'
+import {
+  Logo,
+  logoBigWidth,
+  logoBigHeight,
+  logoSmallWidth,
+  logoSmallHeight,
+} from '~ui/whitelabels'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 
 interface Props {
@@ -58,18 +64,20 @@ const LogoBox = styled(motion.div)(
   variant({
     variants: {
       big: {
-        width: isCareEnv ? '183px' : '124px',
-        height: '20px',
+        width: logoBigWidth,
+        height: logoBigHeight,
+        maxWidth: '100%',
       },
       small: {
-        width: isCareEnv ? '92px' : '61px',
-        height: '10px',
+        width: logoSmallWidth,
+        height: logoSmallHeight,
+        maxWidth: '100%',
       },
       sticky: {
-        top: 8,
+        top: 4,
         position: 'fixed',
-        width: isCareEnv ? '92px' : '61px',
-        height: '10px',
+        width: logoSmallWidth,
+        height: logoSmallHeight,
       },
     },
   })
