@@ -19,6 +19,7 @@ export interface AreaRes {
   menuLink?: string
   menuAlias?: string
   ownerIsBlocked: boolean
+  frontendUrl: string
 }
 
 export async function getArea(id: AreaRes['id']): Promise<AreaRes> {
