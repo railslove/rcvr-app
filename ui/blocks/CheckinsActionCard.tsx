@@ -7,6 +7,7 @@ import { TinyCheck } from '~ui/svg'
 import { Button } from '~ui/core/Button'
 import { Box, Row, Icon } from '~ui/core'
 import { useLastTicketsGrouped } from '~lib/hooks'
+import { queryCache } from 'react-query'
 
 export const CheckinsActionCard: React.FC<{
   area: AreaRes
