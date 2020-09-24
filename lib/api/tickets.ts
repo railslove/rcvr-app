@@ -16,7 +16,6 @@ export interface TicketReq<DateT = Date> {
   leftAt?: DateT
   encryptedData?: string
   publicKey?: string
-  proxyCheckin?: boolean
 }
 
 export async function postTicket(ticket: TicketReq): Promise<TicketRes> {
