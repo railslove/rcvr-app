@@ -19,7 +19,7 @@ export const Confirmation: React.FC<ConfirmationProps> = ({ onSubmit }) => {
 
         <p>
           ich innerhalb der letzten 14 Tage keinen Kontakt zu einer SARS-CoV-2
-          positive getesteten Person hatte.
+          positive getesteten Person hatte und in keinem Risikogebiet war.
         </p>
 
         <p>ich keines der folgenden Symptome aufweise:</p>
