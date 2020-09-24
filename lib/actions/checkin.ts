@@ -5,7 +5,7 @@ import { encrypt, toCSV } from '../crypto'
 interface Params {
   ticket: api.TicketReq
   guest: db.Guest
-  companyId: api.CompanyRes['id']
+  companyId?: api.CompanyRes['id']
 }
 
 export async function checkin(params: Params): Promise<db.Checkin> {
@@ -20,6 +20,7 @@ export async function checkin(params: Params): Promise<db.Checkin> {
     areaId: ticket.areaId,
     business: ticketRes.companyName,
     enteredAt: ticket.enteredAt,
+    proxyCheckin: ticket.proxyCheckin,
   })
 
   const latestGuest = await db.getCurrentGuest()
