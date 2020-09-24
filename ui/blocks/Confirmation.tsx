@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Button, Box, Text, Card } from '~ui/core'
+import { Button, Box, Text, Card, List, ListItem } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 
 type ConfirmationProps = {
@@ -15,14 +15,30 @@ export const Confirmation: React.FC<ConfirmationProps> = ({ onSubmit }) => {
       </Text>
       <Box height={5} />
       <Text>
+        <p>Mit dem Klicken auf weiter bestätige ich, dass:</p>
+
         <p>
-          Sie dürfen hier nur einchecken, wenn Sie keine Symptome von COVID19
-          aufweisen.
+          ich innerhalb der letzten 14 Tage keinen Kontakt zu einer SARS-CoV-2
+          positive getesteten Person hatte.
         </p>
-        <p>
-          Klicken Sie auf Weiter um zu bestätigen, dass Sie keine Symptome
-          aufweisen.
-        </p>
+
+        <p>ich keines der folgenden Symptome aufweise:</p>
+
+        <List>
+          <ListItem>Fieber</ListItem>
+          <ListItem>Halsschmerzen und oder Schluckbeschwerden</ListItem>
+          <ListItem>Husten</ListItem>
+          <ListItem>Atemnot</ListItem>
+          <ListItem>Geschmacks- oder Geruchsverlust</ListItem>
+          <ListItem>
+            Allgemeine Abgeschlagenheit und/oder Leistungsverlust - soweit nicht
+            durch eine bestehende Vorerkrankung erklärbar
+          </ListItem>
+          <ListItem>
+            Starker Schnupfen, soweit nicht durch eine bestehende Vorerkrankung
+            (z. B. Allergien) erklärbar
+          </ListItem>
+        </List>
       </Text>
       <Box height={5} />
       <Button
