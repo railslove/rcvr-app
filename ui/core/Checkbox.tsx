@@ -3,6 +3,7 @@ import { useField } from 'formik'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { motion } from 'framer-motion'
+import { isRcvrEnv } from '~lib/config'
 
 import { Check } from '~ui/anicons'
 import { Text } from './Text'
@@ -83,8 +84,8 @@ const CheckboxCircle = styled(motion.div)(
     height: '20px',
     borderRadius: 5,
     position: 'absolute',
-    top: '0px',
-    left: '4px',
+    top: isRcvrEnv ? '0px' : '-3px',
+    left: isRcvrEnv ? '4px' : '0px',
     zIndex: 1,
   })
 )
