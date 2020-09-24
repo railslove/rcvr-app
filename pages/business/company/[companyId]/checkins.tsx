@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
-import { queryCache } from 'react-query'
 
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany } from '~lib/hooks'
