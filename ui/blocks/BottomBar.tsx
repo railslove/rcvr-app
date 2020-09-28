@@ -5,7 +5,8 @@ import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 
-import { isCareEnv } from '~lib/config'
+import { isCareEnv, isFreseniusEnv } from '~lib/config'
+import { privacyUrl } from '~ui/whitelabels'
 import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Lock, Ticket, Virus } from '~ui/svg'
@@ -16,7 +17,7 @@ export const BottomBar: React.FC<{}> = () => {
   return (
     <Row>
       <Tab
-        href="https://railslove.com/privacy/"
+        href={isFreseniusEnv ? privacyUrl : 'https://railslove.com/privacy/'}
         target="_blank"
         rel="noreferrer noopener"
       >

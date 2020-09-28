@@ -6,10 +6,16 @@ const isCareFeatureBranch =
 const isCareEnvBranch =
   process.env.VERCEL_GITHUB_COMMIT_REF &&
   process.env.VERCEL_GITHUB_COMMIT_REF === 'env/care'
+const isFreseniusBranch =
+  process.env.VERCEL_GITHUB_COMMIT_REF &&
+  process.env.VERCEL_GITHUB_COMMIT_REF.includes('fresenius')
 
 if (isCareFeatureBranch || isCareEnvBranch) {
   console.log('Using BUILD_VARIANT: care')
   process.env.BUILD_VARIANT = 'care'
+} else if (isFreseniusBranch) {
+  console.log('Using BUILD_VARIANT: fresenius')
+  process.env.BUILD_VARIANT = 'fresenius'
 } else {
   console.log('No automatic BUILD_VARIANT detected. Using default from .env')
 }
