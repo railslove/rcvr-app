@@ -8,7 +8,6 @@ import { Box, Text, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { useCurrentGuest } from '~lib/hooks'
-import { Slashes, Arrows } from '~ui/svg'
 
 interface Props {
   checkin: Checkin
