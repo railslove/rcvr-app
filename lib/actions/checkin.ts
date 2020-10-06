@@ -20,6 +20,7 @@ export async function checkin(params: Params): Promise<db.Checkin> {
     areaId: ticket.areaId,
     business: ticketRes.companyName,
     enteredAt: ticket.enteredAt,
+    guest: guest,
   })
 
   const latestGuest = await db.getCurrentGuest()

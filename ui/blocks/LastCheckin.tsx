@@ -17,7 +17,6 @@ interface Props {
 
 export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
   const checkedOut = !!checkin.leftAt
-  const guestInfo = useCurrentGuest()
 
   return (
     <Container>
@@ -36,27 +35,31 @@ export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
       <Box height={2} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
       <Box height={1} />
-      <Text variant="label" as="label">
-        Name:&nbsp;
-        <Text variant="regular" as="span">
-          {guestInfo.data?.name}
-        </Text>
-      </Text>
-      <Box height={1} />
-      <Text variant="label" as="label">
-        Anschrift:&nbsp;
-        <Text variant="regular" as="span">
-          {guestInfo.data?.address}
-        </Text>
-      </Text>
-      <Box height={1} />
-      <Text variant="label" as="label">
-        Telefon:&nbsp;
-        <Text variant="regular" as="span">
-          {guestInfo.data?.phone}
-        </Text>
-      </Text>
-      <Box height={1} />
+      {checkin.guest && (
+        <>
+          <Text variant="label" as="label">
+            Name:&nbsp;
+            <Text variant="regular" as="span">
+              {checkin.guest?.name}
+            </Text>
+          </Text>
+          <Box height={1} />
+          <Text variant="label" as="label">
+            Anschrift:&nbsp;
+            <Text variant="regular" as="span">
+              {checkin.guest?.address}
+            </Text>
+          </Text>
+          <Box height={1} />
+          <Text variant="label" as="label">
+            Telefon:&nbsp;
+            <Text variant="regular" as="span">
+              {checkin.guest?.phone}
+            </Text>
+          </Text>
+          <Box height={1} />
+        </>
+      )}
       <AnimatePresence>
         {!checkin.leftAt && (
           <motion.div

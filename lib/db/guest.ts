@@ -7,7 +7,6 @@ export interface Guest {
   address?: string
   resident?: string
   checkedInCompanyIds?: string[]
-  wantsAutoCheckin?: boolean
 }
 
 export async function getCurrentGuest(): Promise<Guest> {

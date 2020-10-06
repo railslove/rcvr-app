@@ -98,9 +98,11 @@ export default function CheckinPage() {
   )
 
   const handleSubmitOnboarding = React.useCallback(
-    async (guest) => {
-      if (guestInfo.data) await updateGuest(guest)
-      else await addGuest(guest)
+    async (guest, opts) => {
+      if (opts.rememberMe) {
+        if (guestInfo.data) await updateGuest(guest)
+        else await addGuest(guest)
+      }
 
       await checkinAndRedirect(guest)
     },
@@ -112,15 +114,13 @@ export default function CheckinPage() {
 
     // Check if a guest was already created
     const hasData = guest?.name && guest?.phone && guest?.address
-    // and wants to automatically checkin
-    const wantsAutoCheckin = guest?.wantsAutoCheckin
     // and has already checked in at this company before
     const hasAcceptedPrivacy = guest?.checkedInCompanyIds?.includes(
       areaInfo.data.companyId
     )
 
     // then do the checkin cha cha cha.
-    if (hasData && wantsAutoCheckin && hasAcceptedPrivacy) {
+    if (hasData && hasAcceptedPrivacy) {
       checkinAndRedirect(guest)
     } else {
       setShowConfirmation(false)
