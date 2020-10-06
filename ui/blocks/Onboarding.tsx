@@ -8,7 +8,7 @@ import { Input, Checkbox, Button, Box, Text, Card } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 
 type OnboardingProps = {
-  onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
+  onSubmit: (guest: Guest) => void
   prefilledGuest: Guest
 }
 
@@ -16,7 +16,7 @@ const yupShape = {
   name: Yup.string().required('Name muss angegeben werden.'),
   phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
   address: Yup.string().required('Adresse muss angegeben werden.'),
-  rememberMe: Yup.boolean(),
+  wantsAutoCheckin: Yup.boolean(),
 }
 
 if (isCareEnv)
@@ -34,7 +34,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     name: prefilledGuest?.name || '',
     phone: prefilledGuest?.phone || '',
     address: prefilledGuest?.address || '',
-    rememberMe: prefilledGuest ? true : false,
+    wantsAutoCheckin: prefilledGuest?.wantsAutoCheckin ? true : false,
   }
 
   if (isCareEnv) initialValues['resident'] = ''
@@ -44,8 +44,8 @@ export const Onboarding: React.FC<OnboardingProps> = ({
       <Formik
         initialValues={initialValues}
         validationSchema={OnboardingSchema}
-        onSubmit={({ rememberMe, ...fields }) => {
-          onSubmit(fields, { rememberMe })
+        onSubmit={({ ...fields }) => {
+          onSubmit(fields)
         }}
       >
         <Card variant="form" mx={-4}>
@@ -68,8 +68,8 @@ export const Onboarding: React.FC<OnboardingProps> = ({
             )}
             <Box height={3} />
             <Checkbox
-              name="rememberMe"
-              label="Daten auf meinem Handy speichern"
+              name="wantsAutoCheckin"
+              label="Beim nächsten Mal automatisch einchecken"
             />
             <Box height={5} />
             <Button
