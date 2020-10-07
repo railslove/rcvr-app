@@ -38,21 +38,21 @@ export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
       {checkin.guest && (
         <>
           <Text variant="label" as="label">
-            Name:&nbsp;
+            Name:{' '}
             <Text variant="regular" as="span">
               {checkin.guest?.name}
             </Text>
           </Text>
           <Box height={1} />
           <Text variant="label" as="label">
-            Anschrift:&nbsp;
+            Anschrift:{' '}
             <Text variant="regular" as="span">
               {checkin.guest?.address}
             </Text>
           </Text>
           <Box height={1} />
           <Text variant="label" as="label">
-            Telefon:&nbsp;
+            Telefon:{' '}
             <Text variant="regular" as="span">
               {checkin.guest?.phone}
             </Text>
