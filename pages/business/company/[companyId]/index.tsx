@@ -66,7 +66,7 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
         </Text>
         <Box height={2} />
         <Button
-          onClick={() => openModal('autoDataRequest', { companyId: companyId })}
+          onClick={() => openModal('autoDataRequest', { companyId })}
         >
           Abfragen
         </Button>
