@@ -11,6 +11,7 @@ export * from './Row'
 export * from './SRText'
 export * from './Table'
 export * from './Text'
+export * from './List'
 
 export interface As {
   as?: React.ElementType

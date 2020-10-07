@@ -21,6 +21,7 @@ export async function checkin(params: Params): Promise<db.Checkin> {
     business: ticketRes.companyName,
     enteredAt: ticket.enteredAt,
     proxyCheckin: ticket.proxyCheckin,
+    guest: guest,
   })
 
   const latestGuest = await db.getCurrentGuest()

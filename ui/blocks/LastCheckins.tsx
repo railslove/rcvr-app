@@ -85,6 +85,32 @@ export const LastCheckins: React.FC<Props> = ({
       )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
+      <Box height={1} />
+      {checkin.guest && (
+        <>
+          <Text variant="label" as="label">
+            Name:&nbsp;
+            <Text variant="regular" as="span">
+              {checkin.guest?.name}
+            </Text>
+          </Text>
+          <Box height={1} />
+          <Text variant="label" as="label">
+            Anschrift:&nbsp;
+            <Text variant="regular" as="span">
+              {checkin.guest?.address}
+            </Text>
+          </Text>
+          <Box height={1} />
+          <Text variant="label" as="label">
+            Telefon:&nbsp;
+            <Text variant="regular" as="span">
+              {checkin.guest?.phone}
+            </Text>
+          </Text>
+          <Box height={1} />
+        </>
+      )}
       <AnimatePresence>
         {!checkin.leftAt && (
           <motion.div

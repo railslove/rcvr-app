@@ -1,5 +1,5 @@
 import { subDays } from 'date-fns'
-import { db } from './'
+import { db, Guest } from './'
 
 export interface Checkin {
   id?: string
@@ -8,6 +8,7 @@ export interface Checkin {
   areaId?: string
   leftAt?: Date
   proxyCheckin?: boolean
+  guest?: Guest
 }
 
 export async function getCheckin(checkinId: Checkin['id']): Promise<Checkin> {
