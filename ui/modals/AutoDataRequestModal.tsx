@@ -9,7 +9,6 @@ import { Text, Box, Button, Input, Callout } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 
 interface Props {
-  reason?: string
   companyId?: string
 }
 type MProps = ModalBaseProps & Props
@@ -23,7 +22,6 @@ const DataRequestSchema = Yup.object().shape({
 })
 
 export const AutoDataRequestModal: React.FC<MProps> = ({
-  reason,
   companyId,
   ...baseProps
 }) => {

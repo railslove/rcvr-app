@@ -50,10 +50,7 @@ export async function getDataRequest(id: string): Promise<DataRequestRes> {
 }
 
 export async function postAutoDataRequest(reason: string, companyId: string) {
-  const json = snakecaseKeys(
-    { dataRequest: { reason } },
-    { deep: true }
-  )
+  const json = snakecaseKeys({ dataRequest: { reason } }, { deep: true })
 
   return await api
     .post(`companies/${companyId}/data_requests`, { json })
