@@ -1,4 +1,5 @@
 import camelcaseKeys from 'camelcase-keys'
+import snakecaseKeys from 'snakecase-keys'
 import { api, parseDates } from './'
 
 export interface DataRequestRes<DateT = Date> {
@@ -36,6 +37,26 @@ export async function getDataRequests(
 export async function getDataRequest(id: string): Promise<DataRequestRes> {
   return await api
     .get(`data_requests/${id}`)
+    .json()
+    .then((res: DataRequestRes<string>) => camelcaseKeys(res, { deep: true }))
+    .then((res) => {
+      return {
+        ...parseDates<DataRequestRes>(res, 'from', 'to', 'acceptedAt'),
+        tickets: res.tickets?.map((ticket) =>
+          parseDates<DataRequestTicket>(ticket, 'enteredAt', 'leftAt')
+        ),
+      }
+    })
+}
+
+export async function postAutoDataRequest(reason: string, companyId: string) {
+  const json = snakecaseKeys(
+    { dataRequest: { reason: reason } },
+    { deep: true }
+  )
+
+  return await api
+    .post(`companies/${companyId}/data_requests`, { json })
     .json()
     .then((res: DataRequestRes<string>) => camelcaseKeys(res, { deep: true }))
     .then((res) => {
