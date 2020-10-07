@@ -48,12 +48,13 @@ export const LastCheckins: React.FC<Props> = ({
           publicKey: area.publicKey,
           encryptedData: null,
           proxyCheckin: true,
+          enteredAt: new Date(),
         }
 
         await checkinFn({ ticket, guest })
 
-        idRef.current = uuidv4()
-        queryCache.refetchQueries('checkins')
+        idRef.current = uuidv4() // add a new one for the next
+        await queryCache.refetchQueries('checkins')
         setShowProxyCheckin(false)
         setLoading(false)
       } catch (error) {

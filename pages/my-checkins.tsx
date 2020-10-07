@@ -34,17 +34,20 @@ export default function MyCheckinsPage() {
 
   // Sorts checkins by time and groups proxy checkins together with their "main" checkins
   //
-  // We do this by first sorting the checkins by checkin time, thus we always have a main checkin and followed by the associated proxy checkins. We take each of these consecutive checkins and put them in an array so we can render them as a group.
+  // We do this by first sorting the checkins by checkin time, thus we always have a main checkin
+  // and followed by the associated proxy checkins. We take each of these consecutive checkins
+  // and put them in an array so we can render them as a group.
   const groupedCheckins = React.useMemo(() => {
+    // Sort from old to new
     const sortedCheckins = checkinsInfo.data?.sort(
       (c1, c2) => c1.enteredAt.getTime() - c2.enteredAt.getTime()
     )
 
     return sortedCheckins?.reduce((result: Checkin[][], checkin: Checkin) => {
-      if (checkin.proxyCheckin && result.length > 0) {
-        result[0].push(checkin)
+      if (!checkin.proxyCheckin) {
+        result.unshift([checkin]) // main checkins are added in a new array
       } else {
-        result.unshift([checkin])
+        result[0].push(checkin) // proxy checkins are added to the last main checkin
       }
 
       return result
