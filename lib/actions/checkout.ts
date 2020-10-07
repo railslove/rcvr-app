@@ -9,6 +9,7 @@ export async function checkout(checkin: db.Checkin): Promise<db.Checkin> {
   const checkout = await db.updateCheckin({
     id: checkin.id,
     leftAt: ticket.leftAt,
+    guest: null,
   })
   queryCache.refetchQueries('checkins', { force: true })
   return checkout
