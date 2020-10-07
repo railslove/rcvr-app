@@ -51,7 +51,7 @@ export async function getDataRequest(id: string): Promise<DataRequestRes> {
 
 export async function postAutoDataRequest(reason: string, companyId: string) {
   const json = snakecaseKeys(
-    { dataRequest: { reason: reason } },
+    { dataRequest: { reason } },
     { deep: true }
   )
 
