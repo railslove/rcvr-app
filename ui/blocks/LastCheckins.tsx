@@ -86,32 +86,36 @@ export const LastCheckins: React.FC<Props> = ({
       )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
-      <Box height={1} />
-      {checkin.guest && (
-        <>
-          <Text variant="label" as="label">
-            Name:&nbsp;
-            <Text variant="regular" as="span">
-              {checkin.guest?.name}
+      <Box height={2} />
+      {checkins
+        .map(({ guest }) => guest)
+        .filter((guest) => guest != null)
+        .map((guest, index) => (
+          <>
+            {index > 0 && <Box height={2} />}
+            <Text variant="label" as="label">
+              Name:&nbsp;
+              <Text variant="regular" as="span">
+                {guest.name}
+              </Text>
             </Text>
-          </Text>
-          <Box height={1} />
-          <Text variant="label" as="label">
-            Anschrift:&nbsp;
-            <Text variant="regular" as="span">
-              {checkin.guest?.address}
+            <Box height={1} />
+            <Text variant="label" as="label">
+              Anschrift:&nbsp;
+              <Text variant="regular" as="span">
+                {guest.address}
+              </Text>
             </Text>
-          </Text>
-          <Box height={1} />
-          <Text variant="label" as="label">
-            Telefon:&nbsp;
-            <Text variant="regular" as="span">
-              {checkin.guest?.phone}
+            <Box height={1} />
+            <Text variant="label" as="label">
+              Telefon:&nbsp;
+              <Text variant="regular" as="span">
+                {guest.phone}
+              </Text>
             </Text>
-          </Text>
-          <Box height={1} />
-        </>
-      )}
+            <Box height={1} />
+          </>
+        ))}
       <AnimatePresence>
         {!checkin.leftAt && (
           <motion.div
