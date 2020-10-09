@@ -91,7 +91,7 @@ export const LastCheckins: React.FC<Props> = ({
         .map(({ guest }) => guest)
         .filter((guest) => guest != null)
         .map((guest, index) => (
-          <>
+          <div key={index}>
             {index > 0 && <Box height={2} />}
             <Text variant="label" as="label">
               Name:&nbsp;
@@ -114,7 +114,7 @@ export const LastCheckins: React.FC<Props> = ({
               </Text>
             </Text>
             <Box height={1} />
-          </>
+          </div>
         ))}
       <AnimatePresence>
         {!checkin.leftAt && (
