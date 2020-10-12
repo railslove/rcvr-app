@@ -94,21 +94,21 @@ export const LastCheckins: React.FC<Props> = ({
           <div key={index}>
             {index > 0 && <Box height={2} />}
             <Text variant="label" as="label">
-              Name:&nbsp;
+              Name{' '}
               <Text variant="regular" as="span">
                 {guest.name}
               </Text>
             </Text>
             <Box height={1} />
             <Text variant="label" as="label">
-              Anschrift:&nbsp;
+              Anschrift{' '}
               <Text variant="regular" as="span">
                 {guest.address}
               </Text>
             </Text>
             <Box height={1} />
             <Text variant="label" as="label">
-              Telefon:&nbsp;
+              Telefon{' '}
               <Text variant="regular" as="span">
                 {guest.phone}
               </Text>
