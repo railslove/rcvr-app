@@ -51,7 +51,11 @@ export const CheckinsActionCard: React.FC<{
         }
       />
       <ActionCard.Actions>
-        <Button onClick={checkoutAll}>Alle Auschecken</Button>
+        <IconButton
+          icon={Arrows}
+          onClick={checkoutAll}
+          title="Alle Auschecken"
+        />
       </ActionCard.Actions>
       <ActionCard.Below>
         <Row flexWrap="wrap" flex="1 0">
