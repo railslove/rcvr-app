@@ -50,13 +50,15 @@ export const CheckinsActionCard: React.FC<{
           </>
         }
       />
-      <ActionCard.Actions>
-        <IconButton
-          icon={Arrows}
-          onClick={checkoutAll}
-          title="Alle Auschecken"
-        />
-      </ActionCard.Actions>
+      {openCount > 0 && (
+        <ActionCard.Actions>
+          <IconButton
+            icon={Arrows}
+            onClick={checkoutAll}
+            title="Alle Auschecken"
+          />
+        </ActionCard.Actions>
+      )}
       <ActionCard.Below>
         <Row flexWrap="wrap" flex="1 0">
           {[...Array(openCount)].map((_v, i) => (
