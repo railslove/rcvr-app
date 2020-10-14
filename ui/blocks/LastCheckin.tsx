@@ -7,6 +7,7 @@ import { Checkin } from '~lib/db'
 import { Box, Text, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
+import { useCurrentGuest } from '~lib/hooks'
 
 interface Props {
   checkin: Checkin
@@ -31,8 +32,34 @@ export const LastCheckin: React.FC<Props> = ({ checkin, area, onCheckout }) => {
       <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
       <Box height={1} />
       <Text variant="h4">{checkin.business}</Text>
-      <Box height={4} />
+      <Box height={2} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
+      <Box height={1} />
+      {checkin.guest && (
+        <>
+          <Text variant="label" as="label">
+            Name:{' '}
+            <Text variant="regular" as="span">
+              {checkin.guest?.name}
+            </Text>
+          </Text>
+          <Box height={1} />
+          <Text variant="label" as="label">
+            Anschrift:{' '}
+            <Text variant="regular" as="span">
+              {checkin.guest?.address}
+            </Text>
+          </Text>
+          <Box height={1} />
+          <Text variant="label" as="label">
+            Telefon:{' '}
+            <Text variant="regular" as="span">
+              {checkin.guest?.phone}
+            </Text>
+          </Text>
+          <Box height={1} />
+        </>
+      )}
       <AnimatePresence>
         {!checkin.leftAt && (
           <motion.div

@@ -44,11 +44,19 @@ export default function CheckinPage() {
   const prefillPhone = router.query.phone?.toString()
   const prefillAddress = router.query.address?.toString()
 
-  const prefilledGuest = {
-    name: prefillName || guestInfo.data?.name,
-    phone: prefillPhone || guestInfo.data?.phone,
-    address: prefillAddress || guestInfo.data?.address,
-  }
+  const prefilledGuest =
+    prefillName ||
+    prefillPhone ||
+    prefillAddress ||
+    guestInfo.data?.name ||
+    guestInfo.data?.phone ||
+    guestInfo.data?.address
+      ? {
+          name: prefillName || guestInfo.data?.name,
+          phone: prefillPhone || guestInfo.data?.phone,
+          address: prefillAddress || guestInfo.data?.address,
+        }
+      : undefined
 
   React.useEffect(() => {
     if (!areaInfo?.data?.frontendUrl) return
@@ -104,20 +112,16 @@ export default function CheckinPage() {
   const tryAutoCheckin = React.useCallback(() => {
     const guest = guestInfo.data
 
-    // Check if a guest was already created, then do the checkin cha cha cha.
-    if (guest) {
-      const hasData = guest.name && guest.phone && guest.address
-      const hasAcceptedPrivacy = guest.checkedInCompanyIds?.includes(
-        areaInfo.data.companyId
-      )
+    // Check if a guest was already created
+    const hasData = guest?.name && guest?.phone && guest?.address
+    // and has already checked in at this company before
+    const hasAcceptedPrivacy = guest?.checkedInCompanyIds?.includes(
+      areaInfo.data.companyId
+    )
 
-      if (hasData && hasAcceptedPrivacy) {
-        checkinAndRedirect(guest)
-      } else {
-        setShowConfirmation(false)
-        setShowOnboarding(true)
-        setShowLoading(false)
-      }
+    // then do the checkin cha cha cha.
+    if (hasData && hasAcceptedPrivacy) {
+      checkinAndRedirect(guest)
     } else {
       setShowConfirmation(false)
       setShowOnboarding(true)

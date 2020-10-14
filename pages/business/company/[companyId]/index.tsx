@@ -4,23 +4,27 @@ import formatDate from 'intl-dateformat'
 
 import { isCareEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { useCompany, useDataRequests } from '~lib/hooks'
-import { Text, Box, Divider, Callout } from '~ui/core'
+import { useCompany, useDataRequests, useModals } from '~lib/hooks'
+import { Text, Box, Divider, Callout, Button } from '~ui/core'
 import { Lock, Unlock, Right } from '~ui/svg'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 import { ActionList } from '~ui/blocks/ActionList'
 import { ActionCard } from '~ui/blocks/ActionCard'
+import { AutoDataRequestModal } from '~ui/modals/AutoDataRequestModal'
 
 const CompanyPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)
   const { data: dataRequests } = useDataRequests(companyId)
+  const { modals, openModal } = useModals({
+    autoDataRequest: AutoDataRequestModal,
+  })
 
   return (
     <OwnerApp title={company?.name}>
       <BackLink href="/business/dashboard">Meine Betriebe</BackLink>
-
+      {modals}
       <Text variant="h3">Bereiche</Text>
       <Box height={4} />
       <ActionList grid>
@@ -51,6 +55,19 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
             {isCareEnv ? 'Ihnen' : 'Dir'}.
           </p>
         </Text>
+      </Callout>
+      <Box height={2} />
+      <Callout>
+        <Text>
+          <p>
+            Anfragen zu Kundenkontaktdaten für anwesende Gäste{' '}
+            {isCareEnv ? 'können Sie' : 'kannst Du'} hier automatisch stellen.
+          </p>
+        </Text>
+        <Box height={2} />
+        <Button onClick={() => openModal('autoDataRequest', { companyId })}>
+          Abfragen
+        </Button>
       </Callout>
       <Box height={4} />
       {dataRequests?.length === 0 && (

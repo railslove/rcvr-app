@@ -46,7 +46,7 @@ export default function IndexPage() {
         </ButtonLink>
         <Box height={4} />
         <ButtonLink href="/my-checkins">
-          {isCareEnv ? 'Ihre Tickets' : 'Deine Ticket'}
+          {isCareEnv ? 'Ihre Tickets' : 'Deine Tickets'}
         </ButtonLink>
       </Card>
       <Box height={4} />
