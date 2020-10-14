@@ -7,6 +7,7 @@ export interface Checkin {
   enteredAt?: Date
   areaId?: string
   leftAt?: Date
+  proxyCheckin?: boolean
   guest?: Guest
 }
 
