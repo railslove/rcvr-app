@@ -10,7 +10,7 @@ import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
 import { Guest, updateGuest, addGuest, getLastCheckin } from '~lib/db'
-import { Row, Text, Box, Callout } from '~ui/core'
+import { Row, Text, Box, Callout, Card } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Onboarding } from '~ui/blocks/Onboarding'
 import { Confirmation } from '~ui/blocks/Confirmation'
@@ -219,10 +219,12 @@ export default function CheckinPage() {
             </Box>
           )}
           {showOnboarding && (
-            <Onboarding
-              onSubmit={handleSubmitOnboarding}
-              prefilledGuest={prefilledGuest}
-            />
+            <Card variant="form" mx={-4}>
+              <Onboarding
+                onSubmit={handleSubmitOnboarding}
+                prefilledGuest={prefilledGuest}
+              />
+            </Card>
           )}
           {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
