@@ -6,7 +6,7 @@ import { useMutation } from 'react-query'
 import { Checkin } from '~lib/db'
 import { checkout } from '~lib/actions'
 import { isCareEnv } from '~lib/config'
-import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
+import { useCheckins, useDelayedLoading } from '~lib/hooks'
 import { Box, Text, Callout } from '~ui/core'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
 import { LastCheckins } from '~ui/blocks/LastCheckins'
@@ -17,7 +17,6 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
-  const areaInfo = useArea(checkinsInfo.data?.[0]?.areaId)
   const [isLoading, setIsLoading] = useDelayedLoading(false)
   const [checkoutFn, { error }] = useMutation(checkout)
 
@@ -91,7 +90,6 @@ export default function MyCheckinsPage() {
                   <Loading show={isLoading} />
                   <LastCheckins
                     checkins={checkins}
-                    area={areaInfo.data}
                     onCheckout={handleCheckout}
                   />
                   {error && (
