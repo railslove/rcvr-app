@@ -95,7 +95,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
             <Form>
               <Input name="name" label={isCareEnv ? 'Ihr Name' : 'Dein Name'} />
               <Box height={4} />
-              <Input name="companyName" label="Name Ihres Unternehmens" />
+              <Input name="companyName" label={isCareEnv ? 'Name Ihres Unternehmens' : 'Name deines Unternehmens'} />
               <Box height={4} />
               <Input name="phone" label={isCareEnv ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'} />
               <Box height={8} />

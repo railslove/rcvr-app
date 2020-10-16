@@ -5,7 +5,7 @@ import { api, parseDates } from './'
 export interface PostSignup {
   email: string
   companyName: string
-  phone:string
+  phone: string
   password: string
   name: string
   affiliate?: string
