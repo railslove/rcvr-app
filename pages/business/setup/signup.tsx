@@ -34,7 +34,10 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
 
-  const handleSubmit = async ({ name, email, phone, companyName, password }, bag) => {
+  const handleSubmit = async (
+    { name, email, phone, companyName, password },
+    bag
+  ) => {
     try {
       setLoading(true)
       const affiliate = isCareEnv
@@ -95,9 +98,19 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
             <Form>
               <Input name="name" label={isCareEnv ? 'Ihr Name' : 'Dein Name'} />
               <Box height={4} />
-              <Input name="companyName" label={isCareEnv ? 'Name Ihres Unternehmens' : 'Name deines Unternehmens'} />
+              <Input
+                name="companyName"
+                label={
+                  isCareEnv
+                    ? 'Name Ihres Unternehmens'
+                    : 'Name deines Unternehmens'
+                }
+              />
               <Box height={4} />
-              <Input name="phone" label={isCareEnv ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'} />
+              <Input
+                name="phone"
+                label={isCareEnv ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+              />
               <Box height={8} />
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={4} />
