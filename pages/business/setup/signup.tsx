@@ -17,6 +17,8 @@ import { Loading } from '~ui/blocks/Loading'
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),
   email: Yup.string().required('Email muss angegeben werden.'),
+  phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
+  companyName: Yup.string().required('Unternehmensname muss angegeben werden.'),
   password: Yup.string()
     .required('Password muss angegeben werden.')
     .matches(
@@ -32,14 +34,17 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
 
-  const handleSubmit = async ({ name, email, password }, bag) => {
+  const handleSubmit = async (
+    { name, email, phone, companyName, password },
+    bag
+  ) => {
     try {
       setLoading(true)
       const affiliate = isCareEnv
         ? 'care'
         : localStorage.getItem('rcvr_affiliate')
 
-      await signup({ name, email, password, affiliate })
+      await signup({ name, companyName, phone, email, password, affiliate })
       queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
     } catch (error) {
@@ -78,6 +83,8 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
       <Formik
         initialValues={{
           name: '',
+          companyName: '',
+          phone: '',
           email: '',
           password: '',
           confirmPassword: '',
@@ -91,6 +98,20 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
             <Form>
               <Input name="name" label={isCareEnv ? 'Ihr Name' : 'Dein Name'} />
               <Box height={4} />
+              <Input
+                name="companyName"
+                label={
+                  isCareEnv
+                    ? 'Name Ihres Unternehmens'
+                    : 'Name deines Unternehmens'
+                }
+              />
+              <Box height={4} />
+              <Input
+                name="phone"
+                label={isCareEnv ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+              />
+              <Box height={8} />
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={4} />
               <Input
