@@ -13,19 +13,16 @@ import { Box, Text, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
+import { useArea } from '~lib/hooks'
 
 interface Props {
   checkins: Checkin[]
-  area: AreaRes
   onCheckout: (checkins: Checkin[]) => void
 }
 
-export const LastCheckins: React.FC<Props> = ({
-  checkins,
-  area,
-  onCheckout,
-}) => {
+export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const checkin = checkins[0]
+  const area = useArea(checkins[0].areaId).data
   const checkedOut = !!checkin.leftAt
   const idRef = React.useRef<string>(uuidv4())
   const [showProxyCheckin, setShowProxyCheckin] = React.useState(false)
