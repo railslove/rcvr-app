@@ -37,6 +37,14 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           <Logo />
         </LogoBox>
         <FetchingIndicator />
+        <MobileMenu>
+          <li>
+            <NavLink href="/business/dashboard">Betriebe</NavLink>
+          </li>
+          <li>
+            <NavLink href="/business/profile">Profil</NavLink>
+          </li>
+        </MobileMenu>
       </Top>
       <Wrapper>
         <Aside>
@@ -222,6 +230,15 @@ const Aside = styled('aside')(
 
     'ul ul li': {
       mb: 2,
+    },
+  })
+)
+
+const MobileMenu = styled('ul')(
+  css({
+    display: ['flex', 'none', 'none'],
+    '> li': {
+      mr: 2,
     },
   })
 )
