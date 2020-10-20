@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { Guest } from '~lib/db/guest'
 import { Onboarding } from '~ui/blocks/Onboarding'
-import { AreaRes } from '~lib/api'
 import { checkin as checkinAction } from '~lib/actions'
 import { Checkin } from '~lib/db'
 import { Box, Text, Button } from '~ui/core'
