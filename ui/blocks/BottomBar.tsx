@@ -5,8 +5,8 @@ import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 
-import { isCareEnv, isFreseniusEnv } from '~lib/config'
-import { privacyUrl } from '~ui/whitelabels'
+import { isCareEnv, isFreseniusEnv, isHealthEnv } from '~lib/config'
+import { privacyUrl, secondaryHighlightColor } from '~ui/whitelabels'
 import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Lock, Ticket, Virus } from '~ui/svg'
@@ -31,7 +31,13 @@ export const BottomBar: React.FC<{}> = () => {
       <Link href="/my-checkins" passHref>
         <Tab>
           <Circle
-            color={route === '/my-checkins' ? 'yellow.400' : 'transparent'}
+            color={
+              route === '/my-checkins'
+                ? isHealthEnv
+                  ? secondaryHighlightColor
+                  : 'yellow.400'
+                : 'transparent'
+            }
             size={38}
           >
             <Ticket />

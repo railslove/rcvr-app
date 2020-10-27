@@ -3,12 +3,13 @@ import Head from 'next/head'
 import { motion } from 'framer-motion'
 import { useMutation } from 'react-query'
 
+import { Checkin } from '~lib/db'
 import { checkout } from '~lib/actions'
 import { isCareEnv } from '~lib/config'
-import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
+import { useCheckins, useDelayedLoading } from '~lib/hooks'
 import { Box, Text, Callout } from '~ui/core'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
-import { LastCheckin } from '~ui/blocks/LastCheckin'
+import { LastCheckins } from '~ui/blocks/LastCheckins'
 import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Loading } from '~ui/blocks/Loading'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
@@ -16,18 +17,41 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
-  const areaInfo = useArea(checkinsInfo.data?.[0]?.areaId)
   const [isLoading, setIsLoading] = useDelayedLoading(false)
   const [checkoutFn, { error }] = useMutation(checkout)
 
   const handleCheckout = React.useCallback(
-    async (checkin) => {
+    async (checkins: Checkin[]) => {
       setIsLoading(true)
-      await checkoutFn({ id: checkin.id })
+      await Promise.all(
+        checkins.map((checkin) => checkoutFn({ id: checkin.id }))
+      )
       setIsLoading(false)
     },
     [setIsLoading, checkoutFn]
   )
+
+  // Sorts checkins by time and groups proxy checkins together with their "main" checkins
+  //
+  // We do this by first sorting the checkins by checkin time, thus we always have a main checkin
+  // and followed by the associated proxy checkins. We take each of these consecutive checkins
+  // and put them in an array so we can render them as a group.
+  const groupedCheckins = React.useMemo(() => {
+    // Sort from old to new
+    const sortedCheckins = checkinsInfo.data?.sort(
+      (c1, c2) => c1.enteredAt.getTime() - c2.enteredAt.getTime()
+    )
+
+    return sortedCheckins?.reduce((result: Checkin[][], checkin: Checkin) => {
+      if (!checkin.proxyCheckin) {
+        result.unshift([checkin]) // main checkins are added in a new array
+      } else {
+        result[0].push(checkin) // proxy checkins are added to the last main checkin
+      }
+
+      return result
+    }, [])
+  }, [checkinsInfo.data])
 
   return (
     <MobileApp logoVariant="sticky">
@@ -44,9 +68,9 @@ export default function MyCheckinsPage() {
         </Box>
       )}
       <CheckinCardContainer>
-        {checkinsInfo.data?.map((checkin, i) => (
+        {groupedCheckins?.map((checkins: Checkin[], i) => (
           <motion.div
-            key={checkin.id}
+            key={checkins[0].id}
             initial={{
               // only animate the first 25 checkins. The other's will be outside the viewport anyways.
               y: i < 25 ? window.innerHeight + i * -50 : 0,
@@ -60,13 +84,12 @@ export default function MyCheckinsPage() {
               delay: i > 0 && 0.75,
             }}
           >
-            <CheckinCard key={checkin.id} css={{ flexGrow: i > 0 ? 0 : 1 }}>
+            <CheckinCard css={{ flexGrow: i > 0 ? 0 : 1 }}>
               {i === 0 ? (
                 <>
                   <Loading show={isLoading} />
-                  <LastCheckin
-                    checkin={checkin}
-                    area={areaInfo.data}
+                  <LastCheckins
+                    checkins={checkins}
                     onCheckout={handleCheckout}
                   />
                   {error && (
@@ -89,7 +112,7 @@ export default function MyCheckinsPage() {
                   )}
                 </>
               ) : (
-                <PastCheckin checkin={checkin} />
+                <PastCheckin checkins={checkins} />
               )}
             </CheckinCard>
           </motion.div>
