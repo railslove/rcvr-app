@@ -1,6 +1,7 @@
 import LogoRcvr from './svg/logo-rcvr.svg'
 import LogoCare from './svg/logo-care.svg'
 import LogoFresenius from './svg/logo-fresenius.svg'
+import LogoHealth from './svg/logo-health.svg'
 
 const envs = {
   rcvr: {
@@ -46,6 +47,20 @@ const envs = {
     introText:
       'Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.',
   },
+  health: {
+    backgroundColor: '#f2f2f2',
+    primaryHighlightColor: '#10D4FF',
+    secondaryHighlightColor: '',
+    Logo: LogoHealth,
+    logoSmallWidth: '184px',
+    logoSmallHeight: '20px',
+    logoBigWidth: '240px',
+    logoBigHeight: '40px',
+    privacyUrl: '',
+    formalAddress: true,
+    introText:
+      'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Krankenhäuser. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
+  },
 }
 
 const {
@@ -74,7 +89,4 @@ export {
   logoBigHeight,
   logoSmallWidth,
   logoSmallHeight,
-  LogoCare,
-  LogoRcvr,
-  LogoFresenius,
 }
