@@ -14,6 +14,10 @@
 - [Contribute](#contribute)
 - [License](#license)
 
+# Recoverapp: Backlog
+
+<a href="https://github.com/railslove/recover-backlog/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/railslove/recover-backlog"></a>
+
 ## Intro
 
 Due to COVID-19, many localities, like bars and restaurants, must keep track of their guest. So, in the case of infection, the public health department can trace contact persons using this data.
