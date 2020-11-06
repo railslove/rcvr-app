@@ -10,7 +10,7 @@ import { privacyUrl } from '~ui/whitelabels'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
 import { Step2 } from '~ui/svg'
-import { Input, Button, Box, Text, Card, Row } from '~ui/core'
+import { Input, Button, Box, Text, Card, Row, Checkbox } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
 
@@ -28,6 +28,10 @@ const LoginSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required('Passwordwiederholung muss angegeben werden.')
     .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
+  confirmContract: Yup.bool().oneOf(
+    [true],
+    'Sie müssen dem Vertrag zustimmen.'
+  ),
 })
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
@@ -88,6 +92,8 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           email: '',
           password: '',
           confirmPassword: '',
+          confirmContract: false,
+          peng: '',
         }}
         validationSchema={LoginSchema}
         onSubmit={handleSubmit}
@@ -132,10 +138,22 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                 type="password"
                 autoComplete="new-password"
               />
-              <Box height={5} />
-              <Button type="submit" css={{ width: '100%' }}>
-                Registrieren
-              </Button>
+              {isCareEnv && (
+                <>
+                  <Box height={6} />
+                  <Text variant="fineprint">
+                    <p>
+                      <a href="/VertragBFSCare.pdf" target="_blank">
+                        VertragBFSCare.pdf
+                      </a>
+                    </p>
+                  </Text>
+                  <Checkbox
+                    name="confirmContract"
+                    label="Ich akzeptiere diesen Nutzungsvertrag."
+                  />
+                </>
+              )}
               <Box height={6} />
               <Text variant="fineprint">
                 <p>
@@ -153,6 +171,10 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                   einverstanden.
                 </p>
               </Text>
+              <Box height={5} />
+              <Button type="submit" css={{ width: '100%' }}>
+                Registrieren
+              </Button>
             </Form>
           </Card>
         )}
