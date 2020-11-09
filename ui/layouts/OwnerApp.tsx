@@ -136,6 +136,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
               <Box height={6} />
               <Callout>
                 <Icon icon={Close} size={5} onClick={closeHint} />
+                <Box height={2} />
                 <ol>
                   <li>1. Betrieb anlegen</li>
                   <li>2. Bereich in deinem Betrieb anlegen</li>
