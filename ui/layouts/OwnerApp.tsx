@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import styled from '@emotion/styled'
@@ -14,6 +15,7 @@ import { Logo } from '~ui/whitelabels'
 import { Back } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+import { Close } from '~ui/svg'
 
 interface Props {
   children: React.ReactNode
@@ -23,6 +25,12 @@ interface Props {
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
+
+  const [hint, setHint] = useState(localStorage.getItem('hintclosed') !== '1')
+  const closeHint = () => {
+    setHint(false)
+    localStorage.setItem('hintclosed', '1')
+  }
 
   return (
     <Limit>
@@ -123,14 +131,19 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
               )}
             </>
           )}
-          <Box height={6} />
-          <Callout>
-            <ol>
-              <li>1. Betrieb anlegen</li>
-              <li>2. Bereich in deinem Betrieb anlegen</li>
-              <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
-            </ol>
-          </Callout>
+          {hint && (
+            <>
+              <Box height={6} />
+              <Callout>
+                <Icon icon={Close} size={5} onClick={closeHint} />
+                <ol>
+                  <li>1. Betrieb anlegen</li>
+                  <li>2. Bereich in deinem Betrieb anlegen</li>
+                  <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
+                </ol>
+              </Callout>
+            </>
+          )}
           <Box height={6} />
           <Text as="h2" variant="h2">
             {title ?? <>&nbsp;</>}
