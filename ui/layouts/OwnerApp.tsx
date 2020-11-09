@@ -124,6 +124,14 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
             </>
           )}
           <Box height={6} />
+          <Callout>
+            <ol>
+              <li>1. Betrieb anlegen</li>
+              <li>2. Bereich in deinem Betrieb anlegen</li>
+              <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
+            </ol>
+          </Callout>
+          <Box height={6} />
           <Text as="h2" variant="h2">
             {title ?? <>&nbsp;</>}
           </Text>
