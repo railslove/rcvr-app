@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
-import { isCareEnv, isFreseniusEnv } from '~lib/config'
+import { isCareEnv, isFreseniusEnv, isHealthEnv } from '~lib/config'
 import { privacyUrl } from '~ui/whitelabels'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
@@ -93,7 +93,6 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           password: '',
           confirmPassword: '',
           confirmContract: false,
-          peng: '',
         }}
         validationSchema={LoginSchema}
         onSubmit={handleSubmit}
@@ -154,6 +153,23 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                   />
                 </>
               )}
+              {isHealthEnv && (
+                <>
+                  <Box height={6} />
+                  <Text variant="fineprint">
+                    <p>
+                      <a href="/VertragBFSHealth.pdf" target="_blank">
+                        VertragBFSHealth.pdf
+                      </a>
+                    </p>
+                  </Text>
+                  <Checkbox
+                    name="confirmContract"
+                    label="Ich akzeptiere diesen Nutzungsvertrag."
+                  />
+                </>
+              )}
+
               <Box height={6} />
               <Text variant="fineprint">
                 <p>
