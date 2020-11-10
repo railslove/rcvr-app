@@ -15,6 +15,7 @@ import { Back } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
 import { Close } from '~ui/svg'
+import { relative } from 'path'
 
 interface Props {
   children: React.ReactNode
@@ -136,7 +137,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
             <>
               <Box height={6} />
               <Callout>
-                <Icon icon={Close} size={5} onClick={closeHint} />
+                <CloseContainer>
+                  <CloseIcon icon={Close} size={5} onClick={closeHint} />
+                </CloseContainer>
                 <Box height={2} />
                 <ol>
                   <li>1. Betrieb anlegen</li>
@@ -283,5 +286,18 @@ const LogoBox = styled(motion.div)(
       width: '100%',
       height: '100%',
     },
+  })
+)
+
+const CloseContainer = styled('div')(
+  css({
+    position: 'relative',
+  })
+)
+
+const CloseIcon = styled(Icon)(
+  css({
+    position: 'absolute',
+    right: 0,
   })
 )
