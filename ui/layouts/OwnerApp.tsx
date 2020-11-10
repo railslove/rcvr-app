@@ -26,7 +26,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
 
-  const [hint, setHint] = useState(localStorage.getItem('hintclosed') !== '1')
+  const [hint, setHint] = React.useState(() => {
+    return localStorage.getItem('hintclosed') !== '1')
+  })
   const closeHint = () => {
     setHint(false)
     localStorage.setItem('hintclosed', '1')
