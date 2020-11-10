@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import styled from '@emotion/styled'
@@ -27,7 +26,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: owner } = useOwner()
 
   const [hint, setHint] = React.useState(() => {
-    return localStorage.getItem('hintclosed') !== '1')
+    return localStorage.getItem('hintclosed') !== '1'
   })
   const closeHint = () => {
     setHint(false)
