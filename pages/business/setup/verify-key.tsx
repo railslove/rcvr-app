@@ -3,10 +3,10 @@ import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
 
-import { isCareEnv } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { Text, Box, Button, ButtonLink, Row, Input } from '~ui/core'
+import { Text, Box, Button, ButtonLink, Row, Input, FileInput } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { Step4 } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
@@ -35,7 +35,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
     <MobileApp>
       <Head>
         <title key="title">
-          {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel | recover
+          {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
         </title>
       </Head>
       <Text as="h2" variant="h2">
@@ -47,43 +47,57 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       </Row>
       <Box height={6} />
       <Text>
-        {isCareEnv
-          ? 'Geben Sie den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
-          : 'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
+        {isFormal ? (
+          <>
+            <strong>
+              Sie werden die Datei geheimer_schluessel.txt wieder brauchen, wenn
+              das Gesundheitsamt anruft.
+            </strong>
+            <br />
+            Laden sie sie deshalb hier zur Bestätigung noch einmal hoch.
+          </>
+        ) : (
+          'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'
+        )}
       </Text>
-      <Box height={4} />
-      <Text>
-        Zur Erinnerung: {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel ist{' '}
-        <strong>{base64ToHex(owner.publicKey).length} Zeichen</strong> lang. Er
-        beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben von
-        <strong> A bis F</strong>.
-      </Text>
-      <Box height={6} />
-
       <Formik initialValues={{ privateKey: '' }} onSubmit={handleCheck}>
         <Form>
-          <Input name="privateKey" label="Schlüssel" multiline />
-          <Box height={6} />
-          <Button
-            right={<ArrowsRight color="green" />}
-            type="submit"
-            css={{ width: '100%' }}
-          >
-            Schlüssel prüfen
-          </Button>
+          <FileInput
+            name="privateKey"
+            type="file"
+            label="Hier die Dateie geheimer-schluessel.txt hochladen"
+            hint="Falls sie die Datei nicht haben, Pech."
+            accept="text/plain"
+          />
         </Form>
       </Formik>
+      <Box height={4} />
+      <Text>
+        Nun erstellen sie bitte eine Sicherheitskopie, indem sie die
+        Schlüssel-Datei ausdrucken, auf einen USB-Stick übertragen oder den
+        Inhalt in einem Passwortmanager speichern.
+      </Text>
+      <Box height={6} />
+      <Button type="submit" css={{ width: '100%' }}>
+        Schlüssel drucken
+      </Button>
+      <Box height={4} />
+      <Button type="submit" css={{ width: '100%' }}>
+        Schlüssel noch mal herunterladen
+      </Button>
+
       <Box height={8} />
       <Text>
-        {isCareEnv ? 'Sie können' : 'Du kannst'} auch nochmal zurück gehen und
-        den Schlüssel erneut sehen.
+        {isFormal
+          ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
+          : 'Du kannst auch nochmal zurück gehen und den Schlüssel erneut sehen.'}{' '}
       </Text>
       <Box height={4} />
       <ButtonLink
         href="/business/setup/keys"
-        left={<ArrowsLeft color="bluegrey.300" />}
+        right={<ArrowsRight color="green" />}
       >
-        zurück
+        weiter
       </ButtonLink>
     </MobileApp>
   )

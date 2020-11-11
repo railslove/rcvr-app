@@ -1,23 +1,50 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { isCareEnv } from '~lib/config'
-import { Text, Box, Row, ButtonLink } from '~ui/core'
+import { isFormal } from '~lib/config'
+import { Text, Box, Row, Button } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { Step3 } from '~ui/svg'
-import { withOwner } from '~lib/pageWrappers'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import { base64ToHex, generateKeys } from '~lib/crypto'
+import { updateOwner } from '~lib/actions'
+import { useRouter } from 'next/router'
 
-function SetupSuccessPage() {
+const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const router = useRouter()
+  const generateKey = async () => {
+    if (!owner) return
+
+    let { publicKey, privateKey } = owner
+
+    if (!publicKey || !privateKey) {
+      const keys = generateKeys()
+      privateKey = keys.privateKey
+      publicKey = keys.publicKey
+      await updateOwner({ ...owner, privateKey, publicKey })
+    }
+    const hex = base64ToHex(privateKey)
+    const blob = new Blob([hex], { type: 'text/plain' })
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    document.body.appendChild(a)
+    a.setAttribute('style', 'display: none')
+    a.href = url
+    a.download = 'recover_geheimer_schlüssel.txt'
+    a.click()
+    window.URL.revokeObjectURL(url)
+    a.remove()
+    router.push('/business/setup/verify-key')
+  }
+
   return (
     <MobileApp logoVariant="big">
       <Head>
         <title key="title">Account erstellt | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        {isCareEnv
-          ? 'Schön, dass Sie dabei sind!'
-          : 'Toll, dass du dabei bist!'}
+        {isFormal ? 'Schön, dass Sie dabei sind!' : 'Toll, dass du dabei bist!'}
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
@@ -26,52 +53,38 @@ function SetupSuccessPage() {
       <Box height={6} />
       <Text>
         <p>
-          {isCareEnv
+          {isFormal
             ? 'Wir freuen uns, dass Sie recover nutzen! '
             : 'Wir freuen uns, dass du recover nutzt! '}
           <span role="img" aria-label="Hurra!">
             🎉
-          </span>{' '}
-          {isCareEnv
-            ? 'Sie können nun mit der Einrichtung der App fortsetzen.'
-            : 'Du kannst nun mit der Einrichtung fortsetzen.'}
+          </span>
         </p>
         <p>
-          {isCareEnv
-            ? 'Um die Echtheit Ihrer Daten mit Ihnen zu überprüfen, werden wir uns bald per Email bei Ihnen melden.'
+          {isFormal
+            ? 'Um die Echtheit Ihrer Daten zu überprüfen, werden wir uns bald per Email melden.'
             : 'Um die Echtheit deiner Daten mit Dir zu überprüfen, werden wir uns bald per Email bei dir melden.'}
         </p>
         <p>
-          <strong>Im nächsten Schritt</strong> kümmern wir uns um die
-          Verschlüsselung der Kundendaten.
+          <strong>Nächster Schritt: </strong>
+          <br />
+          Bitte drücken sie auf "Schlüssel erstellen". Das erzeugt eine Datei
+          und startet den Download.
         </p>
         <p>
-          Dafür {isCareEnv ? 'sehen Sie' : 'siehst Du'} gleich einen{' '}
-          <strong>privaten Schlüssel</strong>. Das passiert komplett auf{' '}
-          {isCareEnv ? 'Ihrem' : 'deinem'} Handy, wir können diesen Schlüssel
-          nicht sehen.
-        </p>
-        <p>
-          {isCareEnv
-            ? 'Mit diesem Schlüssel können Sie bei einer Anfrage durch das Gesundheitsamt die Kontaktdaten Ihrer Gäste entschlüsseln.'
-            : 'Mit diesem Schlüssel kannst du bei einer Anfrage durch das Gesundheitsamt die Kontaktdaten deiner Gäste entschlüsseln.'}
+          <strong>Bitte speichern sie die Datei auf ihrem Rechner ab.</strong>
         </p>
         <p>
           <strong>
-            {isCareEnv
-              ? 'Den Schlüssel müssen Sie sich aufschreiben und gut bewahren. Er darf nicht verloren gehen.'
-              : 'Den Schlüssel musst du dir aufschreiben und gut bewahren. Er darf nicht verloren gehen.'}
+            Ohne diese Datei können sie keine Daten an das Gesundheitsamt
+            senden.
           </strong>
         </p>
       </Text>
       <Box height={6} />
-
-      <ButtonLink
-        href="/business/setup/keys"
-        right={<ArrowsRight color="green" />}
-      >
+      <Button onClick={generateKey} right={<ArrowsRight color="green" />}>
         Schlüssel erstellen
-      </ButtonLink>
+      </Button>
     </MobileApp>
   )
 }
