@@ -11,6 +11,7 @@ import { generateKeys } from '~lib/crypto'
 import { updateOwner } from '~lib/actions'
 import { useRouter } from 'next/router'
 import { downloadKey } from '~lib/actions/downloadKey'
+import { privateKeyExplanation } from '~lib/contentBasedOnEnv'
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
@@ -42,36 +43,7 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
         <Step3 />
       </Row>
       <Box height={6} />
-      <Text>
-        <p>
-          {isFormal
-            ? 'Wir freuen uns, dass Sie recover nutzen! '
-            : 'Wir freuen uns, dass du recover nutzt! '}
-          <span role="img" aria-label="Hurra!">
-            🎉
-          </span>
-        </p>
-        <p>
-          {isFormal
-            ? 'Um die Echtheit Ihrer Daten zu überprüfen, werden wir uns bald per Email melden.'
-            : 'Um die Echtheit deiner Daten mit Dir zu überprüfen, werden wir uns bald per Email bei dir melden.'}
-        </p>
-        <p>
-          <strong>Nächster Schritt: </strong>
-          <br />
-          Bitte drücken sie auf "Schlüssel herunterladen". Das erzeugt eine
-          Schlüsseldatei und startet den Download.
-        </p>
-        <p>
-          <strong>Bitte speichern sie die Datei auf ihrem Rechner ab.</strong>
-        </p>
-        <p>
-          <strong>
-            Ohne die Schlüsseldatei können sie keine Daten an das Gesundheitsamt
-            senden.
-          </strong>
-        </p>
-      </Text>
+      <Text>{privateKeyExplanation}</Text>
       <Box height={6} />
       <Button onClick={generateKey} right={<ArrowsRight color="green" />}>
         Schlüssel herunterladen

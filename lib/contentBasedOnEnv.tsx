@@ -62,7 +62,140 @@ const getSignupText = () => {
   }
 }
 
+const getPrivateKeyExplanation = () => {
+  if (isFormal) {
+    return (
+      <>
+        <p>
+          Wir freuen uns, dass Sie recover nutzen! '
+          <span role="img" aria-label="Hurra!">
+            🎉
+          </span>
+        </p>
+        <p>
+          Um die Echtheit Ihrer Daten zu überprüfen, werden wir uns bald per
+          E-mail melden.
+        </p>
+        <p>
+          <strong>Nächster Schritt: </strong>
+          <br />
+          Bitte drücken Sie auf "Schlüssel herunterladen". Das erzeugt eine
+          Schlüsseldatei und startet den Download.
+        </p>
+        <p>
+          <strong>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</strong>
+        </p>
+        <p>
+          <strong>
+            Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
+          </strong>
+        </p>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <p>
+          Wir freuen uns, dass du recover nutzt!
+          <span role="img" aria-label="Hurra!">
+            🎉
+          </span>
+        </p>
+        <p>
+          Um die Echtheit deiner Daten zu überprüfen, werden wir uns bald per
+          E-Mail bei dir melden.
+        </p>
+        <p>
+          <strong>Nächster Schritt: </strong>
+          <br />
+          Bitte klicke auf "Schlüssel herunterladen". Das erzeugt eine
+          Schlüsseldatei und startet den Download.
+        </p>
+        <p>
+          <strong>Bitte speichere die Datei auf deinem Rechner ab.</strong>
+        </p>
+        <p>
+          <strong>
+            Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.
+          </strong>
+        </p>
+      </>
+    )
+  }
+}
+
+const getVerifyPrivateKeyExplanation = () => {
+  if (isFormal) {
+    return (
+      <>
+        <p>
+          <strong>
+            Sie werden die Datei rcvr_geheimer_schluessel.txt wieder brauchen,
+            wenn das Gesundheitsamt anruft.
+          </strong>
+        </p>
+        <p>
+          Laden sie die Schlüsseldatei deshalb hier zur Bestätigung noch einmal
+          hoch.
+        </p>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <p>
+          <strong>
+            Du wirst die Datei rcvr_geheimer_schluessel.txt wieder brauchen,
+            wenn das Gesundheitsamt anruft.
+          </strong>
+        </p>
+        <p>
+          Lade die Schlüsseldatei deshalb hier zur Bestätigung noch einmal hoch.
+        </p>
+      </>
+    )
+  }
+}
+
+const getFinishedText = () => {
+  if (isFormal) {
+    return (
+      <>
+        <p>
+          Wir freuen uns, dass Sie dabei sind! Ihr Account ist jetzt vollständig
+          eingerichtet.
+        </p>
+        <p>
+          Falls Sie Fragen zu Ihrem Account und zum Entschlüsseln der Daten
+          haben, melden Sie sich gern bei uns.
+        </p>
+        <p>
+          Jetzt können Sie Ihre Betriebe, Häuser und Bereiche anlegen, sowie
+          QR-Codes für die Gäste erstellen.
+        </p>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <p>
+          Wir freuen uns, dass Du dabei bist! Dein Account ist jetzt vollständig
+          eingerichtet.
+        </p>
+        <p>
+          Du kannst dich gern bei uns melden, um gemeinsam deine Daten zu
+          prüfen.
+        </p>
+        <p>Jetzt kannst du Betriebe, Tische und QR-Codes erstellen.</p>
+      </>
+    )
+  }
+}
+
 export const title = getTitle()
 export const instruction = getInstruction()
 export const introText = getIntroText()
 export const signupText = getSignupText()
+export const privateKeyExplanation = getPrivateKeyExplanation()
+export const verifyPrivateKeyExplanation = getVerifyPrivateKeyExplanation()
+export const finishedText = getFinishedText()

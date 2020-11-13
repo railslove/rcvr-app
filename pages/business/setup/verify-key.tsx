@@ -20,6 +20,7 @@ import * as api from '~lib/api'
 import { height } from 'styled-system'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 import { downloadKey } from '~lib/actions/downloadKey'
+import { verifyPrivateKeyExplanation } from '~lib/contentBasedOnEnv'
 
 const readFile = async (file: Blob) => {
   return new Promise((resolve, reject) => {
@@ -80,25 +81,8 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <Step4 />
         </Row>
         <Box height={6} />
-        <Text>
-          {isFormal ? (
-            <>
-              <p>
-                <strong>
-                  Sie werden die Datei rcvr_geheimer_schluessel.txt wieder
-                  brauchen, wenn das Gesundheitsamt anruft.
-                </strong>
-              </p>
-              <p>
-                Laden sie die Schlüsseldatei deshalb hier zur Bestätigung noch
-                einmal hoch.
-              </p>
-            </>
-          ) : (
-            'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'
-          )}
-        </Text>
-
+        <Text></Text>
+        {verifyPrivateKeyExplanation}
         <Formik
           initialValues={{ privateKey: '' }}
           onSubmit={handleSubmit}
