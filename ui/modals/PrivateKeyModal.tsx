@@ -5,8 +5,9 @@ import { queryCache } from 'react-query'
 
 import { hexToBase64 } from '~lib/crypto'
 import { updateOwner } from '~lib/db'
-import { Box, Input, Button, Text } from '~ui/core'
+import { Box, Input, Button, Text, FileInput } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
+import { readTextFile } from '~lib/file'
 
 interface Props {
   ownerId?: number
@@ -14,13 +15,26 @@ interface Props {
 type MProps = ModalBaseProps & Props
 
 const PrivateKeySchema = Yup.object().shape({
-  hexPrivateKey: Yup.string()
-    .required('Privater Schlüssel muss eingegeben werden.')
-    .matches(
-      /^[A-Fa-f0-9\s]+$/,
-      'Der private Schlüssel darf nur Zahlen und Buchstaben von A - F beinhalten.'
-    ),
+  textPrivateKey: Yup.string().trim().matches(
+    /^[A-Fa-f0-9\s]+$/,
+    'Der private Schlüssel darf nur Zahlen und Buchstaben von A - F beinhalten.'
+  ),
+  filePrivateKey: Yup.mixed()
 })
+  // WHAT A MESS...SORRY....I don't understand yup...i want the user to fill out ONE of the fields
+  .test("check1", "check1", function (value) {
+    if (!value || ((!value.textPrivateKey || value.textPrivateKey.length === 0) && !value.filePrivateKey)) {
+      return this.createError({ path: "textPrivateKey", message: "Privater Schlüssel muss eingegeben werden." })
+    }
+    return true
+  })
+  .test("check2", "check2", function (value) {
+    if (!value || ((!value.textPrivateKey || value.textPrivateKey.length === 0) && !value.filePrivateKey)) {
+      return this.createError({ path: "filePrivateKey", message: "Schlüssel auswählen." })
+    }
+    return true
+  })
+
 
 export const PrivateKeyModal: React.FC<MProps> = ({
   ownerId,
@@ -29,8 +43,14 @@ export const PrivateKeyModal: React.FC<MProps> = ({
   const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = React.useCallback(
-    async ({ hexPrivateKey }, bag) => {
+    async (values, bag) => {
       try {
+        let hexPrivateKey;
+        if (values.filePrivateKey) {
+          hexPrivateKey = await readTextFile(values.filePrivateKey)
+        } else {
+          hexPrivateKey = values.textPrivateKey
+        }
         setLoading(true)
         const privateKey = hexToBase64(hexPrivateKey)
         await updateOwner({ id: ownerId, privateKey })
@@ -40,7 +60,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         bag.setFieldError(
           'hexPrivateKey',
           'Dein privater Schlüssel konnte nicht eingelesen werden. Bitte kontrolliere ihn nochmal. ' +
-            error.toString()
+          error.toString()
         )
         console.error(error)
       } finally {
@@ -58,7 +78,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
       title="Dein privater Schlüssel"
     >
       <Formik
-        initialValues={{ hexPrivateKey: '' }}
+        initialValues={{ textPrivateKey: '', filePrivateKey: undefined }}
         validationSchema={PrivateKeySchema}
         onSubmit={handleSubmit}
       >
@@ -73,11 +93,28 @@ export const PrivateKeyModal: React.FC<MProps> = ({
               kannst ihn mit oder ohne Leerzeichen eingeben, mit Groß- oder
               Kleinbuchstaben.
             </p>
+            <p>
+              Wenn der Schlüssel als Datei vorliegt kannst du die Datei hier
+              auswählen.
+            </p>
           </Text>
           <Box height={6} />
+          <FileInput
+            name="filePrivateKey"
+            type="file"
+            label="Schüsseldatei auswählen"
+            accept="text/plain"
+          />
+          <Box height={3} />
+          <Text>
+            <p>
+              oder
+            </p>
+          </Text>
+          <Box height={3} />
           <Input
-            name="hexPrivateKey"
-            label="Dein privater Schlüssel"
+            name="textPrivateKey"
+            label="Schlüssel eingeben"
             multiline
             autoFocus
           />

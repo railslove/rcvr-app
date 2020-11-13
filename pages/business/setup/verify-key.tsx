@@ -21,19 +21,7 @@ import { height } from 'styled-system'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 import { downloadKey } from '~lib/actions/downloadKey'
 import { verifyPrivateKeyExplanation } from '~lib/contentBasedOnEnv'
-
-const readFile = async (file: Blob) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      resolve(e.target.result)
-    }
-    reader.onerror = (error) => {
-      reject(error)
-    }
-    reader.readAsText(file)
-  })
-}
+import { readTextFile } from '~lib/file'
 
 const getCurrentOwner = async () => {
   let ownerRes = await api.getOwner()
@@ -49,7 +37,7 @@ const VerifyKeySchema = Yup.object().shape({
       if (value) {
         const [owner, key] = await Promise.all([
           getCurrentOwner(),
-          readFile(value),
+          readTextFile(value),
         ])
         return base64ToHex(owner.privateKey) === key
       }
@@ -81,7 +69,6 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <Step4 />
         </Row>
         <Box height={6} />
-        <Text></Text>
         {verifyPrivateKeyExplanation}
         <Formik
           initialValues={{ privateKey: '' }}
@@ -130,25 +117,27 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           )}
         </Formik>
       </ScreenView>
-      {owner.privateKey && (
-        <PrintView>
-          <Text>
-            <p>
-              <strong>
-                Sie werden diesen Schlüssel wieder brauchen, wenn das
-                Gesundheitsamt anruft.
+      {
+        owner.privateKey && (
+          <PrintView>
+            <Text>
+              <p>
+                <strong>
+                  Sie werden diesen Schlüssel wieder brauchen, wenn das
+                  Gesundheitsamt anruft.
               </strong>
+              </p>
+              <p>
+                Bitte bewahren sie diesen Schlüssel an einem sicheren, aber für
+                sie gut zugänglichen Ort auf.
             </p>
-            <p>
-              Bitte bewahren sie diesen Schlüssel an einem sicheren, aber für
-              sie gut zugänglichen Ort auf.
-            </p>
-          </Text>
-          <Box height={8} />
-          <KeyViewer value={owner.privateKey} />
-        </PrintView>
-      )}
-    </MobileApp>
+            </Text>
+            <Box height={8} />
+            <KeyViewer value={owner.privateKey} />
+          </PrintView>
+        )
+      }
+    </MobileApp >
   )
 }
 
