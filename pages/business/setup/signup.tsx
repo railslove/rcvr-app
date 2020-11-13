@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
-import { isCareEnv, isFreseniusEnv, isHealthEnv } from '~lib/config'
+import { isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
 import { privacyUrl } from '~ui/whitelabels'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
@@ -13,6 +13,7 @@ import { Step2 } from '~ui/svg'
 import { Input, Button, Box, Text, Card, Row, Checkbox } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
+import { signupText } from '~lib/contentBasedOnEnv'
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
@@ -77,15 +78,8 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         <Step2 />
       </Row>
       <Box height={6} />
-      <Text>
-        <p>
-          {isCareEnv
-            ? 'Mit Ihrem Account können Sie QR Codes erstellen und Checkins Ihrer Gäste verwalten.'
-            : 'Mit deinem Account kannst du QR Codes erstellen und Checkins deiner Gäste verwalten.'}
-        </p>
-      </Text>
+      <Text>{signupText}</Text>
       <Box height={6} />
-
       <Formik
         initialValues={{
           name: '',
@@ -103,12 +97,12 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
             <Form>
-              <Input name="name" label={isCareEnv ? 'Ihr Name' : 'Dein Name'} />
+              <Input name="name" label={isFormal ? 'Ihr Name' : 'Dein Name'} />
               <Box height={4} />
               <Input
                 name="companyName"
                 label={
-                  isCareEnv
+                  isFormal
                     ? 'Name Ihres Unternehmens'
                     : 'Name deines Unternehmens'
                 }
@@ -116,7 +110,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Box height={4} />
               <Input
                 name="phone"
-                label={isCareEnv ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+                label={isFormal ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
               />
               <Box height={8} />
               <Input name="email" label="Email" autoComplete="email" />
@@ -179,7 +173,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Text variant="fineprint">
                 <p>
                   Mit dem Betätigen des Buttons{' '}
-                  {isCareEnv ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
+                  {isFormal ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
                   <a
                     href={
                       isFreseniusEnv

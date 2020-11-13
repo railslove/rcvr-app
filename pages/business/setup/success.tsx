@@ -2,14 +2,15 @@ import * as React from 'react'
 import Head from 'next/head'
 
 import { isFormal } from '~lib/config'
-import { Text, Box, Row, Button } from '~ui/core'
+import { Text, Box, Row, Button, ButtonLink } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { Step3 } from '~ui/svg'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { base64ToHex, generateKeys } from '~lib/crypto'
+import { generateKeys } from '~lib/crypto'
 import { updateOwner } from '~lib/actions'
 import { useRouter } from 'next/router'
+import { downloadKey } from '~lib/actions/downloadKey'
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
@@ -24,17 +25,7 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
       publicKey = keys.publicKey
       await updateOwner({ ...owner, privateKey, publicKey })
     }
-    const hex = base64ToHex(privateKey)
-    const blob = new Blob([hex], { type: 'text/plain' })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    document.body.appendChild(a)
-    a.setAttribute('style', 'display: none')
-    a.href = url
-    a.download = 'recover_geheimer_schlüssel.txt'
-    a.click()
-    window.URL.revokeObjectURL(url)
-    a.remove()
+    downloadKey(privateKey)
     router.push('/business/setup/verify-key')
   }
 
@@ -68,23 +59,31 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
         <p>
           <strong>Nächster Schritt: </strong>
           <br />
-          Bitte drücken sie auf "Schlüssel erstellen". Das erzeugt eine Datei
-          und startet den Download.
+          Bitte drücken sie auf "Schlüssel herunterladen". Das erzeugt eine
+          Schlüsseldatei und startet den Download.
         </p>
         <p>
           <strong>Bitte speichern sie die Datei auf ihrem Rechner ab.</strong>
         </p>
         <p>
           <strong>
-            Ohne diese Datei können sie keine Daten an das Gesundheitsamt
+            Ohne die Schlüsseldatei können sie keine Daten an das Gesundheitsamt
             senden.
           </strong>
         </p>
       </Text>
       <Box height={6} />
       <Button onClick={generateKey} right={<ArrowsRight color="green" />}>
-        Schlüssel erstellen
+        Schlüssel herunterladen
       </Button>
+      <Box height={6} />
+      <ButtonLink
+        href="/business/setup/keys"
+        right={<ArrowsRight color="green" />}
+        css={{ textAlign: 'center' }}
+      >
+        Schlüssel drucken / notieren
+      </ButtonLink>
     </MobileApp>
   )
 }

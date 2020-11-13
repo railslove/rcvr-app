@@ -2,6 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
+import * as Yup from 'yup'
 
 import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
@@ -10,97 +11,183 @@ import { Text, Box, Button, ButtonLink, Row, Input, FileInput } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { Step4 } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import { AutoDataRequestModal } from '~ui/modals/AutoDataRequestModal'
+
+import styled from '@emotion/styled'
+import { css } from '@styled-system/css'
+import { getOwner } from '~lib/db'
+import * as api from '~lib/api'
+import { height } from 'styled-system'
+import { KeyViewer } from '~ui/blocks/KeyViewer'
+import { downloadKey } from '~lib/actions/downloadKey'
+
+const readFile = async (file: Blob) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      resolve(e.target.result)
+    }
+    reader.onerror = (error) => {
+      reject(error)
+    }
+    reader.readAsText(file)
+  })
+}
+
+const getCurrentOwner = async () => {
+  let ownerRes = await api.getOwner()
+  let owner = await getOwner(ownerRes.id)
+  return owner
+}
+
+const VerifyKeySchema = Yup.object().shape({
+  privateKey: Yup.mixed().test(
+    'validKey',
+    'Schlüsseldatei stimmt nicht überein.',
+    async (value) => {
+      if (value) {
+        const [owner, key] = await Promise.all([
+          getCurrentOwner(),
+          readFile(value),
+        ])
+        return base64ToHex(owner.privateKey) === key
+      }
+      return false
+    }
+  ),
+})
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
 
-  const handleCheck = React.useCallback(
-    ({ privateKey }, bag) => {
-      const normalizedKey = privateKey.toUpperCase().replace(/\s/g, '')
-      if (normalizedKey !== base64ToHex(owner.privateKey)) {
-        bag.setFieldError(
-          'privateKey',
-          'Der Schlüssel stimmt nicht. Überprüfe ihn nochmals. Leerzeichen und Groß- und Kleinschreibung spielen keine Rolle.'
-        )
-      } else {
-        router
-          .replace('/business/setup/finished')
-          .then(() => window.scrollTo(0, 0))
-      }
-    },
-    [router, owner.privateKey]
-  )
+  const handleSubmit = () => {
+    router.push('/business/setup/finished')
+  }
 
   return (
     <MobileApp>
-      <Head>
-        <title key="title">
-          {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
-        </title>
-      </Head>
-      <Text as="h2" variant="h2">
-        Schlüssel bestätigen
-      </Text>
-      <Box height={6} />
-      <Row justifyContent="center">
-        <Step4 />
-      </Row>
-      <Box height={6} />
-      <Text>
-        {isFormal ? (
-          <>
-            <strong>
-              Sie werden die Datei geheimer_schluessel.txt wieder brauchen, wenn
-              das Gesundheitsamt anruft.
-            </strong>
-            <br />
-            Laden sie sie deshalb hier zur Bestätigung noch einmal hoch.
-          </>
-        ) : (
-          'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'
-        )}
-      </Text>
-      <Formik initialValues={{ privateKey: '' }} onSubmit={handleCheck}>
-        <Form>
-          <FileInput
-            name="privateKey"
-            type="file"
-            label="Hier die Dateie geheimer-schluessel.txt hochladen"
-            hint="Falls sie die Datei nicht haben, Pech."
-            accept="text/plain"
-          />
-        </Form>
-      </Formik>
-      <Box height={4} />
-      <Text>
-        Nun erstellen sie bitte eine Sicherheitskopie, indem sie die
-        Schlüssel-Datei ausdrucken, auf einen USB-Stick übertragen oder den
-        Inhalt in einem Passwortmanager speichern.
-      </Text>
-      <Box height={6} />
-      <Button type="submit" css={{ width: '100%' }}>
-        Schlüssel drucken
-      </Button>
-      <Box height={4} />
-      <Button type="submit" css={{ width: '100%' }}>
-        Schlüssel noch mal herunterladen
-      </Button>
+      <ScreenView>
+        <Head>
+          <title key="title">
+            {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
+          </title>
+        </Head>
+        <Text as="h2" variant="h2">
+          Schlüssel bestätigen
+        </Text>
+        <Box height={6} />
+        <Row justifyContent="center">
+          <Step4 />
+        </Row>
+        <Box height={6} />
+        <Text>
+          {isFormal ? (
+            <>
+              <p>
+                <strong>
+                  Sie werden die Datei rcvr_geheimer_schluessel.txt wieder
+                  brauchen, wenn das Gesundheitsamt anruft.
+                </strong>
+              </p>
+              <p>
+                Laden sie die Schlüsseldatei deshalb hier zur Bestätigung noch
+                einmal hoch.
+              </p>
+            </>
+          ) : (
+            'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'
+          )}
+        </Text>
 
-      <Box height={8} />
-      <Text>
-        {isFormal
-          ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
-          : 'Du kannst auch nochmal zurück gehen und den Schlüssel erneut sehen.'}{' '}
-      </Text>
-      <Box height={4} />
-      <ButtonLink
-        href="/business/setup/keys"
-        right={<ArrowsRight color="green" />}
-      >
-        weiter
-      </ButtonLink>
+        <Formik
+          initialValues={{ privateKey: '' }}
+          onSubmit={handleSubmit}
+          validationSchema={VerifyKeySchema}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <FileInput
+                name="privateKey"
+                type="file"
+                label="Hier die Schlüsseldatei hochladen"
+                hint="Falls sie die Datei nicht haben, können sie sie unten herunterladen."
+                accept="text/plain"
+              />
+              <Box height={4} />
+              <Text>
+                Nun erstellen sie bitte eine Sicherheitskopie, indem sie die
+                Schlüssel-Datei ausdrucken, auf einen USB-Stick übertragen oder
+                den Inhalt in einem Passwortmanager speichern.
+              </Text>
+              <Box height={6} />
+              <SubActionButton onClick={window.print}>
+                Schlüssel drucken
+              </SubActionButton>
+              <Box height={4} />
+              <SubActionButton onClick={() => downloadKey(owner.privateKey)}>
+                Schlüssel noch mal herunterladen
+              </SubActionButton>
+
+              <Box height={8} />
+              <Text>
+                {isFormal
+                  ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
+                  : 'Du kannst auch nochmal zurück gehen und den Schlüssel erneut sehen.'}{' '}
+              </Text>
+              <Box height={4} />
+              <Button
+                type="submit"
+                right={<ArrowsRight color="green" />}
+                css={{ width: '100%' }}
+              >
+                weiter
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </ScreenView>
+      {owner.privateKey && (
+        <PrintView>
+          <Text>
+            <p>
+              <strong>
+                Sie werden diesen Schlüssel wieder brauchen, wenn das
+                Gesundheitsamt anruft.
+              </strong>
+            </p>
+            <p>
+              Bitte bewahren sie diesen Schlüssel an einem sicheren, aber für
+              sie gut zugänglichen Ort auf.
+            </p>
+          </Text>
+          <Box height={8} />
+          <KeyViewer value={owner.privateKey} />
+        </PrintView>
+      )}
     </MobileApp>
   )
 }
+
+const PrintView = styled('div')`
+  display: none;
+  @media print {
+    display: block;
+  }
+`
+
+const ScreenView = styled('div')`
+  display: block;
+  @media print {
+    display: none;
+  }
+`
+
+const SubActionButton = styled(Button)(
+  css({
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '80%',
+  })
+)
 
 export default withOwner()(VerifyKeyPage)

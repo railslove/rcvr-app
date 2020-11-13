@@ -106,7 +106,7 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
           {privateKey && (
             <ButtonLink
-              href="/business/setup/verify-key"
+              href="/business/setup/verify-key-manually"
               right={<ArrowsRight color="green" />}
             >
               Schlüssel prüfen
