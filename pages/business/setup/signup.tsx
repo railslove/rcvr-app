@@ -13,6 +13,8 @@ import { Step2 } from '~ui/svg'
 import { Input, Button, Box, Text, Card, Row, Checkbox } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),
@@ -140,32 +142,35 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               {isCareEnv && (
                 <>
                   <Box height={6} />
-                  <Text variant="fineprint">
-                    <p>
-                      <a href="/VertragBFSCare.pdf" target="_blank">
-                        VertragBFSCare.pdf
-                      </a>
-                    </p>
-                  </Text>
                   <Checkbox
                     name="confirmContract"
-                    label="Ich akzeptiere diesen Nutzungsvertrag."
+                    label={
+                      <span>
+                        Ich akzeptiere den{' '}
+                        <InlineLink href="/VertragBFSCare.pdf" target="_blank">
+                          Nutzungsvertrag
+                        </InlineLink>
+                      </span>
+                    }
                   />
                 </>
               )}
               {isHealthEnv && (
                 <>
                   <Box height={6} />
-                  <Text variant="fineprint">
-                    <p>
-                      <a href="/VertragBFSHealth.pdf" target="_blank">
-                        VertragBFSHealth.pdf
-                      </a>
-                    </p>
-                  </Text>
                   <Checkbox
                     name="confirmContract"
-                    label="Ich akzeptiere diesen Nutzungsvertrag."
+                    label={
+                      <span>
+                        Ich akzeptiere den{' '}
+                        <InlineLink
+                          href="/VertragBFSHealth.pdf"
+                          target="_blank"
+                        >
+                          Nutzungsvertrag
+                        </InlineLink>
+                      </span>
+                    }
                   />
                 </>
               )}
@@ -198,5 +203,12 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
     </MobileApp>
   )
 }
+
+export const InlineLink = styled('a')(
+  css({
+    color: '#226EEC',
+    textDecoration: 'underline',
+  })
+)
 
 export default withOwner({ redirect: 'authorized' })(SetupSignupPage)
