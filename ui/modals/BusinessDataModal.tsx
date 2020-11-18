@@ -21,7 +21,21 @@ type MProps = ModalBaseProps & Props
 const BusinessSchema = Yup.object().shape({
   name: Yup.string().required('Du musst einen Namen angeben.'),
   menuLink: Yup.string(),
-  menuPdf: Yup.mixed(),
+  menuPdf: Yup.mixed().test(
+    'isPDF',
+    'Es können nur pdf-Dateien hochgeladen werden.',
+    (value) => {
+      // nothing set
+      if (value === undefined) {
+        return true
+        // an invalid file type has been tried to upload
+      } else if (value === null) {
+        return false
+      } else {
+        return true
+      }
+    }
+  ),
 })
 
 export const BusinessDataModal: React.FC<MProps> = ({
