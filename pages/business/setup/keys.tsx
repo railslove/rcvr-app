@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { isCareEnv } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { generateKeys } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { updateOwner } from '~lib/actions'
@@ -41,18 +41,18 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
     <MobileApp>
       <Head>
         <title key="title">
-          {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel | recover
+          {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
         </title>
       </Head>
       <Text as="h2" variant="h2">
-        {isCareEnv ? 'Ihr' : 'Dein'} geheimer Schlüssel
+        {isFormal ? 'Ihr' : 'Dein'} geheimer Schlüssel
       </Text>
       <Box height={6} />
       {wasGenerated ? (
         <>
           <Text>
             <p>
-              {isCareEnv ? 'Sie haben' : 'Du hast'} schonmal einen Schlüssel
+              {isFormal ? 'Sie haben' : 'Du hast'} schonmal einen Schlüssel
               generiert. Wir können ihn nicht mehr anzeigen.
             </p>
           </Text>
@@ -69,14 +69,14 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <Text>
             <p>
               <strong>
-                {isCareEnv
+                {isFormal
                   ? 'Es ist sehr wichtig, dass Sie diesen Schlüssel notieren.'
                   : 'Es ist sehr wichtig, dass Du diesen Schlüssel notierst.'}
               </strong>
             </p>
             <p>
-              {isCareEnv
-                ? 'Schreiben Sie den Schlüssel zum Beispiel auf einen Zettel und verwahren ihn sorgfältig. Oder machen Sie einen Screenshot und speichern ihn. Sie können ihn auch in einem Passwortmanager speichern.'
+              {isFormal
+                ? 'Notieren Sie sich den Schlüssel zum Beispiel auf einem Zettel und verwahren Sie diesen sorgfältig. Sie können auch einen Screenshot machen und diesen abspeichern. Oder Sie speichern den Schlüssel in einem Passwortmanager.'
                 : 'Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre ihn sorgfältig. Oder mach einen Screenshot davon und speichere ihn sicher. Du kannst ihn auch in einem Passwortmanager speichern.'}
             </p>
           </Text>
@@ -97,7 +97,7 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <Box height={6} />
           <Text>
             <p>
-              {isCareEnv
+              {isFormal
                 ? 'Im nächsten Schritt müssen Sie den Schlüssel eingeben. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
                 : 'Im nächsten Schritt musst Du den Schlüssel eingeben. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
             </p>
@@ -106,7 +106,7 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
           {privateKey && (
             <ButtonLink
-              href="/business/setup/verify-key"
+              href="/business/setup/verify-key-manually"
               right={<ArrowsRight color="green" />}
             >
               Schlüssel prüfen

@@ -2,91 +2,161 @@ import * as React from 'react'
 import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
+import * as Yup from 'yup'
 
-import { isCareEnv } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { Text, Box, Button, ButtonLink, Row, Input } from '~ui/core'
-import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
+import { Text, Box, Button, Row, FileInput } from '~ui/core'
+import { ArrowsRight } from '~ui/anicons'
 import { Step4 } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
+
+import styled from '@emotion/styled'
+import { css } from '@styled-system/css'
+import { getOwner, Owner } from '~lib/db'
+import * as api from '~lib/api'
+import { KeyViewer } from '~ui/blocks/KeyViewer'
+import { downloadKey } from '~lib/actions/downloadKey'
+import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
+import { readTextFile } from '~lib/file'
+
+const getCurrentOwner = async (): Promise<Owner> => {
+  const ownerRes = await api.getOwner()
+  const owner = await getOwner(ownerRes.id)
+  return owner
+}
+
+const VerifyKeySchema = Yup.object().shape({
+  privateKey: Yup.mixed().test(
+    'validKey',
+    'Schlüsseldatei stimmt nicht überein.',
+    async (value) => {
+      if (value) {
+        const [owner, key]: [Owner, string] = await Promise.all([
+          getCurrentOwner(),
+          readTextFile(value),
+        ])
+        return base64ToHex(owner.privateKey) === key
+      }
+      return false
+    }
+  ),
+})
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
 
-  const handleCheck = React.useCallback(
-    ({ privateKey }, bag) => {
-      const normalizedKey = privateKey.toUpperCase().replace(/\s/g, '')
-      if (normalizedKey !== base64ToHex(owner.privateKey)) {
-        bag.setFieldError(
-          'privateKey',
-          'Der Schlüssel stimmt nicht. Überprüfe ihn nochmals. Leerzeichen und Groß- und Kleinschreibung spielen keine Rolle.'
-        )
-      } else {
-        router
-          .replace('/business/setup/finished')
-          .then(() => window.scrollTo(0, 0))
-      }
-    },
-    [router, owner.privateKey]
-  )
+  const handleSubmit = () => {
+    router.push('/business/setup/finished')
+  }
 
   return (
     <MobileApp>
-      <Head>
-        <title key="title">
-          {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel | recover
-        </title>
-      </Head>
-      <Text as="h2" variant="h2">
-        Schlüssel bestätigen
-      </Text>
-      <Box height={6} />
-      <Row justifyContent="center">
-        <Step4 />
-      </Row>
-      <Box height={6} />
-      <Text>
-        {isCareEnv
-          ? 'Geben Sie den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
-          : 'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
-      </Text>
-      <Box height={4} />
-      <Text>
-        Zur Erinnerung: {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel ist{' '}
-        <strong>{base64ToHex(owner.publicKey).length} Zeichen</strong> lang. Er
-        beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben von
-        <strong> A bis F</strong>.
-      </Text>
-      <Box height={6} />
+      <ScreenView>
+        <Head>
+          <title key="title">
+            {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
+          </title>
+        </Head>
+        <Text as="h2" variant="h2">
+          Schlüssel bestätigen
+        </Text>
+        <Box height={6} />
+        <Row justifyContent="center">
+          <Step4 />
+        </Row>
+        <Box height={6} />
+        {verifyPrivateKeyExplanation}
+        <Formik
+          initialValues={{ privateKey: '' }}
+          onSubmit={handleSubmit}
+          validationSchema={VerifyKeySchema}
+        >
+          {() => (
+            <Form>
+              <FileInput
+                name="privateKey"
+                type="file"
+                label="Hier die Schlüsseldatei einfügen"
+                hint="Falls sie die Datei nicht haben, können sie sie unten herunterladen."
+                accept="text/plain"
+              />
+              <Box height={4} />
+              <Text>
+                Nun erstellen sie bitte eine Sicherheitskopie, indem sie die
+                Schlüssel-Datei ausdrucken, auf einen USB-Stick übertragen oder
+                den Inhalt in einem Passwortmanager speichern.
+              </Text>
+              <Box height={6} />
+              <SubActionButton onClick={window.print}>
+                Schlüssel drucken
+              </SubActionButton>
+              <Box height={4} />
+              <SubActionButton onClick={() => downloadKey(owner.privateKey)}>
+                Schlüssel noch mal herunterladen
+              </SubActionButton>
 
-      <Formik initialValues={{ privateKey: '' }} onSubmit={handleCheck}>
-        <Form>
-          <Input name="privateKey" label="Schlüssel" multiline />
-          <Box height={6} />
-          <Button
-            right={<ArrowsRight color="green" />}
-            type="submit"
-            css={{ width: '100%' }}
-          >
-            Schlüssel prüfen
-          </Button>
-        </Form>
-      </Formik>
-      <Box height={8} />
-      <Text>
-        {isCareEnv ? 'Sie können' : 'Du kannst'} auch nochmal zurück gehen und
-        den Schlüssel erneut sehen.
-      </Text>
-      <Box height={4} />
-      <ButtonLink
-        href="/business/setup/keys"
-        left={<ArrowsLeft color="bluegrey.300" />}
-      >
-        zurück
-      </ButtonLink>
+              <Box height={8} />
+              <Text>
+                {isFormal
+                  ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
+                  : 'Du kannst auch nochmal zurück gehen und den Schlüssel erneut sehen.'}{' '}
+              </Text>
+              <Box height={4} />
+              <Button
+                type="submit"
+                right={<ArrowsRight color="green" />}
+                css={{ width: '100%' }}
+              >
+                weiter
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </ScreenView>
+      {owner.privateKey && (
+        <PrintView>
+          <Text>
+            <p>
+              <strong>
+                Sie werden diesen Schlüssel wieder brauchen, wenn das
+                Gesundheitsamt anruft.
+              </strong>
+            </p>
+            <p>
+              Bitte bewahren sie diesen Schlüssel an einem sicheren, aber für
+              sie gut zugänglichen Ort auf.
+            </p>
+          </Text>
+          <Box height={8} />
+          <KeyViewer value={owner.privateKey} />
+        </PrintView>
+      )}
     </MobileApp>
   )
 }
+
+const PrintView = styled('div')`
+  display: none;
+  @media print {
+    display: block;
+  }
+`
+
+const ScreenView = styled('div')`
+  display: block;
+  @media print {
+    display: none;
+  }
+`
+
+const SubActionButton = styled(Button)(
+  css({
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '80%',
+  })
+)
 
 export default withOwner()(VerifyKeyPage)
