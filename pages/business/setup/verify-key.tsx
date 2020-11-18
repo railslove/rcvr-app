@@ -20,7 +20,7 @@ import * as api from '~lib/api'
 import { height } from 'styled-system'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 import { downloadKey } from '~lib/actions/downloadKey'
-import { verifyPrivateKeyExplanation } from '~lib/contentBasedOnEnv'
+import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
 
 const getCurrentOwner = async () => {
@@ -80,7 +80,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <FileInput
                 name="privateKey"
                 type="file"
-                label="Hier die Schlüsseldatei hochladen"
+                label="Hier die Schlüsseldatei einfügen"
                 hint="Falls sie die Datei nicht haben, können sie sie unten herunterladen."
                 accept="text/plain"
               />
@@ -117,27 +117,25 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           )}
         </Formik>
       </ScreenView>
-      {
-        owner.privateKey && (
-          <PrintView>
-            <Text>
-              <p>
-                <strong>
-                  Sie werden diesen Schlüssel wieder brauchen, wenn das
-                  Gesundheitsamt anruft.
+      {owner.privateKey && (
+        <PrintView>
+          <Text>
+            <p>
+              <strong>
+                Sie werden diesen Schlüssel wieder brauchen, wenn das
+                Gesundheitsamt anruft.
               </strong>
-              </p>
-              <p>
-                Bitte bewahren sie diesen Schlüssel an einem sicheren, aber für
-                sie gut zugänglichen Ort auf.
             </p>
-            </Text>
-            <Box height={8} />
-            <KeyViewer value={owner.privateKey} />
-          </PrintView>
-        )
-      }
-    </MobileApp >
+            <p>
+              Bitte bewahren sie diesen Schlüssel an einem sicheren, aber für
+              sie gut zugänglichen Ort auf.
+            </p>
+          </Text>
+          <Box height={8} />
+          <KeyViewer value={owner.privateKey} />
+        </PrintView>
+      )}
+    </MobileApp>
   )
 }
 

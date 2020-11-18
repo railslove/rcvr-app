@@ -11,7 +11,7 @@ import { generateKeys } from '~lib/crypto'
 import { updateOwner } from '~lib/actions'
 import { useRouter } from 'next/router'
 import { downloadKey } from '~lib/actions/downloadKey'
-import { privateKeyExplanation } from '~lib/contentBasedOnEnv'
+import { privateKeyExplanation } from '~ui/whitelabels'
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()

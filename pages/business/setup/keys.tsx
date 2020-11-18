@@ -76,7 +76,7 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
             </p>
             <p>
               {isFormal
-                ? 'Schreiben Sie den Schlüssel zum Beispiel auf einen Zettel und verwahren ihn sorgfältig. Oder machen Sie einen Screenshot und speichern ihn. Sie können ihn auch in einem Passwortmanager speichern.'
+                ? 'Notieren Sie sich den Schlüssel zum Beispiel auf einem Zettel und verwahren Sie diesen sorgfältig. Sie können auch einen Screenshot machen und diesen abspeichern. Oder Sie speichern den Schlüssel in einem Passwortmanager.'
                 : 'Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre ihn sorgfältig. Oder mach einen Screenshot davon und speichere ihn sicher. Du kannst ihn auch in einem Passwortmanager speichern.'}
             </p>
           </Text>

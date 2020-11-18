@@ -13,7 +13,7 @@ import { Step2 } from '~ui/svg'
 import { Input, Button, Box, Text, Card, Row, Checkbox } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
-import { signupText } from '~lib/contentBasedOnEnv'
+import { signupText } from '~ui/whitelabels'
 import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 

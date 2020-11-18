@@ -2,13 +2,12 @@ import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
-import { isCareEnv, isHealthEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Text, Box, Row, ButtonLink } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { Step1 } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { instruction, title, introText } from '~lib/contentBasedOnEnv'
+import { instruction, title, setupIntro } from '~ui/whitelabels'
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
@@ -32,7 +31,7 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
         <Step1 />
       </Row>
       <Box height={6} />
-      <Text>{introText}</Text>
+      <Text>{setupIntro}</Text>
       <Box height={6} />
 
       <ButtonLink

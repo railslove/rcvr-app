@@ -6,7 +6,7 @@ import { withOwner } from '~lib/pageWrappers'
 import { Text, Box, Row, ButtonLink } from '~ui/core'
 import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { finishedText } from '~lib/contentBasedOnEnv'
+import { finishedText } from '~ui/whitelabels'
 
 function SetupSuccessPage() {
   return (
