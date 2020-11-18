@@ -8,14 +8,12 @@ import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
 
 import { useCompanies, useOwner } from '~lib/hooks'
-import { Box, Text, Icon, Row, Callout } from '~ui/core'
+import { Box, Text, Icon, Row, Callout, CloseButton } from '~ui/core'
 import { isCareEnv } from '~lib/config'
 import { Logo } from '~ui/whitelabels'
 import { Back } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
-import { Close } from '~ui/svg'
-import { relative } from 'path'
 
 interface Props {
   children: React.ReactNode
@@ -137,9 +135,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
             <>
               <Box height={6} />
               <Callout>
-                <CloseContainer>
-                  <CloseIcon icon={Close} size={5} onClick={closeHint} />
-                </CloseContainer>
+                <CloseButton onClose={closeHint} />
                 <Box height={2} />
                 <ol>
                   <li>1. Betrieb anlegen</li>
@@ -149,6 +145,14 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
               </Callout>
             </>
           )}
+          <Box height={6} />
+          <Callout>
+            <ol>
+              <li>1. Betrieb anlegen</li>
+              <li>2. Bereich in deinem Betrieb anlegen</li>
+              <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
+            </ol>
+          </Callout>
           <Box height={6} />
           <Text as="h2" variant="h2">
             {title ?? <>&nbsp;</>}
@@ -286,18 +290,5 @@ const LogoBox = styled(motion.div)(
       width: '100%',
       height: '100%',
     },
-  })
-)
-
-const CloseContainer = styled('div')(
-  css({
-    position: 'relative',
-  })
-)
-
-const CloseIcon = styled(Icon)(
-  css({
-    position: 'absolute',
-    right: 0,
   })
 )
