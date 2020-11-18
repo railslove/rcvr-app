@@ -94,7 +94,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           email: '',
           password: '',
           confirmPassword: '',
-          confirmContract: false,
+          confirmContract: !isCareEnv && !isHealthEnv,
         }}
         validationSchema={LoginSchema}
         onSubmit={handleSubmit}
