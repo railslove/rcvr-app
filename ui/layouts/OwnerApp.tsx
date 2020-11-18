@@ -14,6 +14,8 @@ import { Logo } from '~ui/whitelabels'
 import { Back } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+import { Close } from '~ui/svg'
+import { relative } from 'path'
 
 interface Props {
   children: React.ReactNode
@@ -23,6 +25,14 @@ interface Props {
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
+
+  const [hint, setHint] = React.useState(() => {
+    return localStorage.getItem('hintclosed') !== '1'
+  })
+  const closeHint = () => {
+    setHint(false)
+    localStorage.setItem('hintclosed', '1')
+  }
 
   return (
     <Limit>
@@ -121,6 +131,22 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                   </Text>
                 </Callout>
               )}
+            </>
+          )}
+          {hint && (
+            <>
+              <Box height={6} />
+              <Callout>
+                <CloseContainer>
+                  <CloseIcon icon={Close} size={5} onClick={closeHint} />
+                </CloseContainer>
+                <Box height={2} />
+                <ol>
+                  <li>1. Betrieb anlegen</li>
+                  <li>2. Bereich in deinem Betrieb anlegen</li>
+                  <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
+                </ol>
+              </Callout>
             </>
           )}
           <Box height={6} />
@@ -260,5 +286,18 @@ const LogoBox = styled(motion.div)(
       width: '100%',
       height: '100%',
     },
+  })
+)
+
+const CloseContainer = styled('div')(
+  css({
+    position: 'relative',
+  })
+)
+
+const CloseIcon = styled(Icon)(
+  css({
+    position: 'absolute',
+    right: 0,
   })
 )
