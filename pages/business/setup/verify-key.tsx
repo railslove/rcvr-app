@@ -7,25 +7,23 @@ import * as Yup from 'yup'
 import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { Text, Box, Button, ButtonLink, Row, Input, FileInput } from '~ui/core'
-import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
+import { Text, Box, Button, Row, FileInput } from '~ui/core'
+import { ArrowsRight } from '~ui/anicons'
 import { Step4 } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { AutoDataRequestModal } from '~ui/modals/AutoDataRequestModal'
 
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import { getOwner } from '~lib/db'
+import { getOwner, Owner } from '~lib/db'
 import * as api from '~lib/api'
-import { height } from 'styled-system'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 import { downloadKey } from '~lib/actions/downloadKey'
 import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
 
-const getCurrentOwner = async () => {
-  let ownerRes = await api.getOwner()
-  let owner = await getOwner(ownerRes.id)
+const getCurrentOwner = async (): Promise<Owner> => {
+  const ownerRes = await api.getOwner()
+  const owner = await getOwner(ownerRes.id)
   return owner
 }
 
@@ -35,7 +33,7 @@ const VerifyKeySchema = Yup.object().shape({
     'Schlüsseldatei stimmt nicht überein.',
     async (value) => {
       if (value) {
-        const [owner, key] = await Promise.all([
+        const [owner, key]: [Owner, string] = await Promise.all([
           getCurrentOwner(),
           readTextFile(value),
         ])
@@ -75,7 +73,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           onSubmit={handleSubmit}
           validationSchema={VerifyKeySchema}
         >
-          {({ errors, touched }) => (
+          {() => (
             <Form>
               <FileInput
                 name="privateKey"

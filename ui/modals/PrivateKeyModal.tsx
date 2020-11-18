@@ -14,27 +14,43 @@ interface Props {
 }
 type MProps = ModalBaseProps & Props
 
-const PrivateKeySchema = Yup.object().shape({
-  textPrivateKey: Yup.string().trim().matches(
-    /^[A-Fa-f0-9\s]+$/,
-    'Der private Schlüssel darf nur Zahlen und Buchstaben von A - F beinhalten.'
-  ),
-  filePrivateKey: Yup.mixed()
-})
+const PrivateKeySchema = Yup.object()
+  .shape({
+    textPrivateKey: Yup.string()
+      .trim()
+      .matches(
+        /^[A-Fa-f0-9\s]+$/,
+        'Der private Schlüssel darf nur Zahlen und Buchstaben von A - F beinhalten.'
+      ),
+    filePrivateKey: Yup.mixed(),
+  })
   // WHAT A MESS...SORRY....I don't understand yup...i want the user to fill out ONE of the fields
-  .test("check1", "check1", function (value) {
-    if (!value || ((!value.textPrivateKey || value.textPrivateKey.length === 0) && !value.filePrivateKey)) {
-      return this.createError({ path: "textPrivateKey", message: "Privater Schlüssel muss eingegeben werden." })
+  .test('check1', 'check1', function (value) {
+    if (
+      !value ||
+      ((!value.textPrivateKey || value.textPrivateKey.length === 0) &&
+        !value.filePrivateKey)
+    ) {
+      return this.createError({
+        path: 'textPrivateKey',
+        message: 'Privater Schlüssel muss eingegeben werden.',
+      })
     }
     return true
   })
-  .test("check2", "check2", function (value) {
-    if (!value || ((!value.textPrivateKey || value.textPrivateKey.length === 0) && !value.filePrivateKey)) {
-      return this.createError({ path: "filePrivateKey", message: "Schlüssel auswählen." })
+  .test('check2', 'check2', function (value) {
+    if (
+      !value ||
+      ((!value.textPrivateKey || value.textPrivateKey.length === 0) &&
+        !value.filePrivateKey)
+    ) {
+      return this.createError({
+        path: 'filePrivateKey',
+        message: 'Schlüssel auswählen.',
+      })
     }
     return true
   })
-
 
 export const PrivateKeyModal: React.FC<MProps> = ({
   ownerId,
@@ -45,7 +61,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
   const handleSubmit = React.useCallback(
     async (values, bag) => {
       try {
-        let hexPrivateKey;
+        let hexPrivateKey
         if (values.filePrivateKey) {
           hexPrivateKey = await readTextFile(values.filePrivateKey)
         } else {
@@ -60,7 +76,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         bag.setFieldError(
           'hexPrivateKey',
           'Dein privater Schlüssel konnte nicht eingelesen werden. Bitte kontrolliere ihn nochmal. ' +
-          error.toString()
+            error.toString()
         )
         console.error(error)
       } finally {
@@ -107,9 +123,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
           />
           <Box height={3} />
           <Text>
-            <p>
-              oder
-            </p>
+            <p>oder</p>
           </Text>
           <Box height={3} />
           <Input

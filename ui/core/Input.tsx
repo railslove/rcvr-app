@@ -90,7 +90,7 @@ export const FileInput: React.FC<FileInputProps> = ({
   const showError = Boolean(meta.touched && meta.error)
 
   const onDrop = React.useCallback(
-    (acceptedFiles, rejectedFiles) => {
+    (acceptedFiles) => {
       helpers.setTouched(true)
       // setError(undefined)
       if (acceptedFiles.length > 0) {

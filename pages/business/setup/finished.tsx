@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { isCareEnv } from '~lib/config'
 import { withOwner } from '~lib/pageWrappers'
 import { Text, Box, Row, ButtonLink } from '~ui/core'
 import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'

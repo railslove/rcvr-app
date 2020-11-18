@@ -1,3 +1,4 @@
+import * as React from 'react'
 import LogoRcvr from './svg/logo-rcvr.svg'
 import LogoCare from './svg/logo-care.svg'
 import LogoFresenius from './svg/logo-fresenius.svg'
@@ -26,7 +27,7 @@ const envs = {
           der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese
           Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von
           der App verschlüsselt. Während des Onboardings erstellst Du daher in
-          wenigen Schritten ein digitales Schlüsselpaar.'
+          wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
           Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit
@@ -55,7 +56,7 @@ const envs = {
         <p>
           <strong>Nächster Schritt: </strong>
           <br />
-          Bitte klicke auf "Schlüssel herunterladen". Das erzeugt eine
+          Bitte klicke auf &quot;Schlüssel herunterladen&quot;. Das erzeugt eine
           Schlüsseldatei und startet den Download.
         </p>
         <p>
@@ -123,7 +124,7 @@ const envs = {
     privateKeyExplanation: (
       <>
         <p>
-          Wir freuen uns, dass Sie recover nutzen! '
+          Wir freuen uns, dass Sie recover nutzen!
           <span role="img" aria-label="Hurra!">
             🎉
           </span>
@@ -135,8 +136,8 @@ const envs = {
         <p>
           <strong>Nächster Schritt: </strong>
           <br />
-          Bitte drücken Sie auf "Schlüssel herunterladen". Das erzeugt eine
-          Schlüsseldatei und startet den Download.
+          Bitte drücken Sie auf &quot;Schlüssel herunterladen&quot;. Das erzeugt
+          eine Schlüsseldatei und startet den Download.
         </p>
         <p>
           <strong>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</strong>
@@ -207,7 +208,7 @@ const envs = {
     privateKeyExplanation: (
       <>
         <p>
-          Wir freuen uns, dass Sie recover nutzen! '
+          Wir freuen uns, dass Sie recover nutzen!
           <span role="img" aria-label="Hurra!">
             🎉
           </span>
@@ -219,8 +220,8 @@ const envs = {
         <p>
           <strong>Nächster Schritt: </strong>
           <br />
-          Bitte drücken Sie auf "Schlüssel herunterladen". Das erzeugt eine
-          Schlüsseldatei und startet den Download.
+          Bitte drücken Sie auf &quot;Schlüssel herunterladen&quot;. Das erzeugt
+          eine Schlüsseldatei und startet den Download.
         </p>
         <p>
           <strong>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</strong>
@@ -286,7 +287,7 @@ const envs = {
           der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese
           Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von
           der App verschlüsselt. Während des Onboardings erstellst Du daher in
-          wenigen Schritten ein digitales Schlüsselpaar.'
+          wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
           Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit
@@ -314,7 +315,7 @@ const envs = {
         <p>
           <strong>Nächster Schritt: </strong>
           <br />
-          Bitte klicke auf "Schlüssel herunterladen". Das erzeugt eine
+          Bitte klicke auf &quot;Schlüssel herunterladen&quot;. Das erzeugt eine
           Schlüsseldatei und startet den Download.
         </p>
         <p>
