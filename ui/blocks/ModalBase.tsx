@@ -4,9 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { css } from '@styled-system/css'
 import { useClickAway } from 'react-use'
 
-import { Text, Box, Icon } from '~ui/core'
+import { Text, Box, Icon, CloseButton } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
-import { Close } from '~ui/svg'
 
 interface Props {
   maxWidth?: string | number
@@ -59,19 +58,8 @@ export const ModalBase: React.FC<ModalBaseProps & Props> = ({
             exit={{ scale: 0.9 }}
           >
             <Loading show={loading} />
-            <Box
-              as="button"
-              display="flex"
-              position="absolute"
-              left={5}
-              top={5}
-              size={6}
-              alignItems="center"
-              justifyContent="center"
-              onClick={close}
-            >
-              <Icon icon={Close} size={5} color="bluegrey.300" />
-            </Box>
+            <CloseButton onClose={close} />
+            <Box height={4} />
             {title && (
               <Box px={10}>
                 <Text variant="h3" textAlign="center">

@@ -8,7 +8,7 @@ import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
 
 import { useCompanies, useOwner } from '~lib/hooks'
-import { Box, Text, Icon, Row, Callout } from '~ui/core'
+import { Box, Text, Icon, Row, Callout, CloseButton } from '~ui/core'
 import { isCareEnv } from '~lib/config'
 import { Logo } from '~ui/whitelabels'
 import { Back } from '~ui/svg'
@@ -23,6 +23,14 @@ interface Props {
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
+
+  const [hint, setHint] = React.useState(() => {
+    return localStorage.getItem('hintclosed') !== '1'
+  })
+  const closeHint = () => {
+    setHint(false)
+    localStorage.setItem('hintclosed', '1')
+  }
 
   return (
     <Limit>
@@ -121,6 +129,20 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                   </Text>
                 </Callout>
               )}
+            </>
+          )}
+          {hint && (
+            <>
+              <Box height={6} />
+              <Callout>
+                <CloseButton onClose={closeHint} />
+                <Box height={2} />
+                <ol>
+                  <li>1. Betrieb anlegen</li>
+                  <li>2. Bereich in deinem Betrieb anlegen</li>
+                  <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
+                </ol>
+              </Callout>
             </>
           )}
           <Box height={6} />

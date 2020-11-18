@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { css } from '@styled-system/css'
-import { isRcvrEnv } from '~lib/config'
+import { isRcvrEnv, isHealthEnv } from '~lib/config'
 
 interface Props {
   animated?: boolean
@@ -32,7 +32,7 @@ export const Circle: React.FC<Props> = ({
           width: `${size}px`,
           height: `${size}px`,
           borderRadius: '50%',
-          bg: isRcvrEnv ? color : 'transparent',
+          bg: isRcvrEnv || isHealthEnv ? color : 'transparent',
           zIndex: 1,
         })}
       />

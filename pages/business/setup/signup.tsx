@@ -5,14 +5,16 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
 
-import { isCareEnv, isFreseniusEnv } from '~lib/config'
-import { privacyUrl } from '~ui/whitelabels'
+import { isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
+import { privacyUrl, signupText } from '~ui/whitelabels'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
 import { Step2 } from '~ui/svg'
-import { Input, Button, Box, Text, Card, Row } from '~ui/core'
+import { Input, Button, Box, Text, Card, Row, Checkbox } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
+import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),
@@ -28,6 +30,10 @@ const LoginSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required('Passwordwiederholung muss angegeben werden.')
     .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
+  confirmContract: Yup.bool().oneOf(
+    [true],
+    'Sie müssen dem Vertrag zustimmen.'
+  ),
 })
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
@@ -71,15 +77,8 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         <Step2 />
       </Row>
       <Box height={6} />
-      <Text>
-        <p>
-          {isCareEnv
-            ? 'Mit Ihrem Account können Sie QR Codes erstellen und Checkins Ihrer Gäste verwalten.'
-            : 'Mit deinem Account kannst du QR Codes erstellen und Checkins deiner Gäste verwalten.'}
-        </p>
-      </Text>
+      <Text>{signupText}</Text>
       <Box height={6} />
-
       <Formik
         initialValues={{
           name: '',
@@ -88,6 +87,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           email: '',
           password: '',
           confirmPassword: '',
+          confirmContract: !isCareEnv && !isHealthEnv,
         }}
         validationSchema={LoginSchema}
         onSubmit={handleSubmit}
@@ -96,12 +96,12 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
             <Form>
-              <Input name="name" label={isCareEnv ? 'Ihr Name' : 'Dein Name'} />
+              <Input name="name" label={isFormal ? 'Ihr Name' : 'Dein Name'} />
               <Box height={4} />
               <Input
                 name="companyName"
                 label={
-                  isCareEnv
+                  isFormal
                     ? 'Name Ihres Unternehmens'
                     : 'Name deines Unternehmens'
                 }
@@ -109,7 +109,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Box height={4} />
               <Input
                 name="phone"
-                label={isCareEnv ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+                label={isFormal ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
               />
               <Box height={8} />
               <Input name="email" label="Email" autoComplete="email" />
@@ -132,15 +132,47 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                 type="password"
                 autoComplete="new-password"
               />
-              <Box height={5} />
-              <Button type="submit" css={{ width: '100%' }}>
-                Registrieren
-              </Button>
+              {isCareEnv && (
+                <>
+                  <Box height={6} />
+                  <Checkbox
+                    name="confirmContract"
+                    label={
+                      <span>
+                        Ich akzeptiere den{' '}
+                        <InlineLink href="/VertragBFSCare.pdf" target="_blank">
+                          Nutzungsvertrag
+                        </InlineLink>
+                      </span>
+                    }
+                  />
+                </>
+              )}
+              {isHealthEnv && (
+                <>
+                  <Box height={6} />
+                  <Checkbox
+                    name="confirmContract"
+                    label={
+                      <span>
+                        Ich akzeptiere den{' '}
+                        <InlineLink
+                          href="/VertragBFSHealth.pdf"
+                          target="_blank"
+                        >
+                          Nutzungsvertrag
+                        </InlineLink>
+                      </span>
+                    }
+                  />
+                </>
+              )}
+
               <Box height={6} />
               <Text variant="fineprint">
                 <p>
                   Mit dem Betätigen des Buttons{' '}
-                  {isCareEnv ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
+                  {isFormal ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
                   <a
                     href={
                       isFreseniusEnv
@@ -153,6 +185,10 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                   einverstanden.
                 </p>
               </Text>
+              <Box height={5} />
+              <Button type="submit" css={{ width: '100%' }}>
+                Registrieren
+              </Button>
             </Form>
           </Card>
         )}
@@ -160,5 +196,12 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
     </MobileApp>
   )
 }
+
+export const InlineLink = styled('a')(
+  css({
+    color: '#226EEC',
+    textDecoration: 'underline',
+  })
+)
 
 export default withOwner({ redirect: 'authorized' })(SetupSignupPage)

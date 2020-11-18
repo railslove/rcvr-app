@@ -10,7 +10,7 @@ import { Text } from './Text'
 
 interface Props {
   name: string
-  label: string
+  label: string | React.ReactElement
 }
 type CheckboxProps = JSX.IntrinsicElements['input'] & Props
 
