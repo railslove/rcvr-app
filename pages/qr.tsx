@@ -2,7 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 
 import { Text, Card, Box } from '~ui/core'
-import { isCareEnv } from '~lib/config'
+import { isCareEnv, isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
@@ -43,7 +43,7 @@ export default function QRCodePage() {
       </Text>
       <Box height={4} />
       <Text>
-        {isCareEnv
+        {isFormal
           ? 'Scannen Sie den QR-Code im Eingangsbereich.'
           : 'Scanne den QR-Code, den Du auf dem Tisch teilnehmender Betriebe findest.'}
       </Text>
