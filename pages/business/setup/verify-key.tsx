@@ -7,9 +7,9 @@ import * as Yup from 'yup'
 import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { Text, Box, Button, Row, FileInput } from '~ui/core'
+import { Text, Box, Button, Row, FileInput, Card } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
-import { Step4 } from '~ui/svg'
+import { KeyIcon } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 import styled from '@emotion/styled'
@@ -59,61 +59,67 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
             {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
           </title>
         </Head>
-        <Text as="h2" variant="h2">
-          Schlüssel bestätigen
+        <Text as="h3" variant="h3">
+          Account erstellen (3/3)
         </Text>
-        <Box height={6} />
+        <Box height={4} />
         <Row justifyContent="center">
-          <Step4 />
+          <KeyIcon />
         </Row>
         <Box height={6} />
-        {verifyPrivateKeyExplanation}
-        <Formik
-          initialValues={{ privateKey: '' }}
-          onSubmit={handleSubmit}
-          validationSchema={VerifyKeySchema}
-        >
-          {() => (
-            <Form>
-              <FileInput
-                name="privateKey"
-                type="file"
-                label="Hier die Schlüsseldatei einfügen"
-                hint="Falls sie die Datei nicht haben, können sie sie unten herunterladen."
-                accept="text/plain"
-              />
-              <Box height={4} />
-              <Text>
-                Nun erstellen sie bitte eine Sicherheitskopie, indem sie die
-                Schlüssel-Datei ausdrucken, auf einen USB-Stick übertragen oder
-                den Inhalt in einem Passwortmanager speichern.
-              </Text>
-              <Box height={6} />
-              <SubActionButton onClick={window.print}>
-                Schlüssel drucken
-              </SubActionButton>
-              <Box height={4} />
-              <SubActionButton onClick={() => downloadKey(owner.privateKey)}>
-                Schlüssel noch mal herunterladen
-              </SubActionButton>
+        <Card variant="form" mx={-4}>
+          <Text as="h2" variant="h2">
+            3. Schlüssel bestätigen
+          </Text>
+          <Box height={6} />
+          {verifyPrivateKeyExplanation}
+          <Formik
+            initialValues={{ privateKey: '' }}
+            onSubmit={handleSubmit}
+            validationSchema={VerifyKeySchema}
+          >
+            {() => (
+              <Form>
+                <FileInput
+                  name="privateKey"
+                  type="file"
+                  label="Hier die Schlüsseldatei einfügen"
+                  hint="Falls Sie die Datei nicht haben, können Sie sie unten herunterladen."
+                  accept="text/plain"
+                />
+                <Box height={4} />
+                <Text>
+                  Nun erstellen Sie bitte eine Sicherheitskopie, indem Sie die
+                  Schlüssel-Datei ausdrucken, auf einen USB-Stick übertragen
+                  oder den Inhalt in einem Passwortmanager speichern.
+                </Text>
+                <Box height={6} />
+                <SubActionButton onClick={window.print}>
+                  Schlüssel drucken
+                </SubActionButton>
+                <Box height={4} />
+                <SubActionButton onClick={() => downloadKey(owner.privateKey)}>
+                  Schlüssel noch mal herunterladen
+                </SubActionButton>
 
-              <Box height={8} />
-              <Text>
-                {isFormal
-                  ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
-                  : 'Du kannst auch nochmal zurück gehen und den Schlüssel erneut sehen.'}{' '}
-              </Text>
-              <Box height={4} />
-              <Button
-                type="submit"
-                right={<ArrowsRight color="green" />}
-                css={{ width: '100%' }}
-              >
-                weiter
-              </Button>
-            </Form>
-          )}
-        </Formik>
+                <Box height={8} />
+                <Text>
+                  {isFormal
+                    ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
+                    : 'Du kannst auch nochmal zurück gehen und den Schlüssel erneut sehen.'}{' '}
+                </Text>
+                <Box height={4} />
+                <Button
+                  type="submit"
+                  right={<ArrowsRight color="green" />}
+                  css={{ width: '100%' }}
+                >
+                  weiter
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        </Card>
       </ScreenView>
       {owner.privateKey && (
         <PrintView>

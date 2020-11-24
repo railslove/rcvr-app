@@ -3,6 +3,8 @@ import LogoRcvr from './svg/logo-rcvr.svg'
 import LogoCare from './svg/logo-care.svg'
 import LogoFresenius from './svg/logo-fresenius.svg'
 import LogoHealth from './svg/logo-health.svg'
+import { Box } from '~ui/core'
+import { Warning } from './svg'
 
 const envs = {
   rcvr: {
@@ -14,12 +16,14 @@ const envs = {
     logoSmallHeight: '20px',
     logoBigWidth: '182px',
     logoBigHeight: '40px',
-    privacyUrl: '',
+    privacyUrl: 'https://railslove.com/privacy/',
     formalAddress: false,
     introText:
       'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Betriebe | recover',
-    instruction: 'So nutzt Du recover für deinen Betrieb',
+    instruction: 'Account erstellen',
+    indexIntro:
+      'recover ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.',
     setupIntro: (
       <>
         <p>
@@ -63,6 +67,9 @@ const envs = {
           <strong>Bitte speichere die Datei auf deinem Rechner ab.</strong>
         </p>
         <p>
+          <p>
+            <Warning />
+          </p>
           <strong>
             Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -105,12 +112,14 @@ const envs = {
     logoSmallHeight: '20px',
     logoBigWidth: '240px',
     logoBigHeight: '40px',
-    privacyUrl: '',
+    privacyUrl: 'https://www.recovercare.de/datenschutzerklarung',
     formalAddress: true,
+    indexIntro:
+      'recover ist die digitale Kontaktdatenliste für Pflegeeinrichtungen, deren Besucher und Gäste. Einfach, sicher, schnell.',
     introText:
       'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Pflegeeinrichtungen | recover',
-    instruction: 'So nutzen Sie recover für Ihre Pflegeeinrichtung',
+    instruction: 'Account erstellen',
     setupIntro: (
       <>
         <p>
@@ -123,29 +132,25 @@ const envs = {
     signupText: '',
     privateKeyExplanation: (
       <>
+        <p>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</p>
         <p>
-          Wir freuen uns, dass Sie recover nutzen!
-          <span role="img" aria-label="Hurra!">
-            🎉
-          </span>
-        </p>
-        <p>
-          Um die Echtheit Ihrer Daten zu überprüfen, werden wir uns zeitnah per
-          E-Mail melden.
-        </p>
-        <p>
-          <strong>Nächster Schritt: </strong>
-          <br />
-          Bitte drücken Sie auf &quot;Schlüssel herunterladen&quot;. Das erzeugt
-          eine Schlüsseldatei und startet den Download.
-        </p>
-        <p>
-          <strong>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</strong>
-        </p>
-        <p>
+          <p>
+            <Warning />
+          </p>
           <strong>
             Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
           </strong>
+        </p>
+      </>
+    ),
+    contactInformation: (
+      <>
+        <p>
+          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
+          Sie sich gern bei uns:{'  '}
+          <a href="tel:022197356159">
+            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
+          </a>
         </p>
       </>
     ),
@@ -153,14 +158,11 @@ const envs = {
       <>
         <p>
           <strong>
-            Sie werden die Datei rcvr_geheimer_schluessel.txt wieder benötigen,
-            wenn sich das Gesundheitsamt bei Ihnen meldet.
+            Zur Bestätigung laden Sie die Schlüsseldatei
+            rcvr_geheimer_schluessel.txt bitte hier hoch.
           </strong>
         </p>
-        <p>
-          Laden Sie die Schlüsseldatei deshalb hier zur Bestätigung noch einmal
-          hoch.
-        </p>
+        <Box height={4} />
       </>
     ),
     finishedText: (
@@ -170,8 +172,11 @@ const envs = {
           eingerichtet.
         </p>
         <p>
-          Falls Sie Fragen zu Ihrem Account und zum Entschlüsseln der Daten
-          haben, melden Sie sich gern bei uns.
+          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
+          Sie sich gern bei uns:{'  '}
+          <a href="tel:022197356159">
+            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
+          </a>
         </p>
         <p>
           Jetzt können Sie Ihre Betriebe, Häuser und Bereiche anlegen, sowie
@@ -189,16 +194,18 @@ const envs = {
     logoSmallHeight: '20px',
     logoBigWidth: '240px',
     logoBigHeight: '40px',
-    privacyUrl: '',
+    privacyUrl: 'https://www.recover-health.de/datenschutzerklarung',
     formalAddress: true,
+    indexIntro:
+      'recover ist die digitale Kontaktdatenliste für Krankenhäuser, deren Besucher und Gäste. Einfach, sicher, schnell.',
     introText:
       'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Krankenhäuser. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Krankenhäuser | recover',
-    instruction: 'So nutzen Sie recover für Ihr Krankenhaus',
+    instruction: 'Account erstellen',
     setupIntro: (
       <>
         <p>
-          Mit recover führen sie die Kontaktdatenliste Ihrer Besucher digital.
+          Mit recover führen Sie die Kontaktdatenliste Ihrer Besucher digital.
           Um die Daten zu schützen, werden diese von der App verschlüsselt.
         </p>
         <p>Die Einrichtung von recover dauert ca. 10 Min.</p>
@@ -207,29 +214,25 @@ const envs = {
     signupText: '',
     privateKeyExplanation: (
       <>
+        <p>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</p>
         <p>
-          Wir freuen uns, dass Sie recover nutzen!
-          <span role="img" aria-label="Hurra!">
-            🎉
-          </span>
-        </p>
-        <p>
-          Um die Echtheit Ihrer Daten zu überprüfen, werden wir uns zeitnah per
-          E-Mail melden.
-        </p>
-        <p>
-          <strong>Nächster Schritt: </strong>
-          <br />
-          Bitte drücken Sie auf &quot;Schlüssel herunterladen&quot;. Das erzeugt
-          eine Schlüsseldatei und startet den Download.
-        </p>
-        <p>
-          <strong>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</strong>
-        </p>
-        <p>
+          <p>
+            <Warning />
+          </p>
           <strong>
             Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
           </strong>
+        </p>
+      </>
+    ),
+    contactInformation: (
+      <>
+        <p>
+          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
+          Sie sich gern bei uns:{'  '}
+          <a href="tel:022197356159">
+            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
+          </a>
         </p>
       </>
     ),
@@ -237,29 +240,26 @@ const envs = {
       <>
         <p>
           <strong>
-            Sie werden die Datei rcvr_geheimer_schluessel.txt wieder benötigen,
-            wenn sich das Gesundheitsamt bei Ihnen meldet.
+            Zur Bestätigung laden Sie die Schlüsseldatei
+            rcvr_geheimer_schluessel.txt bitte hier hoch.
           </strong>
         </p>
-        <p>
-          Laden Sie die Schlüsseldatei deshalb hier zur Bestätigung noch einmal
-          hoch.
-        </p>
+        <Box height={4} />
       </>
     ),
     finishedText: (
       <>
-        <p>
-          Wir freuen uns, dass Sie dabei sind! Ihr Account ist jetzt vollständig
-          eingerichtet.
-        </p>
+        <p>Ihr Account ist jetzt vollständig eingerichtet.</p>
         <p>
           Falls Sie Fragen zu Ihrem Account und zum Entschlüsseln der Daten
-          haben, melden Sie sich gern bei uns.
+          haben, melden Sie sich gern bei uns:{'  '}
+          <a href="tel:022197356159">
+            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
+          </a>
         </p>
         <p>
           Jetzt können Sie Ihre Betriebe, Häuser und Bereiche anlegen, sowie
-          QR-Codes für die Gäste erstellen.
+          QR-Codes für die Besucher erstellen.
         </p>
       </>
     ),
@@ -358,6 +358,8 @@ const envs = {
 }
 
 const {
+  contactInformation,
+  indexIntro,
   title,
   instruction,
   setupIntro,
@@ -379,6 +381,8 @@ const {
 } = envs[process.env.NEXT_PUBLIC_BUILD_VARIANT || 'rcvr']
 
 export {
+  contactInformation,
+  indexIntro,
   title,
   instruction,
   setupIntro,

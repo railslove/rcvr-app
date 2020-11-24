@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { isCareEnv } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { Box, Text, Row } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Phone } from '~ui/svg'
@@ -21,15 +21,15 @@ export default function CoronaPage() {
       <Text>
         <p>Zu allererst: ruhig bleiben.</p>
         <p>
-          Wenn {isCareEnv ? 'Sie' : 'Du'} eine bestätigte Kontaktperson{' '}
-          {isCareEnv ? 'sind' : 'bist'}, wird sich das Gesundheitsamt bei{' '}
-          {isCareEnv ? 'Ihnen' : 'dir'} telefonisch innerhalb von 48 Stunden
+          Wenn {isFormal ? 'Sie' : 'Du'} eine bestätigte Kontaktperson{' '}
+          {isFormal ? 'sind' : 'bist'}, wird sich das Gesundheitsamt bei{' '}
+          {isFormal ? 'Ihnen' : 'dir'} telefonisch innerhalb von 48 Stunden
           melden.
         </p>
         <p>
-          Falls {isCareEnv ? 'Sie' : 'Du'} bereits typische Symptome wie Fieber,
+          Falls {isFormal ? 'Sie' : 'Du'} bereits typische Symptome wie Fieber,
           Müdigkeit und trockenen Husten{' '}
-          {isCareEnv ? 'haben, sollten Sie' : 'hast, solltest du'}{' '}
+          {isFormal ? 'haben, sollten Sie' : 'hast, solltest du'}{' '}
           vorsichtshalber in häuslicher Quarantäne bleiben und das
           Gesundheitsamt informieren.
         </p>
@@ -42,7 +42,7 @@ export default function CoronaPage() {
         <Box ml={3}>
           <Text variant="h3">Hotline zum Coronavirus</Text>
           <Text variant="h2">
-            <a href="tel:021191191001">030 346465100</a>
+            <a href="tel:030346465100">030 346465100</a>
           </Text>
         </Box>
       </Row>
