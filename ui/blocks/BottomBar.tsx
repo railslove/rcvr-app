@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 
-import { isCareEnv, isFreseniusEnv, isHealthEnv } from '~lib/config'
+import { isCareEnv, isHealthEnv } from '~lib/config'
 import { privacyUrl, secondaryHighlightColor } from '~ui/whitelabels'
 import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
@@ -16,11 +16,7 @@ export const BottomBar: React.FC<{}> = () => {
 
   return (
     <Row>
-      <Tab
-        href={isFreseniusEnv ? privacyUrl : 'https://railslove.com/privacy/'}
-        target="_blank"
-        rel="noreferrer noopener"
-      >
+      <Tab href={privacyUrl} target="_blank" rel="noreferrer noopener">
         <Circle color="transparent" size={38}>
           <Lock css={{ marginTop: '-2px' }} />
         </Circle>

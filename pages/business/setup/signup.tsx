@@ -9,7 +9,7 @@ import { isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
 import { privacyUrl, signupText } from '~ui/whitelabels'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
-import { Step2 } from '~ui/svg'
+import { PersonalData } from '~ui/svg'
 import { Input, Button, Box, Text, Card, Row, Checkbox } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
@@ -22,7 +22,7 @@ const LoginSchema = Yup.object().shape({
   phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
   companyName: Yup.string().required('Unternehmensname muss angegeben werden.'),
   password: Yup.string()
-    .required('Password muss angegeben werden.')
+    .required('Passwort muss angegeben werden.')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.^*()%!-[\]{}])[A-Za-z\d$&+,:;=?@#|'<>.^*()%!-[\]{}]{8,}$/,
       'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
@@ -69,12 +69,12 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
       <Head>
         <title key="title">Account erstellen | recover</title>
       </Head>
-      <Text as="h2" variant="h2">
-        Account erstellen
+      <Text as="h3" variant="h3">
+        Account erstellen (1/3)
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
-        <Step2 />
+        <PersonalData />
       </Row>
       <Box height={6} />
       <Text>{signupText}</Text>
@@ -95,6 +95,10 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         {({ values }) => (
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
+            <Text as="h2" variant="h2">
+              1. Persönliche Angaben
+            </Text>
+            <Box height={4} />
             <Form>
               <Input name="name" label={isFormal ? 'Ihr Name' : 'Dein Name'} />
               <Box height={4} />
@@ -142,6 +146,13 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                         Ich akzeptiere den{' '}
                         <InlineLink href="/VertragBFSCare.pdf" target="_blank">
                           Nutzungsvertrag
+                        </InlineLink>{' '}
+                        und die{'  '}
+                        <InlineLink
+                          href="https://www.recover-health.de/unser-pricing"
+                          target="_blank"
+                        >
+                          Preise
                         </InlineLink>
                       </span>
                     }
@@ -156,11 +167,15 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                     label={
                       <span>
                         Ich akzeptiere den{' '}
+                        <InlineLink href="/VertragBFSCare.pdf" target="_blank">
+                          Nutzungsvertrag
+                        </InlineLink>{' '}
+                        und die{'  '}
                         <InlineLink
-                          href="/VertragBFSHealth.pdf"
+                          href="https://www.recover-health.de/unser-pricing"
                           target="_blank"
                         >
-                          Nutzungsvertrag
+                          Preise
                         </InlineLink>
                       </span>
                     }
