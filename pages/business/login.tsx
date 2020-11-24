@@ -59,7 +59,7 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
       <Text>
         <p>
           {isFormal
-            ? 'Seit Corona sind Einrichtung verpflichtet die Kontaktdaten von Gästen zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie - und die sicherste für Ihre Besucher.'
+            ? 'Seit Corona sind Einrichtungen verpflichtet die Kontaktdaten von Gästen zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie - und die sicherste für Ihre Besucher.'
             : 'Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für deine Gäste.'}
         </p>
       </Text>

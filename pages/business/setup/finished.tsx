@@ -14,7 +14,7 @@ function SetupSuccessPage() {
         <title key="title">Fertig | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Alles fertig!
+        Schön, dass Sie dabei sind!
       </Text>
       <Box height={10} />
       <Row justifyContent="center">

@@ -3,9 +3,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { Text, Box, Row, ButtonLink } from '~ui/core'
+import { Text, Box, ButtonLink } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
-import { Step1 } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { instruction, title, setupIntro } from '~ui/whitelabels'
 
@@ -27,12 +26,8 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
         {instruction}
       </Text>
       <Box height={6} />
-      <Row justifyContent="center">
-        <Step1 />
-      </Row>
-      <Box height={6} />
       <Text>{setupIntro}</Text>
-      <Box height={6} />
+      <Box height={12} />
 
       <ButtonLink
         href="/business/setup/signup"
