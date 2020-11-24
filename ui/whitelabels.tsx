@@ -102,6 +102,7 @@ const envs = {
         <p>Jetzt kannst du Betriebe, Tische und QR-Codes erstellen.</p>
       </>
     ),
+    pdfType: 'Speisekarte',
   },
   care: {
     backgroundColor: '#f2f2f2',
@@ -184,6 +185,7 @@ const envs = {
         </p>
       </>
     ),
+    pdfType: 'Hygienevorschriften',
   },
   health: {
     backgroundColor: '#f2f2f2',
@@ -263,6 +265,7 @@ const envs = {
         </p>
       </>
     ),
+    pdfType: 'Hygienevorschriften',
   },
   fresenius: {
     backgroundColor: '#A6D7D7',
@@ -358,6 +361,7 @@ const envs = {
 }
 
 const {
+  pdfType,
   contactInformation,
   indexIntro,
   title,
@@ -381,6 +385,7 @@ const {
 } = envs[process.env.NEXT_PUBLIC_BUILD_VARIANT || 'rcvr']
 
 export {
+  pdfType,
   contactInformation,
   indexIntro,
   title,
