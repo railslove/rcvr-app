@@ -16,7 +16,7 @@ const envs = {
     logoSmallHeight: '20px',
     logoBigWidth: '182px',
     logoBigHeight: '40px',
-    privacyUrl: '',
+    privacyUrl: 'https://railslove.com/privacy/',
     formalAddress: false,
     introText:
       'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
@@ -67,6 +67,9 @@ const envs = {
           <strong>Bitte speichere die Datei auf deinem Rechner ab.</strong>
         </p>
         <p>
+          <p>
+            <Warning />
+          </p>
           <strong>
             Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -109,7 +112,7 @@ const envs = {
     logoSmallHeight: '20px',
     logoBigWidth: '240px',
     logoBigHeight: '40px',
-    privacyUrl: '',
+    privacyUrl: 'https://www.recovercare.de/datenschutzerklarung',
     formalAddress: true,
     indexIntro:
       'recover ist die digitale Kontaktdatenliste für Pflegeeinrichtungen, deren Besucher und Gäste. Einfach, sicher, schnell.',
@@ -140,6 +143,17 @@ const envs = {
         </p>
       </>
     ),
+    contactInformation: (
+      <>
+        <p>
+          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
+          Sie sich gern bei uns:{'  '}
+          <a href="tel:022197356159">
+            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
+          </a>
+        </p>
+      </>
+    ),
     verifyPrivateKeyExplanation: (
       <>
         <p>
@@ -158,8 +172,11 @@ const envs = {
           eingerichtet.
         </p>
         <p>
-          Falls Sie Fragen zu Ihrem Account und zum Entschlüsseln der Daten
-          haben, melden Sie sich gern bei uns.
+          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
+          Sie sich gern bei uns:{'  '}
+          <a href="tel:022197356159">
+            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
+          </a>
         </p>
         <p>
           Jetzt können Sie Ihre Betriebe, Häuser und Bereiche anlegen, sowie
@@ -177,7 +194,7 @@ const envs = {
     logoSmallHeight: '20px',
     logoBigWidth: '240px',
     logoBigHeight: '40px',
-    privacyUrl: '',
+    privacyUrl: 'https://www.recover-health.de/datenschutzerklarung',
     formalAddress: true,
     indexIntro:
       'recover ist die digitale Kontaktdatenliste für Krankenhäuser, deren Besucher und Gäste. Einfach, sicher, schnell.',
@@ -208,6 +225,17 @@ const envs = {
         </p>
       </>
     ),
+    contactInformation: (
+      <>
+        <p>
+          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
+          Sie sich gern bei uns:{'  '}
+          <a href="tel:022197356159">
+            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
+          </a>
+        </p>
+      </>
+    ),
     verifyPrivateKeyExplanation: (
       <>
         <p>
@@ -224,7 +252,10 @@ const envs = {
         <p>Ihr Account ist jetzt vollständig eingerichtet.</p>
         <p>
           Falls Sie Fragen zu Ihrem Account und zum Entschlüsseln der Daten
-          haben, melden Sie sich gern bei uns.
+          haben, melden Sie sich gern bei uns:{'  '}
+          <a href="tel:022197356159">
+            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
+          </a>
         </p>
         <p>
           Jetzt können Sie Ihre Betriebe, Häuser und Bereiche anlegen, sowie
@@ -327,6 +358,7 @@ const envs = {
 }
 
 const {
+  contactInformation,
   indexIntro,
   title,
   instruction,
@@ -349,6 +381,7 @@ const {
 } = envs[process.env.NEXT_PUBLIC_BUILD_VARIANT || 'rcvr']
 
 export {
+  contactInformation,
   indexIntro,
   title,
   instruction,

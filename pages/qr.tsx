@@ -2,7 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 
 import { Text, Card, Box } from '~ui/core'
-import { isCareEnv, isFormal } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 

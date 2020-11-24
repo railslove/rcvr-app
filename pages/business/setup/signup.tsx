@@ -146,6 +146,13 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                         Ich akzeptiere den{' '}
                         <InlineLink href="/VertragBFSCare.pdf" target="_blank">
                           Nutzungsvertrag
+                        </InlineLink>{' '}
+                        und die{'  '}
+                        <InlineLink
+                          href="https://www.recover-health.de/unser-pricing"
+                          target="_blank"
+                        >
+                          Preise
                         </InlineLink>
                       </span>
                     }
@@ -160,11 +167,15 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                     label={
                       <span>
                         Ich akzeptiere den{' '}
+                        <InlineLink href="/VertragBFSCare.pdf" target="_blank">
+                          Nutzungsvertrag
+                        </InlineLink>{' '}
+                        und die{'  '}
                         <InlineLink
-                          href="/VertragBFSHealth.pdf"
+                          href="https://www.recover-health.de/unser-pricing"
                           target="_blank"
                         >
-                          Nutzungsvertrag
+                          Preise
                         </InlineLink>
                       </span>
                     }

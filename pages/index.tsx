@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { Box, Text, ButtonLink, Card, Row } from '~ui/core'
-import { isFormal } from '~lib/config'
+import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { indexIntro } from '~ui/whitelabels'
@@ -68,7 +68,11 @@ export default function IndexPage() {
       <Row justifyContent="center" my={6}>
         <a
           href={
-            isFormal ? 'https://recovercare.de/' : 'https://www.recoverapp.de/'
+            isCareEnv
+              ? 'https://recovercare.de/'
+              : isHealthEnv
+              ? 'recover-health.de'
+              : 'https://www.recoverapp.de/'
           }
           target="_blank"
           rel="noreferrer noopener"
