@@ -3,10 +3,10 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { queryCache } from 'react-query'
 
-import { isCareEnv } from '~lib/config'
 import { patchCompany, postCompany } from '~lib/api'
 import { Box, Input, FileInput, Button, Text } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
+import { pdfType } from '~ui/whitelabels'
 
 interface Props {
   type: 'new' | 'edit'
@@ -106,11 +106,11 @@ export const BusinessDataModal: React.FC<MProps> = ({
         <Form>
           <Input name="name" label="Name des Betriebs" autoFocus />
           <Box height={4} />
-          {!isCareEnv && (
+          {
             <>
               <Input
                 name="menuLink"
-                label={`${menuAlias || 'Speisekarte'} als Link`}
+                label={`${menuAlias || pdfType} als Link`}
               />
               <Box height={4} />
               <Text variant="shy" textAlign="center">
@@ -120,13 +120,13 @@ export const BusinessDataModal: React.FC<MProps> = ({
               <FileInput
                 name="menuPdf"
                 type="file"
-                label={`${menuAlias || 'Speisekarte'} als PDF`}
+                label={`${menuAlias || pdfType} als PDF`}
                 hint="Es können nur pdf-Dateien hochgeladen werden."
                 accept="application/pdf"
               />
               <Box height={4} />
             </>
-          )}
+          }
           <Button type="submit" css={{ width: '100%' }}>
             {button}
           </Button>
