@@ -139,7 +139,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                 <Box height={2} />
                 <ol>
                   <li>1. Betrieb anlegen</li>
-                  <li>2. Bereich in deinem Betrieb anlegen</li>
+                  <li>2. Bereich in einem Betrieb anlegen</li>
                   <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
                 </ol>
               </Callout>
