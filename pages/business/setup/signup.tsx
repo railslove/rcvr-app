@@ -4,8 +4,13 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
-
-import { getAffiliate, isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
+import {
+  getAffiliate,
+  isCareEnv,
+  isFormal,
+  isFreseniusEnv,
+  isHealthEnv,
+} from '~lib/config'
 import { privacyUrl, signupText } from '~ui/whitelabels'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
