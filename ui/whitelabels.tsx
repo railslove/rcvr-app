@@ -181,7 +181,7 @@ const envs = {
         </p>
         <p>
           Jetzt können Sie Ihre Betriebe, Häuser und Bereiche anlegen, sowie
-          QR-Codes für die Gäste erstellen.
+          QR-Codes für die Besucher erstellen.
         </p>
       </>
     ),
