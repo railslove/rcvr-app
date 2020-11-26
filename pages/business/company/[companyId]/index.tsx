@@ -60,8 +60,9 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
       <Callout>
         <Text>
           <p>
-            Anfragen zu Kundenkontaktdaten für anwesende Gäste{' '}
-            {isCareEnv ? 'können Sie' : 'kannst Du'} hier automatisch stellen.
+            Anfragen zu Kundenkontaktdaten für anwesende{' '}
+            {isCareEnv ? 'Besucher können Sie' : 'Gäste kannst Du'} hier
+            automatisch stellen.
           </p>
         </Text>
         <Box height={2} />
