@@ -168,7 +168,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                       <span>
                         Ich akzeptiere den{' '}
                         <InlineLink
-                          href="/VertragBFSHealth.pdf"
+                          href="/Nutzungsvertrag_recover-health.pdf"
                           target="_blank"
                         >
                           Nutzungsvertrag
