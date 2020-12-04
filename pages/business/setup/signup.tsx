@@ -4,13 +4,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { queryCache } from 'react-query'
-import {
-  getAffiliate,
-  isCareEnv,
-  isFormal,
-  isFreseniusEnv,
-  isHealthEnv,
-} from '~lib/config'
+import { isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
 import { privacyUrl, signupText } from '~ui/whitelabels'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { signup } from '~lib/actions'
@@ -51,7 +45,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   ) => {
     try {
       setLoading(true)
-      const affiliate = getAffiliate()
+      const affiliate = localStorage.getItem('rcvr_affiliate')
 
       await signup({ name, companyName, phone, email, password, affiliate })
       queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
