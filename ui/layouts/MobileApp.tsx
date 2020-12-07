@@ -5,9 +5,9 @@ import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 import { motion } from 'framer-motion'
 
-import { isCareEnv } from '~lib/config'
 import { Box } from '~ui/core'
 import {
+  pageTitle,
   Logo,
   logoBigWidth,
   logoBigHeight,
@@ -28,7 +28,7 @@ export const MobileApp: React.FC<Props> = ({
   return (
     <Limit>
       <Head>
-        <title key="title">{isCareEnv ? 'recover care' : 'recover'}</title>
+        <title key="title">{pageTitle}</title>
       </Head>
       <SharedMeta />
       <LogoBox variant={logoVariant} layoutId="appLogo">
