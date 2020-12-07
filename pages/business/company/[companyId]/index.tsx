@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 
-import { isCareEnv } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany, useDataRequests, useModals } from '~lib/hooks'
 import { Text, Box, Divider, Callout, Button } from '~ui/core'
@@ -49,10 +49,10 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
         <Text>
           <p>
             Anfragen zu Kundenkontaktdaten{' '}
-            {isCareEnv ? 'können Sie' : 'kannst Du'} per Email an{' '}
+            {isFormal ? 'können Sie' : 'kannst Du'} per Email an{' '}
             <a href="mailto:team@recoverapp.de">team@recoverapp.de</a> stellen.
             Wir melden uns dann schnellstmöglich bei{' '}
-            {isCareEnv ? 'Ihnen' : 'Dir'}.
+            {isFormal ? 'Ihnen' : 'Dir'}.
           </p>
         </Text>
       </Callout>
@@ -61,7 +61,7 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
         <Text>
           <p>
             Anfragen zu Kundenkontaktdaten für anwesende{' '}
-            {isCareEnv ? 'Besucher können Sie' : 'Gäste kannst Du'} hier
+            {isFormal ? 'Besucher können Sie' : 'Gäste kannst Du'} hier
             automatisch stellen.
           </p>
         </Text>
@@ -73,7 +73,7 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
       <Box height={4} />
       {dataRequests?.length === 0 && (
         <Text variant="shy">
-          {isCareEnv ? 'Sie haben' : 'Du hast'} noch keine freigegebenen
+          {isFormal ? 'Sie haben' : 'Du hast'} noch keine freigegebenen
           Kundenkontaktdaten.
         </Text>
       )}
