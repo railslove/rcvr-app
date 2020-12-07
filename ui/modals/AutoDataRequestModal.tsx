@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { queryCache } from 'react-query'
 
-import { isCareEnv } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { postAutoDataRequest } from '~lib/api'
 import { Text, Box, Button, Input, Callout } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
@@ -15,7 +15,7 @@ type MProps = ModalBaseProps & Props
 
 const DataRequestSchema = Yup.object().shape({
   reason: Yup.string().required(
-    isCareEnv
+    isFormal
       ? 'Sie müssen einen Grund für die Abfrage angeben.'
       : 'Du musst einen Grund für die Abfrage angeben.'
   ),
@@ -61,7 +61,7 @@ export const AutoDataRequestModal: React.FC<MProps> = ({
         <Form>
           <Callout variant="danger">
             <Text>
-              {isCareEnv ? 'Sie dürfen' : 'Du darfst'} diese Abfrage nur einmal
+              {isFormal ? 'Sie dürfen' : 'Du darfst'} diese Abfrage nur einmal
               am Tag stellen.
             </Text>
           </Callout>

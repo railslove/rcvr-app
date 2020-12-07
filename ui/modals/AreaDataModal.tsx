@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { queryCache } from 'react-query'
 
-import { isCareEnv } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { patchArea, postArea } from '~lib/api'
 import { Box, Input, Button, Text } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
@@ -18,7 +18,7 @@ type MProps = ModalBaseProps & Props
 
 const AreaSchema = Yup.object().shape({
   name: Yup.string().required(
-    isCareEnv
+    isFormal
       ? 'Sie müssen einen Namen angeben'
       : 'Du musst einen Namen angeben.'
   ),
@@ -71,7 +71,7 @@ export const AreaDataModal: React.FC<MProps> = ({
         <Form>
           <Text>
             Der Name des Bereichs wird über dem QR Code angezeigt. Falls{' '}
-            {isCareEnv
+            {isFormal
               ? 'Sie bereits Lage-, Stationspläne oder ähnliches haben, können Sie'
               : 'du bereits einen Saalplan hast, kannst du'}{' '}
             die Nummerierung in gleicher Weise abbilden.

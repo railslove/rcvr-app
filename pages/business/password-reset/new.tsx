@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
 import Link from 'next/link'
 
-import { isCareEnv } from '~lib/config'
+import { isFormal } from '~lib/config'
 import { Callout, Text, Card, Box, Button, Input, Row } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
@@ -55,7 +55,7 @@ export default function PasswordResetNewPage() {
       <Box height={4} />
       <Text>
         <p>
-          {isCareEnv
+          {isFormal
             ? 'Bitte gib ein neues Passwort an mit dem du dich von jetzt an anmelden kannst.'
             : 'Bitte geben Sie ein neues Passwort an mit dem Sie sich von jetzt an anmelden können'}
         </p>

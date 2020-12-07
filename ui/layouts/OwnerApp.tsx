@@ -9,11 +9,11 @@ import formatDate from 'intl-dateformat'
 
 import { useCompanies, useOwner } from '~lib/hooks'
 import { Box, Text, Icon, Row, Callout, CloseButton } from '~ui/core'
-import { isCareEnv } from '~lib/config'
 import { Logo } from '~ui/whitelabels'
 import { Back } from '~ui/svg'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+import { pageTitle } from '~ui/whitelabels'
 
 interface Props {
   children: React.ReactNode
@@ -37,7 +37,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
       <SharedMeta />
       <Head>
         <title key="title">
-          {title ?? '____'} | {isCareEnv ? 'recover care' : 'recover'}
+          {title ?? '____'} | {pageTitle}
         </title>
       </Head>
       <Top>

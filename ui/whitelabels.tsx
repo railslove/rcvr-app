@@ -21,6 +21,7 @@ const envs = {
     introText:
       'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Betriebe | recover',
+    pageTitle: 'recover',
     instruction: 'Account erstellen',
     indexIntro:
       'recover ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.',
@@ -103,6 +104,19 @@ const envs = {
       </>
     ),
     pdfType: 'Speisekarte',
+    pricingInfoDuringTest: (
+      <p>
+        Du kannst recover 14 Tage lang kostenlos auf Herz und Nieren testen.
+        <br />
+        Danach kostet die Mitgliedschaft 15€ inkl. USt. pro Monat und Betrieb.
+        Die Mitgliedschaft kann jederzeit zum Monatsende gekündigt werden.
+        <br />
+        Wenn Du Anspruch auf eine kostenlose oder reduzierte Nutzung von der
+        Recover App hast, melde dich gerne bei unserem Support, damit wir deinen
+        Laden überprüfen und freischalten können:{' '}
+        <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+      </p>
+    ),
   },
   care: {
     backgroundColor: '#f2f2f2',
@@ -120,6 +134,7 @@ const envs = {
     introText:
       'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Pflegeeinrichtungen | recover',
+    pageTitle: 'recover care',
     instruction: 'Account erstellen',
     setupIntro: (
       <>
@@ -186,6 +201,14 @@ const envs = {
       </>
     ),
     pdfType: 'Hygienevorschriften',
+    pricingInfoDuringTest: (
+      <p>
+        Sie können recover 14 Tage lang kostenlos auf Herz und Nieren testen.
+        Danach kostet die Mitgliedschaft 29.90€ inkl. USt. pro Monat und
+        Pflegeeinrichtung. Die Mitgliedschaft kann jederzeit zum Monatsende
+        gekündigt werden.
+      </p>
+    ),
   },
   health: {
     backgroundColor: '#f2f2f2',
@@ -203,6 +226,7 @@ const envs = {
     introText:
       'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Krankenhäuser. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Krankenhäuser | recover',
+    pageTitle: 'recover health',
     instruction: 'Account erstellen',
     setupIntro: (
       <>
@@ -266,6 +290,22 @@ const envs = {
       </>
     ),
     pdfType: 'Hygienevorschriften',
+    pricingInfoDuringTest: (
+      <>
+        <p>
+          Sie können recover 14 Tage lang kostenlos testen. Danach kostet die
+          Mitgliedschaft für alle Krankenhäuser mit einer Größe bis 199 Betten
+          199€ pro Monat, für alle Krankenhäuser mit einer Größe von 200 bis 499
+          Betten 349€ pro Monat und für alle Krankenhäuser mit einer Größe von
+          500 Betten 449€ pro Monat bei einer jeweiligen Mindestlaufzeit von 6
+          Monaten.
+        </p>
+        <p>
+          Bei Fragen zum Pricing können Sie sich jederzeit bei unserem Support
+          unter team@recoverapp.com melden.
+        </p>
+      </>
+    ),
   },
   fresenius: {
     backgroundColor: '#A6D7D7',
@@ -282,6 +322,7 @@ const envs = {
     introText:
       'Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.',
     title: 'Für Betriebe | recover',
+    pageTitle: 'recover',
     instruction: 'So nutzt Du recover für deinen Betrieb',
     setupIntro: (
       <>
@@ -357,6 +398,19 @@ const envs = {
         <p>Jetzt kannst du Betriebe, Tische und QR-Codes erstellen.</p>
       </>
     ),
+    pricingInfoDuringTest: (
+      <p>
+        Du kannst recover 14 Tage lang kostenlos auf Herz und Nieren testen.
+        <br />
+        Danach kostet die Mitgliedschaft 15€ inkl. USt. pro Monat und Betrieb.
+        Die Mitgliedschaft kann jederzeit zum Monatsende gekündigt werden.
+        <br />
+        Wenn Du Anspruch auf eine kostenlose oder reduzierte Nutzung von der
+        Recover App hast, melde dich gerne bei unserem Support, damit wir deinen
+        Laden überprüfen und freischalten können:{' '}
+        <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+      </p>
+    ),
   },
 }
 
@@ -365,6 +419,7 @@ const {
   contactInformation,
   indexIntro,
   title,
+  pageTitle,
   instruction,
   setupIntro,
   signupText,
@@ -382,6 +437,7 @@ const {
   logoBigHeight,
   logoSmallWidth,
   logoSmallHeight,
+  pricingInfoDuringTest,
 } = envs[process.env.NEXT_PUBLIC_BUILD_VARIANT || 'rcvr']
 
 export {
@@ -389,6 +445,7 @@ export {
   contactInformation,
   indexIntro,
   title,
+  pageTitle,
   instruction,
   setupIntro,
   signupText,
@@ -406,4 +463,5 @@ export {
   logoBigHeight,
   logoSmallWidth,
   logoSmallHeight,
+  pricingInfoDuringTest,
 }
