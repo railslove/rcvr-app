@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 
 import { Box } from '~ui/core'
 import {
+  pageTitle,
   Logo,
   logoBigWidth,
   logoBigHeight,
@@ -14,7 +15,6 @@ import {
   logoSmallHeight,
 } from '~ui/whitelabels'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
-import { pageTitle } from '~ui/whitelabels'
 
 interface Props {
   children: React.ReactNode
