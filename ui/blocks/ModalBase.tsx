@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { css } from '@styled-system/css'
 import { useClickAway } from 'react-use'
 
-import { Text, Box, Icon, CloseButton } from '~ui/core'
+import { Text, Box, CloseButton } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
 
 interface Props {
