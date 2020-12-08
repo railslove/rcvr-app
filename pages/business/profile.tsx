@@ -95,6 +95,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
         <>
           <Text>{pricingInfoDuringTest}</Text>
           <Box height={4} />
+
           {isHealthEnv || isCareEnv ? (
             <Text>
               <p>
