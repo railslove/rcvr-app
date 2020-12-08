@@ -4,7 +4,7 @@ import formatDate from 'intl-dateformat'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { isFormal, isHealthEnv } from '~lib/config'
+import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
 import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
@@ -95,12 +95,21 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
         <>
           <Text>{pricingInfoDuringTest}</Text>
           <Box height={4} />
-          {isHealthEnv ? (
-            <a href="mailto:team@recoverapp.com">
-              <Button right={<ArrowsRight color="pink" />}>
-                Jetzt recover health abonnieren
-              </Button>
-            </a>
+
+          {isHealthEnv || isCareEnv ? (
+            <Text>
+              <p>
+                Wenn sie recover weiter nutzen möchten, schreiben sie uns eine
+                E-Mail.
+              </p>
+              <p>
+                <a href="mailto:team@recoverapp.com">
+                  <Button right={<ArrowsRight color="pink" />}>
+                    Email schreiben
+                  </Button>
+                </a>
+              </p>
+            </Text>
           ) : (
             <Button onClick={openCheckout} right={<ArrowsRight color="pink" />}>
               Jetzt upgraden
