@@ -136,6 +136,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
                 <Text variant="h3">Wen willst du mit dir einchecken?</Text>
                 <Box height={2} />
                 <Onboarding
+                  prefilledGuest={{ address: checkin.guest?.address }}
                   hideRememberMe={true}
                   onSubmit={proxyCheckin}
                   onAbort={() => setShowProxyCheckin(false)}
