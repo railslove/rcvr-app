@@ -99,6 +99,17 @@ export async function postOwnerCheckout(): Promise<OwnerCheckoutRes> {
     .then((res: OwnerCheckoutRes) => camelcaseKeys(res, { deep: true }))
 }
 
+export interface OwnerStripeIntentRes {
+  id: string
+}
+
+export async function postOwnerStripeIntent(): Promise<OwnerCheckoutRes> {
+  return await api
+    .post('setup_intent')
+    .json()
+    .then((res: OwnerStripeIntentRes) => camelcaseKeys(res, { deep: true }))
+}
+
 export interface SubscriptionRes {
   url: string
 }

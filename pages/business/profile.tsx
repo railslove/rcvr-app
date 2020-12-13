@@ -6,7 +6,11 @@ import { useRouter } from 'next/router'
 
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
-import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
+import {
+  postOwnerCheckout,
+  postOwnerStripeIntent,
+  postOwnerSubscription,
+} from '~lib/api'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Box, Button, Text, Divider, Callout } from '~ui/core'
 import { Right } from '~ui/svg'
@@ -49,6 +53,20 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       )
       const checkout = await postOwnerCheckout()
       stripe.redirectToCheckout({ sessionId: checkout.id })
+    } catch (error) {
+      setRedirecting(false)
+      console.error(error)
+    }
+  }, [])
+
+  const openSepaCheckout = React.useCallback(async () => {
+    try {
+      setRedirecting(true)
+      // const stripe = await loadStripe(
+      //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+      // )
+      const checkout = await postOwnerStripeIntent()
+      console.error(checkout)
     } catch (error) {
       setRedirecting(false)
       console.error(error)
@@ -114,7 +132,12 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
             </Text>
           ) : (
             <Button
-              onClick={() => openModal('checkoutSelection', { openCheckout })}
+              onClick={() =>
+                openModal('checkoutSelection', {
+                  openCheckout,
+                  openSepaCheckout,
+                })
+              }
               right={<ArrowsRight color="pink" />}
             >
               Jetzt upgraden
