@@ -68,9 +68,9 @@ const envs = {
           <strong>Bitte speichere die Datei auf deinem Rechner ab.</strong>
         </p>
         <p>
-          <p>
+          <div>
             <Warning />
-          </p>
+          </div>
           <strong>
             Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -150,9 +150,9 @@ const envs = {
       <>
         <p>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</p>
         <p>
-          <p>
+          <div>
             <Warning />
-          </p>
+          </div>
           <strong>
             Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -242,9 +242,9 @@ const envs = {
       <>
         <p>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</p>
         <p>
-          <p>
+          <div>
             <Warning />
-          </p>
+          </div>
           <strong>
             Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
           </strong>
