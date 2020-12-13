@@ -59,20 +59,6 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
     }
   }, [])
 
-  const openSepaCheckout = React.useCallback(async () => {
-    try {
-      setRedirecting(true)
-      // const stripe = await loadStripe(
-      //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-      // )
-      const checkout = await postOwnerStripeIntent()
-      console.error(checkout)
-    } catch (error) {
-      setRedirecting(false)
-      console.error(error)
-    }
-  }, [])
-
   const openSelfService = React.useCallback(async () => {
     try {
       setRedirecting(true)
@@ -132,12 +118,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
             </Text>
           ) : (
             <Button
-              onClick={() =>
-                openModal('checkoutSelection', {
-                  openCheckout,
-                  openSepaCheckout,
-                })
-              }
+              onClick={() => openModal('checkoutSelection', { openCheckout })}
               right={<ArrowsRight color="pink" />}
             >
               Jetzt upgraden
