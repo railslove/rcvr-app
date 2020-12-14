@@ -16,6 +16,10 @@ export interface PostLogin {
   password: string
 }
 
+export interface PostPaymentMethod {
+  token: string
+}
+
 export interface OwnerRes {
   id: number
   email: string
@@ -108,6 +112,17 @@ export async function postOwnerStripeIntent(): Promise<OwnerCheckoutRes> {
     .post('setup_intent')
     .json()
     .then((res: OwnerStripeIntentRes) => camelcaseKeys(res, { deep: true }))
+}
+
+export async function postOwnerPaymentMethod(
+  token: PostPaymentMethod
+): Promise<OwnerCheckoutRes> {
+  const json = snakecaseKeys({ token }, { deep: true })
+
+  return await api
+    .post('owner_payment_method', { json })
+    .json()
+    .then((res: any) => camelcaseKeys(res, { deep: true }))
 }
 
 export interface SubscriptionRes {

@@ -20,6 +20,7 @@ export const api = ky.create({
           '/data_requests',
           '/checkout',
           '/setup_intent',
+          '/owner_payment_method',
           '/subscription-settings',
         ]
         const shouldSetToken = protectedPaths.some((path) =>

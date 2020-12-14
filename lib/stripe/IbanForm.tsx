@@ -1,6 +1,9 @@
 import React from 'react'
 import { IbanElement } from '@stripe/react-stripe-js'
 
+import { Button } from '~ui/core'
+import { ArrowsRight } from '~ui/anicons'
+
 // Custom styling can be passed as options when creating an Element.
 const IBAN_STYLE = {
   base: {
@@ -67,9 +70,13 @@ export default function IbanForm({ onSubmit, disabled }) {
         </label>
       </div>
 
-      <button type="submit" disabled={disabled}>
-        Set up SEPA Direct Debit
-      </button>
+      <Button
+        type="submit"
+        disabled={disabled}
+        right={<ArrowsRight color="pink" />}
+      >
+        SEPA Lastschriftverfahren bestätigen
+      </Button>
 
       {/* Display mandate acceptance text. */}
       <div className="mandate-acceptance">

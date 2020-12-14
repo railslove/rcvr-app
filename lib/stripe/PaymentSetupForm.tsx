@@ -3,6 +3,7 @@ import React from 'react'
 import { useStripe, useElements, IbanElement } from '@stripe/react-stripe-js'
 
 import IbanForm from './IbanForm'
+import { postOwnerPaymentMethod } from '~lib/api'
 
 export default function PaymentSetupForm(props) {
   const stripe = useStripe()
@@ -44,7 +45,12 @@ export default function PaymentSetupForm(props) {
       // Show error to your customer.
       console.log(result.error.message)
     } else {
-      debugger
+      const res = await postOwnerPaymentMethod(
+        result.setupIntent?.payment_method
+      )
+
+      debugger;
+
       // Show a confirmation message to your customer.
       // The SetupIntent is in the 'succeeded' state.
     }
