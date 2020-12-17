@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { isFormal } from '~lib/config'
 import { Text, Box, Row, Button, ButtonLink, Card } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { KeyPaper } from '~ui/svg'
