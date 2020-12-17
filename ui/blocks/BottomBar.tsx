@@ -39,7 +39,7 @@ export const BottomBar: React.FC<{}> = () => {
             <Ticket />
           </Circle>
           <Text variant="fineprint" fontWeight="semibold">
-            {isCareEnv ? 'Checkins' : 'Tickets'}
+            {isCareEnv || isHealthEnv ? 'Checkins' : 'Tickets'}
           </Text>
         </Tab>
       </Link>
