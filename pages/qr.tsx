@@ -5,9 +5,29 @@ import { Text, Card, Box } from '~ui/core'
 import { isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import { useRouter } from 'next/router'
 
 export default function QRCodePage() {
   const videoEl = React.useRef<HTMLVideoElement>()
+
+  const router = useRouter()
+
+  const paramsRef = React.useRef<object>({})
+
+  paramsRef.current = {
+    name: router.query.name?.toString(),
+    phone: router.query.phone?.toString(),
+    address: router.query.address?.toString(),
+  }
+
+  function appendGuestInfo(url: string): any {
+    Object.entries(paramsRef.current).forEach((entry) => {
+      if (entry[1]) {
+        url = url.concat(`&${entry[0]}=${entry[1]}`)
+      }
+    })
+    return url
+  }
 
   React.useEffect(() => {
     let qrCodeReader: any
@@ -22,7 +42,7 @@ export default function QRCodePage() {
           undefined,
           videoEl.current
         )
-        window.location.href = result.getText()
+        window.location.href = appendGuestInfo(result.getText())
       } catch (error) {
         console.error('Failed mountAndWaitForScan:', error)
       }
