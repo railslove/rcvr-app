@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 import { useEffectOnce } from 'react-use'
 
-import { isCareEnv } from '~lib/config'
+import { isCareEnv, isFormal } from '~lib/config'
 import { decryptTickets, DecryptedTicket } from '~lib/actions'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany, useDataRequest, useModals } from '~lib/hooks'
@@ -116,7 +116,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
         <Callout>
           <Text>
             Die Daten für diesen Zeitraum wurden noch nicht für{' '}
-            {isCareEnv ? 'Sie' : 'Dich'}
+            {isFormal ? 'Sie' : 'Dich'}
             freigegeben.
           </Text>
         </Callout>
@@ -125,7 +125,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       {dataRequest?.tickets && !owner.privateKey && (
         <Box mb={4}>
           <Text>
-            {isCareEnv
+            {isFormal
               ? 'Dein privater Schlüssel ist nicht mehr auf deinem Gerät gespeichert. Um die Daten zu entschlüsseln, musst du ihn neu eingeben.'
               : 'Ihr privater Schlüssel ist nicht mehr auf Ihrem Gerät gespeichert. Um die Daten zu entschlüsseln, müssen Sie ihn neu eingeben.'}
           </Text>
@@ -148,8 +148,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <Callout variant="danger">
                 <Text>
                   Keine Daten konnten entschlüsselt werden. Wahrscheinlich ist
-                  {isCareEnv ? 'Ihre' : 'dein'} privater Schlüssel nicht
-                  korrekt. Bitte {isCareEnv ? 'geben Sie' : 'gib'} ihn neu ein.
+                  {isFormal ? 'Ihre' : 'dein'} privater Schlüssel nicht korrekt.
+                  Bitte {isFormal ? 'geben Sie' : 'gib'} ihn neu ein.
                 </Text>
               </Callout>
               <Box height={4} />
