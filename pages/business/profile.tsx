@@ -6,11 +6,7 @@ import { useRouter } from 'next/router'
 
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
-import {
-  postOwnerCheckout,
-  postOwnerStripeIntent,
-  postOwnerSubscription,
-} from '~lib/api'
+import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Box, Button, Text, Divider, Callout } from '~ui/core'
 import { Right } from '~ui/svg'
@@ -130,7 +126,9 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       {hasSubscription && !owner.canUseForFree && (
         <>
           <ActionList grid>
-            <ActionCard onClick={openCheckout}>
+            <ActionCard
+              onClick={() => openModal('checkoutSelection', { openCheckout })}
+            >
               <ActionCard.Main title="Rechnungsdaten ändern" icon={Right} />
             </ActionCard>
             <ActionCard onClick={openSelfService}>

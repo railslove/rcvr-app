@@ -16,7 +16,7 @@ export interface PostLogin {
   password: string
 }
 
-export interface PostPaymentMethod {
+export interface PostSepaSubscription {
   token: string
 }
 
@@ -114,15 +114,11 @@ export async function postOwnerStripeIntent(): Promise<OwnerCheckoutRes> {
     .then((res: OwnerStripeIntentRes) => camelcaseKeys(res, { deep: true }))
 }
 
-export async function postOwnerPaymentMethod(
-  token: PostPaymentMethod
-): Promise<OwnerCheckoutRes> {
-  const json = snakecaseKeys({ token }, { deep: true })
-
-  return await api
-    .post('owner_payment_method', { json })
-    .json()
-    .then((res: any) => camelcaseKeys(res, { deep: true }))
+export async function postSepaSubscription(
+  sepaSubscription: PostSepaSubscription
+): Promise<null> {
+  const json = snakecaseKeys(sepaSubscription, { deep: true })
+  return await api.post('sepa_subscription', { json }).json()
 }
 
 export interface SubscriptionRes {
