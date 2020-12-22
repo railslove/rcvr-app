@@ -14,6 +14,7 @@ import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Loading } from '~ui/blocks/Loading'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import { Guest } from '../lib/db/guest';
 
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
@@ -53,6 +54,10 @@ export default function MyCheckinsPage() {
     }, [])
   }, [checkinsInfo.data])
 
+  const handleGuestDataEdited = (guest: Guest) => {
+    // window.location.reload()
+  }
+
   return (
     <MobileApp logoVariant="sticky">
       <Head>
@@ -91,6 +96,7 @@ export default function MyCheckinsPage() {
                   <LastCheckins
                     checkins={checkins}
                     onCheckout={handleCheckout}
+                    onGuestDataEdit={handleGuestDataEdited}
                   />
                   {error && (
                     <Callout variant="danger">
