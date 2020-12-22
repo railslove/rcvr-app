@@ -1,31 +1,18 @@
-import * as React from 'react'
 import Head from 'next/head'
-
-import { Text, Card, Box } from '~ui/core'
+import * as React from 'react'
 import { isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { Box, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { useRouter } from 'next/router'
 
 export default function QRCodePage() {
   const videoEl = React.useRef<HTMLVideoElement>()
 
-  const router = useRouter()
-
-  const paramsRef = React.useRef<object>({})
-
-  paramsRef.current = {
-    name: router.query.name?.toString(),
-    phone: router.query.phone?.toString(),
-    address: router.query.address?.toString(),
-  }
-
-  function appendGuestInfo(url: string): any {
-    Object.entries(paramsRef.current).forEach((entry) => {
-      if (entry[1]) {
-        url = url.concat(`&${entry[0]}=${entry[1]}`)
-      }
-    })
+  function appendUrlParams(url: string): any {
+    const params = new URLSearchParams(new URL(window.location.href).search)
+    for (const [key, value] of params.entries()) {
+      url = url.concat(`&${key}=${value}`)
+    }
     return url
   }
 
@@ -42,7 +29,7 @@ export default function QRCodePage() {
           undefined,
           videoEl.current
         )
-        window.location.href = appendGuestInfo(result.getText())
+        window.location.href = appendUrlParams(result.getText())
       } catch (error) {
         console.error('Failed mountAndWaitForScan:', error)
       }
