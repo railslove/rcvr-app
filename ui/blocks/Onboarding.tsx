@@ -12,6 +12,7 @@ type OnboardingProps = {
   prefilledGuest?: Guest
   hideRememberMe?: boolean
   onAbort?: () => void
+  submitButtonValue?: string
 }
 
 const yupShape = {
@@ -33,6 +34,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   prefilledGuest,
   hideRememberMe,
   onAbort,
+  submitButtonValue = "Check in",
 }) => {
   const initialValues = {
     name: prefilledGuest?.name || '',
@@ -85,7 +87,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
             left={<ArrowsRight color="green" />}
             right={<ArrowsLeft color="green" />}
           >
-            Check in
+            {submitButtonValue}
           </Button>
           {onAbort && (
             <>

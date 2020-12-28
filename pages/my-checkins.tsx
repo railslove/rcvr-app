@@ -14,6 +14,7 @@ import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Loading } from '~ui/blocks/Loading'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import { Guest } from '../lib/db/guest';
 
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
