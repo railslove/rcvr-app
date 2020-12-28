@@ -1,4 +1,9 @@
-import { getLastNonProxyCheckin, updateCheckin, updateGuest, getCurrentGuest } from '~lib/db'
+import {
+  getLastNonProxyCheckin,
+  updateCheckin,
+  updateGuest,
+  getCurrentGuest,
+} from '~lib/db'
 import { queryCache } from 'react-query'
 import * as db from '../db'
 import * as api from '../api'

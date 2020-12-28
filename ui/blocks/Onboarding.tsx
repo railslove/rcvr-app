@@ -34,7 +34,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   prefilledGuest,
   hideRememberMe,
   onAbort,
-  submitButtonValue = "Check in",
+  submitButtonValue = 'Check in',
 }) => {
   const initialValues = {
     name: prefilledGuest?.name || '',

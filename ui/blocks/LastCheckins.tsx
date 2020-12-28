@@ -77,8 +77,8 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
         {checkedOut ? (
           <Thumb delay={0.8} />
         ) : (
-            <Check delay={0.8} css={{ position: 'relative', top: 2 }} />
-          )}
+          <Check delay={0.8} css={{ position: 'relative', top: 2 }} />
+        )}
       </Circle>
       <Box height={4} />
       <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
@@ -146,14 +146,14 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             >
               Deine Daten ändern
             </Button>
-            {showEditData &&
+            {showEditData && (
               <Onboarding
                 prefilledGuest={checkin.guest}
                 onSubmit={handleEditGuest}
                 hideRememberMe={true}
-                submitButtonValue='Speichern'
+                submitButtonValue="Speichern"
               />
-            }            
+            )}
             {isLoading && <Loading show={true} />}
             <Box height={8} />
             {showProxyCheckin ? (
@@ -168,13 +168,13 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
                 />
               </>
             ) : (
-                <Button
-                  css={{ width: '100%', marginTop: '10px' }}
-                  onClick={() => setShowProxyCheckin(true)}
-                >
-                  Person hinzufügen
-                </Button>
-              )}
+              <Button
+                css={{ width: '100%', marginTop: '10px' }}
+                onClick={() => setShowProxyCheckin(true)}
+              >
+                Person hinzufügen
+              </Button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
