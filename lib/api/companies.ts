@@ -4,6 +4,7 @@ import { api, AreaRes } from './'
 export interface CompanyReq extends FormData {
   'company[name]'?: FormDataEntryValue
   'company[menu_link]'?: FormDataEntryValue
+  'company[privacy_policy_link]'?: FormDataEntryValue
   'company[menu_pdf]'?: File
 }
 
@@ -11,6 +12,7 @@ export interface CompanyRes {
   id: string
   name: string
   menuLink?: string
+  privacyPolicyLink?: string
   menuPdfLink?: string
   areas: AreaRes[]
 }
