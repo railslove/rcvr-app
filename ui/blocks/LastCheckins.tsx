@@ -13,6 +13,7 @@ import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
 import { useArea } from '~lib/hooks'
+import { updateCurrentGuest } from '~lib/actions/updateGuest'
 
 interface Props {
   checkins: Checkin[]
@@ -26,10 +27,19 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const idRef = React.useRef<string>(uuidv4())
   const [showProxyCheckin, setShowProxyCheckin] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
+  const [showEditData, setShowEditData] = React.useState(false)
 
   const [checkinFn] = useMutation(checkinAction, {
     throwOnError: true,
   })
+
+  const handleEditGuest = (guest, opts) => {
+    setLoading(true)
+    updateCurrentGuest(guest).then((checkin) => {
+      setLoading(false)
+      setShowEditData(false)
+    })
+  }
 
   const proxyCheckin = React.useCallback(
     async (guest: Guest) => {
@@ -129,7 +139,23 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             >
               Check out
             </Button>
-            {isLoading && <Loading />}
+            <Box height={4} />
+            <Button
+              css={{ width: '100%' }}
+              onClick={() => setShowEditData(!showEditData)}
+            >
+              Deine Daten ändern
+            </Button>
+            {showEditData && (
+              <Onboarding
+                prefilledGuest={checkin.guest}
+                onSubmit={handleEditGuest}
+                hideRememberMe={true}
+                submitButtonValue="Speichern"
+              />
+            )}
+            {isLoading && <Loading show={true} />}
+            <Box height={8} />
             {showProxyCheckin ? (
               <>
                 <Box height={4} />
