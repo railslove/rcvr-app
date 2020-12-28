@@ -9,7 +9,7 @@ export interface Checkin {
   leftAt?: Date
   proxyCheckin?: boolean
   guest?: Guest
-  k: string
+  k?: string
 }
 
 export async function getCheckin(checkinId: Checkin['id']): Promise<Checkin> {

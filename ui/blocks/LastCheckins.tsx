@@ -4,7 +4,7 @@ import { useMutation, queryCache } from 'react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Guest, updateGuest, getCurrentGuest } from '~lib/db/guest'
+import { Guest } from '~lib/db/guest'
 import { Onboarding } from '~ui/blocks/Onboarding'
 import { checkin as checkinAction } from '~lib/actions'
 import { Checkin } from '~lib/db'
@@ -18,10 +18,9 @@ import { updateCurrentGuest } from '~lib/actions/updateGuest'
 interface Props {
   checkins: Checkin[]
   onCheckout: (checkins: Checkin[]) => void
-  onGuestDataEdit: (guest: Guest) => void
 }
 
-export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout, onGuestDataEdit }) => {
+export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const checkin = checkins[0]
   const area = useArea(checkins[0].areaId).data
   const checkedOut = !!checkin.leftAt
@@ -39,7 +38,6 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout, onGuestDat
     updateCurrentGuest(guest).then((checkin) => {
       setLoading(false)
       setShowEditData(false)
-      onGuestDataEdit()
     })
   }
 

@@ -12,7 +12,7 @@ type OnboardingProps = {
   prefilledGuest?: Guest
   hideRememberMe?: boolean
   onAbort?: () => void
-  submitButtonValue: string
+  submitButtonValue?: string
 }
 
 const yupShape = {

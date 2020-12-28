@@ -54,10 +54,6 @@ export default function MyCheckinsPage() {
     }, [])
   }, [checkinsInfo.data])
 
-  const handleGuestDataEdited = (guest: Guest) => {
-    // window.location.reload()
-  }
-
   return (
     <MobileApp logoVariant="sticky">
       <Head>
@@ -96,7 +92,6 @@ export default function MyCheckinsPage() {
                   <LastCheckins
                     checkins={checkins}
                     onCheckout={handleCheckout}
-                    onGuestDataEdit={handleGuestDataEdited}
                   />
                   {error && (
                     <Callout variant="danger">
