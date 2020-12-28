@@ -224,8 +224,23 @@ export default function CheckinPage() {
                 onSubmit={handleSubmitOnboarding}
                 prefilledGuest={prefilledGuest}
               />
+              {areaInfo.data.privacyPolicyLink && (
+                <>
+                  <Box height={4} />
+                  <a
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    href={areaInfo.data.privacyPolicyLink}
+                  >
+                    <Text variant="link">
+                      Datenschutzerklärung von {areaInfo.data.companyName}
+                    </Text>
+                  </a>
+                </>
+              )}
             </Card>
           )}
+
           {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
             <a
