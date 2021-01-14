@@ -10,10 +10,12 @@ export default function QRCodePage() {
 
   function appendUrlParams(url: string): any {
     const params = new URLSearchParams(new URL(window.location.href).search)
+    const qrUrl = new URL(url)
+
     for (const [key, value] of params.entries()) {
-      url = url.concat(`&${key}=${value}`)
+      qrUrl.searchParams.append(key, value)
     }
-    return url
+    return qrUrl.toString()
   }
 
   React.useEffect(() => {
