@@ -15,12 +15,14 @@ interface Props {
   menuPdfLink?: string
   menuAlias?: string
   companyId?: string
+  privacyPolicyLink?: string
 }
 type MProps = ModalBaseProps & Props
 
 const BusinessSchema = Yup.object().shape({
   name: Yup.string().required('Du musst einen Namen angeben.'),
   menuLink: Yup.string(),
+  privacyPolicyLink: Yup.string(),
   menuPdf: Yup.mixed().test(
     'isPDF',
     'Es können nur pdf-Dateien hochgeladen werden.',
@@ -45,22 +47,30 @@ export const BusinessDataModal: React.FC<MProps> = ({
   menuPdfLink,
   menuAlias,
   companyId,
+  privacyPolicyLink,
   ...baseProps
 }) => {
   const title = { new: 'Neuer Betrieb', edit: 'Betrieb ändern' }[type]
   const button = { new: 'Hinzufügen', edit: 'Speichern' }[type]
   const [loading, setLoading] = React.useState(false)
 
+  const safeLink = (link: string) => {
+    let safeLink = link
+    if (safeLink && !safeLink.startsWith('http')) {
+      safeLink = 'https://' + safeLink
+    }
+    return safeLink
+  }
+
   const handleSubmit = React.useCallback(
-    async ({ name, menuLink, menuPdf }, bag) => {
-      let safeMenuLink = menuLink
-      if (menuLink && !menuLink.startsWith('http')) {
-        safeMenuLink = 'https://' + menuLink
-      }
+    async ({ name, menuLink, menuPdf, privacyPolicyLink }, bag) => {
+      const safeMenuLink = safeLink(menuLink)
+      const safePrivacyPolicyLink = safeLink(privacyPolicyLink)
 
       const formData = new FormData()
       formData.append('company[name]', name)
       formData.append('company[menu_link]', safeMenuLink)
+      formData.append('company[privacy_policy_link]', safePrivacyPolicyLink)
       if (menuPdf !== menuPdfLink) {
         if (menuPdf === undefined) {
           formData.append('company[remove_menu_pdf]', '1')
@@ -98,6 +108,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         initialValues={{
           name: name || '',
           menuLink: menuLink || '',
+          privacyPolicyLink: privacyPolicyLink || '',
           menuPdf: menuPdfLink,
         }}
         validationSchema={BusinessSchema}
@@ -105,6 +116,11 @@ export const BusinessDataModal: React.FC<MProps> = ({
       >
         <Form>
           <Input name="name" label="Name des Betriebs" autoFocus />
+          <Box height={4} />
+          <Input
+            name="privacyPolicyLink"
+            label={'Datenschutzerklärung als Link'}
+          />
           <Box height={4} />
           {
             <>
