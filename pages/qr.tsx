@@ -1,13 +1,22 @@
-import * as React from 'react'
 import Head from 'next/head'
-
-import { Text, Card, Box } from '~ui/core'
+import * as React from 'react'
 import { isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { Box, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function QRCodePage() {
   const videoEl = React.useRef<HTMLVideoElement>()
+
+  function appendUrlParams(url: string): any {
+    const params = new URLSearchParams(new URL(window.location.href).search)
+    const qrUrl = new URL(url)
+
+    for (const [key, value] of params.entries()) {
+      qrUrl.searchParams.append(key, value)
+    }
+    return qrUrl.toString()
+  }
 
   React.useEffect(() => {
     let qrCodeReader: any
@@ -22,7 +31,7 @@ export default function QRCodePage() {
           undefined,
           videoEl.current
         )
-        window.location.href = result.getText()
+        window.location.href = appendUrlParams(result.getText())
       } catch (error) {
         console.error('Failed mountAndWaitForScan:', error)
       }
