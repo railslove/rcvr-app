@@ -7,12 +7,12 @@ import SepaPaymentContainer from '~ui/blocks/SepaPaymentContainer'
 
 interface Props {
   children: Array<any>
-  openCheckout: Function
+  openStripeCheckout: Function
 }
 type MProps = ModalBaseProps & Props
 
 export const CheckoutSelectionModal: React.FC<MProps> = ({
-  openCheckout,
+  openStripeCheckout,
   ...modalProps
 }) => {
   const [sepa, setSepa] = React.useState(false)
@@ -25,7 +25,7 @@ export const CheckoutSelectionModal: React.FC<MProps> = ({
         <>
           <Box height={4} />
           <Button
-            onClick={() => openCheckout()}
+            onClick={() => openStripeCheckout()}
             css={{ width: '100%' }}
             right={<ArrowsRight color="pink" />}
           >

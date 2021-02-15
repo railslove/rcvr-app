@@ -41,7 +41,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
     }
   }, [status, openModal])
 
-  const openCheckout = React.useCallback(async () => {
+  const openStripeCheckout = React.useCallback(async () => {
     try {
       setRedirecting(true)
       const stripe = await loadStripe(
@@ -54,6 +54,14 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       console.error(error)
     }
   }, [])
+
+  const openCheckout = () => {
+    if (owner.sepaTrial) {
+      openModal('checkoutSelection', { openStripeCheckout })
+    } else {
+      openStripeCheckout()
+    }
+  }
 
   const openSelfService = React.useCallback(async () => {
     try {
@@ -114,7 +122,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
             </Text>
           ) : (
             <Button
-              onClick={() => openModal('checkoutSelection', { openCheckout })}
+              onClick={() => openCheckout()}
               right={<ArrowsRight color="pink" />}
             >
               Jetzt upgraden
@@ -126,9 +134,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       {hasSubscription && !owner.canUseForFree && (
         <>
           <ActionList grid>
-            <ActionCard
-              onClick={() => openModal('checkoutSelection', { openCheckout })}
-            >
+            <ActionCard onClick={() => openCheckout()}>
               <ActionCard.Main title="Rechnungsdaten ändern" icon={Right} />
             </ActionCard>
             <ActionCard onClick={openSelfService}>
