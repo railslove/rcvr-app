@@ -1,19 +1,19 @@
-import * as React from 'react'
 import styled from '@emotion/styled'
-import { useMutation, queryCache } from 'react-query'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import * as React from 'react'
+import { queryCache, useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
-
-import { Guest } from '~lib/db/guest'
-import { Onboarding } from '~ui/blocks/Onboarding'
 import { checkin as checkinAction } from '~lib/actions'
+import { updateCurrentGuest } from '~lib/actions/updateGuest'
 import { Checkin } from '~lib/db'
-import { Box, Text, Button } from '~ui/core'
-import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
+import { Guest } from '~lib/db/guest'
+import { useArea } from '~lib/hooks'
+import { ArrowsLeft, ArrowsRight, Check, Circle, Thumb } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
-import { useArea } from '~lib/hooks'
-import { updateCurrentGuest } from '~lib/actions/updateGuest'
+import { Onboarding } from '~ui/blocks/Onboarding'
+import { Box, Button, Text } from '~ui/core'
+
 
 interface Props {
   checkins: Checkin[]
@@ -146,6 +146,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             >
               Deine Daten ändern
             </Button>
+            <Box height={4} />
             {showEditData && (
               <Onboarding
                 prefilledGuest={checkin.guest}
