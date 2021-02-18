@@ -9,6 +9,7 @@ export interface Checkin {
   leftAt?: Date
   proxyCheckin?: boolean
   guest?: Guest
+  k?: string
 }
 
 export async function getCheckin(checkinId: Checkin['id']): Promise<Checkin> {
@@ -30,6 +31,11 @@ export async function getVisibleCheckins(): Promise<Checkin[]> {
 export async function getLastCheckin(): Promise<Checkin> {
   const checkins = await getVisibleCheckins()
   return checkins[0]
+}
+
+export async function getLastNonProxyCheckin(): Promise<Checkin> {
+  const checkins = await getVisibleCheckins()
+  return checkins.filter((checkin) => !checkin.proxyCheckin)[0]
 }
 
 export async function addCheckin(newCheckin: Checkin): Promise<Checkin> {
