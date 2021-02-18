@@ -17,6 +17,7 @@ export interface AreaRes {
   companyId: string
   companyName: string
   menuLink?: string
+  privacyPolicyLink?: string
   menuAlias?: string
   ownerIsBlocked: boolean
   frontendUrl: string
