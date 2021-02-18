@@ -22,6 +22,7 @@ export async function checkin(params: Params): Promise<db.Checkin> {
     enteredAt: ticket.enteredAt,
     proxyCheckin: ticket.proxyCheckin,
     guest: guest,
+    k: ticket.publicKey,
   })
 
   const latestGuest = await db.getCurrentGuest()
