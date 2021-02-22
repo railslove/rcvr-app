@@ -1,18 +1,18 @@
-import * as React from 'react'
 import styled from '@emotion/styled'
-import { useMutation, queryCache } from 'react-query'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import * as React from 'react'
+import { queryCache, useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
-
-import { Guest } from '~lib/db/guest'
-import { Onboarding } from '~ui/blocks/Onboarding'
 import { checkin as checkinAction } from '~lib/actions'
+import { updateCurrentGuest } from '~lib/actions/updateGuest'
 import { Checkin } from '~lib/db'
-import { Box, Text, Button } from '~ui/core'
-import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
+import { Guest } from '~lib/db/guest'
+import { useArea } from '~lib/hooks'
+import { ArrowsLeft, ArrowsRight, Check, Circle, Thumb } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
-import { useArea } from '~lib/hooks'
+import { Onboarding } from '~ui/blocks/Onboarding'
+import { Box, Button, Text } from '~ui/core'
 
 interface Props {
   checkins: Checkin[]
@@ -26,10 +26,19 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const idRef = React.useRef<string>(uuidv4())
   const [showProxyCheckin, setShowProxyCheckin] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
+  const [showEditData, setShowEditData] = React.useState(false)
 
   const [checkinFn] = useMutation(checkinAction, {
     throwOnError: true,
   })
+
+  const handleEditGuest = (guest, opts) => {
+    setLoading(true)
+    updateCurrentGuest(guest).then((checkin) => {
+      setLoading(false)
+      setShowEditData(false)
+    })
+  }
 
   const proxyCheckin = React.useCallback(
     async (guest: Guest) => {
@@ -129,7 +138,24 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             >
               Check out
             </Button>
-            {isLoading && <Loading />}
+            <Box height={4} />
+            <Button
+              css={{ width: '100%' }}
+              onClick={() => setShowEditData(!showEditData)}
+            >
+              Deine Daten ändern
+            </Button>
+            <Box height={4} />
+            {showEditData && (
+              <Onboarding
+                prefilledGuest={checkin.guest}
+                onSubmit={handleEditGuest}
+                hideRememberMe={true}
+                submitButtonValue="Speichern"
+              />
+            )}
+            <Loading show={isLoading} />
+            <Box height={8} />
             {showProxyCheckin ? (
               <>
                 <Box height={4} />
