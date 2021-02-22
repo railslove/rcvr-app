@@ -35,7 +35,7 @@ export async function getLastCheckin(): Promise<Checkin> {
 
 export async function getLastNonProxyCheckin(): Promise<Checkin> {
   const checkins = await getVisibleCheckins()
-  return checkins.filter((checkin) => !checkin.proxyCheckin)[0]
+  return checkins.find((checkin) => !checkin.proxyCheckin)
 }
 
 export async function addCheckin(newCheckin: Checkin): Promise<Checkin> {
