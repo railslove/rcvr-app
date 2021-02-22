@@ -154,7 +154,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
                 submitButtonValue="Speichern"
               />
             )}
-            {isLoading && <Loading show={true} />}
+            <Loading show={isLoading} />
             <Box height={8} />
             {showProxyCheckin ? (
               <>
