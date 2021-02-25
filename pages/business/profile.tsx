@@ -17,6 +17,7 @@ import { ActionList } from '~ui/blocks/ActionList'
 import { ActionCard } from '~ui/blocks/ActionCard'
 import { SubscribedModal } from '~ui/modals/SubscribedModal'
 import { pricingInfoDuringTest } from '~ui/whitelabels'
+import { CheckoutSelectionModal } from '~ui/modals/CheckoutSelectionModal'
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   const [redirecting, setRedirecting] = React.useState(false)
@@ -28,6 +29,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const didOpenSuccessModal = React.useRef(false)
   const { modals, openModal } = useModals({
+    checkoutSelection: CheckoutSelectionModal,
     success: SubscribedModal,
   })
 
@@ -39,7 +41,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
     }
   }, [status, openModal])
 
-  const openCheckout = React.useCallback(async () => {
+  const openStripeCheckout = React.useCallback(async () => {
     try {
       setRedirecting(true)
       const stripe = await loadStripe(
@@ -52,6 +54,14 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       console.error(error)
     }
   }, [])
+
+  const openCheckout = () => {
+    if (owner.sepaTrial) {
+      openModal('checkoutSelection', { openStripeCheckout })
+    } else {
+      openStripeCheckout()
+    }
+  }
 
   const openSelfService = React.useCallback(async () => {
     try {
@@ -111,7 +121,10 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               </p>
             </Text>
           ) : (
-            <Button onClick={openCheckout} right={<ArrowsRight color="pink" />}>
+            <Button
+              onClick={() => openCheckout()}
+              right={<ArrowsRight color="pink" />}
+            >
               Jetzt upgraden
             </Button>
           )}
@@ -121,7 +134,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       {hasSubscription && !owner.canUseForFree && (
         <>
           <ActionList grid>
-            <ActionCard onClick={openCheckout}>
+            <ActionCard onClick={() => openCheckout()}>
               <ActionCard.Main title="Rechnungsdaten ändern" icon={Right} />
             </ActionCard>
             <ActionCard onClick={openSelfService}>
