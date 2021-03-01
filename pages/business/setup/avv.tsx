@@ -24,7 +24,7 @@ const Avv: React.FC = () => {
         >
           Datenschutzbestimmungen
         </a>{' '}
-        einverstanden sowie der{' '}
+        sowie der{' '}
         <a href={getAvvLink()} target="_blank" rel="noopener noreferrer">
           Auftragsverarbeitungsvereinbarung
         </a>{' '}
