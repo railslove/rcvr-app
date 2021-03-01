@@ -1,19 +1,20 @@
-import * as React from 'react'
-import Head from 'next/head'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
-import { useRouter } from 'next/router'
-import { queryCache } from 'react-query'
-import { isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
-import { privacyUrl, signupText } from '~ui/whitelabels'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { signup } from '~lib/actions'
-import { PersonalData } from '~ui/svg'
-import { Input, Button, Box, Text, Card, Row, Checkbox } from '~ui/core'
-import { MobileApp } from '~ui/layouts/MobileApp'
-import { Loading } from '~ui/blocks/Loading'
-import styled from '@emotion/styled'
 import { css } from '@emotion/core'
+import styled from '@emotion/styled'
+import { Form, Formik } from 'formik'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import { queryCache } from 'react-query'
+import * as Yup from 'yup'
+import { signup } from '~lib/actions'
+import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { PersonalData } from '~ui/svg'
+import { signupText } from '~ui/whitelabels'
+import Avv from './avv'
 
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),
@@ -184,22 +185,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               )}
 
               <Box height={6} />
-              <Text variant="fineprint">
-                <p>
-                  Mit dem Betätigen des Buttons{' '}
-                  {isFormal ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
-                  <a
-                    href={
-                      isFreseniusEnv
-                        ? privacyUrl
-                        : 'https://railslove.com/privacy/'
-                    }
-                  >
-                    Datenschutzbestimmungen
-                  </a>{' '}
-                  einverstanden.
-                </p>
-              </Text>
+              <Avv />
               <Box height={5} />
               <Button type="submit" css={{ width: '100%' }}>
                 Registrieren
