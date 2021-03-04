@@ -1,12 +1,12 @@
 import * as React from 'react'
-
-import { patchTicket, AreaRes } from '~lib/api'
+import { queryCache } from 'react-query'
+import { AreaRes, patchTicket } from '~lib/api'
+import { useLastTicketsGrouped } from '~lib/hooks'
 import { ActionCard } from '~ui/blocks/ActionCard'
 import { Loading } from '~ui/blocks/Loading'
+import { Box, Icon, IconButton, Row } from '~ui/core'
 import { Arrows, TinyCheck } from '~ui/svg'
-import { Box, Row, Icon, IconButton } from '~ui/core'
-import { useLastTicketsGrouped } from '~lib/hooks'
-import { queryCache } from 'react-query'
+
 
 export const CheckinsActionCard: React.FC<{
   area: AreaRes
@@ -42,7 +42,7 @@ export const CheckinsActionCard: React.FC<{
         title={area.name}
         subtitle={
           <>
-            <span css={{ whiteSpace: 'nowrap' }}>am Tisch: {openCount}</span>
+            <span css={{ whiteSpace: 'nowrap' }}>im Bereich Tisch: {openCount}</span>
             {' – '}
             <span css={{ whiteSpace: 'nowrap' }}>
               ausgecheckt: {closedCount}

@@ -1,12 +1,12 @@
+import { Form, Formik } from 'formik'
 import * as React from 'react'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
 import { queryCache } from 'react-query'
-
-import { isFormal } from '~lib/config'
+import * as Yup from 'yup'
 import { patchArea, postArea } from '~lib/api'
-import { Box, Input, Button, Text } from '~ui/core'
+import { isFormal } from '~lib/config'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
+import { Box, Button, Input, Text } from '~ui/core'
+
 
 interface Props {
   type: 'new' | 'edit'
@@ -73,8 +73,8 @@ export const AreaDataModal: React.FC<MProps> = ({
             Der Name des Bereichs wird über dem QR Code angezeigt. Falls{' '}
             {isFormal
               ? 'Sie bereits Lage-, Stationspläne oder ähnliches haben, können Sie'
-              : 'du bereits einen Saalplan hast, kannst du'}{' '}
-            die Nummerierung in gleicher Weise abbilden.
+              : 'du bereits einen Übersichtsplan hast, kannst du'}{' '}
+            die Benennung in gleicher Weise abbilden.
           </Text>
           <Box height={6} />
           <Input

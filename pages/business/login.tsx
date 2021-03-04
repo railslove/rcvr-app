@@ -1,17 +1,17 @@
-import * as React from 'react'
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import * as React from 'react'
 import { queryCache } from 'react-query'
-
-import { isFormal } from '~lib/config'
-import { Input, Button, Box, Text, Card, Row } from '~ui/core'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import * as Yup from 'yup'
 import { login } from '~lib/actions/login'
-import { MobileApp } from '~ui/layouts/MobileApp'
+import { isFormal } from '~lib/config'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Card, Input, Row, Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required('Email muss angegeben werden.'),
@@ -60,7 +60,7 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
         <p>
           {isFormal
             ? 'Seit Corona sind Einrichtungen verpflichtet die Kontaktdaten von Gästen zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie - und die sicherste für Ihre Besucher.'
-            : 'Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für deine Gäste.'}
+            : 'Seit Corona sind viele Betriebe und Einrichtungen verpflichtet, Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für Deine Besucher oder Gäste.'}
         </p>
       </Text>
       <Box height={4} />

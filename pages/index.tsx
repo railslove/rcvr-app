@@ -1,10 +1,10 @@
 import * as React from 'react'
-
-import { Box, Text, ButtonLink, Card, Row } from '~ui/core'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { indexIntro } from '~ui/whitelabels'
+
 
 export default function IndexPage() {
   return (
@@ -50,7 +50,7 @@ export default function IndexPage() {
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {isFormal ? 'Für Ihre Einrichtung' : 'Für deinen Betrieb'}
+          {isFormal ? 'Für Ihre Einrichtung' : 'Für Deinen Betrieb'}
         </Text>
         <Box height={4} />
         <Text>

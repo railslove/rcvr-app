@@ -1,19 +1,19 @@
-import * as React from 'react'
-import Head from 'next/head'
 import { motion } from 'framer-motion'
+import Head from 'next/head'
+import * as React from 'react'
 import { useMutation } from 'react-query'
-
-import { Checkin } from '~lib/db'
 import { checkout } from '~lib/actions'
 import { isCareEnv } from '~lib/config'
+import { Checkin } from '~lib/db'
 import { useCheckins, useDelayedLoading } from '~lib/hooks'
-import { Box, Text, Callout } from '~ui/core'
+import { FixedBottomBar } from '~ui/blocks/BottomBar'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
 import { LastCheckins } from '~ui/blocks/LastCheckins'
-import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Loading } from '~ui/blocks/Loading'
-import { FixedBottomBar } from '~ui/blocks/BottomBar'
+import { PastCheckin } from '~ui/blocks/PastCheckin'
+import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
+
 
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
@@ -97,15 +97,15 @@ export default function MyCheckinsPage() {
                       <Text>
                         {error instanceof TypeError ? (
                           <p>
-                            Wir konnten dich nicht auschecken. Hast du
+                            Wir konnten Dich nicht auschecken. Hast du
                             vielleicht gerade kein Internet?
                           </p>
                         ) : (
-                          <p>Wir konnten dich nicht auschecken.</p>
+                          <p>Wir konnten Dich nicht auschecken.</p>
                         )}
                         <p>
                           Sollte das Problem weiterhin bestehen, keine Sorge:
-                          wir checken dich später automatisch aus.
+                          wir checken Dich später automatisch aus.
                         </p>
                       </Text>
                     </Callout>
