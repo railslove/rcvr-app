@@ -1,12 +1,11 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
-
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { useRouter } from 'next/router'
+import * as React from 'react'
 import { useArea, useLastAreaTickets } from '~lib/hooks'
-import { Text, Box } from '~ui/core'
-import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { DataList, DataListItem } from '~ui/blocks/DataList'
+import { Box, Text } from '~ui/core'
+import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
@@ -38,7 +37,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
                 {ticket.leftAt && ' – ' + formatDate(ticket.leftAt, 'HH:mm')}
               </Text>
             }
-            right={<Text>{ticket.leftAt ? 'ausgecheckt' : 'am Tisch'}</Text>}
+            right={<Text>{ticket.leftAt ? 'ausgecheckt' : 'Im Bereich'}</Text>}
           />
         ))}
       </DataList>

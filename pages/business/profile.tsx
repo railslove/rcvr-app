@@ -1,23 +1,22 @@
-import * as React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import formatDate from 'intl-dateformat'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
+import * as React from 'react'
+import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
-import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { Box, Button, Text, Divider, Callout } from '~ui/core'
-import { Right } from '~ui/svg'
 import { ArrowsRight } from '~ui/anicons'
-import { OwnerApp } from '~ui/layouts/OwnerApp'
-import { Loading } from '~ui/blocks/Loading'
-import { ActionList } from '~ui/blocks/ActionList'
 import { ActionCard } from '~ui/blocks/ActionCard'
-import { SubscribedModal } from '~ui/modals/SubscribedModal'
-import { pricingInfoDuringTest } from '~ui/whitelabels'
+import { ActionList } from '~ui/blocks/ActionList'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Callout, Divider, Text } from '~ui/core'
+import { OwnerApp } from '~ui/layouts/OwnerApp'
 import { CheckoutSelectionModal } from '~ui/modals/CheckoutSelectionModal'
+import { SubscribedModal } from '~ui/modals/SubscribedModal'
+import { Right } from '~ui/svg'
+import { pricingInfoDuringTest } from '~ui/whitelabels'
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   const [redirecting, setRedirecting] = React.useState(false)
@@ -152,7 +151,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
           </ActionList>
           <Box height={4} />
           <Text variant="shy">
-            {isFormal ? 'Sie können ihre' : 'Du kannst deine'} Mitgliedschaft
+            {isFormal ? 'Sie können ihre' : 'Du kannst Deine'} Mitgliedschaft
             jederzeit zum Monatsende kündigen.
           </Text>
         </>
@@ -260,7 +259,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout variant="danger">
         <Text>
-          {isFormal ? 'Sie haben ihre' : 'Du hast deine'} Mitgliedschaft
+          {isFormal ? 'Sie haben ihre' : 'Du hast Deine'} Mitgliedschaft
           gekündigt.
         </Text>
       </Callout>
