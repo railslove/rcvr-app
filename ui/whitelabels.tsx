@@ -1,10 +1,10 @@
 import * as React from 'react'
-import LogoRcvr from './svg/logo-rcvr.svg'
+import { Box } from '~ui/core'
+import { Warning } from './svg'
 import LogoCare from './svg/logo-care.svg'
 import LogoFresenius from './svg/logo-fresenius.svg'
 import LogoHealth from './svg/logo-health.svg'
-import { Box } from '~ui/core'
-import { Warning } from './svg'
+import LogoRcvr from './svg/logo-rcvr.svg'
 
 const envs = {
   rcvr: {
@@ -19,7 +19,7 @@ const envs = {
     privacyUrl: 'https://railslove.com/privacy/',
     formalAddress: false,
     introText:
-      'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
+      'Durch die aktuellen Corona-Verordnungen musst du Deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
     instruction: 'Account erstellen',
@@ -35,7 +35,7 @@ const envs = {
           wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
-          Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit
+          Nach dem Onboarding kannst Du Dich bei uns melden um zusammen mit
           unserem Team die Echtheit deiner Daten zu prüfen
         </p>
         <p>
@@ -97,13 +97,13 @@ const envs = {
           eingerichtet.
         </p>
         <p>
-          Du kannst dich gern bei uns melden, um gemeinsam deine Daten zu
+          Du kannst Dich gern bei uns melden, um gemeinsam Deine Daten zu
           prüfen.
         </p>
-        <p>Jetzt kannst du Betriebe, Tische und QR-Codes erstellen.</p>
+        <p>Jetzt kannst Du Betriebe, Bereiche und QR-Codes erstellen.</p>
       </>
     ),
-    pdfType: 'Speisekarte',
+    pdfType: 'Zusatz-Informationen',
     pricingInfoDuringTest: (
       <p>
         Du kannst recover 14 Tage lang kostenlos auf Herz und Nieren testen.
@@ -112,7 +112,7 @@ const envs = {
         Die Mitgliedschaft kann jederzeit zum Monatsende gekündigt werden.
         <br />
         Wenn Du Anspruch auf eine kostenlose oder reduzierte Nutzung von der
-        Recover App hast, melde dich gerne bei unserem Support, damit wir deinen
+        Recover App hast, melde Dich gerne bei unserem Support, damit wir Deinen
         Laden überprüfen und freischalten können:{' '}
         <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
       </p>
@@ -323,7 +323,7 @@ const envs = {
       'Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
-    instruction: 'So nutzt Du recover für deinen Betrieb',
+    instruction: 'So nutzt Du recover für Deinen Betrieb',
     setupIntro: (
       <>
         <p>
@@ -334,7 +334,7 @@ const envs = {
           wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
-          Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit
+          Nach dem Onboarding kannst Du Dich bei uns melden um zusammen mit
           unserem Team die Echtheit deiner Daten zu prüfen
         </p>
         <p>
@@ -392,10 +392,10 @@ const envs = {
           eingerichtet.
         </p>
         <p>
-          Du kannst dich gern bei uns melden, um gemeinsam deine Daten zu
+          Du kannst Dich gern bei uns melden, um gemeinsam Deine Daten zu
           prüfen.
         </p>
-        <p>Jetzt kannst du Betriebe, Tische und QR-Codes erstellen.</p>
+        <p>Jetzt kannst Du Betriebe, Bereiche und QR-Codes erstellen.</p>
       </>
     ),
     pricingInfoDuringTest: (
@@ -406,7 +406,7 @@ const envs = {
         Die Mitgliedschaft kann jederzeit zum Monatsende gekündigt werden.
         <br />
         Wenn Du Anspruch auf eine kostenlose oder reduzierte Nutzung von der
-        Recover App hast, melde dich gerne bei unserem Support, damit wir deinen
+        Recover App hast, melde Dich gerne bei unserem Support, damit wir Deinen
         Laden überprüfen und freischalten können:{' '}
         <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
       </p>
