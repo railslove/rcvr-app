@@ -42,7 +42,7 @@ export const CheckinsActionCard: React.FC<{
         title={area.name}
         subtitle={
           <>
-            <span css={{ whiteSpace: 'nowrap' }}>im Bereich Tisch: {openCount}</span>
+            <span css={{ whiteSpace: 'nowrap' }}>im Bereich: {openCount}</span>
             {' – '}
             <span css={{ whiteSpace: 'nowrap' }}>
               ausgecheckt: {closedCount}
