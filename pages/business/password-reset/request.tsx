@@ -1,14 +1,14 @@
-import * as React from 'react'
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import * as Yup from 'yup'
 import Link from 'next/link'
-import { Formik, Form } from 'formik'
-
-import { isFormal } from '~lib/config'
-import { Row, Callout, Text, Card, Box, Button, Input } from '~ui/core'
-import { MobileApp } from '~ui/layouts/MobileApp'
-import { Loading } from '~ui/blocks/Loading'
+import * as React from 'react'
+import * as Yup from 'yup'
 import { postRequestPasswordReset } from '~lib/api'
+import { isFormal } from '~lib/config'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+
 
 const EmailSchema = Yup.object().shape({
   email: Yup.string().required('Email muss angegeben werden.'),
@@ -38,7 +38,7 @@ export default function PasswordResetRequestPage() {
       <Box height={4} />
       <Text>
         <p>
-          Bitte {isFormal ? 'geben Sie Ihre' : 'gib deine'} Email Adresse ein.
+          Bitte {isFormal ? 'geben Sie Ihre' : 'gib Deine'} Email Adresse ein.
           Wir schicken dann einen Link um das Passwort zurückzusetzen an die
           angegebene Email Adresse.
         </p>
@@ -66,12 +66,12 @@ export default function PasswordResetRequestPage() {
       {done && (
         <Callout>
           <Text>
-            Falls {isFormal ? 'Ihre' : 'deine'} Email Adresse bei uns
+            Falls {isFormal ? 'Ihre' : 'Deine'} Email Adresse bei uns
             registriert war haben wir {isFormal ? 'Ihnen' : 'dir'} einen Link
             zum Passwort zurückzusetzen geschickt. Bitte{' '}
             {isFormal ? 'überprüfen Sie Ihr' : 'überprüfe dein'} Email Konto.
             Sollte das nicht funktioniert haben,
-            {isFormal ? 'wenden Sie' : 'wende dich'} bitte an useren{' '}
+            {isFormal ? 'wenden Sie' : 'wende Dich'} bitte an useren{' '}
             <a href="mailto:team@recoverapp.de">support</a>.
           </Text>
         </Callout>

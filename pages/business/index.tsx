@@ -1,10 +1,10 @@
-import * as React from 'react'
 import Head from 'next/head'
-
+import * as React from 'react'
 import { isFormal } from '~lib/config'
-import { Text, Card, Box, ButtonLink } from '~ui/core'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { Box, ButtonLink, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
+
 
 export default function BusinessIndexPage() {
   return (
@@ -22,7 +22,7 @@ export default function BusinessIndexPage() {
         <p>
           {isFormal
             ? 'Seit Ausbruch der Corona-Pandemie sind auch Krankenhausbetreiber und Betreiber von Gesundheitseinrichtungen verpflichtet die Kontaktdaten Ihrer Besucher zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie und die sicherste für Ihre Besucher.'
-            : 'Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für deine Gäste.'}
+            : 'Seit Corona sind viele Betriebe und Einrichtungen verpflichtet, Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für Deine Besucher oder Gäste.'}
         </p>
       </Text>
       <Box height={4} />
@@ -59,7 +59,7 @@ export default function BusinessIndexPage() {
           <p>
             {isFormal
               ? 'Hier können Sie ihre Einrichtungen verwalten, QR Codes ausdrucken und aktuelle Checkins sehen.'
-              : 'Verwalte deine Betriebe, drucke QR Codes aus und sehe aktuelle Checkins.'}
+              : 'Verwalte Deine Betriebe, drucke QR Codes aus und sehe aktuelle Checkins.'}
           </p>
         </Text>
         <Box height={4} />

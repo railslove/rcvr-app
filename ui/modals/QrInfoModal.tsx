@@ -1,8 +1,8 @@
 import * as React from 'react'
-
 import { isFormal } from '~lib/config'
-import { Text, Box, Button } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
+import { Box, Button, Text } from '~ui/core'
+
 
 export const QrInfoModal: React.FC<ModalBaseProps> = (props) => {
   return (
@@ -11,7 +11,7 @@ export const QrInfoModal: React.FC<ModalBaseProps> = (props) => {
         <p>
           {isFormal
             ? 'Der QR-Code wurde in Ihren Downloads gespeichert. Drucken Sie ihn am besten zusammen mit einer kurzen Erklärung zum Checkin aus.'
-            : 'Der QR-Code wurde in deinen Downloads gespeichert. Drucke ihn am besten zusammen mit einer kurzen Erklärung zum Checkin aus.'}
+            : 'Der QR-Code wurde in Deinen Downloads gespeichert. Drucke ihn am besten zusammen mit einer kurzen Erklärung zum Checkin aus.'}
         </p>
         <p>
           {isFormal ? 'Sie können' : 'Du kannst'} auch einfach unsere Vorlage
@@ -29,7 +29,7 @@ export const QrInfoModal: React.FC<ModalBaseProps> = (props) => {
             </>
           ) : (
             <>
-              Scanne diesen QR-Code mit Deiner Kamera. Sollte deine Kamera den
+              Scanne diesen QR-Code mit Deiner Kamera. Sollte Deine Kamera den
               Code nicht erkennen, gib <strong>rcvr.app/qr</strong> in deinem
               Browser ein.
             </>
@@ -38,14 +38,14 @@ export const QrInfoModal: React.FC<ModalBaseProps> = (props) => {
         </Text>
         <Text as="li">
           <strong>Beim ersten Checkin</strong>{' '}
-          {isFormal ? 'geben Sie Ihren' : 'gibst Du deinen'} Namen,
+          {isFormal ? 'geben Sie Ihren' : 'gibst Du Deinen'} Namen,
           Telefonnummer und Adresse an. {isFormal ? 'Ihre' : 'Deine'} Daten
           legen wir natürlich verschlüsselt und sicher ab!
           <Box height={2} />
         </Text>
         <Text as="li">
           <strong>Wenn {isFormal ? 'Sie gehen' : 'Du gehst'}</strong>,{' '}
-          {isFormal ? 'können Sie sich auf Ihrem' : 'kannst Du dich auf deinem'}{' '}
+          {isFormal ? 'können Sie sich auf Ihrem' : 'kannst Du Dich auf deinem'}{' '}
           Handy wieder auschecken. So können wir noch besser herausfinden, ob{' '}
           {isFormal ? 'Sie' : 'Du'} im Zweifel eine mögliche Kontaktperson{' '}
           {isFormal ? 'sind' : 'bist'} oder nicht.

@@ -1,15 +1,15 @@
-import * as React from 'react'
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
-import * as Yup from 'yup'
-import { Formik, Form } from 'formik'
 import Link from 'next/link'
-
-import { isFormal } from '~lib/config'
-import { Callout, Text, Card, Box, Button, Input, Row } from '~ui/core'
-import { MobileApp } from '~ui/layouts/MobileApp'
-import { Loading } from '~ui/blocks/Loading'
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import * as Yup from 'yup'
 import { postResetPassword } from '~lib/api'
+import { isFormal } from '~lib/config'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+
 
 const PasswordSchema = Yup.object().shape({
   password: Yup.string()
@@ -56,7 +56,7 @@ export default function PasswordResetNewPage() {
       <Text>
         <p>
           {isFormal
-            ? 'Bitte gib ein neues Passwort an mit dem du dich von jetzt an anmelden kannst.'
+            ? 'Bitte gib ein neues Passwort an mit dem du Dich von jetzt an anmelden kannst.'
             : 'Bitte geben Sie ein neues Passwort an mit dem Sie sich von jetzt an anmelden können'}
         </p>
       </Text>
