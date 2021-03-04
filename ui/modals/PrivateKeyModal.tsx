@@ -8,7 +8,6 @@ import { readTextFile } from '~lib/file'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { Box, Button, FileInput, Input, Text } from '~ui/core'
 
-
 interface Props {
   ownerId?: number
 }

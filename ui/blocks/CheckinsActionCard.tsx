@@ -7,7 +7,6 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Icon, IconButton, Row } from '~ui/core'
 import { Arrows, TinyCheck } from '~ui/svg'
 
-
 export const CheckinsActionCard: React.FC<{
   area: AreaRes
   companyId: string

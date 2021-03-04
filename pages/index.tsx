@@ -5,7 +5,6 @@ import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { indexIntro } from '~ui/whitelabels'
 
-
 export default function IndexPage() {
   return (
     <MobileApp logoVariant="big">

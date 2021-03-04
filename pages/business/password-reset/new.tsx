@@ -10,7 +10,6 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-
 const PasswordSchema = Yup.object().shape({
   password: Yup.string()
     .required('Passwort muss angegeben werden.')

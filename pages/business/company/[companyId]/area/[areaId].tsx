@@ -7,7 +7,6 @@ import { DataList, DataListItem } from '~ui/blocks/DataList'
 import { Box, Text } from '~ui/core'
 import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
 
-
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
   const companyId = query.companyId.toString()

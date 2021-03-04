@@ -3,7 +3,6 @@ import { isFormal } from '~lib/config'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { Box, Button, Text } from '~ui/core'
 
-
 export const QrInfoModal: React.FC<ModalBaseProps> = (props) => {
   return (
     <ModalBase {...props} maxWidth={400} title="QR-Code wurde heruntergeladen!">

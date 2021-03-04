@@ -12,7 +12,6 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required('Email muss angegeben werden.'),
   password: Yup.string().required('Password muss angegeben werden.'),

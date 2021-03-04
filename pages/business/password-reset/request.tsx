@@ -9,7 +9,6 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-
 const EmailSchema = Yup.object().shape({
   email: Yup.string().required('Email muss angegeben werden.'),
 })

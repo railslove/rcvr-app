@@ -14,7 +14,6 @@ import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
   const [isLoading, setIsLoading] = useDelayedLoading(false)

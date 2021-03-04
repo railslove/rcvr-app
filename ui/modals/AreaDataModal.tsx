@@ -7,7 +7,6 @@ import { isFormal } from '~lib/config'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { Box, Button, Input, Text } from '~ui/core'
 
-
 interface Props {
   type: 'new' | 'edit'
   name?: string
