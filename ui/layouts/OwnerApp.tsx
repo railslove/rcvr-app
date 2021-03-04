@@ -95,41 +95,21 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
         </Aside>
         <Main>
           {owner.blockAt && (
-            <>
-              {owner.blockAt < new Date() ? (
-                <Callout variant="danger">
-                  <Text>
-                    Du nutzt aktuell eine bis
-                    {formatDate(owner.blockAt, 'DD.MM.YYYY')} kostenlos zur
-                    Verfügung gestellte Version von recover. Wenn Du recover
-                    nach dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter
-                    für Checkins nutzen möchtest, bitten wir Dich im
-                    Profil-Bereich Deine Zahlungsinformationen zu hinterlegen.
-                  </Text>
-                  <Text>
-                    Selbstverständlich wirst Du weiter Zugriff auf Dein Konto
-                    haben, sowie Informationen zu alten Checkins anfordern und
-                    ans Gesundheitsamt weiterleiten können.
-                  </Text>
-                </Callout>
-              ) : (
-                <Callout variant="warn">
-                  <Text>
-                    Du nutzt aktuell eine bis
-                    {formatDate(owner.blockAt, 'DD.MM.YYYY')} kostenlos zur
-                    Verfügung gestellte Version von recover. Wenn Du recover
-                    nach dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter
-                    für Checkins nutzen möchtest, bitten wir Dich im
-                    Profil-Bereich Deine Zahlungsinformationen zu hinterlegen.
-                  </Text>
-                  <Text>
-                    Selbstverständlich wirst Du weiter Zugriff auf Dein Konto
-                    haben, sowie Informationen zu alten Checkins anfordern und
-                    ans Gesundheitsamt weiterleiten können.
-                  </Text>
-                </Callout>
-              )}
-            </>
+            <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
+              <Text>
+                Du nutzt aktuell eine bis&nbsp;
+                {formatDate(owner.blockAt, 'DD.MM.YYYY')} kostenlos zur
+                Verfügung gestellte Version von recover. Wenn Du recover nach
+                dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für
+                Checkins nutzen möchtest, bitten wir Dich im Profil-Bereich
+                Deine Zahlungsinformationen zu hinterlegen.
+              </Text>
+              <Text>
+                Selbstverständlich wirst Du weiter Zugriff auf Dein Konto haben,
+                sowie Informationen zu alten Checkins anfordern und ans
+                Gesundheitsamt weiterleiten können.
+              </Text>
+            </Callout>
           )}
           {hint && (
             <>

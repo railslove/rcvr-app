@@ -13,7 +13,6 @@ import { Loading } from '~ui/blocks/Loading'
 import { Onboarding } from '~ui/blocks/Onboarding'
 import { Box, Button, Text } from '~ui/core'
 
-
 interface Props {
   checkins: Checkin[]
   onCheckout: (checkins: Checkin[]) => void
