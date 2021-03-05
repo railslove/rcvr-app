@@ -28,11 +28,11 @@ const envs = {
     setupIntro: (
       <>
         <p>
-          Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
-          der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese
-          Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von
-          der App verschlüsselt. Während des Onboardings erstellst Du daher in
-          wenigen Schritten ein digitales Schlüsselpaar.
+          Seit Corona sind viele Betriebe und Einrichtungen verpflichtet,
+          Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! Mit recover
+          führst Du diese Liste digital. Um die Daten deiner Gäste zu schützen,
+          werden sie von der App verschlüsselt. Während des Onboardings
+          erstellst Du daher in wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
           Nach dem Onboarding kannst Du Dich bei uns melden um zusammen mit
@@ -327,11 +327,11 @@ const envs = {
     setupIntro: (
       <>
         <p>
-          Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
-          der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese
-          Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von
-          der App verschlüsselt. Während des Onboardings erstellst Du daher in
-          wenigen Schritten ein digitales Schlüsselpaar.
+          Seit Corona sind viele Betriebe und Einrichtungen verpflichtet,
+          Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! Mit recover
+          führst Du diese Liste digital. Um die Daten deiner Gäste zu schützen,
+          werden sie von der App verschlüsselt. Während des Onboardings
+          erstellst Du daher in wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
           Nach dem Onboarding kannst Du Dich bei uns melden um zusammen mit
