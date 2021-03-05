@@ -108,13 +108,22 @@ const envs = {
       <p>
         Du kannst recover 14 Tage lang kostenlos auf Herz und Nieren testen.
         <br />
+        <br />
         Danach kostet die Mitgliedschaft 15€ inkl. USt. pro Monat und Betrieb.
         Die Mitgliedschaft kann jederzeit zum Monatsende gekündigt werden.
+        <br />
         <br />
         Wenn Du Anspruch auf eine kostenlose oder reduzierte Nutzung von der
         Recover App hast, melde Dich gerne bei unserem Support, damit wir Deinen
         Laden überprüfen und freischalten können:{' '}
         <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+        <br />
+        <br />
+        Willst Du per Rechnung bezahlen? Kein Problem, melde Dich gerne bei
+        unserem Support und wir organiseren das für Dich:{' '}
+        <a href="mailto:team@recoverapp.de?subject=Ich würde gerne für Recover auf Rechnung bezahlen">
+          team@recoverapp.de
+        </a>
       </p>
     ),
   },
