@@ -1,15 +1,15 @@
-import * as React from 'react'
 import Head from 'next/head'
-
-import { Text, Box, Row, Button, ButtonLink, Card } from '~ui/core'
-import { ArrowsRight } from '~ui/anicons'
-import { KeyPaper } from '~ui/svg'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { MobileApp } from '~ui/layouts/MobileApp'
-import { generateKeys } from '~lib/crypto'
-import { updateOwner } from '~lib/actions'
 import { useRouter } from 'next/router'
+import * as React from 'react'
+import { updateOwner } from '~lib/actions'
 import { downloadKey } from '~lib/actions/downloadKey'
+import { isFormal } from '~lib/config'
+import { generateKeys } from '~lib/crypto'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { ArrowsRight } from '~ui/anicons'
+import { Box, Button, ButtonLink, Card, Row, Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { KeyPaper } from '~ui/svg'
 import { contactInformation, privateKeyExplanation } from '~ui/whitelabels'
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
@@ -44,7 +44,8 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Box height={4} />
       <Card variant="form" mx={-4}>
         <Text as="h2" variant="h2">
-          2. Ihr privater Schlüssel
+          2.
+          {isFormal ? ' Ihr privater Schlüssel.' : ' Dein privater Schlüssel.'}
         </Text>
         <Box height={4} />
         <Text>{privateKeyExplanation}</Text>
