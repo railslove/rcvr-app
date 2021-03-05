@@ -4,6 +4,7 @@ import { api } from './'
 export interface Affiliate {
   name: string
   logoUrl?: string
+  logoLink?: string
 }
 
 export async function findAffiliateByCode(code: string): Promise<Affiliate> {

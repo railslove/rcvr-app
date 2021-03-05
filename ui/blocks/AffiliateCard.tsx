@@ -20,11 +20,13 @@ export const AffiliateCard: React.FC<Props> = ({ code }) => {
 
   return affiliate ? (
     <Card>
-      <img
-        alt="affilitate logo"
-        style={{ maxWidth: '100%' }}
-        src={affiliate?.logoUrl}
-      ></img>
+      <a href={affiliate.logoLink} target="_blank" rel="noreferrer noopener">
+        <img
+          alt="affilitate logo"
+          style={{ maxWidth: '100%' }}
+          src={affiliate?.logoUrl}
+        ></img>
+      </a>
     </Card>
   ) : (
     <></>
