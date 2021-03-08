@@ -19,7 +19,7 @@ export const AffiliateCard: React.FC<Props> = ({ code }) => {
   }, [code])
 
   return affiliate ? (
-    <Card>
+    <Card style={{ padding: '1em' }}>
       <a href={affiliate.logoLink} target="_blank" rel="noreferrer noopener">
         <img
           alt="affilitate logo"
