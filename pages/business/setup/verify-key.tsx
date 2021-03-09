@@ -19,7 +19,6 @@ import { downloadKey } from '~lib/actions/downloadKey'
 import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
 import { updateOwner } from '~lib/actions'
-import { patchOwner } from '~lib/api'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
@@ -27,8 +26,8 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const handleSubmit = async () => {
     // user has confirmed the temporary setupPublicKey..
     // extract it and set it as the real publicKey on front- and backend
-    const { setupPublicKey, ...newOwner } = owner;
-    await updateOwner({...newOwner, publicKey: setupPublicKey})
+    const { setupPublicKey, ...newOwner } = owner
+    await updateOwner({ ...newOwner, publicKey: setupPublicKey })
     router.push('/business/setup/finished')
   }
 
