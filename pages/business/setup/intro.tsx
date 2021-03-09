@@ -1,12 +1,12 @@
-import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-
+import * as React from 'react'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { Text, Box, ButtonLink } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
+import { AffiliateCard } from '~ui/blocks/AffiliateCard'
+import { Box, ButtonLink, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { instruction, title, setupIntro } from '~ui/whitelabels'
+import { instruction, setupIntro, title } from '~ui/whitelabels'
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
@@ -35,6 +35,12 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       >
         Los geht{"'"}s
       </ButtonLink>
+      {query.affiliate && (
+        <>
+          <Box height={6} />
+          <AffiliateCard code={query.affiliate.toString()} />
+        </>
+      )}
     </MobileApp>
   )
 }
