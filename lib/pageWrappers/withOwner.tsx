@@ -38,7 +38,11 @@ export const withOwner = (userConfig: WithOwnerConfig = {}) => (
       }
 
       if (status === 'success' && config.redirect === 'authorized') {
-        router.replace('/business/dashboard')
+        if (!data.publicKey) {
+          router.replace('/business/setup/success')
+        } else {
+          router.replace('/business/dashboard')
+        }
         return
       }
 

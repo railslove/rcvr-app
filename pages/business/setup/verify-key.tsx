@@ -14,42 +14,39 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import { getOwner, Owner } from '~lib/db'
-import * as api from '~lib/api'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 import { downloadKey } from '~lib/actions/downloadKey'
 import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
-
-const getCurrentOwner = async (): Promise<Owner> => {
-  const ownerRes = await api.getOwner()
-  const owner = await getOwner(ownerRes.id)
-  return owner
-}
-
-const VerifyKeySchema = Yup.object().shape({
-  privateKey: Yup.mixed().test(
-    'validKey',
-    'Schlüsseldatei stimmt nicht überein.',
-    async (value) => {
-      if (value) {
-        const [owner, key]: [Owner, string] = await Promise.all([
-          getCurrentOwner(),
-          readTextFile(value),
-        ])
-        return base64ToHex(owner.privateKey) === key
-      }
-      return false
-    }
-  ),
-})
+import { updateOwner } from '~lib/actions'
+import { patchOwner } from '~lib/api'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    // user has confirmed the temporary setupPublicKey..
+    // extract it and set it as the real publicKey on front- and backend
+    const { setupPublicKey, ...newOwner } = owner;
+    await updateOwner({...newOwner, publicKey: setupPublicKey})
     router.push('/business/setup/finished')
   }
+
+  const VerifyKeySchema = React.useMemo(() => {
+    return Yup.object().shape({
+      privateKey: Yup.mixed().test(
+        'validKey',
+        'Schlüsseldatei stimmt nicht überein.',
+        async (value) => {
+          if (value) {
+            const key = await readTextFile(value)
+            return base64ToHex(owner.privateKey) == key
+          }
+          return false
+        }
+      ),
+    })
+  }, [owner])
 
   return (
     <MobileApp>
@@ -74,7 +71,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <Box height={6} />
           {verifyPrivateKeyExplanation}
           <Formik
-            initialValues={{ privateKey: '' }}
+            initialValues={{ privateKey: undefined }}
             onSubmit={handleSubmit}
             validationSchema={VerifyKeySchema}
           >
