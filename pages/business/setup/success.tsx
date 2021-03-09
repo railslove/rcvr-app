@@ -18,12 +18,18 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
     if (!owner) return
 
     let { publicKey, privateKey } = owner
-
     if (!publicKey || !privateKey) {
       const keys = generateKeys()
       privateKey = keys.privateKey
       publicKey = keys.publicKey
-      await updateOwner({ ...owner, privateKey, publicKey })
+
+      // the backend will receive the publicKey when the onboarding
+      // process has been done completely.
+      // meanwhile we store it in the frontend as setupPublicKey.
+      // so when a user freshly logs in (or reloads or whatever)
+      // and doesn't have a public_key assigned in the backend
+      // the frontend needs to restart the onboarding process!
+      await updateOwner({ ...owner, privateKey, setupPublicKey: publicKey })
     }
     downloadKey(privateKey)
     router.push('/business/setup/verify-key')
