@@ -24,7 +24,7 @@ export const AffiliateCard: React.FC<Props> = ({ code }) => {
         <img
           alt="affilitate logo"
           style={{ maxWidth: '100%' }}
-          src={affiliate?.logoUrl}
+          src={affiliate.logoUrl}
         ></img>
       </a>
     </Card>
