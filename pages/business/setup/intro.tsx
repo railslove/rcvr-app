@@ -35,8 +35,12 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       >
         Los geht{"'"}s
       </ButtonLink>
-      <Box height={6} />
-      <AffiliateCard code={query.affiliate?.toString()} />
+      {query.affiliate && (
+        <>
+          <Box height={6} />
+          <AffiliateCard code={query.affiliate.toString()} />
+        </>
+      )}
     </MobileApp>
   )
 }
