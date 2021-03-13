@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { render, fireEvent, screen, waitFor } from '@testing-library/react'
-import MockDate from 'mockdate'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import fetchMock from 'fetch-mock-jest'
-
+import MockDate from 'mockdate'
+import * as React from 'react'
 import { decrypt } from '~lib/crypto'
 import { withTestRouter } from '~lib/testing/withTestRouter'
 import Checkin from '../pages/checkin'
+
 
 const privateKey = 'KVITtyAWMy0fKTRyqTAm2r05+FkyibXVSnlsI5v0XqQ='
 const publicKey = '5ki/YAX91GQ0ABSyBTsOXBO7tBl6ZJat+OzxnbZCjVM='
@@ -44,7 +44,7 @@ it('encrypts guest data and sends checkin to api', async () => {
   fireEvent.change(screen.getByLabelText('Telefon'), {
     target: { value: '+11880' },
   })
-  fireEvent.change(screen.getByLabelText('Anschrift'), {
+  fireEvent.change(screen.getByLabelText('Anschrift (Straße und Hausnummer)'), {
     target: { value: 'Täststr. 3, Köln' },
   })
   fireEvent.click(screen.getByText('Check in'))
