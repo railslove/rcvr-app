@@ -6,7 +6,6 @@ import { Guest } from '~lib/db'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Button, Checkbox, Input, Text } from '~ui/core'
 
-
 type OnboardingProps = {
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
   prefilledGuest?: Guest
@@ -69,11 +68,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
             autoComplete="postal-code"
           />
           <Box height={4} />
-          <Input
-            name="city"
-            label="Ort"
-            autoComplete="address-level2"
-          />
+          <Input name="city" label="Ort" autoComplete="address-level2" />
           {isCareEnv && (
             <>
               <Box height={4} />
