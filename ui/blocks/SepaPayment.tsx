@@ -6,6 +6,7 @@ import SepaForm from './SepaForm'
 import { postSepaSubscription } from '~lib/api'
 import { useRouter } from 'next/router'
 import { Card, Box, Text } from '~ui/core'
+import { Loading } from '~ui/blocks/Loading'
 
 interface SepaPaymentProps {
   intent: string
@@ -16,8 +17,10 @@ const SepaPayment: React.FC<SepaPaymentProps> = ({ intent }) => {
 
   const router = useRouter()
   const [error, setError] = React.useState(null)
+  const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = async ({ name, email, iban }) => {
+    setLoading(true)
     try {
       const result = await stripe.confirmSepaDebitSetup(intent, {
         payment_method: {
@@ -41,11 +44,14 @@ const SepaPayment: React.FC<SepaPaymentProps> = ({ intent }) => {
       }
     } catch (e) {
       setError(e)
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <>
+      <Loading show={loading} />
       {error && (
         <Card mx={-4} p={6}>
           <Text variant="h3" as="h1" color="red.500">
