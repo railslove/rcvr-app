@@ -7,6 +7,8 @@ export interface Owner {
   privateKey?: string
   publicKey?: string
   sepaTrial?: boolean
+  // temporary publicKey location while setup process is not yet complete
+  setupPublicKey?: string
 }
 
 export async function getOwner(ownerId: Owner['id']): Promise<Owner> {
