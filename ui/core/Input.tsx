@@ -91,17 +91,13 @@ export const FileInput: React.FC<FileInputProps> = ({
 
   const onDrop = React.useCallback(
     (acceptedFiles) => {
-      // order is important here! first set the value and THEN set touched
-      // otherwise the validation is being triggered twice
-      // once with undefined value and then with our real value
-      // for unknown reasons formik gets confused when this happens with
-      // async validators
+      helpers.setTouched(true)
+      // setError(undefined)
       if (acceptedFiles.length > 0) {
         helpers.setValue(acceptedFiles[0])
       } else {
         helpers.setValue(null)
       }
-      helpers.setTouched(true)
       // if (rejectedFiles.length > 0) {
       //   helpers.setTouched(true)
       //   setError('Es können nur pdf-Dateien hochgeladen werden.')
@@ -119,8 +115,8 @@ export const FileInput: React.FC<FileInputProps> = ({
   const resetValue = React.useCallback(
     (event) => {
       event.stopPropagation()
-      helpers.setValue(undefined)
       helpers.setTouched(true)
+      helpers.setValue(undefined)
     },
     [helpers]
   )

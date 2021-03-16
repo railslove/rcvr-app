@@ -24,8 +24,6 @@ export const withOwner = (userConfig: WithOwnerConfig = {}) => (
     const { data, status, error } = useOwner()
     const router = useRouter()
 
-    const publicKey = data?.privateKey
-
     React.useEffect(() => {
       if (!isMounted()) return
 
@@ -40,11 +38,7 @@ export const withOwner = (userConfig: WithOwnerConfig = {}) => (
       }
 
       if (status === 'success' && config.redirect === 'authorized') {
-        if (!publicKey) {
-          router.replace('/business/setup/success')
-        } else {
-          router.replace('/business/dashboard')
-        }
+        router.replace('/business/dashboard')
         return
       }
 
@@ -52,7 +46,7 @@ export const withOwner = (userConfig: WithOwnerConfig = {}) => (
         setRenderPage(true)
         return
       }
-    }, [router, status, error, isMounted, publicKey])
+    }, [router, status, error, isMounted])
 
     return (
       <>
