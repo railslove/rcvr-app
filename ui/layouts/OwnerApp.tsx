@@ -97,12 +97,12 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           {owner.blockAt && (
             <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
               <Text>
-                Du nutzt aktuell eine bis&nbsp;
-                {formatDate(owner.blockAt, 'DD.MM.YYYY')} kostenlos zur
-                Verfügung gestellte Version von recover. Wenn Du recover nach
-                dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für
-                Checkins nutzen möchtest, bitten wir Dich im Profil-Bereich
-                Deine Zahlungsinformationen zu hinterlegen.
+                recover steht Dir aktuell bis&nbsp;
+                {formatDate(owner.blockAt, 'DD.MM.YYYY')} in vollem Umfang zur
+                Verfügung. Wenn Du recover nach dem{' '}
+                {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
+                nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
+                Zahlungsinformationen zu bearbeiten.
               </Text>
               <Text>
                 Selbstverständlich wirst Du weiter Zugriff auf Dein Konto haben,
