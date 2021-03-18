@@ -61,16 +61,17 @@ const envs = {
         <p>
           <strong>Nächster Schritt: </strong>
           <br />
-          Bitte klicke auf &quot;Schlüssel herunterladen&quot;. Das erzeugt eine
-          Schlüsseldatei und startet den Download.
+          Ein Schlüssel wird erzeugt mit dem die Daten deiner Kunden
+          verschlüsselt werden.
+          <br />
+          Bitte wähle hier aus, wie du den Schlüssel verwahren möchtest.
         </p>
+        <Box height={4} />
+        <div>
+          <Warning />
+        </div>
+        <Box height={4} />
         <p>
-          <strong>Bitte speichere die Datei auf deinem Rechner ab.</strong>
-        </p>
-        <p>
-          <p>
-            <Warning />
-          </p>
           <strong>
             Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -86,7 +87,8 @@ const envs = {
           </strong>
         </p>
         <p>
-          Lade die Schlüsseldatei deshalb hier zur Bestätigung noch einmal hoch.
+          Zur Bestätigung, dass du den Schlüssel erhalten hast, lade den
+          Schlüssel hier nochmal hoch.
         </p>
       </>
     ),
@@ -157,11 +159,19 @@ const envs = {
     signupText: '',
     privateKeyExplanation: (
       <>
-        <p>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</p>
         <p>
-          <p>
-            <Warning />
-          </p>
+          <strong>Nächster Schritt: </strong>
+          <br />
+          Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.
+          <br />
+          Bitte wähle Sie hier aus, wie Sie den Schlüssel verwahren möchten.
+        </p>
+        <Box height={4} />
+        <div>
+          <Warning />
+        </div>
+        <Box height={4} />
+        <p>
           <strong>
             Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -249,11 +259,19 @@ const envs = {
     signupText: '',
     privateKeyExplanation: (
       <>
-        <p>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</p>
         <p>
-          <p>
-            <Warning />
-          </p>
+          <strong>Nächster Schritt: </strong>
+          <br />
+          Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.
+          <br />
+          Bitte wähle Sie hier aus, wie Sie den Schlüssel verwahren möchten.
+        </p>
+        <Box height={4} />
+        <div>
+          <Warning />
+        </div>
+        <Box height={4} />
+        <p>
           <strong>
             Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
           </strong>
