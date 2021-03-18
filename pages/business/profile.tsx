@@ -55,11 +55,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   }, [])
 
   const openCheckout = () => {
-    if (owner.sepaTrial) {
-      openModal('checkoutSelection', { openStripeCheckout })
-    } else {
-      openStripeCheckout()
-    }
+    openModal('checkoutSelection', { openStripeCheckout })
   }
 
   const openSelfService = React.useCallback(async () => {
@@ -134,10 +130,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
         <>
           <ActionList grid>
             <ActionCard onClick={() => openCheckout()}>
-              <ActionCard.Main title="Rechnungsdaten ändern" icon={Right} />
-            </ActionCard>
-            <ActionCard onClick={openSelfService}>
-              <ActionCard.Main title="Rechnungen" icon={Right} />
+              <ActionCard.Main title="Zahlungsmethode ändern" icon={Right} />
             </ActionCard>
           </ActionList>
 
