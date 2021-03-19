@@ -6,7 +6,6 @@ export interface Owner {
   name?: string
   privateKey?: string
   publicKey?: string
-  sepaTrial?: boolean
 }
 
 export async function getOwner(ownerId: Owner['id']): Promise<Owner> {

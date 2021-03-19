@@ -96,15 +96,15 @@ export default function MyCheckinsPage() {
                       <Text>
                         {error instanceof TypeError ? (
                           <p>
-                            Wir konnten dich nicht auschecken. Hast du
+                            Wir konnten Dich nicht auschecken. Hast du
                             vielleicht gerade kein Internet?
                           </p>
                         ) : (
-                          <p>Wir konnten dich nicht auschecken.</p>
+                          <p>Wir konnten Dich nicht auschecken.</p>
                         )}
                         <p>
                           Sollte das Problem weiterhin bestehen, keine Sorge:
-                          wir checken dich später automatisch aus.
+                          wir checken Dich später automatisch aus.
                         </p>
                       </Text>
                     </Callout>

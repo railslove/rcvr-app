@@ -1,18 +1,17 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
-
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import * as React from 'react'
 import { useCompanies, useOwner } from '~lib/hooks'
-import { Box, Text, Icon, Row, Callout, CloseButton } from '~ui/core'
-import { Logo, pageTitle } from '~ui/whitelabels'
-import { Back } from '~ui/svg'
-import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+import { SharedMeta } from '~ui/blocks/SharedMeta'
+import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
+import { Back } from '~ui/svg'
+import { Logo, pageTitle } from '~ui/whitelabels'
 
 interface Props {
   children: React.ReactNode
@@ -96,39 +95,21 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
         </Aside>
         <Main>
           {owner.blockAt && (
-            <>
-              {owner.blockAt < new Date() ? (
-                <Callout variant="danger">
-                  <Text>
-                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
-                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
-                    überprüfen.
-                  </Text>
-                  <Text>
-                    Seit dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} sind
-                    keine neuen Checkins mehr möglich. Selbstverständlich haben
-                    Sie weiterhin Zugriff auf Ihr Konto und können Informationen
-                    zu alten Checkins anfordern und ans Gesundheitsamt
-                    weiterleiten.
-                  </Text>
-                </Callout>
-              ) : (
-                <Callout variant="warn">
-                  <Text>
-                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
-                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
-                    überprüfen.
-                  </Text>
-                  <Text>
-                    Ab dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} werden
-                    keine neuen Checkins mehr möglich sein. Selbstverständlich
-                    werden Sie weiterhin Zugriff auf Ihr Konto haben und
-                    Informationen zu alten Checkins anfordern und ans
-                    Gesundheitsamt weiterleiten können.
-                  </Text>
-                </Callout>
-              )}
-            </>
+            <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
+              <Text>
+                recover steht Dir aktuell bis&nbsp;
+                {formatDate(owner.blockAt, 'DD.MM.YYYY')} in vollem Umfang zur
+                Verfügung. Wenn Du recover nach dem{' '}
+                {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
+                nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
+                Zahlungsinformationen zu bearbeiten.
+              </Text>
+              <Text>
+                Selbstverständlich wirst Du weiter Zugriff auf Dein Konto haben,
+                sowie Informationen zu alten Checkins anfordern und ans
+                Gesundheitsamt weiterleiten können.
+              </Text>
+            </Callout>
           )}
           {hint && (
             <>
