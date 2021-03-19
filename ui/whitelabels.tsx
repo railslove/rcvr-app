@@ -164,7 +164,7 @@ const envs = {
           <br />
           Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.
           <br />
-          Bitte wähle Sie hier aus, wie Sie den Schlüssel verwahren möchten.
+          Bitte wählen Sie hier aus, wie Sie den Schlüssel verwahren möchten.
         </p>
         <Box height={4} />
         <div>
@@ -264,7 +264,7 @@ const envs = {
           <br />
           Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.
           <br />
-          Bitte wähle Sie hier aus, wie Sie den Schlüssel verwahren möchten.
+          Bitte wählen Sie hier aus, wie Sie den Schlüssel verwahren möchten.
         </p>
         <Box height={4} />
         <div>
