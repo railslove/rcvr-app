@@ -9,6 +9,7 @@ import { EyeOpen, EyeClosed, Trash } from '~ui/svg'
 import { Text } from './Text'
 import { Icon } from './Icon'
 import type { As } from './'
+import { ErrorText } from './ErrorText'
 
 interface Props {
   name: string
@@ -149,14 +150,6 @@ export const FileInput: React.FC<FileInputProps> = ({
     </div>
   )
 }
-
-const ErrorText = styled(Text)(
-  css({
-    color: 'red.400',
-    py: 2,
-    px: 3,
-  })
-)
 
 const HintText = styled(Text)(
   css({
