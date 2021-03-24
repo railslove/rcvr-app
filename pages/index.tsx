@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
-import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
+import { Box, Button, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { indexIntro } from '~ui/whitelabels'
 
@@ -33,13 +33,15 @@ export default function IndexPage() {
         </Text>
         <Box height={8} />
 
-        <ButtonLink
-          href="/qr"
+        <Button
+          onClick={() => {
+            throw new Error('PENF')
+          }}
           left={<ArrowsRight color="green" />}
           right={<ArrowsLeft color="green" />}
         >
           QR-Code scannen
-        </ButtonLink>
+        </Button>
         <Box height={4} />
         <ButtonLink href="/my-checkins">
           {isFormal ? 'Ihre Tickets' : 'Deine Tickets'}
