@@ -21,6 +21,13 @@ interface Props {
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
+  const router = useRouter()
+
+  React.useEffect(() => {
+    if (!owner.publicKey) {
+      router.replace('/business/setup/success')
+    }
+  }, [])
 
   const [hint, setHint] = React.useState(() => {
     return localStorage.getItem('hintclosed') !== '1'
