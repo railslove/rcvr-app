@@ -52,7 +52,7 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
         <Box height={6} />
         <Button
           onClick={() => {
-            generateKey('/business/setup/download-key')
+            generateKey('/business/setup/verify-key')
           }}
           right={<ArrowsRight color="green" />}
         >
