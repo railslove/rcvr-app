@@ -18,11 +18,15 @@ import { KeyViewer } from '~ui/blocks/KeyViewer'
 import { downloadKey } from '~lib/actions/downloadKey'
 import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
+import { commitSetupPublicKey } from '~lib/actions'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
 
   const handleSubmit = async () => {
+    // user has confirmed the temporary setupPublicKey..
+    // extract it and set it as the real publicKey on front- and backend
+    await commitSetupPublicKey(owner)
     router.push('/business/setup/finished')
   }
 

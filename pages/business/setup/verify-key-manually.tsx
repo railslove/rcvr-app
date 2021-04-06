@@ -10,12 +10,13 @@ import { Text, Box, Button, ButtonLink, Row, Input } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { KeyPaper } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import { commitSetupPublicKey } from '~lib/actions'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
 
   const handleCheck = React.useCallback(
-    ({ privateKey }, bag) => {
+    async ({ privateKey }, bag) => {
       const normalizedKey = privateKey.toUpperCase().replace(/\s/g, '')
       if (normalizedKey !== base64ToHex(owner.privateKey)) {
         bag.setFieldError(
@@ -23,6 +24,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           'Der Schlüssel stimmt nicht. Bitte nochmal überprüfen. Leerzeichen und Groß- und Kleinschreibung spielen keine Rolle.'
         )
       } else {
+        await commitSetupPublicKey(owner)
         router
           .replace('/business/setup/finished')
           .then(() => window.scrollTo(0, 0))
