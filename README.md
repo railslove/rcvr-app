@@ -87,6 +87,8 @@ Suppose you want to change environment variables locally, for example, the API U
 
 If you want to change environment variables locally, for example the API URL, you can duplicate `.env` to `.env.local` and change the variables in your local copy. Read more about environment variables [here](https://nextjs.org/docs/basic-features/environment-variables).
 
+To contribute, please simply create a PullRequest. If you have the permissions to merge, please do so yourself, but only after you have at least one approval from a core contributor. If you are working on a ticket from the backlog, please leave a link in the description. Either way, please add a small description of the changes and a screenshot if applicable. Rebasing or squashing are preferred over merges.
+
 ### Deployment
 
 - `origin/master` deploys to [rcvr.app](https://rcvr.app) on push
