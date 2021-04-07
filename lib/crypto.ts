@@ -65,7 +65,14 @@ export function hexToBase64(hex: string): string {
 }
 
 export function toCSV(guest: Guest): string {
-  const values = [guest.name, guest.phone, guest.address, guest.resident]
+  console.log(guest)
+  const values = [
+    guest.name,
+    guest.phone,
+    `${guest.address}, ${guest.postalCode} ${guest.city}`,
+    guest.resident,
+  ]
+  console.log(values)
   return values.map((v) => JSON.stringify(v)).join(',')
 }
 
