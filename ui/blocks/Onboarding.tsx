@@ -1,11 +1,10 @@
+import { Form, Formik } from 'formik'
 import * as React from 'react'
-import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-
 import { isCareEnv } from '~lib/config'
 import { Guest } from '~lib/db'
-import { Input, Checkbox, Button, Box, Text } from '~ui/core'
-import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
+import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { Box, Button, Checkbox, Input, Text } from '~ui/core'
 
 type OnboardingProps = {
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
@@ -40,9 +39,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     name: prefilledGuest?.name || '',
     phone: prefilledGuest?.phone || '',
     address: prefilledGuest?.address || '',
+    postalCode: prefilledGuest?.postalCode || '',
+    city: prefilledGuest?.city || '',
     rememberMe: prefilledGuest ? true : false,
   }
-
   if (isCareEnv) initialValues['resident'] = ''
 
   return (
@@ -61,10 +61,17 @@ export const Onboarding: React.FC<OnboardingProps> = ({
           <Box height={4} />
           <Input
             name="address"
-            label="Anschrift"
+            label="Anschrift (Straße und Hausnummer)"
             autoComplete="street-address"
           />
           <Box height={4} />
+          <Input
+            name="postalCode"
+            label="Postleitzahl"
+            autoComplete="postal-code"
+          />
+          <Box height={4} />
+          <Input name="city" label="Ort" autoComplete="address-level2" />
           {isCareEnv && (
             <>
               <Box height={4} />
