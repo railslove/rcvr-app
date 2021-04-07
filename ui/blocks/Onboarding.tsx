@@ -43,8 +43,6 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     city: prefilledGuest?.city || '',
     rememberMe: prefilledGuest ? true : false,
   }
-  console.log(initialValues)
-
   if (isCareEnv) initialValues['resident'] = ''
 
   return (

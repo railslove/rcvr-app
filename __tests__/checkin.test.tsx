@@ -44,7 +44,13 @@ it('encrypts guest data and sends checkin to api', async () => {
     target: { value: '+11880' },
   })
   fireEvent.change(screen.getByLabelText('Anschrift (Straße und Hausnummer)'), {
-    target: { value: 'Täststr. 3, Köln' },
+    target: { value: 'Täststr. 3' },
+  })
+  fireEvent.change(screen.getByLabelText('Postleitzahl'), {
+    target: { value: '50667' },
+  })
+  fireEvent.change(screen.getByLabelText('Ort'), {
+    target: { value: 'Köln' },
   })
   fireEvent.click(screen.getByText('Check in'))
 
@@ -69,5 +75,5 @@ it('encrypts guest data and sends checkin to api', async () => {
     publicKey,
     privateKey
   )
-  expect(decrypted).toBe('"Donnie","+11880","Täststr. 3, Köln",')
+  expect(decrypted).toBe('"Donnie","+11880","Täststr. 3, 50667 Köln",')
 })
