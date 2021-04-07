@@ -25,7 +25,7 @@
     "dexie": "^3.0.1",
     "emotion-theming": "^10.0.27",
     "formik": "^2.1.4",
-    "framer-motion": "^2.0.0-beta.72",
+    "framer-motion": "^2.9.5",
     "iban": "0.0.14",
     "intl-dateformat": "^0.1.4",
     "ky": "^0.19.1",
@@ -87,18 +87,23 @@
   "jest": {
     "testEnvironment": "<rootDir>/lib/testing/customJsdomEnv.js",
     "automock": false,
+    "verbose": true,
     "preset": "ts-jest",
     "setupFilesAfterEnv": [
       "<rootDir>/setupTests.ts"
     ],
+    "transform": {
+      "^.+\\.ts$": "babel-jest",
+      "\\.svg$": "<rootDir>/lib/testing/fileTransformer.js"
+    },
     "moduleNameMapper": {
-      "\\.svg$": "<rootDir>/lib/testing/svgImportMock.js",
       "^~ui/(.*)$": "<rootDir>/ui/$1",
       "^~lib/(.*)$": "<rootDir>/lib/$1"
     },
     "globals": {
       "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.jest.json"
+        "tsConfig": "<rootDir>/tsconfig.jest.json",
+        "babelConfig": "<rootDir>/babel.config.js"
       }
     }
   }
