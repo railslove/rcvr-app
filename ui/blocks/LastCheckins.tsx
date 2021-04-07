@@ -96,7 +96,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
         .map(({ guest }) => guest)
         .filter((guest) => guest != null)
         .map((guest, index) => (
-          <div key={index}>
+          <GuestDetails key={index}>
             {index > 0 && <Box height={2} />}
             <Text variant="label" as="label">
               Name{' '}
@@ -108,7 +108,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             <Text variant="label" as="label">
               Anschrift{' '}
               <Text variant="regular" as="span">
-                {guest.address}
+                {guest.address}, {guest.postalCode}&nbsp;{guest.city}
               </Text>
             </Text>
             <Box height={1} />
@@ -119,7 +119,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
               </Text>
             </Text>
             <Box height={1} />
-          </div>
+          </GuestDetails>
         ))}
       <AnimatePresence>
         {!checkin.leftAt && (
@@ -203,4 +203,8 @@ const Container = styled.div({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+})
+
+const GuestDetails = styled.div({
+  width: '100%',
 })
