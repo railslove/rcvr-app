@@ -6,7 +6,6 @@ import { decrypt } from '~lib/crypto'
 import { withTestRouter } from '~lib/testing/withTestRouter'
 import Checkin from '../pages/checkin'
 
-
 const privateKey = 'KVITtyAWMy0fKTRyqTAm2r05+FkyibXVSnlsI5v0XqQ='
 const publicKey = '5ki/YAX91GQ0ABSyBTsOXBO7tBl6ZJat+OzxnbZCjVM='
 const areaId = '5ac34aab-81f8-4f4d-bc24-97ba8d21eb7b'

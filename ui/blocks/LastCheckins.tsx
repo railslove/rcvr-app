@@ -32,9 +32,9 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
     throwOnError: true,
   })
 
-  const handleEditGuest = (guest, opts) => {
+  const handleEditGuest = (guest, _opts) => {
     setLoading(true)
-    updateCurrentGuest(guest).then((checkin) => {
+    updateCurrentGuest(guest).then((_checkin) => {
       setLoading(false)
       setShowEditData(false)
     })
