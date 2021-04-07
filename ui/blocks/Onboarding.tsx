@@ -39,8 +39,11 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     name: prefilledGuest?.name || '',
     phone: prefilledGuest?.phone || '',
     address: prefilledGuest?.address || '',
+    postalCode: prefilledGuest?.postalCode || '',
+    city: prefilledGuest?.city || '',
     rememberMe: prefilledGuest ? true : false,
   }
+  console.log(initialValues)
 
   if (isCareEnv) initialValues['resident'] = ''
 
