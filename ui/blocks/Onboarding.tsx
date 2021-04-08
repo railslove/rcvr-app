@@ -19,7 +19,7 @@ const yupShape = {
   phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
   address: Yup.string().required('Adresse muss angegeben werden.'),
   postalCode: Yup.string().required('Postleitzahl muss angegeben werden.'),
-  city: Yup.string().required('Stadt muss angegeben werden.'),
+  city: Yup.string().required('Ort muss angegeben werden.'),
   rememberMe: Yup.boolean(),
 }
 
