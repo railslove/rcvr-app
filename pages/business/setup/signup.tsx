@@ -20,6 +20,9 @@ const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),
   email: Yup.string().required('Email muss angegeben werden.'),
   phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
+  street: Yup.string().required('Strasse muss angegeben werden.'),
+  zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
+  city: Yup.string().required('Ort muss angegeben werden.'),
   companyName: Yup.string().required('Unternehmensname muss angegeben werden.'),
   password: Yup.string()
     .required('Passwort muss angegeben werden.')
@@ -41,14 +44,24 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = async (
-    { name, email, phone, companyName, password },
+    { name, email, phone, street, zip, city, companyName, password },
     bag
   ) => {
     try {
       setLoading(true)
       const affiliate = localStorage.getItem('rcvr_affiliate')
 
-      await signup({ name, companyName, phone, email, password, affiliate })
+      await signup({
+        name,
+        companyName,
+        phone,
+        street,
+        zip,
+        city,
+        email,
+        password,
+        affiliate,
+      })
       queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
     } catch (error) {
@@ -82,6 +95,9 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           name: '',
           companyName: '',
           phone: '',
+          street: '',
+          zip: '',
+          city: '',
           email: '',
           password: '',
           confirmPassword: '',
@@ -112,7 +128,23 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Input
                 name="phone"
                 label={isFormal ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+                type="tel"
+                autoComplete="tel"
               />
+              <Box height={4} />
+              <Input
+                name="street"
+                label={'Strasse und Hausnummer'}
+                autoComplete="street-address"
+              />
+              <Box height={4} />
+              <Input
+                name="zip"
+                label={'Postleitzahl'}
+                autoComplete="postal-code"
+              />
+              <Box height={4} />
+              <Input name="city" label={'Ort'} autoComplete="address-level2" />
               <Box height={8} />
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={4} />
