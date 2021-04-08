@@ -8,6 +8,9 @@ export interface PostSignup {
   phone: string
   password: string
   name: string
+  street: string
+  zip: string
+  city: string
   affiliate?: string
 }
 
