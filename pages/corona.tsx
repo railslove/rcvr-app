@@ -15,19 +15,19 @@ export default function CoronaPage() {
         <title key="title">Corona, was nun? | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Was sollte ich tun, wenn ich Kontaktperson bin?
+        Was soll ich tun, wenn ich Kontaktperson bin?
       </Text>
       <Box height={5} />
       <Text>
-        <p>Zu allererst: ruhig bleiben.</p>
+        <p>In erster Linie: ruhig bleiben.</p>
         <p>
-          Wenn {isFormal ? 'Sie' : 'Du'} eine bestätigte Kontaktperson{' '}
+          Wenn {isFormal ? 'Sie' : 'du'} eine bestätigte Kontaktperson{' '}
           {isFormal ? 'sind' : 'bist'}, wird sich das Gesundheitsamt bei{' '}
           {isFormal ? 'Ihnen' : 'dir'} telefonisch innerhalb von 48 Stunden
           melden.
         </p>
         <p>
-          Falls {isFormal ? 'Sie' : 'Du'} bereits typische Symptome wie Fieber,
+          Falls {isFormal ? 'Sie' : 'du'} bereits typische Symptome wie Fieber,
           Müdigkeit und trockenen Husten{' '}
           {isFormal ? 'haben, sollten Sie' : 'hast, solltest du'}{' '}
           vorsichtshalber in häuslicher Quarantäne bleiben und das
@@ -42,7 +42,7 @@ export default function CoronaPage() {
         <Box ml={3}>
           <Text variant="h3">Hotline zum Coronavirus</Text>
           <Text variant="h2">
-            <a href="tel:030346465100">030 346465100</a>
+            <a href="tel:+4930346465100">030 346465100</a>
           </Text>
         </Box>
       </Row>
@@ -62,10 +62,10 @@ export default function CoronaPage() {
           </a>
           . Dort finden sich insbesondere auch Links zu den
           Informationsangeboten der Bundeszentrale für gesundheitliche
-          Aufklärung und des Robert-Koch-Instituts.
+          Aufklärung und des Robert Koch-Instituts.
         </p>
       </Text>
-      <FixedBottomBar transparent />
+      <FixedBottomBar />
     </MobileApp>
   )
 }
