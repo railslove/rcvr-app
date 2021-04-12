@@ -27,6 +27,9 @@ export interface OwnerRes {
   id: number
   email: string
   name: string
+  street: string
+  zip: string
+  city: string
   canUseForFree: boolean
   publicKey?: string
   affiliate?: string
