@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation } from 'react-query'
 
-import { isCareEnv, isRcvrEnv } from '~lib/config'
+import { isCareEnv, isFormal, isHealthEnv, isRcvrEnv } from '~lib/config'
 import { introText, formalAddress } from '~ui/whitelabels'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
@@ -146,7 +146,7 @@ export default function CheckinPage() {
     // Checks if the publicKey is decodable. Throws an error and shows the
     // corresponding error page if not.
     binKey(publicKey)
-    if (isCareEnv) {
+    if (isFormal) {
       setShowConfirmation(true)
       setShowLoading(false)
     } else {
@@ -211,7 +211,7 @@ export default function CheckinPage() {
             <Box mb={6} mx={-4}>
               <Callout variant="danger">
                 <Text>
-                  {isCareEnv
+                  {isFormal
                     ? 'Wir konnten keine Verbindung herstellen. Haben Sie vielleicht gerade kein Internet?'
                     : 'Wir konnten keine Verbindung herstellen. Hast du vielleicht gerade kein Internet?'}
                 </Text>
@@ -224,14 +224,31 @@ export default function CheckinPage() {
                 onSubmit={handleSubmitOnboarding}
                 prefilledGuest={prefilledGuest}
               />
+              {areaInfo.data.privacyPolicyLink && (
+                <>
+                  <Box height={4} />
+                  <a
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    href={areaInfo.data.privacyPolicyLink}
+                  >
+                    <Text variant="link">
+                      Datenschutzerklärung von {areaInfo.data.companyName}
+                    </Text>
+                  </a>
+                </>
+              )}
             </Card>
           )}
+
           {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
             <a
               href={
                 isCareEnv
                   ? 'https://www.recovercare.de/fur-besucher'
+                  : isHealthEnv
+                  ? 'https://www.recover-health.de/fur-besucher'
                   : 'https://www.recoverapp.de/fuer-gaeste'
               }
               target="_blank"

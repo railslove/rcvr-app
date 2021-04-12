@@ -87,12 +87,23 @@ Suppose you want to change environment variables locally, for example, the API U
 
 If you want to change environment variables locally, for example the API URL, you can duplicate `.env` to `.env.local` and change the variables in your local copy. Read more about environment variables [here](https://nextjs.org/docs/basic-features/environment-variables).
 
+To contribute, please simply create a PullRequest. If you have the permissions to merge, please do so yourself, but only after you have at least one approval from a core contributor. If you are working on a ticket from the backlog, please leave a link in the description. Either way, please add a small description of the changes and a screenshot if applicable. Rebasing or squashing are preferred over merges.
+
 ### Deployment
 
 - `origin/master` deploys to [rcvr.app](https://rcvr.app) on push
 - `origin/env/care` deploys to [care.rcvr.app](https://care.rcvr.app) on push
+- `origin/env/health` deploys to [health.rcvr.app](https://health.rcvr.app) on push
 - All pushed branches will create a preview deployment
   - Prefixing a branch with `care/` will use a preview deployment of recover care
+
+### recover health
+
+_[recover health](https://health.rcvr.app/)_ is a version of recover for institutions like hospitals and nursing homes. It has slight differences in theming and behavior. To switch to recover care, set the environment variable `BUILD_VARIANT=health`.
+
+```
+BUILD_VARIANT=health npm run dev
+```
 
 ### recover care
 

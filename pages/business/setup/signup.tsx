@@ -1,26 +1,31 @@
-import * as React from 'react'
+import { css } from '@emotion/core'
+import styled from '@emotion/styled'
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
 import { useRouter } from 'next/router'
+import * as React from 'react'
 import { queryCache } from 'react-query'
-
-import { isCareEnv, isFreseniusEnv } from '~lib/config'
-import { privacyUrl } from '~ui/whitelabels'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import * as Yup from 'yup'
 import { signup } from '~lib/actions'
-import { Step2 } from '~ui/svg'
-import { Input, Button, Box, Text, Card, Row } from '~ui/core'
-import { MobileApp } from '~ui/layouts/MobileApp'
+import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { PersonalData } from '~ui/svg'
+import { signupText } from '~ui/whitelabels'
+import Avv from './avv'
 
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),
   email: Yup.string().required('Email muss angegeben werden.'),
   phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
+  street: Yup.string().required('Strasse muss angegeben werden.'),
+  zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
+  city: Yup.string().required('Ort muss angegeben werden.'),
   companyName: Yup.string().required('Unternehmensname muss angegeben werden.'),
   password: Yup.string()
-    .required('Password muss angegeben werden.')
+    .required('Passwort muss angegeben werden.')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.^*()%!-[\]{}])[A-Za-z\d$&+,:;=?@#|'<>.^*()%!-[\]{}]{8,}$/,
       'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
@@ -28,6 +33,10 @@ const LoginSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required('Passwordwiederholung muss angegeben werden.')
     .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
+  confirmContract: Yup.bool().oneOf(
+    [true],
+    'Sie müssen dem Vertrag zustimmen.'
+  ),
 })
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
@@ -35,16 +44,24 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = async (
-    { name, email, phone, companyName, password },
+    { name, email, phone, street, zip, city, companyName, password },
     bag
   ) => {
     try {
       setLoading(true)
-      const affiliate = isCareEnv
-        ? 'care'
-        : localStorage.getItem('rcvr_affiliate')
+      const affiliate = localStorage.getItem('rcvr_affiliate')
 
-      await signup({ name, companyName, phone, email, password, affiliate })
+      await signup({
+        name,
+        companyName,
+        phone,
+        street,
+        zip,
+        city,
+        email,
+        password,
+        affiliate,
+      })
       queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
     } catch (error) {
@@ -63,31 +80,28 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
       <Head>
         <title key="title">Account erstellen | recover</title>
       </Head>
-      <Text as="h2" variant="h2">
-        Account erstellen
+      <Text as="h3" variant="h3">
+        Account erstellen (1/3)
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
-        <Step2 />
+        <PersonalData />
       </Row>
       <Box height={6} />
-      <Text>
-        <p>
-          {isCareEnv
-            ? 'Mit Ihrem Account können Sie QR Codes erstellen und Checkins Ihrer Gäste verwalten.'
-            : 'Mit deinem Account kannst du QR Codes erstellen und Checkins deiner Gäste verwalten.'}
-        </p>
-      </Text>
+      <Text>{signupText}</Text>
       <Box height={6} />
-
       <Formik
         initialValues={{
           name: '',
           companyName: '',
           phone: '',
+          street: '',
+          zip: '',
+          city: '',
           email: '',
           password: '',
           confirmPassword: '',
+          confirmContract: !isCareEnv && !isHealthEnv,
         }}
         validationSchema={LoginSchema}
         onSubmit={handleSubmit}
@@ -95,13 +109,17 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         {({ values }) => (
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
+            <Text as="h2" variant="h2">
+              1. Persönliche Angaben
+            </Text>
+            <Box height={4} />
             <Form>
-              <Input name="name" label={isCareEnv ? 'Ihr Name' : 'Dein Name'} />
+              <Input name="name" label={isFormal ? 'Ihr Name' : 'Dein Name'} />
               <Box height={4} />
               <Input
                 name="companyName"
                 label={
-                  isCareEnv
+                  isFormal
                     ? 'Name Ihres Unternehmens'
                     : 'Name deines Unternehmens'
                 }
@@ -109,8 +127,24 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Box height={4} />
               <Input
                 name="phone"
-                label={isCareEnv ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+                label={isFormal ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+                type="tel"
+                autoComplete="tel"
               />
+              <Box height={4} />
+              <Input
+                name="street"
+                label={'Strasse und Hausnummer'}
+                autoComplete="street-address"
+              />
+              <Box height={4} />
+              <Input
+                name="zip"
+                label={'Postleitzahl'}
+                autoComplete="postal-code"
+              />
+              <Box height={4} />
+              <Input name="city" label={'Ort'} autoComplete="address-level2" />
               <Box height={8} />
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={4} />
@@ -132,27 +166,62 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                 type="password"
                 autoComplete="new-password"
               />
+              {isCareEnv && (
+                <>
+                  <Box height={6} />
+                  <Checkbox
+                    name="confirmContract"
+                    label={
+                      <span>
+                        Ich akzeptiere den{' '}
+                        <InlineLink href="/VertragBFSCare.pdf" target="_blank">
+                          Nutzungsvertrag
+                        </InlineLink>{' '}
+                        und die{'  '}
+                        <InlineLink
+                          href="https://www.recover-health.de/unser-pricing"
+                          target="_blank"
+                        >
+                          Preise
+                        </InlineLink>
+                      </span>
+                    }
+                  />
+                </>
+              )}
+              {isHealthEnv && (
+                <>
+                  <Box height={6} />
+                  <Checkbox
+                    name="confirmContract"
+                    label={
+                      <span>
+                        Ich akzeptiere den{' '}
+                        <InlineLink
+                          href="/Nutzungsvertrag_recover-health.pdf"
+                          target="_blank"
+                        >
+                          Nutzungsvertrag
+                        </InlineLink>{' '}
+                        und die{'  '}
+                        <InlineLink
+                          href="https://www.recover-health.de/unser-pricing"
+                          target="_blank"
+                        >
+                          Preise
+                        </InlineLink>
+                      </span>
+                    }
+                  />
+                </>
+              )}
+
+              <Box height={6} />
+              <Avv />
               <Box height={5} />
               <Button type="submit" css={{ width: '100%' }}>
                 Registrieren
               </Button>
-              <Box height={6} />
-              <Text variant="fineprint">
-                <p>
-                  Mit dem Betätigen des Buttons{' '}
-                  {isCareEnv ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
-                  <a
-                    href={
-                      isFreseniusEnv
-                        ? privacyUrl
-                        : 'https://railslove.com/privacy/'
-                    }
-                  >
-                    Datenschutzbestimmungen
-                  </a>{' '}
-                  einverstanden.
-                </p>
-              </Text>
             </Form>
           </Card>
         )}
@@ -160,5 +229,12 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
     </MobileApp>
   )
 }
+
+export const InlineLink = styled('a')(
+  css({
+    color: '#226EEC',
+    textDecoration: 'underline',
+  })
+)
 
 export default withOwner({ redirect: 'authorized' })(SetupSignupPage)

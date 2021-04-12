@@ -6,6 +6,8 @@ export interface Owner {
   name?: string
   privateKey?: string
   publicKey?: string
+  // temporary publicKey location while setup process is not yet complete
+  setupPublicKey?: string
 }
 
 export async function getOwner(ownerId: Owner['id']): Promise<Owner> {

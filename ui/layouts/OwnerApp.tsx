@@ -1,19 +1,17 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
-
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import * as React from 'react'
 import { useCompanies, useOwner } from '~lib/hooks'
-import { Box, Text, Icon, Row, Callout } from '~ui/core'
-import { isCareEnv } from '~lib/config'
-import { Logo } from '~ui/whitelabels'
-import { Back } from '~ui/svg'
-import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+import { SharedMeta } from '~ui/blocks/SharedMeta'
+import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
+import { Back } from '~ui/svg'
+import { Logo, pageTitle } from '~ui/whitelabels'
 
 interface Props {
   children: React.ReactNode
@@ -23,13 +21,28 @@ interface Props {
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
+  const router = useRouter()
+
+  React.useEffect(() => {
+    if (!owner.publicKey) {
+      router.replace('/business/setup/success')
+    }
+  }, [])
+
+  const [hint, setHint] = React.useState(() => {
+    return localStorage.getItem('hintclosed') !== '1'
+  })
+  const closeHint = () => {
+    setHint(false)
+    localStorage.setItem('hintclosed', '1')
+  }
 
   return (
     <Limit>
       <SharedMeta />
       <Head>
         <title key="title">
-          {title ?? '____'} | {isCareEnv ? 'recover care' : 'recover'}
+          {title ?? '____'} | {pageTitle}
         </title>
       </Head>
       <Top>
@@ -89,38 +102,34 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
         </Aside>
         <Main>
           {owner.blockAt && (
+            <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
+              <Text>
+                recover steht Dir aktuell bis&nbsp;
+                {formatDate(owner.blockAt, 'DD.MM.YYYY')} in vollem Umfang zur
+                Verfügung. Wenn Du recover nach dem{' '}
+                {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
+                nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
+                Zahlungsinformationen zu bearbeiten.
+              </Text>
+              <Text>
+                Selbstverständlich wirst Du weiter Zugriff auf Dein Konto haben,
+                sowie Informationen zu alten Checkins anfordern und ans
+                Gesundheitsamt weiterleiten können.
+              </Text>
+            </Callout>
+          )}
+          {hint && (
             <>
-              {owner.blockAt < new Date() ? (
-                <Callout variant="danger">
-                  <Text>
-                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
-                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
-                    überprüfen.
-                  </Text>
-                  <Text>
-                    Seit dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} sind
-                    keine neuen Checkins mehr möglich. Selbstverständlich haben
-                    Sie weiterhin Zugriff auf Ihr Konto und können Informationen
-                    zu alten Checkins anfordern und ans Gesundheitsamt
-                    weiterleiten.
-                  </Text>
-                </Callout>
-              ) : (
-                <Callout variant="warn">
-                  <Text>
-                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
-                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
-                    überprüfen.
-                  </Text>
-                  <Text>
-                    Ab dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} werden
-                    keine neuen Checkins mehr möglich sein. Selbstverständlich
-                    werden Sie weiterhin Zugriff auf Ihr Konto haben und
-                    Informationen zu alten Checkins anfordern und ans
-                    Gesundheitsamt weiterleiten können.
-                  </Text>
-                </Callout>
-              )}
+              <Box height={6} />
+              <Callout>
+                <CloseButton onClose={closeHint} />
+                <Box height={2} />
+                <ol>
+                  <li>1. Betrieb anlegen</li>
+                  <li>2. Bereich in einem Betrieb anlegen</li>
+                  <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
+                </ol>
+              </Callout>
             </>
           )}
           <Box height={6} />
