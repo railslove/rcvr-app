@@ -45,11 +45,13 @@ const Limit = styled('div')(
     display: 'flex',
     flexDirection: 'column',
     flex: '1 0 auto',
-    p: 8,
+    px: 8,
+    py: 12,
     width: '100%',
     maxWidth: '420px',
     mx: 'auto',
     overflow: 'hidden',
+    overflowWrap: 'break-word',
   })
 )
 
