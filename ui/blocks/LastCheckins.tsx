@@ -63,7 +63,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
         setShowProxyCheckin(false)
         setLoading(false)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     [checkin, checkinFn, setShowProxyCheckin, area]
