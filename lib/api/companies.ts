@@ -11,6 +11,9 @@ export interface CompanyReq extends FormData {
 export interface CompanyRes {
   id: string
   name: string
+  street: string
+  zip: string
+  city: string
   menuLink?: string
   privacyPolicyLink?: string
   menuPdfLink?: string
