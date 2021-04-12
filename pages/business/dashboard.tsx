@@ -18,17 +18,13 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
     delete: BusinessDeleteModal,
   })
 
-  const menuPdfFileName = (company) => company.menuPdfLink?.split('/')?.pop()
-
   return (
     <OwnerApp title="Meine Betriebe">
       {modals}
       <ActionList>
         <AddCard
           title="Betrieb anlegen..."
-          onClick={() =>
-            openModal('data', { type: 'new', menuAlias: owner.menuAlias })
-          }
+          onClick={() => openModal('data', { type: 'new', owner: owner })}
         />
         {companies?.map((company) => (
           <CompanyCard
@@ -38,12 +34,8 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
             onEdit={() =>
               openModal('data', {
                 type: 'edit',
-                name: company.name,
-                menuLink: company.menuLink,
-                privacyPolicyLink: company.privacyPolicyLink,
-                menuPdfLink: menuPdfFileName(company),
-                menuAlias: owner.menuAlias,
-                companyId: company.id,
+                owner: owner,
+                company: company,
               })
             }
             onDelete={() => openModal('delete')}
