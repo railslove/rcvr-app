@@ -27,6 +27,11 @@ export interface OwnerRes {
   id: number
   email: string
   name: string
+  companyName: string
+  phone: string
+  street: string
+  zip: string
+  city: string
   canUseForFree: boolean
   publicKey?: string
   affiliate?: string
@@ -43,9 +48,13 @@ export interface OwnerRes {
 }
 
 export interface OwnerReq {
-  id?: number
+  name?: string
+  companyName?: string
+  phone?: string
+  street?: string
+  zip?: string
+  city?: string
   publicKey?: string
-  foo?: string
 }
 
 export async function postSignup(signup: PostSignup): Promise<OwnerRes> {

@@ -14,6 +14,7 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Divider, Text } from '~ui/core'
 import { OwnerApp } from '~ui/layouts/OwnerApp'
 import { CheckoutSelectionModal } from '~ui/modals/CheckoutSelectionModal'
+import { OwnerModal } from '~ui/modals/OwnerModal'
 import { SubscribedModal } from '~ui/modals/SubscribedModal'
 import { Right } from '~ui/svg'
 import { pricingInfoDuringTest } from '~ui/whitelabels'
@@ -30,6 +31,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { modals, openModal } = useModals({
     checkoutSelection: CheckoutSelectionModal,
     success: SubscribedModal,
+    editOwner: OwnerModal,
   })
 
   React.useEffect(() => {
@@ -58,6 +60,10 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
     openModal('checkoutSelection', { openStripeCheckout })
   }
 
+  const openEditOwner = () => {
+    openModal('editOwner', { owner })
+  }
+
   const openSelfService = React.useCallback(async () => {
     try {
       setRedirecting(true)
@@ -80,6 +86,14 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
     <OwnerApp title="Mein Profil">
       {modals}
       <Loading show={redirecting} />
+
+      <Button
+        onClick={() => openEditOwner()}
+        right={<ArrowsRight color="green" />}
+      >
+        Profil bearbeiten
+      </Button>
+
       <Divider />
       <Text as="h3" variant="h2">
         Meine Mitgliedschaft
