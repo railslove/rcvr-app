@@ -1,0 +1,1 @@
+indexedDB.deleteDatabase('RcvrDatabase')
