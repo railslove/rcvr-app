@@ -20,6 +20,7 @@ blocks:
             - checkout
             - cache restore
             - npm i
+            - npm run cypress verify
             - cache store
 
   - name: 'Test'
@@ -29,10 +30,17 @@ blocks:
         commands:
           - checkout --use-cache
           - cache restore
+          - npm run dev &
       jobs:
-        - name: jest
+        - name: cypress
           commands:
             - npm test
+
+      epilogue:
+        on_fail:
+          commands:
+            - artifact push job cypress/videos
+            - artifact push job cypress/screenshots
 
   - name: 'Analyze'
     dependencies: ['Install']
