@@ -29,6 +29,10 @@ blocks:
         commands:
           - checkout --use-cache
           - cache restore
+          - npm ci
+          - npm run cy:verify
+          - cache store
+          - npm run dev &
       jobs:
         - name: jest
           commands:
