@@ -11,6 +11,9 @@ import { Text, Box, Callout, Table, Button } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
+import { FilledCircle } from '~ui/core/FilledCircle'
+import styled from '@emotion/styled'
+import { css } from '@styled-system/css'
 
 function ticketsToExcel(tickets: DecryptedTicket[]) {
   const downloadableTickets = tickets.map((ticket) => ({
@@ -35,6 +38,12 @@ function ticketsToExcel(tickets: DecryptedTicket[]) {
 
   return [header, ...downloadableTickets]
 }
+
+const ResponsiveFlexRow = styled('div')(
+  css({
+    display: ['block', 'block', 'flex'],
+  })
+)
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { query } = useRouter()
@@ -99,6 +108,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const didDecrypt = dataRequest?.tickets && pendingCount === 0
 
+  const twoHoursBefore = new Date()
+  twoHoursBefore.setHours(new Date().getHours() - 2)
   return (
     <OwnerApp title={title}>
       <Loading show={loading} />
@@ -158,8 +169,44 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               </Button>
             </>
           )}
-          <Box height={4} />
-          <Button onClick={handleDownload}>Download als Excel</Button>
+          <ResponsiveFlexRow>
+            <div
+              css={{
+                flexGrow: 1,
+              }}
+            >
+              <Box height={4} />
+              <Button onClick={handleDownload}>Download als Excel</Button>
+            </div>
+            <div
+              css={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <div
+                css={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  paddingTop: 16,
+                  paddingBottom: 8,
+                }}
+              >
+                <FilledCircle variant="cyan" />
+                Kontaktdaten der letzten 2 Stunden für das Ordnungsamt
+              </div>
+              <div
+                css={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <FilledCircle variant="lilac" />
+                Ältere Kontaktdaten für Abfragen des Gesundheitsamt
+              </div>
+            </div>
+          </ResponsiveFlexRow>
         </Box>
       )}
 
@@ -178,7 +225,15 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
           </thead>
           <tbody>
             {tickets.map((ticket) => (
-              <tr key={ticket.id}>
+              <tr
+                key={ticket.id}
+                css={css({
+                  bg:
+                    ticket.enteredAt >= twoHoursBefore
+                      ? 'cyan.100'
+                      : 'lilac.100',
+                })}
+              >
                 <td>{formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm')}</td>
                 <td>
                   {ticket.leftAt
