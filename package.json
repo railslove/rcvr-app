@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js",
     "typecheck": "tsc --noemit",
-    "test": "jest"
+    "test": "cypress run",
+    "cypress": "cypress"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
@@ -52,10 +53,7 @@
     "@babel/core": "^7.9.6",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@svgr/webpack": "^5.4.0",
-    "@testing-library/jest-dom": "^5.7.0",
-    "@testing-library/react": "^10.0.4",
     "@types/iban": "0.0.30",
-    "@types/jest": "^25.2.2",
     "@types/node": "^13.13.5",
     "@types/react": "^16.9.34",
     "@types/styled-system": "^5.1.9",
@@ -63,6 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
     "babel-loader": "^8.1.0",
+    "cypress": "^7.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.0.0",
@@ -71,40 +70,11 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.0.0",
-    "fake-indexeddb": "^3.0.0",
-    "fetch-mock": "^9.9.0",
-    "fetch-mock-jest": "^1.3.0",
-    "jest": "^26.0.1",
-    "mockdate": "^2.0.5",
     "prettier": "^2.0.5",
-    "ts-jest": "^26.0.0",
     "typescript": "^3.8.3"
   },
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "jest": {
-    "testEnvironment": "<rootDir>/lib/testing/customJsdomEnv.js",
-    "automock": false,
-    "verbose": true,
-    "preset": "ts-jest",
-    "setupFilesAfterEnv": [
-      "<rootDir>/setupTests.ts"
-    ],
-    "transform": {
-      "^.+\\.ts$": "babel-jest",
-      "\\.svg$": "<rootDir>/lib/testing/fileTransformer.js"
-    },
-    "moduleNameMapper": {
-      "^~ui/(.*)$": "<rootDir>/ui/$1",
-      "^~lib/(.*)$": "<rootDir>/lib/$1"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.jest.json",
-        "babelConfig": "<rootDir>/babel.config.js"
-      }
-    }
   }
 }
