@@ -29,8 +29,12 @@ blocks:
         commands:
           - checkout --use-cache
           - cache restore
+          - npm ci
+          - npm run cypress verify
+          - cache store
+          - npm run dev &
       jobs:
-        - name: jest
+        - name: cypress
           commands:
             - npm test
 
