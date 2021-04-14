@@ -1,0 +1,3 @@
+indexedDB.deleteDatabase('RcvrDatabase')
+
+export {}
