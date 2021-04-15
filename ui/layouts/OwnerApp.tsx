@@ -105,8 +105,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
             <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
               <Text>
                 recover steht Dir aktuell bis&nbsp;
-                {formatDate(owner.blockAt, 'DD.MM.YYYY')} in vollem Umfang zur
-                Verfügung. Wenn Du recover nach dem{' '}
+                {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')} in vollem Umfang
+                zur Verfügung, dann hast du noch zwei Tage um die Bezahldaten
+                anzugeben. Wenn Du recover nach dem{' '}
                 {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
                 nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
                 Zahlungsinformationen zu bearbeiten.
