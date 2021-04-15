@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://localhost:4040/",
+  "supportFile": "cypress/support/index.ts",
+  "pageLoadTimeout": 120000,
+  "video": false
+}
