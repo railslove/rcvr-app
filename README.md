@@ -97,6 +97,11 @@ To contribute, please simply create a PullRequest. If you have the permissions t
 - All pushed branches will create a preview deployment
   - Prefixing a branch with `care/` will use a preview deployment of recover care
 
+### Testing
+
+This app is using [cypress](https://www.cypress.io/) as testing framework. To start testing locally you have to start the development server in ci mode with
+`npm run start:ci` and keep it running. Start the cypress ui with `npm run cypress open`. Alternatively, run the tests on the command line with `npm test`.
+
 ### recover health
 
 _[recover health](https://health.rcvr.app/)_ is a version of recover for institutions like hospitals and nursing homes. It has slight differences in theming and behavior. To switch to recover care, set the environment variable `BUILD_VARIANT=health`.
