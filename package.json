@@ -53,7 +53,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@emotion/babel-preset-css-prop": "^10.0.27",
-    "@svgr/webpack": "^5.4.0",
+    "@svgr/webpack": "^5.5.0",
     "@types/iban": "0.0.30",
     "@types/node": "^13.13.5",
     "@types/react": "^16.9.34",
