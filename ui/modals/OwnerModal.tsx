@@ -7,6 +7,7 @@ import { isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Button, Input } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
+import { phoneValidator } from '~lib/phoneValidator'
 
 type OwnerFormProps = {
   owner: OwnerRes
@@ -15,7 +16,7 @@ type MProps = ModalBaseProps & OwnerFormProps
 
 const yupShape = {
   name: Yup.string().required('Name muss angegeben werden.'),
-  phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
+  phone: phoneValidator,
   street: Yup.string().required('Strasse muss angegeben werden.'),
   zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
   city: Yup.string().required('Ort muss angegeben werden.'),
