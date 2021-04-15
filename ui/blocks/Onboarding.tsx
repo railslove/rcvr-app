@@ -3,6 +3,7 @@ import * as React from 'react'
 import * as Yup from 'yup'
 import { isCareEnv } from '~lib/config'
 import { Guest } from '~lib/db'
+import { phoneValidator } from '~lib/phoneValidator'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Button, Checkbox, Input, Text } from '~ui/core'
 
@@ -16,7 +17,7 @@ type OnboardingProps = {
 
 const yupShape = {
   name: Yup.string().required('Name muss angegeben werden.'),
-  phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
+  phone: phoneValidator,
   address: Yup.string().required('Adresse muss angegeben werden.'),
   postalCode: Yup.string().required('Postleitzahl muss angegeben werden.'),
   city: Yup.string().required('Ort muss angegeben werden.'),

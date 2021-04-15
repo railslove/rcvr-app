@@ -9,6 +9,7 @@ import * as Yup from 'yup'
 import { signup } from '~lib/actions'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { phoneValidator } from '~lib/phoneValidator'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
@@ -19,7 +20,7 @@ import Avv from './avv'
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),
   email: Yup.string().required('Email muss angegeben werden.'),
-  phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
+  phone: phoneValidator,
   street: Yup.string().required('Strasse muss angegeben werden.'),
   zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
   city: Yup.string().required('Ort muss angegeben werden.'),
