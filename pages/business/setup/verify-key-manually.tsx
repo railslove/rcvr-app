@@ -30,8 +30,10 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           .then(() => window.scrollTo(0, 0))
       }
     },
-    [router, owner.privateKey]
+    [router, owner, owner.privateKey]
   )
+
+  console.log(owner)
 
   return (
     <MobileApp>
@@ -56,8 +58,9 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Box height={4} />
       <Text>
         Zur Erinnerung: {isFormal ? 'Ihr' : 'Dein'} Schlüssel ist{' '}
-        <strong>{base64ToHex(owner.publicKey).length} Zeichen</strong> lang. Er
-        beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben von
+        <strong>{base64ToHex(owner.setupPublicKey).length} Zeichen</strong>{' '}
+        lang. Er beinhaltet nur Zahlen von <strong>0 bis 9</strong> und
+        Buchstaben von
         <strong> A bis F</strong>.
       </Text>
       <Box height={6} />
