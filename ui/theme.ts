@@ -85,6 +85,14 @@ const theme = {
       800: '#0e1a3b',
       900: '#000518',
     },
+    cyan: {
+      100: '#BDEAE4',
+      600: '#5C948C',
+    },
+    lilac: {
+      100: '#E0E0F9',
+      600: '#8F8FD9',
+    },
   },
   fonts: {
     body: 'Nunito, sans-serif',
