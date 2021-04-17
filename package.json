@@ -32,6 +32,7 @@
     "intl-dateformat": "^0.1.4",
     "ky": "^0.19.1",
     "ky-universal": "^0.6.0",
+    "libphonenumber-js": "^1.9.16",
     "modern-normalize": "^0.6.0",
     "next": "9.4.4",
     "papaparse": "^5.2.0",
