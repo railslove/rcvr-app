@@ -11,6 +11,9 @@ import { Text, Box, Callout, Table, Button } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
+import { FilledCircle } from '~ui/core/FilledCircle'
+import styled from '@emotion/styled'
+import { css } from '@styled-system/css'
 
 function ticketsToExcel(tickets: DecryptedTicket[]) {
   const downloadableTickets = tickets.map((ticket) => ({
@@ -99,6 +102,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const didDecrypt = dataRequest?.tickets && pendingCount === 0
 
+  const twoHoursBefore = new Date()
+  twoHoursBefore.setHours(new Date().getHours() - 2)
   return (
     <OwnerApp title={title}>
       <Loading show={loading} />
@@ -158,8 +163,23 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               </Button>
             </>
           )}
-          <Box height={4} />
-          <Button onClick={handleDownload}>Download als Excel</Button>
+          <FlexibleRow>
+            <FlexibleRowStart>
+              <Box height={4} />
+              <Button onClick={handleDownload}>Download als Excel</Button>
+            </FlexibleRowStart>
+
+            <FlexibleRowEnd>
+              <InfoRowItem>
+                <FilledCircle variant="cyan" />
+                Kontaktdaten der letzten 2 Stunden für das Ordnungsamt
+              </InfoRowItem>
+              <InfoRowItem>
+                <FilledCircle variant="lilac" />
+                Ältere Kontaktdaten für Abfragen des Gesundheitsamt
+              </InfoRowItem>
+            </FlexibleRowEnd>
+          </FlexibleRow>
         </Box>
       )}
 
@@ -178,7 +198,15 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
           </thead>
           <tbody>
             {tickets.map((ticket) => (
-              <tr key={ticket.id}>
+              <tr
+                key={ticket.id}
+                css={css({
+                  bg:
+                    ticket.enteredAt >= twoHoursBefore
+                      ? 'cyan.100'
+                      : 'lilac.100',
+                })}
+              >
                 <td>{formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm')}</td>
                 <td>
                   {ticket.leftAt
@@ -209,4 +237,34 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   )
 }
 
+const FlexibleRow = styled('div')(
+  css({
+    display: ['block', 'block', 'flex'],
+  })
+)
+
+const FlexibleRowStart = styled('div')(
+  css({
+    flexGrow: 1,
+  })
+)
+
+const FlexibleRowEnd = styled('div')(
+  css({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  })
+)
+
+const InfoRowItem = styled('div')(
+  css({
+    display: 'flex',
+    alignItems: 'center',
+    '&:first-child': {
+      paddingTop: 4,
+      paddingBottom: 2,
+    },
+  })
+)
 export default withOwner()(DataRequestPage)
