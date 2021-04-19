@@ -1,15 +1,17 @@
 import styled from '@emotion/styled'
-import { css } from '@styled-system/css'
+import { css, css } from '@styled-system/css'
 import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { useCompanies, useOwner } from '~lib/hooks'
+import { CompanyRes } from '~lib/api'
+import { useCompanies, useModals, useOwner } from '~lib/hooks'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
+import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
 import { Back } from '~ui/svg'
 import { Logo, pageTitle } from '~ui/whitelabels'
 
@@ -22,6 +24,10 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
   const router = useRouter()
+
+  const { modals, openModal } = useModals({
+    data: BusinessDataModal,
+  })
 
   React.useEffect(() => {
     if (!owner.publicKey) {
@@ -37,8 +43,19 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
     localStorage.setItem('hintclosed', '1')
   }
 
+  const isEmptyString = (string) => !string?.trim()
+
+  const companiesWithoutAddress = companies?.filter((company) => {
+    return (
+      isEmptyString(company.street) ||
+      isEmptyString(company.zip) ||
+      isEmptyString(company.city)
+    )
+  })
+
   return (
     <Limit>
+      {modals}
       <SharedMeta />
       <Head>
         <title key="title">
@@ -133,6 +150,45 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
               </Callout>
             </>
           )}
+          {companiesWithoutAddress?.length > 0 && (
+            <>
+              <Box height={6} />
+              <Callout variant="danger">
+                <Text>
+                  Wichtiger Hinweis: Um im Corona-Positivfall Kontakte und
+                  Ereignisse zuordnen zu können, benötigt das Gesundheitsamt
+                  Angaben zum Standort Deiner Betriebe. Bitte trage noch bei
+                  allen Betrieben die Adresse nach. Diese ist mittlerweile eine
+                  Pflichtangabe. Vielen Dank!
+                </Text>
+                <Box height={2} />
+                {companiesWithoutAddress.length > 1 ? (
+                  <Text>Bitte die folgenden Betriebe vervollständigen:</Text>
+                ) : (
+                  <Text>Bitte den folgenden Betrieb vervollständigen:</Text>
+                )}
+                <Box height={2} />
+                <UnorderedList>
+                  {companiesWithoutAddress.map((company: CompanyRes) => (
+                    <li key={company.id}>
+                      <ButtonWithCursor
+                        onClick={() =>
+                          openModal('data', {
+                            type: 'edit',
+                            owner: owner,
+                            company: company,
+                          })
+                        }
+                      >
+                        {company.name}
+                      </ButtonWithCursor>
+                    </li>
+                  ))}
+                </UnorderedList>
+              </Callout>
+            </>
+          )}
+
           <Box height={6} />
           <Text as="h2" variant="h2">
             {title ?? <>&nbsp;</>}
@@ -270,5 +326,19 @@ const LogoBox = styled(motion.div)(
       width: '100%',
       height: '100%',
     },
+  })
+)
+
+const UnorderedList = styled('div')(
+  css({
+    listStyleType: 'disc',
+    marginLeft: 3,
+  })
+)
+
+const ButtonWithCursor = styled('button')(
+  css({
+    color: 'red.600',
+    cursor: 'pointer',
   })
 )
