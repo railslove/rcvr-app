@@ -8,14 +8,13 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 export default function QRCodePage() {
   const videoEl = React.useRef<HTMLVideoElement>()
 
-  function appendUrlParams(url: string): any {
+  function appendUrlParams(url: URL): any {
     const params = new URLSearchParams(new URL(window.location.href).search)
-    const qrUrl = new URL(url)
 
     for (const [key, value] of params.entries()) {
-      qrUrl.searchParams.append(key, value)
+      url.searchParams.append(key, value)
     }
-    return qrUrl.toString()
+    return url.toString()
   }
 
   React.useEffect(() => {
@@ -31,7 +30,12 @@ export default function QRCodePage() {
           undefined,
           videoEl.current
         )
-        window.location.href = appendUrlParams(result.getText())
+        const qrUrl = new URL(result.getText())
+        if (qrUrl.hostname === 'rcvr.app') {
+          window.location.href = appendUrlParams(qrUrl)
+        } else {
+          console.error('Found wrong url host', qrUrl.hostname)
+        }
       } catch (error) {
         console.error('Failed mountAndWaitForScan:', error)
       }
