@@ -138,13 +138,6 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
           <RequestList dataRequests={splitRequest.pastDataRequest} />
         )}
       </Callout>
-
-      {dataRequests?.length === 0 && (
-        <Text variant="shy">
-          {isFormal ? 'Sie haben' : 'Du hast'} noch keine freigegebenen
-          Kundenkontaktdaten.
-        </Text>
-      )}
     </OwnerApp>
   )
 }
