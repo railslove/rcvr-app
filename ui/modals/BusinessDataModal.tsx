@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { queryCache } from 'react-query'
 
 import { OwnerRes, CompanyRes, patchCompany, postCompany } from '~lib/api'
-import { Box, Input, FileInput, Button, Text } from '~ui/core'
+import { Box, Input, FileInput, Button, Text, Checkbox } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { pdfType } from '~ui/whitelabels'
 
@@ -23,6 +23,7 @@ const BusinessSchema = Yup.object().shape({
   street: Yup.string().required('Strasse muss angegeben werden.'),
   zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
   city: Yup.string().required('Ort muss angegeben werden.'),
+  needToShowCoronaTest: Yup.boolean(),
   menuLink: Yup.string(),
   privacyPolicyLink: Yup.string(),
   menuPdf: Yup.mixed().test(
@@ -62,7 +63,16 @@ export const BusinessDataModal: React.FC<MProps> = ({
 
   const handleSubmit = React.useCallback(
     async (
-      { name, street, zip, city, menuLink, menuPdf, privacyPolicyLink },
+      {
+        name,
+        street,
+        zip,
+        city,
+        needToShowCoronaTest,
+        menuLink,
+        menuPdf,
+        privacyPolicyLink,
+      },
       bag
     ) => {
       const safeMenuLink = safeLink(menuLink)
@@ -73,8 +83,10 @@ export const BusinessDataModal: React.FC<MProps> = ({
       formData.append('company[street]', street)
       formData.append('company[zip]', zip)
       formData.append('company[city]', city)
+      formData.append('company[need_to_show_corona_test]', needToShowCoronaTest)
       formData.append('company[menu_link]', safeMenuLink)
       formData.append('company[privacy_policy_link]', safePrivacyPolicyLink)
+      console.log(needToShowCoronaTest)
 
       if (menuPdf !== menuPdfFileName(company)) {
         if (menuPdf === undefined || menuPdf === null || menuPdf == '') {
@@ -104,7 +116,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [type, baseProps, company?.id, company?.menuPdfLink]
+    [type, baseProps, company, company?.id, company?.menuPdfLink]
   )
 
   return (
@@ -117,6 +129,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           city: company?.city || owner?.city || '',
           menuLink: company?.menuLink || '',
           privacyPolicyLink: company?.privacyPolicyLink || '',
+          needToShowCoronaTest: company?.needToShowCoronaTest,
           menuPdf: menuPdfFileName(company),
         }}
         validationSchema={BusinessSchema}
@@ -135,32 +148,33 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <Box height={4} />
           <Input name="city" label="Ort" autoComplete="address-level2" />
           <Box height={4} />
+          <Checkbox
+            name="needToShowCoronaTest"
+            label="Gäste müssen einen negative Corona-Test vorzeigen"
+          />
+          <Box height={1} />
           <Input
             name="privacyPolicyLink"
             label={'Datenschutzerklärung als Link'}
           />
           <Box height={4} />
-          {
-            <>
-              <Input
-                name="menuLink"
-                label={`${owner?.menuAlias || pdfType} als Link`}
-              />
-              <Box height={4} />
-              <Text variant="shy" textAlign="center">
-                – oder –
-              </Text>
-              <Box height={2} />
-              <FileInput
-                name="menuPdf"
-                type="file"
-                label={`${owner?.menuAlias || pdfType} als PDF`}
-                hint="Es können nur pdf-Dateien hochgeladen werden."
-                accept="application/pdf"
-              />
-              <Box height={4} />
-            </>
-          }
+          <Input
+            name="menuLink"
+            label={`${owner?.menuAlias || pdfType} als Link`}
+          />
+          <Box height={4} />
+          <Text variant="shy" textAlign="center">
+            – oder –
+          </Text>
+          <Box height={2} />
+          <FileInput
+            name="menuPdf"
+            type="file"
+            label={`${owner?.menuAlias || pdfType} als PDF`}
+            hint="Es können nur pdf-Dateien hochgeladen werden."
+            accept="application/pdf"
+          />
+          <Box height={4} />
           <Button type="submit" css={{ width: '100%' }}>
             {button}
           </Button>
