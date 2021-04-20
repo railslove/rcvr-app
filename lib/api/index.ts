@@ -50,7 +50,9 @@ export const api = ky.create({
 export function parseDates<T>(obj: object, ...keys: string[]): T {
   const objCopy = { ...obj }
   for (const key of keys) {
-    if (objCopy[key]) objCopy[key] = Date.parse(objCopy[key])
+    if (objCopy[key]) {
+      objCopy[key] = new Date(Date.parse(objCopy[key]))
+    }
   }
   return objCopy as T
 }
