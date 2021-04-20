@@ -107,14 +107,21 @@ export const BusinessDataModal: React.FC<MProps> = ({
     [type, baseProps, company?.id, company?.menuPdfLink]
   )
 
+  const prefilledWithWhenNew = (value, prefilledValue) => {
+    if (type === 'edit') {
+      return value || ''
+    }
+    return value || prefilledValue || ''
+  }
+
   return (
     <ModalBase {...baseProps} maxWidth={400} loading={loading} title={title}>
       <Formik
         initialValues={{
           name: company?.name || '',
-          street: company?.street || owner?.street || '',
-          zip: company?.zip || owner?.zip || '',
-          city: company?.city || owner?.city || '',
+          street: prefilledWithWhenNew(company?.street, owner?.street),
+          zip: prefilledWithWhenNew(company?.zip, owner?.zip),
+          city: prefilledWithWhenNew(company?.city, owner?.city),
           menuLink: company?.menuLink || '',
           privacyPolicyLink: company?.privacyPolicyLink || '',
           menuPdf: menuPdfFileName(company),
