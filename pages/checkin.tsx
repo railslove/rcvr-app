@@ -221,6 +221,7 @@ export default function CheckinPage() {
           {showOnboarding && (
             <Card variant="form" mx={-4}>
               <Onboarding
+                area={areaInfo.data}
                 onSubmit={handleSubmitOnboarding}
                 prefilledGuest={prefilledGuest}
               />

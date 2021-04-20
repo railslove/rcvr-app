@@ -16,6 +16,7 @@ export interface AreaRes {
   name: string
   companyId: string
   companyName: string
+  companyNeedToShowCoronaTest: boolean
   menuLink?: string
   privacyPolicyLink?: string
   menuAlias?: string
