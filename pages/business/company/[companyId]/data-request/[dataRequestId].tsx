@@ -15,8 +15,15 @@ import { FilledCircle } from '~ui/core/FilledCircle'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 
-function ticketsToExcel(tickets: DecryptedTicket[]) {
-  const downloadableTickets = tickets.map((ticket) => ({
+const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
+  return tickets.sort(
+    (c1: DecryptedTicket, c2: DecryptedTicket) =>
+      c2.leftAt.getTime() - c1.leftAt.getTime()
+  )
+}
+
+const ticketsToExcel = (tickets: DecryptedTicket[]) => {
+  const downloadableTickets = sortTickets(tickets).map((ticket) => ({
     enteredAt: formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm'),
     leftAt: ticket.leftAt ? formatDate(ticket.leftAt, 'DD.MM.YYYY HH:mm') : '-',
     areaName: ticket.areaName,
@@ -197,14 +204,12 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
             </tr>
           </thead>
           <tbody>
-            {tickets.map((ticket) => (
+            {sortTickets(tickets).map((ticket) => (
               <tr
                 key={ticket.id}
                 css={css({
                   bg:
-                    ticket.enteredAt >= twoHoursBefore
-                      ? 'cyan.100'
-                      : 'lilac.100',
+                    ticket.leftAt >= twoHoursBefore ? 'cyan.100' : 'lilac.100',
                 })}
               >
                 <td>{formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm')}</td>
