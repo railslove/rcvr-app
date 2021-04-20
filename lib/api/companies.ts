@@ -3,6 +3,7 @@ import { api, AreaRes } from './'
 
 export interface CompanyReq extends FormData {
   'company[name]'?: FormDataEntryValue
+  'company[need_to_show_corona_test]'?: FormDataEntryValue
   'company[menu_link]'?: FormDataEntryValue
   'company[privacy_policy_link]'?: FormDataEntryValue
   'company[menu_pdf]'?: File
@@ -14,6 +15,7 @@ export interface CompanyRes {
   street: string
   zip: string
   city: string
+  needToShowCoronaTest: boolean
   menuLink?: string
   privacyPolicyLink?: string
   menuPdfLink?: string
