@@ -148,6 +148,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             <Box height={4} />
             {showEditData && (
               <Onboarding
+                area={area}
                 prefilledGuest={checkin.guest}
                 onSubmit={handleEditGuest}
                 hideRememberMe={true}
@@ -162,6 +163,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
                 <Text variant="h3">Wen willst du mit dir einchecken?</Text>
                 <Box height={2} />
                 <Onboarding
+                  area={area}
                   prefilledGuest={{
                     address: checkin.guest?.address,
                     postalCode: checkin.guest?.postalCode,
