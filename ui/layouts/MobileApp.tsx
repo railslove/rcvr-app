@@ -69,6 +69,8 @@ const LogoBox = styled(motion.div)(
       width: '100%',
       height: '100%',
     },
+    flexShrink: 0,
+    display: 'flex',
   },
   variant({
     variants: {
@@ -96,6 +98,7 @@ const LogoContainer = styled('div')(
     'div:last-child': {
       paddingLeft: '5px',
     },
+    width: '356px',
   },
   css({
     display: 'flex',
