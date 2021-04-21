@@ -96,7 +96,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
               <Box height={3} />
               <Checkbox
                 name="haveNegativeTest"
-                label="Ich bestätige einen negative Test vorliegen zu haben"
+                label="Ich bestätige einen negativen Test vorliegen zu haben"
               />
             </>
           )}
