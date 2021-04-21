@@ -31,10 +31,16 @@ export default function QRCodePage() {
           videoEl.current
         )
         const qrUrl = new URL(result.getText())
-        if (qrUrl.hostname === 'rcvr.app') {
+        if (qrUrl.hostname === window.location.hostname) {
           window.location.href = appendUrlParams(qrUrl)
         } else {
-          console.error('Found wrong url host', qrUrl.hostname)
+          if (
+            confirm(
+              `Warnnung, dieser QR code ist nicht Teil der RecoverApp. Sie können diese Seite öffnen, aber alle Daten, die Sie dort eingeben, werden an ${qrUrl.hostname} geschickt.`
+            )
+          ) {
+            window.location.href = appendUrlParams(qrUrl)
+          }
         }
       } catch (error) {
         console.error('Failed mountAndWaitForScan:', error)
