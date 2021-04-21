@@ -135,7 +135,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           city: prefilledWithWhenNew(company?.city, owner?.city),
           menuLink: company?.menuLink || '',
           privacyPolicyLink: company?.privacyPolicyLink || '',
-          needToShowCoronaTest: company?.needToShowCoronaTest,
+          needToShowCoronaTest: company?.needToShowCoronaTest || false,
           menuPdf: menuPdfFileName(company),
         }}
         validationSchema={BusinessSchema}
