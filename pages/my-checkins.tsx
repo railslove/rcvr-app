@@ -5,7 +5,7 @@ import { useMutation } from 'react-query'
 import { checkout } from '~lib/actions'
 import { isCareEnv } from '~lib/config'
 import { Checkin } from '~lib/db'
-import { useCheckins, useDelayedLoading } from '~lib/hooks'
+import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
 import { LastCheckins } from '~ui/blocks/LastCheckins'
@@ -30,17 +30,19 @@ export default function MyCheckinsPage() {
     [setIsLoading, checkoutFn]
   )
 
+  const sortedCheckins = React.useMemo(() => {
+    // Sort from old to new
+    return checkinsInfo.data?.sort(
+      (c1, c2) => c1.enteredAt.getTime() - c2.enteredAt.getTime()
+    )
+  }, [checkinsInfo.data])
+
   // Sorts checkins by time and groups proxy checkins together with their "main" checkins
   //
   // We do this by first sorting the checkins by checkin time, thus we always have a main checkin
   // and followed by the associated proxy checkins. We take each of these consecutive checkins
   // and put them in an array so we can render them as a group.
   const groupedCheckins = React.useMemo(() => {
-    // Sort from old to new
-    const sortedCheckins = checkinsInfo.data?.sort(
-      (c1, c2) => c1.enteredAt.getTime() - c2.enteredAt.getTime()
-    )
-
     return sortedCheckins?.reduce((result: Checkin[][], checkin: Checkin) => {
       if (!checkin.proxyCheckin) {
         result.unshift([checkin]) // main checkins are added in a new array
@@ -50,10 +52,22 @@ export default function MyCheckinsPage() {
 
       return result
     }, [])
-  }, [checkinsInfo.data])
+  }, [sortedCheckins])
+
+  const lastCheckin = React.useMemo(() => {
+    if (!sortedCheckins) {
+      return
+    }
+    if (sortedCheckins.length < 1) {
+      return
+    }
+    return sortedCheckins[sortedCheckins.length - 1]
+  }, [sortedCheckins])
+
+  const area = useArea(lastCheckin?.areaId)
 
   return (
-    <MobileApp logoVariant="sticky">
+    <MobileApp logoVariant="sticky" secondaryLogo={area?.data?.affiliateLogo}>
       <Head>
         <title key="title">Meine Checkins | recover</title>
       </Head>
