@@ -19,11 +19,13 @@ import { SharedMeta } from '~ui/blocks/SharedMeta'
 interface Props {
   children: React.ReactNode
   logoVariant?: 'big' | 'small' | 'sticky'
+  secondaryLogo?: string
 }
 
 export const MobileApp: React.FC<Props> = ({
   children,
   logoVariant = 'small',
+  secondaryLogo = null,
 }) => {
   return (
     <Limit>
@@ -31,10 +33,17 @@ export const MobileApp: React.FC<Props> = ({
         <title key="title">{pageTitle}</title>
       </Head>
       <SharedMeta />
-      <LogoBox variant={logoVariant} layoutId="appLogo">
-        <Logo />
-      </LogoBox>
-      <Box height={logoVariant === 'sticky' ? 6 : 4} />
+      <LogoContainer variant={logoVariant}>
+        <LogoBox variant={logoVariant} layoutId="appLogo">
+          <Logo />
+        </LogoBox>
+        {secondaryLogo ? (
+          <SecondaryLogoBox>
+            <SecondaryLogo src={secondaryLogo} />
+          </SecondaryLogoBox>
+        ) : null}
+      </LogoContainer>
+      <Box height={logoVariant === 'sticky' ? 10 : 4} />
       {children}
     </Limit>
   )
@@ -64,21 +73,63 @@ const LogoBox = styled(motion.div)(
   variant({
     variants: {
       big: {
-        width: logoBigWidth,
-        height: logoBigHeight,
-        maxWidth: '100%',
+        maxWidth: logoBigWidth,
+        maxHeight: logoBigHeight,
       },
       small: {
-        width: logoSmallWidth,
-        height: logoSmallHeight,
-        maxWidth: '100%',
+        maxWidth: logoSmallWidth,
+        maxHeight: logoSmallHeight,
       },
       sticky: {
-        top: 4,
-        position: 'fixed',
-        width: logoSmallWidth,
-        height: logoSmallHeight,
+        maxWidth: logoSmallWidth,
+        maxHeight: logoSmallHeight,
       },
     },
+  })
+)
+
+const LogoContainer = styled('div')(
+  {
+    'div:first-child': {
+      paddingRight: '5px',
+    },
+    'div:last-child': {
+      paddingLeft: '5px',
+    },
+  },
+  css({
+    display: 'flex',
+  }),
+  variant({
+    variants: {
+      big: {
+        height: logoBigHeight,
+      },
+      small: {
+        height: logoSmallHeight,
+      },
+      sticky: {
+        height: logoSmallHeight,
+        position: 'fixed',
+      },
+    },
+  })
+)
+
+const SecondaryLogoBox = styled('div')(
+  css({
+    width: '100%',
+    height: '100%',
+    maxWidth: '100%',
+    maxHeight: '100%',
+  })
+)
+
+const SecondaryLogo = styled('img')(
+  css({
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+    objectPosition: 'right',
   })
 )
