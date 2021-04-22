@@ -20,7 +20,7 @@
     "@stripe/stripe-js": "^1.5.0",
     "@styled-system/css": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
-    "@zxing/library": "^0.17.0",
+    "@zxing/library": "^0.18.5",
     "camelcase-keys": "^6.2.2",
     "date-fns": "^2.21.1",
     "detect-browser": "^5.1.0",
