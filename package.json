@@ -52,7 +52,7 @@
     "yup": "^0.29.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
+    "@babel/core": "^7.13.16",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@svgr/webpack": "^5.5.0",
     "@types/iban": "0.0.30",
