@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
+    "@emotion/styled": "^11.3.0",
     "@stripe/react-stripe-js": "^1.4.0",
     "@stripe/stripe-js": "^1.5.0",
     "@styled-system/css": "^5.1.5",
