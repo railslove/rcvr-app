@@ -155,7 +155,7 @@ export default function CheckinPage() {
   }, [isReady, publicKey, tryAutoCheckin])
 
   return (
-    <MobileApp logoVariant="big">
+    <MobileApp logoVariant="big" secondaryLogo={areaInfo.data?.affiliateLogo}>
       <Head>
         <title key="title">Checkin... | recover</title>
       </Head>

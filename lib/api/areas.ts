@@ -23,6 +23,7 @@ export interface AreaRes {
   ownerIsBlocked: boolean
   frontendUrl: string
   publicKey: string
+  affiliateLogo?: string
 }
 
 export async function getArea(id: AreaRes['id']): Promise<AreaRes> {
