@@ -52,7 +52,7 @@
     "yup": "^0.29.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
+    "@babel/core": "^7.13.16",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@svgr/webpack": "^5.5.0",
     "@types/iban": "0.0.30",
@@ -66,7 +66,7 @@
     "cypress": "^7.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.15.0",
-    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.3",
