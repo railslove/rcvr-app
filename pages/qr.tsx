@@ -8,14 +8,13 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 export default function QRCodePage() {
   const videoEl = React.useRef<HTMLVideoElement>()
 
-  function appendUrlParams(url: string): any {
+  function appendUrlParams(url: URL): any {
     const params = new URLSearchParams(new URL(window.location.href).search)
-    const qrUrl = new URL(url)
 
     for (const [key, value] of params.entries()) {
-      qrUrl.searchParams.append(key, value)
+      url.searchParams.append(key, value)
     }
-    return qrUrl.toString()
+    return url.toString()
   }
 
   React.useEffect(() => {
@@ -31,7 +30,18 @@ export default function QRCodePage() {
           undefined,
           videoEl.current
         )
-        window.location.href = appendUrlParams(result.getText())
+        const qrUrl = new URL(result.getText())
+        if (qrUrl.hostname === window.location.hostname) {
+          window.location.href = appendUrlParams(qrUrl)
+        } else {
+          if (
+            confirm(
+              `Warnnung, dieser QR code ist nicht Teil der RecoverApp. Sie können diese Seite öffnen, aber alle Daten, die Sie dort eingeben, werden an ${qrUrl.hostname} geschickt.`
+            )
+          ) {
+            window.location.href = appendUrlParams(qrUrl)
+          }
+        }
       } catch (error) {
         console.error('Failed mountAndWaitForScan:', error)
       }
