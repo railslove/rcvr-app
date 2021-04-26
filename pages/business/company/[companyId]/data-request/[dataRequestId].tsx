@@ -18,7 +18,7 @@ import { css } from '@styled-system/css'
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
     (c1: DecryptedTicket, c2: DecryptedTicket) =>
-      c2.leftAt.getTime() - c1.leftAt.getTime()
+      c2?.leftAt?.getTime() - c1?.leftAt?.getTime()
   )
 }
 
