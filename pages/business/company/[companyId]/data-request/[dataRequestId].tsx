@@ -97,6 +97,10 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     setLoading(false)
   }, [tickets, company, dataRequest])
 
+  const approveRequest = React.useCallback(async () => {
+    console.log('approving reuest')
+  }, [])
+
   const dateRange =
     dataRequest?.from && dataRequest?.to
       ? formatDate(dataRequest.from, 'DD.MM.YYYY HH:mm') +
@@ -111,6 +115,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const twoHoursBefore = new Date()
   twoHoursBefore.setHours(new Date().getHours() - 2)
+
   return (
     <OwnerApp title={title}>
       <Loading show={loading} />
@@ -125,13 +130,27 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       {status !== 'success' && <Text variant="shy">Lade...</Text>}
 
       {dataRequest && !dataRequest.acceptedAt && (
-        <Callout>
-          <Text>
-            Die Daten für diesen Zeitraum wurden noch nicht für{' '}
-            {isFormal ? 'Sie' : 'Dich'}
-            freigegeben.
-          </Text>
-        </Callout>
+        <>
+          <Callout variant="danger">
+            <Text>
+              {isFormal ? 'Sie' : 'Du'} hast diese Daten noch nicht für das
+              Gesundheitsamt freigegeben. Sobald{' '}
+              {isFormal
+                ? 'sie diese Daten freigeben'
+                : 'du diese Daten freigibst'}
+              , werden diese verschlüsselt an das Gesundheitsamt gesendet.
+            </Text>
+            <Box height={4} />
+            <Text as="h2">Anfragende Behörde:</Text>
+            <Text>{dataRequest.irisHealthDepartment}</Text>
+            <Box height={4} />
+            <Text as="h2">Grund der Anfrage:</Text>
+            <Text>{dataRequest.reason}</Text>
+            <Box height={4} />
+            <Button onClick={approveRequest}>Daten freigeben</Button>
+          </Callout>
+          <Box height={4} />
+        </>
       )}
 
       {dataRequest?.tickets && !owner.privateKey && (

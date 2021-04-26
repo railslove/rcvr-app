@@ -4,6 +4,8 @@ import { api, parseDates } from './'
 
 export interface DataRequestRes<DateT = Date> {
   id: string
+  reason: string
+  irisHealthDepartment: string
   from: DateT
   to: DateT
   acceptedAt: DateT
