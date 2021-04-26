@@ -67,3 +67,9 @@ export async function postAutoDataRequest(reason: string, companyId: string) {
       }
     })
 }
+
+export async function postAcceptDataRequest(dataRequestId: string) {
+  return await api
+    .patch(`unaccepted_data_requests/${dataRequestId}/accept`, {})
+    .json()
+}

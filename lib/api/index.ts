@@ -18,6 +18,7 @@ export const api = ky.create({
           '/companies',
           '/areas',
           '/data_requests',
+          '/unaccepted_data_requests',
           '/checkout',
           '/setup_intent',
           '/sepa_subscription',
