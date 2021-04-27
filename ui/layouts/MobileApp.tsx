@@ -92,7 +92,7 @@ const LogoBox = styled(motion.div)(
 
 const LogoContainer = styled('div')(
   {
-    'div:first-child': {
+    'div:first-of-type': {
       paddingRight: '5px',
     },
     'div:last-child': {

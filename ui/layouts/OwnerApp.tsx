@@ -6,8 +6,9 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { CompanyRes } from '~lib/api'
+import { CompanyRes, DataRequestRes } from '~lib/api'
 import { useCompanies, useModals, useOwner } from '~lib/hooks'
+import { useUnacceptedDataRequests } from '~lib/hooks/useUnacceptedDataRequests'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
@@ -23,6 +24,7 @@ interface Props {
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
+  const { data: unacceptedDataRequests } = useUnacceptedDataRequests()
   const router = useRouter()
 
   const { modals, openModal } = useModals({
@@ -52,6 +54,19 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
       isEmptyString(company.city)
     )
   })
+
+  const getCompanyName = (companyId) =>
+    companies?.find((company: CompanyRes) => company.id === companyId)?.name
+
+  const formatDateRange = (dataRequest: DataRequestRes) => {
+    const dateRange =
+      dataRequest?.from && dataRequest?.to
+        ? formatDate(dataRequest.from, 'DD.MM.YYYY HH:mm') +
+          ' – ' +
+          formatDate(dataRequest.to, 'DD.MM.YYYY HH:mm')
+        : ''
+    return dateRange
+  }
 
   return (
     <Limit>
@@ -118,27 +133,61 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           </ul>
         </Aside>
         <Main>
+          {Object.keys(unacceptedDataRequests || {}).length > 0 && (
+            <>
+              <Callout variant="danger">
+                <Text>
+                  Dringend: Datenfreigabe für das Gesundheitsamt erforderlich!
+                </Text>
+                <RequestList>
+                  {Object.keys(unacceptedDataRequests).map(
+                    (companyId: string) => {
+                      return unacceptedDataRequests[companyId]
+                        .map((dataRequest: DataRequestRes) => {
+                          return (
+                            <li key={`${companyId}-${dataRequest.id}`}>
+                              <Link
+                                href={`/business/company/${companyId}/data-request/${dataRequest.id}`}
+                              >
+                                <a>
+                                  {getCompanyName(companyId)} -{' '}
+                                  {formatDateRange(dataRequest)}
+                                </a>
+                              </Link>
+                            </li>
+                          )
+                        })
+                        .flat()
+                    }
+                  )}
+                </RequestList>
+              </Callout>
+              <Box height={6} />
+            </>
+          )}
           {owner.blockAt && (
-            <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
-              <Text>
-                recover steht Dir aktuell bis&nbsp;
-                {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')} in vollem Umfang
-                zur Verfügung, dann hast du noch zwei Tage um die Bezahldaten
-                anzugeben. Wenn Du recover nach dem{' '}
-                {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
-                nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
-                Zahlungsinformationen zu bearbeiten.
-              </Text>
-              <Text>
-                Selbstverständlich wirst Du weiter Zugriff auf Dein Konto haben,
-                sowie Informationen zu alten Checkins anfordern und ans
-                Gesundheitsamt weiterleiten können.
-              </Text>
-            </Callout>
+            <>
+              <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
+                <Text>
+                  recover steht Dir aktuell bis&nbsp;
+                  {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')} in vollem Umfang
+                  zur Verfügung, dann hast du noch zwei Tage um die Bezahldaten
+                  anzugeben. Wenn Du recover nach dem{' '}
+                  {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
+                  nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
+                  Zahlungsinformationen zu bearbeiten.
+                </Text>
+                <Text>
+                  Selbstverständlich wirst Du weiter Zugriff auf Dein Konto
+                  haben, sowie Informationen zu alten Checkins anfordern und ans
+                  Gesundheitsamt weiterleiten können.
+                </Text>
+              </Callout>
+              <Box height={6} />
+            </>
           )}
           {hint && (
             <>
-              <Box height={6} />
               <Callout>
                 <CloseButton onClose={closeHint} />
                 <Box height={2} />
@@ -148,11 +197,11 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                   <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
                 </ol>
               </Callout>
+              <Box height={6} />
             </>
           )}
           {companiesWithoutAddress?.length > 0 && (
             <>
-              <Box height={6} />
               <Callout variant="danger">
                 <Text>
                   Wichtiger Hinweis: Um im Corona-Positivfall Kontakte und
@@ -186,10 +235,10 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                   ))}
                 </UnorderedList>
               </Callout>
+              <Box height={6} />
             </>
           )}
 
-          <Box height={6} />
           <Text as="h2" variant="h2">
             {title ?? <>&nbsp;</>}
           </Text>
@@ -340,5 +389,19 @@ const ButtonWithCursor = styled('button')(
   css({
     color: 'red.600',
     cursor: 'pointer',
+  })
+)
+
+const RequestList = styled('ul')(
+  css({
+    listStyle: 'disc',
+    marginLeft: 8,
+    marginTop: 2,
+    li: {
+      marginBottom: 1,
+    },
+    '* a': {
+      textDecoration: 'underline',
+    },
   })
 )
