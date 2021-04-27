@@ -7,7 +7,7 @@ import { queryCache } from 'react-query'
 import { isCareEnv, isFormal } from '~lib/config'
 import { decryptTickets, DecryptedTicket } from '~lib/actions'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { useCompany, useDataRequest, useModals } from '~lib/hooks'
+import { useCompanies, useCompany, useDataRequest, useModals } from '~lib/hooks'
 import { Text, Box, Callout, Table, Button } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
@@ -50,6 +50,7 @@ const ticketsToExcel = (tickets: DecryptedTicket[]) => {
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { query } = useRouter()
+  const { data: companies } = useCompanies()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()
   const { data: company } = useCompany(companyId)
@@ -102,6 +103,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const approveRequest = React.useCallback(async () => {
     postAcceptDataRequest(dataRequestId).then(() => {
       queryCache.refetchQueries(['dataRequests', companyId, dataRequestId])
+      queryCache.refetchQueries(['unacceptedDataRequests'])
     })
   }, [])
 

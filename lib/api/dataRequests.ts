@@ -22,6 +22,16 @@ export interface DataRequestTicket<DateT = Date> {
   encryptedData: string
 }
 
+export interface UnacceptedDataRequestsRes {
+  [companyId: string]: DataRequestRes[]
+}
+
+interface UnacceptedDataRequestsReq {
+  id: string
+  name: string
+  unacceptedDataRequests: DataRequestRes[]
+}
+
 export async function getDataRequests(
   companyId: string
 ): Promise<DataRequestRes[]> {
@@ -72,4 +82,21 @@ export async function postAcceptDataRequest(dataRequestId: string) {
   return await api
     .patch(`unaccepted_data_requests/${dataRequestId}/accept`, {})
     .json()
+}
+
+export async function getUnacceptedDataRequests() {
+  return await api
+    .get(`unaccepted_data_requests`, {})
+    .json()
+    .then((res) => camelcaseKeys(res, { deep: true }))
+    .then((res: UnacceptedDataRequestsReq[]) =>
+      res.reduce((obj, item) => {
+        obj[
+          item.id
+        ] = item.unacceptedDataRequests.map((dataRequest: DataRequestRes) =>
+          parseDates<DataRequestRes>(dataRequest, 'from', 'to', 'acceptedAt')
+        )
+        return obj
+      }, {})
+    )
 }
