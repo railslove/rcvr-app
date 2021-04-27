@@ -23,7 +23,7 @@
     "@zxing/library": "^0.17.0",
     "camelcase-keys": "^6.2.2",
     "date-fns": "^2.21.1",
-    "detect-browser": "^5.1.0",
+    "detect-browser": "^5.2.0",
     "dexie": "^3.0.1",
     "emotion-theming": "^10.0.27",
     "formik": "^2.2.6",
