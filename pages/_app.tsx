@@ -4,8 +4,8 @@ import '~lib/appReset.css'
 
 import * as React from 'react'
 import { AppProps } from 'next/app'
-import { Global } from '@emotion/core'
-import { ThemeProvider } from 'emotion-theming'
+import { Global, ThemeProvider } from '@emotion/react'
+
 import { AnimateSharedLayout } from 'framer-motion'
 
 import { useA11yFocusRing } from '~lib/hooks'
