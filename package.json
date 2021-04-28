@@ -14,8 +14,8 @@
     "start:ci": "NODE_ENV=test next dev -- -p 4040"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
     "@stripe/react-stripe-js": "^1.4.0",
     "@stripe/stripe-js": "^1.5.0",
     "@styled-system/css": "^5.1.5",
@@ -25,7 +25,6 @@
     "date-fns": "^2.21.1",
     "detect-browser": "^5.2.0",
     "dexie": "^3.0.1",
-    "emotion-theming": "^10.0.27",
     "formik": "^2.2.6",
     "framer-motion": "^2.9.5",
     "iban": "0.0.14",
@@ -53,7 +52,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",
-    "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@emotion/babel-preset-css-prop": "^11.2.0",
+    "@emotion/eslint-plugin": "^11.2.0",
     "@svgr/webpack": "^5.5.0",
     "@types/iban": "0.0.30",
     "@types/node": "^13.13.5",
@@ -72,7 +72,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.0.0",
     "prettier": "^2.2.1",
-    "typescript": "^3.8.3"
+    "typescript": "^4.2.4"
   },
   "prettier": {
     "semi": false,
