@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik'
 import * as React from 'react'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { patchArea, postArea } from '~lib/api'
 import { isFormal } from '~lib/config'
@@ -30,6 +30,7 @@ export const AreaDataModal: React.FC<MProps> = ({
   companyId,
   ...baseProps
 }) => {
+  const queryClient = useQueryClient()
   const title = { new: 'Neuer Bereich', edit: 'Bereich ändern' }[type]
   const button = { new: 'Hinzufügen', edit: 'Speichern' }[type]
   const [loading, setLoading] = React.useState(false)
@@ -44,8 +45,8 @@ export const AreaDataModal: React.FC<MProps> = ({
         if (type === 'new') {
           await postArea({ name, companyId })
         }
-        queryCache.refetchQueries('areas')
-        queryCache.refetchQueries('companies')
+        queryClient.invalidateQueries('areas')
+        queryClient.invalidateQueries('companies')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(

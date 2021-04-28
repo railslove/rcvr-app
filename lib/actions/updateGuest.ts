@@ -4,12 +4,15 @@ import {
   updateGuest,
   getCurrentGuest,
 } from '~lib/db'
-import { queryCache } from 'react-query'
+import { QueryClient } from 'react-query'
 import * as db from '../db'
 import * as api from '../api'
 import { encrypt, toCSV } from '../crypto'
 
-export async function updateCurrentGuest(guest: db.Guest): Promise<db.Checkin> {
+export async function updateCurrentGuest(
+  queryClient: QueryClient,
+  guest: db.Guest
+): Promise<db.Checkin> {
   // First we update the current guest in local DB (if it exists)
   const currentGuest = await getCurrentGuest()
   if (currentGuest) {
@@ -29,6 +32,6 @@ export async function updateCurrentGuest(guest: db.Guest): Promise<db.Checkin> {
     })
   }
   // Finally we need to refresh the checkins in order to display it in my-checkins
-  queryCache.refetchQueries('checkins', { force: true })
+  queryClient.invalidateQueries('checkins')
   return updatedCheckin
 }
