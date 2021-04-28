@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-export const SRText: React.FC<{}> = styled('div')({
+export const SRText: React.FC<Record<string, never>> = styled('div')({
   position: 'absolute',
   height: 1,
   width: 1,
