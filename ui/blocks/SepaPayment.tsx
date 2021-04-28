@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import * as React from 'react'
 import { useStripe } from '@stripe/react-stripe-js'
 
