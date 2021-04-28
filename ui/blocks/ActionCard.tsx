@@ -24,26 +24,28 @@ export const ActionCard: AreaCardCmps = ({ href, as, onClick, children }) => {
       as={onClick ? 'button' : 'div'}
       onClick={onClick}
     >
-      <Row flexWrap="wrap" alignItems="center" px={4} py={2}>
-        {children}
-      </Row>
-      {href && (
-        <Link href={href} as={as}>
-          <a
-            css={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              zIndex: 1,
-              cursor: 'pointer',
-            }}
-          >
-            <SRText>Zur Seite navigieren</SRText>
-          </a>
-        </Link>
-      )}
+      <>
+        <Row flexWrap="wrap" alignItems="center" px={4} py={2}>
+          {children}
+        </Row>
+        {href && (
+          <Link href={href} as={as}>
+            <a
+              css={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 1,
+                cursor: 'pointer',
+              }}
+            >
+              <SRText>Zur Seite navigieren</SRText>
+            </a>
+          </Link>
+        )}
+      </>
     </Card>
   )
 }
