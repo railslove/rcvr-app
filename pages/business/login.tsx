@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { login } from '~lib/actions/login'
 import { isFormal } from '~lib/config'
@@ -20,12 +20,13 @@ const LoginSchema = Yup.object().shape({
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
+  const queryClient = useQueryClient()
 
   const handleSubmit = async ({ email, password }, bag) => {
     try {
       setLoading(true)
       const owner = await login({ email, password })
-      queryCache.clear()
+      queryClient.clear()
 
       if (!owner.publicKey) {
         // If the owner has no publicKey here, it means the owner didn't finish

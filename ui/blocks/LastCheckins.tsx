@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { AnimatePresence, motion } from 'framer-motion'
 import * as React from 'react'
-import { queryCache, useMutation } from 'react-query'
+import { useQueryClient, useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
 import { checkin as checkinAction } from '~lib/actions'
 import { updateCurrentGuest } from '~lib/actions/updateGuest'
@@ -28,13 +28,13 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const [isLoading, setLoading] = React.useState(false)
   const [showEditData, setShowEditData] = React.useState(false)
 
-  const [checkinFn] = useMutation(checkinAction, {
-    throwOnError: true,
-  })
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(checkinAction)
 
   const handleEditGuest = (guest, _opts) => {
     setLoading(true)
-    updateCurrentGuest(guest).then((_checkin) => {
+    updateCurrentGuest(queryClient, guest).then((_checkin) => {
       setLoading(false)
       setShowEditData(false)
     })
@@ -56,17 +56,17 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
           enteredAt: new Date(),
         }
 
-        await checkinFn({ ticket, guest })
+        await mutation.mutateAsync({ ticket, guest })
 
         idRef.current = uuidv4() // add a new one for the next
-        await queryCache.refetchQueries('checkins')
+        await queryClient.invalidateQueries('checkins')
         setShowProxyCheckin(false)
         setLoading(false)
       } catch (error) {
         console.error(error)
       }
     },
-    [checkin, checkinFn, setShowProxyCheckin, area]
+    [checkin, setShowProxyCheckin, area, queryClient, mutation]
   )
 
   return (

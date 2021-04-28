@@ -1,8 +1,8 @@
-import { queryCache } from 'react-query'
 import * as db from '../db'
 import * as api from '../api'
 
 export async function checkout(checkin: db.Checkin): Promise<db.Checkin> {
+  const queryClient = useQueryClient()
   const leftAt = new Date()
   const ticket = await api.patchTicket({ id: checkin.id, leftAt })
 
@@ -11,6 +11,6 @@ export async function checkout(checkin: db.Checkin): Promise<db.Checkin> {
     leftAt: ticket.leftAt,
     guest: null,
   })
-  queryCache.refetchQueries('checkins', { force: true })
+  queryClient.invalidateQueries('checkins', { force: true })
   return checkout
 }

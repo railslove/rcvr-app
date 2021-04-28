@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik'
 import * as React from 'react'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { hexToBase64 } from '~lib/crypto'
 import { updateOwner } from '~lib/db'
@@ -56,6 +56,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
   ...baseProps
 }) => {
   const [loading, setLoading] = React.useState(false)
+  const queryClient = useQueryClient()
 
   const handleSubmit = React.useCallback(
     async (values, bag) => {
@@ -69,7 +70,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         setLoading(true)
         const privateKey = hexToBase64(hexPrivateKey)
         await updateOwner({ id: ownerId, privateKey })
-        queryCache.refetchQueries('owner')
+        queryClient.invalidateQueries('owner')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(
@@ -82,7 +83,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [baseProps, ownerId]
+    [baseProps, ownerId, queryClient]
   )
 
   return (
