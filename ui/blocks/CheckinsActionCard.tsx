@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { AreaRes, patchTicket } from '~lib/api'
 import { useLastTicketsGrouped } from '~lib/hooks'
 import { ActionCard } from '~ui/blocks/ActionCard'
@@ -12,6 +12,7 @@ export const CheckinsActionCard: React.FC<{
   companyId: string
 }> = ({ area, companyId }) => {
   const { data: ticketsByArea } = useLastTicketsGrouped(companyId)
+  const queryClient = useQueryClient()
 
   const tickets = ticketsByArea?.[area.id]
   const openCount = tickets?.open.length ?? 0
@@ -26,7 +27,7 @@ export const CheckinsActionCard: React.FC<{
     const openTickets = tickets?.open || []
     await Promise.all(openTickets.map(({ id }) => patchTicket({ id, leftAt })))
 
-    await queryCache.refetchQueries(['tickets', companyId])
+    await queryClient.invalidateQueries(['tickets', companyId])
 
     setLoading(false)
   }

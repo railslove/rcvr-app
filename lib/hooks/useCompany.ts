@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query'
 import { getCompany, CompanyRes } from '../api'
 
-async function fetchCompany(_key: unknown, id: string): Promise<CompanyRes> {
+async function fetchCompany({ queryKey }): Promise<CompanyRes> {
+  const [_key, id] = queryKey
   return await getCompany(id)
 }
 

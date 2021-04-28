@@ -17,17 +17,17 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
   const [isLoading, setIsLoading] = useDelayedLoading(false)
-  const [checkoutFn, { error }] = useMutation(checkout)
+  const mutation = useMutation(checkout)
 
   const handleCheckout = React.useCallback(
     async (checkins: Checkin[]) => {
       setIsLoading(true)
       await Promise.all(
-        checkins.map((checkin) => checkoutFn({ id: checkin.id }))
+        checkins.map((checkin) => mutation.mutate({ id: checkin.id }))
       )
       setIsLoading(false)
     },
-    [setIsLoading, checkoutFn]
+    [setIsLoading, mutation]
   )
 
   const sortedCheckins = React.useMemo(() => {
@@ -105,10 +105,10 @@ export default function MyCheckinsPage() {
                     checkins={checkins}
                     onCheckout={handleCheckout}
                   />
-                  {error && (
+                  {mutation.error && (
                     <Callout variant="danger">
                       <Text>
-                        {error instanceof TypeError ? (
+                        {mutation.error instanceof TypeError ? (
                           <p>
                             Wir konnten Dich nicht auschecken. Hast du
                             vielleicht gerade kein Internet?
