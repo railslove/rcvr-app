@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-export const SharedMeta: React.FC<{}> = () => {
+export const SharedMeta: React.FC<Record<string, never>> = () => {
   return (
     <Head>
       <link
