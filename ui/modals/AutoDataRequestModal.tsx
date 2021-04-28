@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 import { isFormal } from '~lib/config'
 import { postAutoDataRequest } from '~lib/api'
@@ -25,6 +25,7 @@ export const AutoDataRequestModal: React.FC<MProps> = ({
   companyId,
   ...baseProps
 }) => {
+  const queryClient = useQueryClient()
   const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = React.useCallback(
@@ -32,7 +33,7 @@ export const AutoDataRequestModal: React.FC<MProps> = ({
       try {
         setLoading(true)
         await postAutoDataRequest(reason, companyId)
-        queryCache.refetchQueries('dataRequests')
+        queryClient.invalidateQueries('dataRequests')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(
@@ -44,7 +45,7 @@ export const AutoDataRequestModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [baseProps, companyId]
+    [baseProps, companyId, queryClient]
   )
   return (
     <ModalBase

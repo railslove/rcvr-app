@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import * as React from 'react'
+import { useQueryClient } from 'react-query'
 import { updateOwner } from '~lib/actions'
 import { isFormal } from '~lib/config'
 import { generateKeys } from '~lib/crypto'
@@ -13,6 +14,8 @@ import { contactInformation, privateKeyExplanation } from '~ui/whitelabels'
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
+  const queryClient = useQueryClient()
+
   const generateKey = async (redirectTarget: string) => {
     if (!owner) return
 
@@ -28,7 +31,11 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
       // so when a user freshly logs in (or reloads or whatever)
       // and doesn't have a public_key assigned in the backend
       // the frontend needs to restart the onboarding process!
-      await updateOwner({ ...owner, privateKey, setupPublicKey: publicKey })
+      await updateOwner(queryClient, {
+        ...owner,
+        privateKey,
+        setupPublicKey: publicKey,
+      })
     }
     router.push(redirectTarget)
   }

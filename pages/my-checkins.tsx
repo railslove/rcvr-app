@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import Head from 'next/head'
 import * as React from 'react'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { checkout } from '~lib/actions'
 import { isCareEnv } from '~lib/config'
 import { Checkin } from '~lib/db'
@@ -17,17 +17,20 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
   const [isLoading, setIsLoading] = useDelayedLoading(false)
-  const [checkoutFn, { error }] = useMutation(checkout)
+  const mutation = useMutation(checkout)
+  const queryClient = useQueryClient()
 
   const handleCheckout = React.useCallback(
     async (checkins: Checkin[]) => {
       setIsLoading(true)
       await Promise.all(
-        checkins.map((checkin) => checkoutFn({ id: checkin.id }))
+        checkins.map((checkin) =>
+          mutation.mutate({ queryClient, checkin: { id: checkin.id } })
+        )
       )
       setIsLoading(false)
     },
-    [setIsLoading, checkoutFn]
+    [setIsLoading, mutation, queryClient]
   )
 
   const sortedCheckins = React.useMemo(() => {
@@ -105,10 +108,10 @@ export default function MyCheckinsPage() {
                     checkins={checkins}
                     onCheckout={handleCheckout}
                   />
-                  {error && (
+                  {mutation.error && (
                     <Callout variant="danger">
                       <Text>
-                        {error instanceof TypeError ? (
+                        {mutation.error instanceof TypeError ? (
                           <p>
                             Wir konnten Dich nicht auschecken. Hast du
                             vielleicht gerade kein Internet?

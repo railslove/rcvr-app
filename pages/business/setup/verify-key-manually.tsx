@@ -11,9 +11,11 @@ import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { KeyPaper } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { commitSetupPublicKey } from '~lib/actions'
+import { useQueryClient } from 'react-query'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const handleCheck = React.useCallback(
     async ({ privateKey }, bag) => {
@@ -24,13 +26,13 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           'Der Schlüssel stimmt nicht. Bitte nochmal überprüfen. Leerzeichen und Groß- und Kleinschreibung spielen keine Rolle.'
         )
       } else {
-        await commitSetupPublicKey(owner)
+        await commitSetupPublicKey(queryClient, owner)
         router
           .replace('/business/setup/finished')
           .then(() => window.scrollTo(0, 0))
       }
     },
-    [router, owner]
+    [router, owner, queryClient]
   )
 
   return (
