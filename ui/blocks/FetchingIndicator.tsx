@@ -7,7 +7,7 @@ import styled from '@emotion/styled'
 import { Icon } from '~ui/core'
 import { ArrowRefresh } from '~ui/svg'
 
-export const FetchingIndicator: React.FC<{}> = () => {
+export const FetchingIndicator: React.FC<Record<string, never>> = () => {
   const isFetching = useIsFetching()
 
   return (

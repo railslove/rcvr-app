@@ -7,7 +7,7 @@ import SepaPaymentContainer from '~ui/blocks/SepaPaymentContainer'
 
 interface Props {
   children: Array<any>
-  openStripeCheckout: Function
+  openStripeCheckout: () => void
 }
 type MProps = ModalBaseProps & Props
 
