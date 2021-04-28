@@ -1,5 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
+  plugins: ['@emotion'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
