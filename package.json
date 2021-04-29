@@ -41,7 +41,7 @@
     "react-query": "^3.13.12",
     "react-textarea-autosize": "^8.3.2",
     "react-use": "^17.2.4",
-    "snakecase-keys": "^3.2.1",
+    "snakecase-keys": "^4.0.2",
     "styled-system": "^5.1.5",
     "tweetnacl": "^1.0.3",
     "tweetnacl-sealedbox-js": "^1.2.0",
