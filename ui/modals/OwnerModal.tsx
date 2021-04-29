@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as Yup from 'yup'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { Form, Formik } from 'formik'
 import { OwnerRes, patchOwner } from '~lib/api'
 import { isFormal } from '~lib/config'
@@ -35,6 +35,7 @@ export const OwnerModal: React.FC<MProps> = ({ owner, ...baseProps }) => {
     companyName: owner?.companyName || '',
   }
   const [loading, setLoading] = React.useState(false)
+  const queryClient = useQueryClient()
 
   return (
     <ModalBase
@@ -50,7 +51,7 @@ export const OwnerModal: React.FC<MProps> = ({ owner, ...baseProps }) => {
           setLoading(true)
           try {
             await patchOwner(fields)
-            queryCache.refetchQueries('owner')
+            queryClient.invalidateQueries('owner')
             baseProps.onClose()
           } finally {
             setLoading(false)

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 import { OwnerRes, CompanyRes, patchCompany, postCompany } from '~lib/api'
 import { Box, Input, FileInput, Button, Text, Checkbox } from '~ui/core'
@@ -49,6 +49,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
   company,
   ...baseProps
 }) => {
+  const queryClient = useQueryClient()
   const title = { new: 'Neuer Betrieb', edit: 'Betrieb ändern' }[type]
   const button = { new: 'Hinzufügen', edit: 'Speichern' }[type]
   const [loading, setLoading] = React.useState(false)
@@ -103,7 +104,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         if (type === 'new') {
           await postCompany(formData)
         }
-        queryCache.refetchQueries('companies')
+        queryClient.invalidateQueries('companies')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(
