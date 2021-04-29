@@ -40,7 +40,7 @@
     "react-dropzone": "^11.3.2",
     "react-query": "^3.13.12",
     "react-textarea-autosize": "^8.3.2",
-    "react-use": "^15.1.0",
+    "react-use": "^17.2.4",
     "snakecase-keys": "^3.2.1",
     "styled-system": "^5.1.5",
     "tweetnacl": "^1.0.3",
