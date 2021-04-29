@@ -8,7 +8,7 @@ agent:
 global_job_config:
   prologue:
     commands:
-      - sem-version node 14
+      - sem-version node 12
 
 blocks:
   - name: 'Install'
@@ -24,10 +24,6 @@ blocks:
             - npm run cypress verify
             - cache store
             - cache store cypress-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json)-$(checksum .semaphore/semaphore.yml) ~/.cache/Cypress
-      epilogue:
-        on_fail:
-          commands:
-            - artifact push job /home/semaphore/.npm/_logs
 
   - name: 'Test'
     dependencies: ['Install']
