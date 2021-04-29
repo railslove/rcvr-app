@@ -90,7 +90,7 @@ export default function CheckinPage() {
 
       try {
         const ticket = { id, publicKey, areaId, enteredAt }
-        await mutationCheckin.mutate({
+        await mutationCheckin.mutateAsync({
           ticket,
           guest,
           companyId: areaInfo.data.companyId,
