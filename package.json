@@ -74,6 +74,9 @@
     "prettier": "^2.2.1",
     "typescript": "^3.8.3"
   },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  },
   "prettier": {
     "semi": false,
     "singleQuote": true
