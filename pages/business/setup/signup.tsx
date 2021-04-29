@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { signup } from '~lib/actions'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
@@ -43,6 +43,7 @@ const LoginSchema = Yup.object().shape({
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
+  const queryClient = useQueryClient()
 
   const handleSubmit = async (
     { name, email, phone, street, zip, city, companyName, password },
@@ -63,7 +64,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         password,
         affiliate,
       })
-      queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
+      queryClient.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
     } catch (error) {
       if (error.response?.status === 422) {

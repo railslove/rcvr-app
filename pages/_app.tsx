@@ -7,18 +7,22 @@ import { AppProps } from 'next/app'
 import { Global } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
 import { AnimateSharedLayout } from 'framer-motion'
-
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { useA11yFocusRing } from '~lib/hooks'
 import { theme, globalStyles } from '~ui/theme'
+
+const queryClient = new QueryClient()
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   useA11yFocusRing()
   return (
     <ThemeProvider theme={theme}>
-      <Global styles={globalStyles} />
-      <AnimateSharedLayout>
-        <Component {...pageProps} />
-      </AnimateSharedLayout>
+      <QueryClientProvider client={queryClient}>
+        <Global styles={globalStyles} />
+        <AnimateSharedLayout>
+          <Component {...pageProps} />
+        </AnimateSharedLayout>
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }
