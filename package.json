@@ -64,7 +64,7 @@
     "babel-loader": "^8.2.2",
     "cypress": "^7.1.0",
     "eslint": "^7.25.0",
-    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
