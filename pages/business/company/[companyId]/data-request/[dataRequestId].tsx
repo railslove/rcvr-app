@@ -266,7 +266,7 @@ const InfoRowItem = styled('div')(
   css({
     display: 'flex',
     alignItems: 'center',
-    '&:first-child': {
+    '&:first-of-type': {
       paddingTop: 4,
       paddingBottom: 2,
     },
