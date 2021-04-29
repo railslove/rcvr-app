@@ -8,7 +8,7 @@ agent:
 global_job_config:
   prologue:
     commands:
-      - sem-version node 12
+      - sem-version node 14
 
 blocks:
   - name: 'Install'
