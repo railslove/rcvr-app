@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { patchArea, postArea } from '~lib/api'
-import { isFormal } from '~lib/config'
+import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { Box, Button, Input, Text } from '~ui/core'
 
@@ -80,7 +80,11 @@ export const AreaDataModal: React.FC<MProps> = ({
           <Input
             name="name"
             label="Name des Bereichs"
-            hint='z.B. "Tisch 1" oder "Theke"'
+            hint={
+              isCareEnv || isHealthEnv
+                ? 'z.B "Eingangsbereich" oder "Station 1"'
+                : 'z.B. "Tisch 1" oder "Theke"'
+            }
             autoFocus
           />
           <Box height={4} />
