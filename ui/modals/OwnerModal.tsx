@@ -7,7 +7,7 @@ import { isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Button, Input } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
-import { phoneValidator } from '~lib/phoneValidator'
+import { phoneValidator } from '~lib/validators/phoneValidator'
 
 type OwnerFormProps = {
   owner: OwnerRes
