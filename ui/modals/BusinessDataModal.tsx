@@ -1,26 +1,31 @@
 import * as React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
 
-import { patchCompany, postCompany } from '~lib/api'
-import { Box, Input, FileInput, Button, Text } from '~ui/core'
+import { OwnerRes, CompanyRes, patchCompany, postCompany } from '~lib/api'
+import { Box, Input, FileInput, Button, Text, Checkbox } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { pdfType } from '~ui/whitelabels'
 
 interface Props {
   type: 'new' | 'edit'
-  name?: string
-  menuLink?: string
-  menuPdfLink?: string
-  menuAlias?: string
-  companyId?: string
+  company?: CompanyRes
+  owner?: OwnerRes
 }
 type MProps = ModalBaseProps & Props
 
+const menuPdfFileName = (company: CompanyRes) =>
+  company?.menuPdfLink?.split('/')?.pop()
+
 const BusinessSchema = Yup.object().shape({
   name: Yup.string().required('Du musst einen Namen angeben.'),
+  street: Yup.string().required('Strasse muss angegeben werden.'),
+  zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
+  city: Yup.string().required('Ort muss angegeben werden.'),
+  needToShowCoronaTest: Yup.boolean(),
   menuLink: Yup.string(),
+  privacyPolicyLink: Yup.string(),
   menuPdf: Yup.mixed().test(
     'isPDF',
     'Es können nur pdf-Dateien hochgeladen werden.',
@@ -40,29 +45,51 @@ const BusinessSchema = Yup.object().shape({
 
 export const BusinessDataModal: React.FC<MProps> = ({
   type = 'new',
-  name,
-  menuLink,
-  menuPdfLink,
-  menuAlias,
-  companyId,
+  owner,
+  company,
   ...baseProps
 }) => {
+  const queryClient = useQueryClient()
   const title = { new: 'Neuer Betrieb', edit: 'Betrieb ändern' }[type]
   const button = { new: 'Hinzufügen', edit: 'Speichern' }[type]
   const [loading, setLoading] = React.useState(false)
 
+  const safeLink = (link: string) => {
+    let safeLink = link
+    if (safeLink && !safeLink.startsWith('http')) {
+      safeLink = 'https://' + safeLink
+    }
+    return safeLink
+  }
+
   const handleSubmit = React.useCallback(
-    async ({ name, menuLink, menuPdf }, bag) => {
-      let safeMenuLink = menuLink
-      if (menuLink && !menuLink.startsWith('http')) {
-        safeMenuLink = 'https://' + menuLink
-      }
+    async (
+      {
+        name,
+        street,
+        zip,
+        city,
+        needToShowCoronaTest,
+        menuLink,
+        menuPdf,
+        privacyPolicyLink,
+      },
+      bag
+    ) => {
+      const safeMenuLink = safeLink(menuLink)
+      const safePrivacyPolicyLink = safeLink(privacyPolicyLink)
 
       const formData = new FormData()
       formData.append('company[name]', name)
+      formData.append('company[street]', street)
+      formData.append('company[zip]', zip)
+      formData.append('company[city]', city)
+      formData.append('company[need_to_show_corona_test]', needToShowCoronaTest)
       formData.append('company[menu_link]', safeMenuLink)
-      if (menuPdf !== menuPdfLink) {
-        if (menuPdf === undefined) {
+      formData.append('company[privacy_policy_link]', safePrivacyPolicyLink)
+
+      if (menuPdf !== menuPdfFileName(company)) {
+        if (menuPdf === undefined || menuPdf === null || menuPdf == '') {
           formData.append('company[remove_menu_pdf]', '1')
         } else {
           formData.append('company[menu_pdf]', menuPdf)
@@ -72,12 +99,12 @@ export const BusinessDataModal: React.FC<MProps> = ({
       try {
         setLoading(true)
         if (type === 'edit') {
-          await patchCompany(companyId, formData)
+          await patchCompany(company.id, formData)
         }
         if (type === 'new') {
           await postCompany(formData)
         }
-        queryCache.refetchQueries('companies')
+        queryClient.invalidateQueries('companies')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(
@@ -89,16 +116,28 @@ export const BusinessDataModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [type, companyId, baseProps, menuPdfLink]
+    [type, baseProps, company, company?.id, company?.menuPdfLink]
   )
+
+  const prefilledWithWhenNew = (value, prefilledValue) => {
+    if (type === 'edit') {
+      return value || ''
+    }
+    return value || prefilledValue || ''
+  }
 
   return (
     <ModalBase {...baseProps} maxWidth={400} loading={loading} title={title}>
       <Formik
         initialValues={{
-          name: name || '',
-          menuLink: menuLink || '',
-          menuPdf: menuPdfLink,
+          name: company?.name || '',
+          street: prefilledWithWhenNew(company?.street, owner?.street),
+          zip: prefilledWithWhenNew(company?.zip, owner?.zip),
+          city: prefilledWithWhenNew(company?.city, owner?.city),
+          menuLink: company?.menuLink || '',
+          privacyPolicyLink: company?.privacyPolicyLink || '',
+          needToShowCoronaTest: company?.needToShowCoronaTest || false,
+          menuPdf: menuPdfFileName(company),
         }}
         validationSchema={BusinessSchema}
         onSubmit={handleSubmit}
@@ -106,27 +145,43 @@ export const BusinessDataModal: React.FC<MProps> = ({
         <Form>
           <Input name="name" label="Name des Betriebs" autoFocus />
           <Box height={4} />
-          {
-            <>
-              <Input
-                name="menuLink"
-                label={`${menuAlias || pdfType} als Link`}
-              />
-              <Box height={4} />
-              <Text variant="shy" textAlign="center">
-                – oder –
-              </Text>
-              <Box height={2} />
-              <FileInput
-                name="menuPdf"
-                type="file"
-                label={`${menuAlias || pdfType} als PDF`}
-                hint="Es können nur pdf-Dateien hochgeladen werden."
-                accept="application/pdf"
-              />
-              <Box height={4} />
-            </>
-          }
+          <Input
+            name="street"
+            label="Strasse und Hausnummer"
+            autoComplete="street-address"
+          />
+          <Box height={4} />
+          <Input name="zip" label="Postleitzahl" autoComplete="postal-code" />
+          <Box height={4} />
+          <Input name="city" label="Ort" autoComplete="address-level2" />
+          <Box height={4} />
+          <Checkbox
+            name="needToShowCoronaTest"
+            label="Gäste müssen einen negative Corona-Test vorzeigen"
+          />
+          <Box height={1} />
+          <Input
+            name="privacyPolicyLink"
+            label={'Datenschutzerklärung als Link'}
+          />
+          <Box height={4} />
+          <Input
+            name="menuLink"
+            label={`${owner?.menuAlias || pdfType} als Link`}
+          />
+          <Box height={4} />
+          <Text variant="shy" textAlign="center">
+            – oder –
+          </Text>
+          <Box height={2} />
+          <FileInput
+            name="menuPdf"
+            type="file"
+            label={`${owner?.menuAlias || pdfType} als PDF`}
+            hint="Es können nur pdf-Dateien hochgeladen werden."
+            accept="application/pdf"
+          />
+          <Box height={4} />
           <Button type="submit" css={{ width: '100%' }}>
             {button}
           </Button>

@@ -1,21 +1,22 @@
-import * as React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import formatDate from 'intl-dateformat'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
+import * as React from 'react'
+import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
-import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { Box, Button, Text, Divider, Callout } from '~ui/core'
-import { Right } from '~ui/svg'
 import { ArrowsRight } from '~ui/anicons'
-import { OwnerApp } from '~ui/layouts/OwnerApp'
-import { Loading } from '~ui/blocks/Loading'
-import { ActionList } from '~ui/blocks/ActionList'
 import { ActionCard } from '~ui/blocks/ActionCard'
+import { ActionList } from '~ui/blocks/ActionList'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Callout, Divider, Text } from '~ui/core'
+import { OwnerApp } from '~ui/layouts/OwnerApp'
+import { CheckoutSelectionModal } from '~ui/modals/CheckoutSelectionModal'
+import { OwnerModal } from '~ui/modals/OwnerModal'
 import { SubscribedModal } from '~ui/modals/SubscribedModal'
+import { Right } from '~ui/svg'
 import { pricingInfoDuringTest } from '~ui/whitelabels'
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
@@ -28,7 +29,9 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const didOpenSuccessModal = React.useRef(false)
   const { modals, openModal } = useModals({
+    checkoutSelection: CheckoutSelectionModal,
     success: SubscribedModal,
+    editOwner: OwnerModal,
   })
 
   React.useEffect(() => {
@@ -39,7 +42,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
     }
   }, [status, openModal])
 
-  const openCheckout = React.useCallback(async () => {
+  const openStripeCheckout = React.useCallback(async () => {
     try {
       setRedirecting(true)
       const stripe = await loadStripe(
@@ -52,6 +55,14 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       console.error(error)
     }
   }, [])
+
+  const openCheckout = () => {
+    openModal('checkoutSelection', { openStripeCheckout })
+  }
+
+  const openEditOwner = () => {
+    openModal('editOwner', { owner })
+  }
 
   const openSelfService = React.useCallback(async () => {
     try {
@@ -75,6 +86,14 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
     <OwnerApp title="Mein Profil">
       {modals}
       <Loading show={redirecting} />
+
+      <Button
+        onClick={() => openEditOwner()}
+        right={<ArrowsRight color="green" />}
+      >
+        Profil bearbeiten
+      </Button>
+
       <Divider />
       <Text as="h3" variant="h2">
         Meine Mitgliedschaft
@@ -103,7 +122,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
                 E-Mail.
               </p>
               <p>
-                <a href="mailto:team@recoverapp.com">
+                <a href="mailto:team@recoverapp.de">
                   <Button right={<ArrowsRight color="pink" />}>
                     Email schreiben
                   </Button>
@@ -111,7 +130,10 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               </p>
             </Text>
           ) : (
-            <Button onClick={openCheckout} right={<ArrowsRight color="pink" />}>
+            <Button
+              onClick={() => openCheckout()}
+              right={<ArrowsRight color="pink" />}
+            >
               Jetzt upgraden
             </Button>
           )}
@@ -121,11 +143,8 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       {hasSubscription && !owner.canUseForFree && (
         <>
           <ActionList grid>
-            <ActionCard onClick={openCheckout}>
-              <ActionCard.Main title="Rechnungsdaten ändern" icon={Right} />
-            </ActionCard>
-            <ActionCard onClick={openSelfService}>
-              <ActionCard.Main title="Rechnungen" icon={Right} />
+            <ActionCard onClick={() => openCheckout()}>
+              <ActionCard.Main title="Zahlungsmethode ändern" icon={Right} />
             </ActionCard>
           </ActionList>
 
@@ -139,7 +158,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
           </ActionList>
           <Box height={4} />
           <Text variant="shy">
-            {isFormal ? 'Sie können ihre' : 'Du kannst deine'} Mitgliedschaft
+            {isFormal ? 'Sie können ihre' : 'Du kannst Deine'} Mitgliedschaft
             jederzeit zum Monatsende kündigen.
           </Text>
         </>
@@ -247,7 +266,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout variant="danger">
         <Text>
-          {isFormal ? 'Sie haben ihre' : 'Du hast deine'} Mitgliedschaft
+          {isFormal ? 'Sie haben ihre' : 'Du hast Deine'} Mitgliedschaft
           gekündigt.
         </Text>
       </Callout>

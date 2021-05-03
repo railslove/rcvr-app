@@ -10,12 +10,15 @@ import { Text, Box, Button, ButtonLink, Row, Input } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { KeyPaper } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import { commitSetupPublicKey } from '~lib/actions'
+import { useQueryClient } from 'react-query'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const handleCheck = React.useCallback(
-    ({ privateKey }, bag) => {
+    async ({ privateKey }, bag) => {
       const normalizedKey = privateKey.toUpperCase().replace(/\s/g, '')
       if (normalizedKey !== base64ToHex(owner.privateKey)) {
         bag.setFieldError(
@@ -23,12 +26,13 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           'Der Schlüssel stimmt nicht. Bitte nochmal überprüfen. Leerzeichen und Groß- und Kleinschreibung spielen keine Rolle.'
         )
       } else {
+        await commitSetupPublicKey(queryClient, owner)
         router
           .replace('/business/setup/finished')
           .then(() => window.scrollTo(0, 0))
       }
     },
-    [router, owner.privateKey]
+    [router, owner, queryClient]
   )
 
   return (
@@ -54,8 +58,9 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Box height={4} />
       <Text>
         Zur Erinnerung: {isFormal ? 'Ihr' : 'Dein'} Schlüssel ist{' '}
-        <strong>{base64ToHex(owner.publicKey).length} Zeichen</strong> lang. Er
-        beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben von
+        <strong>{base64ToHex(owner.setupPublicKey).length} Zeichen</strong>{' '}
+        lang. Er beinhaltet nur Zahlen von <strong>0 bis 9</strong> und
+        Buchstaben von
         <strong> A bis F</strong>.
       </Text>
       <Box height={6} />

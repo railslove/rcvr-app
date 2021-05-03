@@ -27,7 +27,13 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
       <Box height={2} />
       <ActionList grid>
         {company?.areas.map((area) => {
-          return <CheckinsActionCard area={area} companyId={companyId} />
+          return (
+            <CheckinsActionCard
+              key={area.id}
+              area={area}
+              companyId={companyId}
+            />
+          )
         })}
       </ActionList>
     </OwnerApp>

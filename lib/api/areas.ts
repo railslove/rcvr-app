@@ -16,11 +16,14 @@ export interface AreaRes {
   name: string
   companyId: string
   companyName: string
+  companyNeedToShowCoronaTest: boolean
   menuLink?: string
+  privacyPolicyLink?: string
   menuAlias?: string
   ownerIsBlocked: boolean
   frontendUrl: string
   publicKey: string
+  affiliateLogo?: string
 }
 
 export async function getArea(id: AreaRes['id']): Promise<AreaRes> {

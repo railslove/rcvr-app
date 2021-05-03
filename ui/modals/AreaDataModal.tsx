@@ -1,12 +1,11 @@
+import { Form, Formik } from 'formik'
 import * as React from 'react'
-import { Formik, Form } from 'formik'
+import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
-import { queryCache } from 'react-query'
-
-import { isFormal } from '~lib/config'
 import { patchArea, postArea } from '~lib/api'
-import { Box, Input, Button, Text } from '~ui/core'
+import { isFormal } from '~lib/config'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
+import { Box, Button, Input, Text } from '~ui/core'
 
 interface Props {
   type: 'new' | 'edit'
@@ -31,6 +30,7 @@ export const AreaDataModal: React.FC<MProps> = ({
   companyId,
   ...baseProps
 }) => {
+  const queryClient = useQueryClient()
   const title = { new: 'Neuer Bereich', edit: 'Bereich ändern' }[type]
   const button = { new: 'Hinzufügen', edit: 'Speichern' }[type]
   const [loading, setLoading] = React.useState(false)
@@ -45,8 +45,8 @@ export const AreaDataModal: React.FC<MProps> = ({
         if (type === 'new') {
           await postArea({ name, companyId })
         }
-        queryCache.refetchQueries('areas')
-        queryCache.refetchQueries('companies')
+        queryClient.invalidateQueries('areas')
+        queryClient.invalidateQueries('companies')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(
@@ -73,8 +73,8 @@ export const AreaDataModal: React.FC<MProps> = ({
             Der Name des Bereichs wird über dem QR Code angezeigt. Falls{' '}
             {isFormal
               ? 'Sie bereits Lage-, Stationspläne oder ähnliches haben, können Sie'
-              : 'du bereits einen Saalplan hast, kannst du'}{' '}
-            die Nummerierung in gleicher Weise abbilden.
+              : 'du bereits einen Übersichtsplan hast, kannst du'}{' '}
+            die Benennung in gleicher Weise abbilden.
           </Text>
           <Box height={6} />
           <Input

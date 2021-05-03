@@ -1,24 +1,29 @@
-import * as React from 'react'
-import Head from 'next/head'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
-import { useRouter } from 'next/router'
-import { queryCache } from 'react-query'
-import { isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
-import { privacyUrl, signupText } from '~ui/whitelabels'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { signup } from '~lib/actions'
-import { PersonalData } from '~ui/svg'
-import { Input, Button, Box, Text, Card, Row, Checkbox } from '~ui/core'
-import { MobileApp } from '~ui/layouts/MobileApp'
-import { Loading } from '~ui/blocks/Loading'
+import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { css } from '@emotion/core'
+import { Form, Formik } from 'formik'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import { useQueryClient } from 'react-query'
+import * as Yup from 'yup'
+import { signup } from '~lib/actions'
+import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { phoneValidator } from '~lib/phoneValidator'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
+import { PersonalData } from '~ui/svg'
+import { signupText } from '~ui/whitelabels'
+import Avv from './avv'
 
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required('Name muss angegeben werden.'),
   email: Yup.string().required('Email muss angegeben werden.'),
-  phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
+  phone: phoneValidator,
+  street: Yup.string().required('Strasse muss angegeben werden.'),
+  zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
+  city: Yup.string().required('Ort muss angegeben werden.'),
   companyName: Yup.string().required('Unternehmensname muss angegeben werden.'),
   password: Yup.string()
     .required('Passwort muss angegeben werden.')
@@ -38,17 +43,28 @@ const LoginSchema = Yup.object().shape({
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
+  const queryClient = useQueryClient()
 
   const handleSubmit = async (
-    { name, email, phone, companyName, password },
+    { name, email, phone, street, zip, city, companyName, password },
     bag
   ) => {
     try {
       setLoading(true)
       const affiliate = localStorage.getItem('rcvr_affiliate')
 
-      await signup({ name, companyName, phone, email, password, affiliate })
-      queryCache.clear() // `owner` is cached and the next page would otherwise first think there's still no user
+      await signup({
+        name,
+        companyName,
+        phone,
+        street,
+        zip,
+        city,
+        email,
+        password,
+        affiliate,
+      })
+      queryClient.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
     } catch (error) {
       if (error.response?.status === 422) {
@@ -81,6 +97,9 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           name: '',
           companyName: '',
           phone: '',
+          street: '',
+          zip: '',
+          city: '',
           email: '',
           password: '',
           confirmPassword: '',
@@ -111,7 +130,23 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Input
                 name="phone"
                 label={isFormal ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+                type="tel"
+                autoComplete="tel"
               />
+              <Box height={4} />
+              <Input
+                name="street"
+                label={'Strasse und Hausnummer'}
+                autoComplete="street-address"
+              />
+              <Box height={4} />
+              <Input
+                name="zip"
+                label={'Postleitzahl'}
+                autoComplete="postal-code"
+              />
+              <Box height={4} />
+              <Input name="city" label={'Ort'} autoComplete="address-level2" />
               <Box height={8} />
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={4} />
@@ -184,22 +219,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               )}
 
               <Box height={6} />
-              <Text variant="fineprint">
-                <p>
-                  Mit dem Betätigen des Buttons{' '}
-                  {isFormal ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
-                  <a
-                    href={
-                      isFreseniusEnv
-                        ? privacyUrl
-                        : 'https://railslove.com/privacy/'
-                    }
-                  >
-                    Datenschutzbestimmungen
-                  </a>{' '}
-                  einverstanden.
-                </p>
-              </Text>
+              <Avv />
               <Box height={5} />
               <Button type="submit" css={{ width: '100%' }}>
                 Registrieren

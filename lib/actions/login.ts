@@ -12,7 +12,7 @@ export async function login(login: api.PostLogin): Promise<db.Owner> {
 
   // update publicKey in api if it exists locally but not in api
   if (owner.publicKey && !ownerRes.publicKey) {
-    await api.patchOwner({ id: owner.id, publicKey: owner.publicKey })
+    await api.patchOwner({ publicKey: owner.publicKey })
   }
 
   // update publicKey locally if it's missing locally but exists in api
