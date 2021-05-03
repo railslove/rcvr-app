@@ -122,7 +122,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
                 E-Mail.
               </p>
               <p>
-                <a href="mailto:team@recoverapp.com">
+                <a href="mailto:team@recoverapp.de">
                   <Button right={<ArrowsRight color="pink" />}>
                     Email schreiben
                   </Button>
