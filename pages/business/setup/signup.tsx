@@ -9,7 +9,8 @@ import * as Yup from 'yup'
 import { signup } from '~lib/actions'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { phoneValidator } from '~lib/phoneValidator'
+import { passwordValidator } from '~lib/validators/passwordValidator'
+import { phoneValidator } from '~lib/validators/phoneValidator'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
@@ -25,12 +26,7 @@ const LoginSchema = Yup.object().shape({
   zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
   city: Yup.string().required('Ort muss angegeben werden.'),
   companyName: Yup.string().required('Unternehmensname muss angegeben werden.'),
-  password: Yup.string()
-    .required('Passwort muss angegeben werden.')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.^*()%!-[\]{}])[A-Za-z\d$&+,:;=?@#|'<>.^*()%!-[\]{}]{8,}$/,
-      'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
-    ),
+  password: passwordValidator,
   confirmPassword: Yup.string()
     .required('Passwordwiederholung muss angegeben werden.')
     .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
