@@ -2,7 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 
 import { isCareEnv, isFormal, isHealthEnv, isRcvrEnv } from '~lib/config'
 import { introText, formalAddress } from '~ui/whitelabels'
@@ -19,19 +19,18 @@ import { Loading } from '~ui/blocks/Loading'
 export default function CheckinPage() {
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())
-  const [checkinFn, { error }] = useMutation(checkin, {
-    throwOnError: true,
-  })
-  const [checkoutFn] = useMutation(checkout)
+  const mutationCheckin = useMutation(checkin)
+  const mutationCheckout = useMutation(checkout)
   const [showOnboarding, setShowOnboarding] = React.useState(false)
   const [showConfirmation, setShowConfirmation] = React.useState(false)
   const [showLoading, setShowLoading] = React.useState(true)
   const router = useRouter()
+  const queryClient = useQueryClient()
 
-  if (error && !(error instanceof TypeError)) {
+  if (mutationCheckin.error && !(mutationCheckin.error instanceof TypeError)) {
     // Something went very wrong during the checkin and we can't
     // recover ( ☜(ﾟヮﾟ☜) ayyyy) from it
-    throw error
+    throw mutationCheckin.error
   }
 
   const publicKey = router.query.k?.toString()
@@ -80,12 +79,22 @@ export default function CheckinPage() {
       // auto checkout
       const lastCheckin = await getLastCheckin()
       if (lastCheckin && !lastCheckin.leftAt) {
-        await checkoutFn({ id: lastCheckin.id, leftAt: enteredAt })
+        await mutationCheckout.mutateAsync({
+          queryClient,
+          checkin: {
+            id: lastCheckin.id,
+            leftAt: enteredAt,
+          },
+        })
       }
 
       try {
         const ticket = { id, publicKey, areaId, enteredAt }
-        await checkinFn({ ticket, guest, companyId: areaInfo.data.companyId })
+        await mutationCheckin.mutateAsync({
+          ticket,
+          guest,
+          companyId: areaInfo.data.companyId,
+        })
         router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
       } catch (error) {
         if (error instanceof TypeError) {
@@ -94,7 +103,15 @@ export default function CheckinPage() {
         }
       }
     },
-    [publicKey, areaId, areaInfo, router, checkinFn, checkoutFn]
+    [
+      publicKey,
+      areaId,
+      areaInfo,
+      router,
+      mutationCheckin,
+      mutationCheckout,
+      queryClient,
+    ]
   )
 
   const handleSubmitOnboarding = React.useCallback(
@@ -155,7 +172,7 @@ export default function CheckinPage() {
   }, [isReady, publicKey, tryAutoCheckin])
 
   return (
-    <MobileApp logoVariant="big">
+    <MobileApp logoVariant="big" secondaryLogo={areaInfo.data?.affiliateLogo}>
       <Head>
         <title key="title">Checkin... | recover</title>
       </Head>
@@ -207,7 +224,7 @@ export default function CheckinPage() {
           </Text>
           <Box height={6} />
 
-          {error && (
+          {mutationCheckin.error && (
             <Box mb={6} mx={-4}>
               <Callout variant="danger">
                 <Text>
@@ -221,11 +238,27 @@ export default function CheckinPage() {
           {showOnboarding && (
             <Card variant="form" mx={-4}>
               <Onboarding
+                area={areaInfo.data}
                 onSubmit={handleSubmitOnboarding}
                 prefilledGuest={prefilledGuest}
               />
+              {areaInfo.data.privacyPolicyLink && (
+                <>
+                  <Box height={4} />
+                  <a
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    href={areaInfo.data.privacyPolicyLink}
+                  >
+                    <Text variant="link">
+                      Datenschutzerklärung von {areaInfo.data.companyName}
+                    </Text>
+                  </a>
+                </>
+              )}
             </Card>
           )}
+
           {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
           <Row justifyContent="center" my={6}>
             <a

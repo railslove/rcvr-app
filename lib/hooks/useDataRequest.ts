@@ -1,11 +1,8 @@
 import { useQuery } from 'react-query'
 import { getDataRequest, DataRequestRes } from '../api'
 
-async function fetchDataRequest(
-  _key: unknown,
-  _companyId: string,
-  id: string
-): Promise<DataRequestRes> {
+async function fetchDataRequest({ queryKey }): Promise<DataRequestRes> {
+  const [_key, _companyId, id] = queryKey
   return await getDataRequest(id)
 }
 

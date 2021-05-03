@@ -11,7 +11,7 @@ import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Lock, Ticket, Virus } from '~ui/svg'
 
-export const BottomBar: React.FC<{}> = () => {
+export const BottomBar: React.FC<Record<string, never>> = () => {
   const { route } = useRouter()
 
   return (

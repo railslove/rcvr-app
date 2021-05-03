@@ -1,13 +1,12 @@
+import { Form, Formik } from 'formik'
 import * as React from 'react'
-import { Formik, Form } from 'formik'
+import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
-import { queryCache } from 'react-query'
-
 import { hexToBase64 } from '~lib/crypto'
 import { updateOwner } from '~lib/db'
-import { Box, Input, Button, Text, FileInput } from '~ui/core'
-import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { readTextFile } from '~lib/file'
+import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
+import { Box, Button, FileInput, Input, Text } from '~ui/core'
 
 interface Props {
   ownerId?: number
@@ -57,6 +56,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
   ...baseProps
 }) => {
   const [loading, setLoading] = React.useState(false)
+  const queryClient = useQueryClient()
 
   const handleSubmit = React.useCallback(
     async (values, bag) => {
@@ -70,7 +70,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         setLoading(true)
         const privateKey = hexToBase64(hexPrivateKey)
         await updateOwner({ id: ownerId, privateKey })
-        queryCache.refetchQueries('owner')
+        queryClient.invalidateQueries('owner')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(
@@ -83,7 +83,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [baseProps, ownerId]
+    [baseProps, ownerId, queryClient]
   )
 
   return (
@@ -101,7 +101,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         <Form>
           <Text>
             <p>
-              Bitte gib deinen privaten Schlüssel ein, den du während der
+              Bitte gib Deinen privaten Schlüssel ein, den du während der
               Registrierung notiert hast.
             </p>
             <p>

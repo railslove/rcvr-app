@@ -1,47 +1,62 @@
+import { Form, Formik } from 'formik'
 import * as React from 'react'
-import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-
+import { AreaRes } from '~lib/api'
 import { isCareEnv } from '~lib/config'
 import { Guest } from '~lib/db'
-import { Input, Checkbox, Button, Box, Text } from '~ui/core'
-import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
+import { phoneValidator } from '~lib/phoneValidator'
+import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { Box, Button, Checkbox, Input, Text } from '~ui/core'
 
 type OnboardingProps = {
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
   prefilledGuest?: Guest
+  area: AreaRes
   hideRememberMe?: boolean
   onAbort?: () => void
+  submitButtonValue?: string
 }
-
-const yupShape = {
-  name: Yup.string().required('Name muss angegeben werden.'),
-  phone: Yup.string().required('Telefonnummer muss angegeben werden.'),
-  address: Yup.string().required('Adresse muss angegeben werden.'),
-  rememberMe: Yup.boolean(),
-}
-
-if (isCareEnv)
-  yupShape['resident'] = Yup.string().required(
-    'Bewohnername muss angegeben werden.'
-  )
-
-const OnboardingSchema = Yup.object().shape(yupShape)
 
 export const Onboarding: React.FC<OnboardingProps> = ({
+  area,
   onSubmit,
   prefilledGuest,
   hideRememberMe,
   onAbort,
+  submitButtonValue = 'Check in',
 }) => {
   const initialValues = {
     name: prefilledGuest?.name || '',
     phone: prefilledGuest?.phone || '',
     address: prefilledGuest?.address || '',
+    postalCode: prefilledGuest?.postalCode || '',
+    city: prefilledGuest?.city || '',
     rememberMe: prefilledGuest ? true : false,
+    haveNegativeTest: false,
+  }
+  if (isCareEnv) initialValues['resident'] = ''
+
+  const yupShape = {
+    name: Yup.string().required('Name muss angegeben werden.'),
+    phone: phoneValidator,
+    address: Yup.string().required('Adresse muss angegeben werden.'),
+    postalCode: Yup.string().required('Postleitzahl muss angegeben werden.'),
+    city: Yup.string().required('Ort muss angegeben werden.'),
+    rememberMe: Yup.boolean(),
   }
 
-  if (isCareEnv) initialValues['resident'] = ''
+  if (area.companyNeedToShowCoronaTest)
+    yupShape['haveNegativeTest'] = Yup.boolean().oneOf(
+      [true],
+      'Ein negativer Test muss vorliegen'
+    )
+
+  if (isCareEnv)
+    yupShape['resident'] = Yup.string().required(
+      'Bewohnername muss angegeben werden.'
+    )
+
+  const OnboardingSchema = Yup.object().shape(yupShape)
 
   return (
     <div>
@@ -59,14 +74,30 @@ export const Onboarding: React.FC<OnboardingProps> = ({
           <Box height={4} />
           <Input
             name="address"
-            label="Anschrift"
+            label="Anschrift (Straße und Hausnummer)"
             autoComplete="street-address"
           />
           <Box height={4} />
+          <Input
+            name="postalCode"
+            label="Postleitzahl"
+            autoComplete="postal-code"
+          />
+          <Box height={4} />
+          <Input name="city" label="Ort" autoComplete="address-level2" />
           {isCareEnv && (
             <>
               <Box height={4} />
               <Input name="resident" label="Bewohnername" />
+            </>
+          )}
+          {area.companyNeedToShowCoronaTest && (
+            <>
+              <Box height={3} />
+              <Checkbox
+                name="haveNegativeTest"
+                label="Ich bestätige einen negativen Test vorliegen zu haben"
+              />
             </>
           )}
           {hideRememberMe || (
@@ -85,7 +116,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
             left={<ArrowsRight color="green" />}
             right={<ArrowsLeft color="green" />}
           >
-            Check in
+            {submitButtonValue}
           </Button>
           {onAbort && (
             <>

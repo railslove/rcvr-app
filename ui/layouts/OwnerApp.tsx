@@ -1,18 +1,19 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
-
-import { useCompanies, useOwner } from '~lib/hooks'
-import { Box, Text, Icon, Row, Callout, CloseButton } from '~ui/core'
-import { Logo, pageTitle } from '~ui/whitelabels'
-import { Back } from '~ui/svg'
-import { SharedMeta } from '~ui/blocks/SharedMeta'
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import { CompanyRes } from '~lib/api'
+import { useCompanies, useModals, useOwner } from '~lib/hooks'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+import { SharedMeta } from '~ui/blocks/SharedMeta'
+import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
+import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
+import { Back } from '~ui/svg'
+import { Logo, pageTitle } from '~ui/whitelabels'
 
 interface Props {
   children: React.ReactNode
@@ -22,6 +23,17 @@ interface Props {
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
+  const router = useRouter()
+
+  const { modals, openModal } = useModals({
+    data: BusinessDataModal,
+  })
+
+  React.useEffect(() => {
+    if (!owner.publicKey) {
+      router.replace('/business/setup/success')
+    }
+  }, [])
 
   const [hint, setHint] = React.useState(() => {
     return localStorage.getItem('hintclosed') !== '1'
@@ -31,8 +43,19 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
     localStorage.setItem('hintclosed', '1')
   }
 
+  const isEmptyString = (string) => !string?.trim()
+
+  const companiesWithoutAddress = companies?.filter((company) => {
+    return (
+      isEmptyString(company.street) ||
+      isEmptyString(company.zip) ||
+      isEmptyString(company.city)
+    )
+  })
+
   return (
     <Limit>
+      {modals}
       <SharedMeta />
       <Head>
         <title key="title">
@@ -96,39 +119,22 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
         </Aside>
         <Main>
           {owner.blockAt && (
-            <>
-              {owner.blockAt < new Date() ? (
-                <Callout variant="danger">
-                  <Text>
-                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
-                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
-                    überprüfen.
-                  </Text>
-                  <Text>
-                    Seit dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} sind
-                    keine neuen Checkins mehr möglich. Selbstverständlich haben
-                    Sie weiterhin Zugriff auf Ihr Konto und können Informationen
-                    zu alten Checkins anfordern und ans Gesundheitsamt
-                    weiterleiten.
-                  </Text>
-                </Callout>
-              ) : (
-                <Callout variant="warn">
-                  <Text>
-                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
-                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
-                    überprüfen.
-                  </Text>
-                  <Text>
-                    Ab dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} werden
-                    keine neuen Checkins mehr möglich sein. Selbstverständlich
-                    werden Sie weiterhin Zugriff auf Ihr Konto haben und
-                    Informationen zu alten Checkins anfordern und ans
-                    Gesundheitsamt weiterleiten können.
-                  </Text>
-                </Callout>
-              )}
-            </>
+            <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
+              <Text>
+                recover steht Dir aktuell bis&nbsp;
+                {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')} in vollem Umfang
+                zur Verfügung, dann hast du noch zwei Tage um die Bezahldaten
+                anzugeben. Wenn Du recover nach dem{' '}
+                {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
+                nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
+                Zahlungsinformationen zu bearbeiten.
+              </Text>
+              <Text>
+                Selbstverständlich wirst Du weiter Zugriff auf Dein Konto haben,
+                sowie Informationen zu alten Checkins anfordern und ans
+                Gesundheitsamt weiterleiten können.
+              </Text>
+            </Callout>
           )}
           {hint && (
             <>
@@ -144,6 +150,45 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
               </Callout>
             </>
           )}
+          {companiesWithoutAddress?.length > 0 && (
+            <>
+              <Box height={6} />
+              <Callout variant="danger">
+                <Text>
+                  Wichtiger Hinweis: Um im Corona-Positivfall Kontakte und
+                  Ereignisse zuordnen zu können, benötigt das Gesundheitsamt
+                  Angaben zum Standort Deiner Betriebe. Bitte trage noch bei
+                  allen Betrieben die Adresse nach. Diese ist mittlerweile eine
+                  Pflichtangabe. Vielen Dank!
+                </Text>
+                <Box height={2} />
+                {companiesWithoutAddress.length > 1 ? (
+                  <Text>Bitte die folgenden Betriebe vervollständigen:</Text>
+                ) : (
+                  <Text>Bitte den folgenden Betrieb vervollständigen:</Text>
+                )}
+                <Box height={2} />
+                <UnorderedList>
+                  {companiesWithoutAddress.map((company: CompanyRes) => (
+                    <li key={company.id}>
+                      <ButtonWithCursor
+                        onClick={() =>
+                          openModal('data', {
+                            type: 'edit',
+                            owner: owner,
+                            company: company,
+                          })
+                        }
+                      >
+                        {company.name}
+                      </ButtonWithCursor>
+                    </li>
+                  ))}
+                </UnorderedList>
+              </Callout>
+            </>
+          )}
+
           <Box height={6} />
           <Text as="h2" variant="h2">
             {title ?? <>&nbsp;</>}
@@ -281,5 +326,19 @@ const LogoBox = styled(motion.div)(
       width: '100%',
       height: '100%',
     },
+  })
+)
+
+const UnorderedList = styled('div')(
+  css({
+    listStyleType: 'disc',
+    marginLeft: 3,
+  })
+)
+
+const ButtonWithCursor = styled('button')(
+  css({
+    color: 'red.600',
+    cursor: 'pointer',
   })
 )

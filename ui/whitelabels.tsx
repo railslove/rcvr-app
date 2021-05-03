@@ -1,10 +1,10 @@
 import * as React from 'react'
-import LogoRcvr from './svg/logo-rcvr.svg'
+import { Box } from '~ui/core'
+import { Warning } from './svg'
 import LogoCare from './svg/logo-care.svg'
 import LogoFresenius from './svg/logo-fresenius.svg'
 import LogoHealth from './svg/logo-health.svg'
-import { Box } from '~ui/core'
-import { Warning } from './svg'
+import LogoRcvr from './svg/logo-rcvr.svg'
 
 const envs = {
   rcvr: {
@@ -13,13 +13,13 @@ const envs = {
     secondaryHighlightColor: '#EA28EE',
     Logo: LogoRcvr,
     logoSmallWidth: '122px',
-    logoSmallHeight: '20px',
+    logoSmallHeight: '35px',
     logoBigWidth: '182px',
     logoBigHeight: '40px',
     privacyUrl: 'https://railslove.com/privacy/',
     formalAddress: false,
     introText:
-      'Durch die aktuellen Corona-Verordnungen musst du deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
+      'Durch die aktuellen Corona-Verordnungen musst du Deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
     instruction: 'Account erstellen',
@@ -28,14 +28,14 @@ const envs = {
     setupIntro: (
       <>
         <p>
-          Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
-          der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese
-          Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von
-          der App verschlüsselt. Während des Onboardings erstellst Du daher in
-          wenigen Schritten ein digitales Schlüsselpaar.
+          Seit Corona sind viele Betriebe und Einrichtungen verpflichtet,
+          Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! Mit recover
+          führst Du diese Liste digital. Um die Daten deiner Gäste zu schützen,
+          werden sie von der App verschlüsselt. Während des Onboardings
+          erstellst Du daher in wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
-          Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit
+          Nach dem Onboarding kannst Du Dich bei uns melden um zusammen mit
           unserem Team die Echtheit deiner Daten zu prüfen
         </p>
         <p>
@@ -61,16 +61,17 @@ const envs = {
         <p>
           <strong>Nächster Schritt: </strong>
           <br />
-          Bitte klicke auf &quot;Schlüssel herunterladen&quot;. Das erzeugt eine
-          Schlüsseldatei und startet den Download.
+          Ein Schlüssel wird erzeugt mit dem die Daten deiner Kunden
+          verschlüsselt werden.
+          <br />
+          Bitte wähle hier aus, wie du den Schlüssel verwahren möchtest.
         </p>
+        <Box height={4} />
+        <div>
+          <Warning />
+        </div>
+        <Box height={4} />
         <p>
-          <strong>Bitte speichere die Datei auf deinem Rechner ab.</strong>
-        </p>
-        <p>
-          <p>
-            <Warning />
-          </p>
           <strong>
             Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -86,7 +87,8 @@ const envs = {
           </strong>
         </p>
         <p>
-          Lade die Schlüsseldatei deshalb hier zur Bestätigung noch einmal hoch.
+          Zur Bestätigung, dass du den Schlüssel erhalten hast, lade den
+          Schlüssel hier nochmal hoch.
         </p>
       </>
     ),
@@ -97,24 +99,33 @@ const envs = {
           eingerichtet.
         </p>
         <p>
-          Du kannst dich gern bei uns melden, um gemeinsam deine Daten zu
+          Du kannst Dich gern bei uns melden, um gemeinsam Deine Daten zu
           prüfen.
         </p>
-        <p>Jetzt kannst du Betriebe, Tische und QR-Codes erstellen.</p>
+        <p>Jetzt kannst Du Betriebe, Bereiche und QR-Codes erstellen.</p>
       </>
     ),
-    pdfType: 'Speisekarte',
+    pdfType: 'Zusatz-Informationen',
     pricingInfoDuringTest: (
       <p>
         Du kannst recover 14 Tage lang kostenlos auf Herz und Nieren testen.
         <br />
+        <br />
         Danach kostet die Mitgliedschaft 15€ inkl. USt. pro Monat und Betrieb.
         Die Mitgliedschaft kann jederzeit zum Monatsende gekündigt werden.
         <br />
+        <br />
         Wenn Du Anspruch auf eine kostenlose oder reduzierte Nutzung von der
-        Recover App hast, melde dich gerne bei unserem Support, damit wir deinen
+        Recover App hast, melde Dich gerne bei unserem Support, damit wir Deinen
         Laden überprüfen und freischalten können:{' '}
         <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+        <br />
+        <br />
+        Willst Du per Rechnung bezahlen? Kein Problem, melde Dich gerne bei
+        unserem Support und wir organiseren das für Dich:{' '}
+        <a href="mailto:team@recoverapp.de?subject=Ich würde gerne für Recover auf Rechnung bezahlen">
+          team@recoverapp.de
+        </a>
       </p>
     ),
   },
@@ -124,7 +135,7 @@ const envs = {
     secondaryHighlightColor: '',
     Logo: LogoCare,
     logoSmallWidth: '184px',
-    logoSmallHeight: '20px',
+    logoSmallHeight: '35px',
     logoBigWidth: '240px',
     logoBigHeight: '40px',
     privacyUrl: 'https://www.recovercare.de/datenschutzerklarung',
@@ -148,11 +159,19 @@ const envs = {
     signupText: '',
     privateKeyExplanation: (
       <>
-        <p>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</p>
         <p>
-          <p>
-            <Warning />
-          </p>
+          <strong>Nächster Schritt: </strong>
+          <br />
+          Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.
+          <br />
+          Bitte wählen Sie hier aus, wie Sie den Schlüssel verwahren möchten.
+        </p>
+        <Box height={4} />
+        <div>
+          <Warning />
+        </div>
+        <Box height={4} />
+        <p>
           <strong>
             Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -216,7 +235,7 @@ const envs = {
     secondaryHighlightColor: '#10D4FF',
     Logo: LogoHealth,
     logoSmallWidth: '184px',
-    logoSmallHeight: '20px',
+    logoSmallHeight: '35px',
     logoBigWidth: '240px',
     logoBigHeight: '40px',
     privacyUrl: 'https://www.recover-health.de/datenschutzerklarung',
@@ -240,11 +259,19 @@ const envs = {
     signupText: '',
     privateKeyExplanation: (
       <>
-        <p>Bitte speichern Sie die Datei auf Ihrem Rechner ab.</p>
         <p>
-          <p>
-            <Warning />
-          </p>
+          <strong>Nächster Schritt: </strong>
+          <br />
+          Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.
+          <br />
+          Bitte wählen Sie hier aus, wie Sie den Schlüssel verwahren möchten.
+        </p>
+        <Box height={4} />
+        <div>
+          <Warning />
+        </div>
+        <Box height={4} />
+        <p>
           <strong>
             Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
           </strong>
@@ -302,7 +329,7 @@ const envs = {
         </p>
         <p>
           Bei Fragen zum Pricing können Sie sich jederzeit bei unserem Support
-          unter team@recoverapp.com melden.
+          unter team@recoverapp.de melden.
         </p>
       </>
     ),
@@ -323,18 +350,18 @@ const envs = {
       'Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
-    instruction: 'So nutzt Du recover für deinen Betrieb',
+    instruction: 'So nutzt Du recover für Deinen Betrieb',
     setupIntro: (
       <>
         <p>
-          Die aktuelle Corona-Verordnung in NRW schreibt vor, dass Du eine Liste
-          der Kontaktdaten deiner Gäste führst. Mit recover führst Du diese
-          Liste digital. Um die Daten deiner Gäste zu schützen, werden sie von
-          der App verschlüsselt. Während des Onboardings erstellst Du daher in
-          wenigen Schritten ein digitales Schlüsselpaar.
+          Seit Corona sind viele Betriebe und Einrichtungen verpflichtet,
+          Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! Mit recover
+          führst Du diese Liste digital. Um die Daten deiner Gäste zu schützen,
+          werden sie von der App verschlüsselt. Während des Onboardings
+          erstellst Du daher in wenigen Schritten ein digitales Schlüsselpaar.
         </p>
         <p>
-          Nach dem Onboarding kannst Du dich bei uns melden um zusammen mit
+          Nach dem Onboarding kannst Du Dich bei uns melden um zusammen mit
           unserem Team die Echtheit deiner Daten zu prüfen
         </p>
         <p>
@@ -392,10 +419,10 @@ const envs = {
           eingerichtet.
         </p>
         <p>
-          Du kannst dich gern bei uns melden, um gemeinsam deine Daten zu
+          Du kannst Dich gern bei uns melden, um gemeinsam Deine Daten zu
           prüfen.
         </p>
-        <p>Jetzt kannst du Betriebe, Tische und QR-Codes erstellen.</p>
+        <p>Jetzt kannst Du Betriebe, Bereiche und QR-Codes erstellen.</p>
       </>
     ),
     pricingInfoDuringTest: (
@@ -406,7 +433,7 @@ const envs = {
         Die Mitgliedschaft kann jederzeit zum Monatsende gekündigt werden.
         <br />
         Wenn Du Anspruch auf eine kostenlose oder reduzierte Nutzung von der
-        Recover App hast, melde dich gerne bei unserem Support, damit wir deinen
+        Recover App hast, melde Dich gerne bei unserem Support, damit wir Deinen
         Laden überprüfen und freischalten können:{' '}
         <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
       </p>

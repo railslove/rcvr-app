@@ -11,6 +11,7 @@ import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 import { ActionList } from '~ui/blocks/ActionList'
 import { ActionCard } from '~ui/blocks/ActionCard'
 import { AutoDataRequestModal } from '~ui/modals/AutoDataRequestModal'
+import { DataRequestRes } from '~lib/api'
 
 const CompanyPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
@@ -21,62 +22,31 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
     autoDataRequest: AutoDataRequestModal,
   })
 
-  return (
-    <OwnerApp title={company?.name}>
-      <BackLink href="/business/dashboard">Meine Betriebe</BackLink>
-      {modals}
-      <Text variant="h3">Bereiche</Text>
-      <Box height={4} />
-      <ActionList grid>
-        <ActionCard
-          href="/business/company/[companyId]/area"
-          as={`/business/company/${companyId}/area`}
-        >
-          <ActionCard.Main title="Bereiche verwalten" icon={Right} />
-        </ActionCard>
-        <ActionCard
-          href="/business/company/[companyId]/checkins"
-          as={`/business/company/${companyId}/checkins`}
-        >
-          <ActionCard.Main title="Aktuelle Checkins" icon={Right} />
-        </ActionCard>
-      </ActionList>
-      <Divider />
+  let splitRequest = { currentDataRequest: [], pastDataRequest: [] }
 
-      <Text variant="h3">Kundenkontaktdaten</Text>
-      <Box height={4} />
-      <Callout>
-        <Text>
-          <p>
-            Anfragen zu Kundenkontaktdaten{' '}
-            {isFormal ? 'können Sie' : 'kannst Du'} per Email an{' '}
-            <a href="mailto:team@recoverapp.de">team@recoverapp.de</a> stellen.
-            Wir melden uns dann schnellstmöglich bei{' '}
-            {isFormal ? 'Ihnen' : 'Dir'}.
-          </p>
-        </Text>
-      </Callout>
-      <Box height={2} />
-      <Callout>
-        <Text>
-          <p>
-            Anfragen zu Kundenkontaktdaten für anwesende{' '}
-            {isFormal ? 'Besucher können Sie' : 'Gäste kannst Du'} hier
-            automatisch stellen.
-          </p>
-        </Text>
-        <Box height={2} />
-        <Button onClick={() => openModal('autoDataRequest', { companyId })}>
-          Abfragen
-        </Button>
-      </Callout>
-      <Box height={4} />
-      {dataRequests?.length === 0 && (
-        <Text variant="shy">
-          {isFormal ? 'Sie haben' : 'Du hast'} noch keine freigegebenen
-          Kundenkontaktdaten.
-        </Text>
-      )}
+  if (dataRequests?.length) {
+    const twoHoursBefore = new Date()
+    twoHoursBefore.setHours(new Date().getHours() - 2)
+    splitRequest = dataRequests.reduce(
+      (result, request) => {
+        if (request.to >= twoHoursBefore) {
+          result.currentDataRequest.push(request)
+        } else {
+          result.pastDataRequest.push(request)
+        }
+        return result
+      },
+      { currentDataRequest: [], pastDataRequest: [] }
+    )
+  }
+
+  const RequestList = ({
+    dataRequests,
+  }: {
+    dataRequests: DataRequestRes[]
+  }) => (
+    <>
+      <Box height={6} />
       <ActionList grid>
         {dataRequests?.map((dataRequest) => (
           <ActionCard
@@ -102,6 +72,72 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
         ))}
         <div />
       </ActionList>
+    </>
+  )
+
+  return (
+    <OwnerApp title={company?.name}>
+      <BackLink href="/business/dashboard">Meine Betriebe</BackLink>
+      {modals}
+      <Text variant="h3">Bereiche</Text>
+      <Box height={4} />
+      <ActionList grid>
+        <ActionCard
+          href="/business/company/[companyId]/area"
+          as={`/business/company/${companyId}/area`}
+        >
+          <ActionCard.Main title="Bereiche verwalten" icon={Right} />
+        </ActionCard>
+        <ActionCard
+          href="/business/company/[companyId]/checkins"
+          as={`/business/company/${companyId}/checkins`}
+        >
+          <ActionCard.Main title="Aktuelle Checkins" icon={Right} />
+        </ActionCard>
+      </ActionList>
+      <Divider />
+
+      <Callout variant="cyan">
+        <Text variant="h3">Plausibiltätsprüfung Ordnungsamt</Text>
+        <Box height={2} />
+        <Text>
+          <p>
+            Anfragen zu Kundenkontaktdaten für anwesende{' '}
+            {isFormal ? 'Besucher können Sie' : 'Gäste kannst Du'} hier
+            automatisch stellen.
+          </p>
+        </Text>
+        <Box height={4} />
+        <Button onClick={() => openModal('autoDataRequest', { companyId })}>
+          Abfragen
+        </Button>
+
+        {splitRequest?.currentDataRequest?.length > 0 && (
+          <RequestList dataRequests={splitRequest.currentDataRequest} />
+        )}
+      </Callout>
+
+      <Box height={4} />
+
+      <Callout variant="lilac">
+        <Text variant="h3">Anfrage Gesundheitsamt</Text>
+        <Box height={2} />
+        <Text>
+          <p>
+            Anfragen zu Kundenkontaktdaten{' '}
+            {isFormal ? 'können Sie' : 'kannst Du'} per Email an{' '}
+            <a href="mailto:team@recoverapp.de">team@recoverapp.de</a> stellen.
+            Wir melden uns dann schnellstmöglich bei{' '}
+            {isFormal ? 'Ihnen' : 'Dir'}.
+          </p>
+        </Text>
+
+        <Box height={4} />
+
+        {splitRequest?.pastDataRequest?.length > 0 && (
+          <RequestList dataRequests={splitRequest.pastDataRequest} />
+        )}
+      </Callout>
     </OwnerApp>
   )
 }
