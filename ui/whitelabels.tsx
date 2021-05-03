@@ -329,7 +329,7 @@ const envs = {
         </p>
         <p>
           Bei Fragen zum Pricing können Sie sich jederzeit bei unserem Support
-          unter team@recoverapp.com melden.
+          unter team@recoverapp.de melden.
         </p>
       </>
     ),
