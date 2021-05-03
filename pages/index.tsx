@@ -70,7 +70,7 @@ export default function IndexPage() {
             isCareEnv
               ? 'https://recovercare.de/'
               : isHealthEnv
-              ? 'recover-health.de'
+              ? 'https://www.recover-health.de'
               : 'https://www.recoverapp.de/'
           }
           target="_blank"
