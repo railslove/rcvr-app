@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { AreaRes } from '~lib/api'
 import { isCareEnv } from '~lib/config'
 import { Guest } from '~lib/db'
-import { phoneValidator } from '~lib/phoneValidator'
+import { phoneValidator } from '~lib/validators/phoneValidator'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Button, Checkbox, Input, Text } from '~ui/core'
 
