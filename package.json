@@ -29,7 +29,7 @@
     "framer-motion": "^4.1.11",
     "iban": "0.0.14",
     "intl-dateformat": "^0.1.4",
-    "ky": "^0.25.0",
+    "ky": "^0.28.0",
     "ky-universal": "^0.8.0",
     "libphonenumber-js": "^1.9.16",
     "modern-normalize": "^1.1.0",
