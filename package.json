@@ -60,7 +60,7 @@
     "@types/react": "17.0.4",
     "@types/styled-system": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.1",
     "babel-loader": "^8.2.2",
     "cypress": "^7.1.0",
     "eslint": "^7.25.0",
