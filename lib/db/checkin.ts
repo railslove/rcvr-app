@@ -9,6 +9,7 @@ export interface Checkin {
   leftAt?: Date
   proxyCheckin?: boolean
   guest?: Guest
+  companyCwaUrl?: string
   k?: string
 }
 

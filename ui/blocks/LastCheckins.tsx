@@ -13,6 +13,7 @@ import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
 import { Onboarding } from '~ui/blocks/Onboarding'
 import { Box, Button, Text } from '~ui/core'
+import CwaLogo from '~ui/svg/logo-cwa.svg'
 
 interface Props {
   checkins: Checkin[]
@@ -69,6 +70,10 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
     [checkin, setShowProxyCheckin, area, queryClient, mutation]
   )
 
+  const openCwa = () => {
+    window.open(checkin.companyCwaUrl, '_blank', 'noopener=yes')
+  }
+
   return (
     <Container>
       <Box height={16} />
@@ -91,6 +96,18 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
+      {!checkedOut && checkin.companyCwaUrl && (
+        <>
+          <Box height={4} />
+          <Button onClick={openCwa} name="cwaCheckinUrl">
+            <CwaLink>
+              <CwaLogo width="24" height="24" />
+              Check-in Corona Warn App
+            </CwaLink>
+          </Button>
+          <Box height={4} />
+        </>
+      )}
       <Box height={2} />
       {checkins
         .map(({ guest }) => guest)
@@ -215,4 +232,10 @@ const Container = styled.div({
 
 const GuestDetails = styled.div({
   width: '100%',
+})
+
+const CwaLink = styled.div({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
 })
