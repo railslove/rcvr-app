@@ -56,7 +56,7 @@
     "@emotion/eslint-plugin": "^11.2.0",
     "@svgr/webpack": "^5.5.0",
     "@types/iban": "0.0.32",
-    "@types/node": "^15.0.1",
+    "@types/node": "^15.0.2",
     "@types/react": "17.0.5",
     "@types/styled-system": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
