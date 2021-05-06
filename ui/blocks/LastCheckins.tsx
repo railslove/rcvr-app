@@ -96,7 +96,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
-      {checkin.companyCwaUrl && (
+      {!checkedOut && checkin.companyCwaUrl && (
         <>
           <Box height={4} />
           <Button onClick={openCwa}>
