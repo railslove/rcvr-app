@@ -148,7 +148,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           privacyPolicyLink: company?.privacyPolicyLink || '',
           needToShowCoronaTest: company?.needToShowCoronaTest || false,
           menuPdf: menuPdfFileName(company),
-          locationType: company?.locationType,
+          locationType: company?.locationType || 'other',
           cwaLinkEnabled: company?.cwaLinkEnabled || false,
         }}
         validationSchema={BusinessSchema}
