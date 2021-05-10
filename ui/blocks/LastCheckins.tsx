@@ -99,7 +99,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       {!checkedOut && checkin.companyCwaUrl && (
         <>
           <Box height={4} />
-          <Button onClick={openCwa}>
+          <Button onClick={openCwa} name="cwaCheckinUrl">
             <CwaLink>
               <CwaLogo width="24" height="24" />
               Check-in Corona Warn App
