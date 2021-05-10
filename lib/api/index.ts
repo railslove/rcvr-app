@@ -54,7 +54,7 @@ export function parseDates<K, T>(obj: K, ...keys: string[]): T {
       objCopy[key] = new Date(Date.parse(objCopy[key] as string))
     }
   }
-  return (objCopy as unknown) as T
+  return objCopy as unknown as T
 }
 
 export function stringifyDates<K, T>(obj: K, ...keys: string[]): T {
@@ -62,5 +62,5 @@ export function stringifyDates<K, T>(obj: K, ...keys: string[]): T {
   for (const key in keys) {
     if (objCopy[key]) objCopy[key] = (objCopy[key] as Date).toISOString()
   }
-  return (objCopy as unknown) as T
+  return objCopy as unknown as T
 }
