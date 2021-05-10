@@ -26,7 +26,7 @@
     "detect-browser": "^5.2.0",
     "dexie": "^3.0.1",
     "formik": "^2.2.6",
-    "framer-motion": "^4.1.11",
+    "framer-motion": "^4.1.13",
     "iban": "0.0.14",
     "intl-dateformat": "^0.1.4",
     "ky": "^0.25.0",
