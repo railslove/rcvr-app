@@ -10,11 +10,18 @@ import { Text } from './Text'
 
 interface Props {
   name: string
+  hint?: string
+  hintEnabled?: string
   label: string | React.ReactElement
 }
 type CheckboxProps = JSX.IntrinsicElements['input'] & Props
 
-export const Checkbox: React.FC<CheckboxProps> = ({ label, ...rest }) => {
+export const Checkbox: React.FC<CheckboxProps> = ({
+  label,
+  hint,
+  hintEnabled,
+  ...rest
+}) => {
   const [field, meta] = useField({ ...rest, type: 'checkbox' })
   const showError = Boolean(meta.touched && meta.error)
 
@@ -38,6 +45,12 @@ export const Checkbox: React.FC<CheckboxProps> = ({ label, ...rest }) => {
         {...rest}
         css={{ display: 'none' }}
       />
+      {field.checked && hintEnabled && (
+        <HintText variant="fineprint">{hintEnabled}</HintText>
+      )}
+      {hint && !(field.checked && hintEnabled) && (
+        <HintText variant="fineprint">{hint}</HintText>
+      )}
       {showError && <ErrorText variant="fineprint">{meta.error}</ErrorText>}
     </div>
   )
@@ -95,5 +108,12 @@ const ErrorText = styled(Text)(
     color: 'red.400',
     py: 2,
     px: 3,
+  })
+)
+
+const HintText = styled(Text)(
+  css({
+    color: 'bluegrey.500',
+    px: 8,
   })
 )
