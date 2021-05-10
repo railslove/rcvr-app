@@ -3,8 +3,14 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useQueryClient } from 'react-query'
 
-import { OwnerRes, CompanyRes, patchCompany, postCompany } from '~lib/api'
-import { Box, Input, FileInput, Button, Text, Checkbox } from '~ui/core'
+import {
+  OwnerRes,
+  CompanyRes,
+  patchCompany,
+  postCompany,
+  CompanyTypeOptions,
+} from '~lib/api'
+import { Box, Input, FileInput, Button, Text, Checkbox, Select } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { pdfType } from '~ui/whitelabels'
 
@@ -73,6 +79,8 @@ export const BusinessDataModal: React.FC<MProps> = ({
         menuLink,
         menuPdf,
         privacyPolicyLink,
+        cwaLinkEnabled,
+        locationType,
       },
       bag
     ) => {
@@ -87,6 +95,8 @@ export const BusinessDataModal: React.FC<MProps> = ({
       formData.append('company[need_to_show_corona_test]', needToShowCoronaTest)
       formData.append('company[menu_link]', safeMenuLink)
       formData.append('company[privacy_policy_link]', safePrivacyPolicyLink)
+      formData.append('company[cwa_link_enabled]', cwaLinkEnabled)
+      formData.append('company[location_type]', locationType)
 
       if (menuPdf !== menuPdfFileName(company)) {
         if (menuPdf === undefined || menuPdf === null || menuPdf == '') {
@@ -116,7 +126,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [type, baseProps, company, company?.id, company?.menuPdfLink]
+    [type, baseProps, company, queryClient]
   )
 
   const prefilledWithWhenNew = (value, prefilledValue) => {
@@ -138,6 +148,8 @@ export const BusinessDataModal: React.FC<MProps> = ({
           privacyPolicyLink: company?.privacyPolicyLink || '',
           needToShowCoronaTest: company?.needToShowCoronaTest || false,
           menuPdf: menuPdfFileName(company),
+          locationType: company?.locationType,
+          cwaLinkEnabled: company?.cwaLinkEnabled || false,
         }}
         validationSchema={BusinessSchema}
         onSubmit={handleSubmit}
@@ -155,9 +167,21 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <Box height={4} />
           <Input name="city" label="Ort" autoComplete="address-level2" />
           <Box height={4} />
+          <Select
+            name="locationType"
+            label="Art des Betriebes"
+            options={CompanyTypeOptions}
+          />
+          <Box height={4} />
           <Checkbox
             name="needToShowCoronaTest"
             label="Gäste müssen einen negative Corona-Test vorzeigen"
+          />
+          <Checkbox
+            name="cwaLinkEnabled"
+            label="Checkin mit der Corona-Warn-App anbieten"
+            hint="Biete deinen Gästen einen zusätzlichen Checkin mit der Corona-Warn-App an. So werden sie noch schneller über Risikobegegnungen informiert."
+            hintEnabled="Deine Gäste können nun nach dem Checkin mit recover ganz einfach zusätzlich mit der Corona-Warn-App einchecken."
           />
           <Box height={1} />
           <Input

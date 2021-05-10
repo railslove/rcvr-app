@@ -9,6 +9,16 @@ export interface CompanyReq extends FormData {
   'company[menu_pdf]'?: File
 }
 
+export const CompanyTypeOptions = {
+  FOOD_SERVICE: 'Gastronomiebetrieb',
+  CRAFT: 'Handwerksbetrieb',
+  RETAIL: 'Einzelhandel',
+  WORKPLACE: 'Arbeitsstätte',
+  EDUCATIONAL_INSTITUTION: 'Bildungsstätte',
+  PUBLIC_BUILDING: 'öffentliches Gebäude',
+  OTHER: 'Anderes',
+}
+
 export interface CompanyRes {
   id: string
   name: string
@@ -20,6 +30,8 @@ export interface CompanyRes {
   privacyPolicyLink?: string
   menuPdfLink?: string
   areas: AreaRes[]
+  cwaLinkEnabled: boolean
+  locationType: string
 }
 
 export async function getCompanies(): Promise<CompanyRes[]> {
