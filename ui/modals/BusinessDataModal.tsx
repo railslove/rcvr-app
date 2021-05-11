@@ -177,13 +177,6 @@ export const BusinessDataModal: React.FC<MProps> = ({
             name="needToShowCoronaTest"
             label="Gäste müssen einen negative Corona-Test vorzeigen"
           />
-          <Checkbox
-            name="cwaLinkEnabled"
-            label="Checkin mit der Corona-Warn-App anbieten"
-            hint="Biete deinen Gästen einen zusätzlichen Checkin mit der Corona-Warn-App an. So werden sie noch schneller über Risikobegegnungen informiert."
-            hintEnabled="Deine Gäste können nun nach dem Checkin mit recover ganz einfach zusätzlich mit der Corona-Warn-App einchecken."
-          />
-          <Box height={1} />
           <Input
             name="privacyPolicyLink"
             label={'Datenschutzerklärung als Link'}
