@@ -87,7 +87,9 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       <Box height={4} />
       <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
       <Box height={1} />
-      <Text variant="h4">{checkin.business}</Text>
+      <Text variant="h4" data-wfd-location={checkin.business}>
+        {checkin.business}
+      </Text>
       {checkins.length > 1 && (
         <>
           <Box height={1} />
@@ -152,6 +154,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
               left={<ArrowsRight color="pink" />}
               right={<ArrowsLeft color="pink" />}
               onClick={() => onCheckout(checkins)}
+              dataAttributes={{ 'wfd-action': 'check-out' }}
             >
               Check out
             </Button>
