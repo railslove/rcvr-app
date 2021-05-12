@@ -16,10 +16,9 @@ type ButtonProps = JSX.IntrinsicElements['button'] & Props & As
 
 export const Button: React.FC<ButtonProps> = React.forwardRef(
   ({ children, left, right, dataAttributes, ...rest }, ref) => {
-    const data = {}
-    Object.keys(dataAttributes || {}).forEach(function (key) {
-      data[`data-${key}`] = dataAttributes[key]
-    })
+      const data = Object.entries(dataAttributes || {})
+        .reduce((data, [key, value]) => ({ [`data-${key}`]: value, ...data }), {})
+    )
 
     return (
       <Base {...rest} ref={ref} {...data}>
