@@ -115,6 +115,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
             css={{ width: '100%' }}
             left={<ArrowsRight color="green" />}
             right={<ArrowsLeft color="green" />}
+            dataAttributes={{ 'wfd-action': 'check-in' }}
           >
             {submitButtonValue}
           </Button>
