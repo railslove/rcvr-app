@@ -12,6 +12,7 @@ import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
 import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
+import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { Back } from '~ui/svg'
 import { Logo, pageTitle } from '~ui/whitelabels'
 
@@ -27,6 +28,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
 
   const { modals, openModal } = useModals({
     data: BusinessDataModal,
+    privateKey: PrivateKeyModal,
   })
 
   React.useEffect(() => {
@@ -173,11 +175,13 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                     <li key={company.id}>
                       <ButtonWithCursor
                         onClick={() =>
-                          openModal('data', {
-                            type: 'edit',
-                            owner: owner,
-                            company: company,
-                          })
+                          owner.privateKey
+                            ? openModal('data', {
+                                type: 'edit',
+                                owner: owner,
+                                company: company,
+                              })
+                            : openModal('privateKey', { ownerId: owner.id })
                         }
                       >
                         {company.name}
