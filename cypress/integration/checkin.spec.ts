@@ -172,15 +172,19 @@ context('Checkin', () => {
       menuLink: null,
       companyId: 'some-uuid',
       companyNeedToShowCoronaTest: true,
+      companyCwaLinkEnabled: true,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
       companyName: 'Testlokal',
-      companyCwaUrl: 'http://example.com/',
       enteredAt: '2020-05-11T12:30:00.000Z',
     }).as('createTicketWithTesting')
 
-    cy.visit(`/checkin?a=${areaId}&k=${encodeURIComponent(publicKey)}`)
+    cy.visit(
+      `/checkin?a=${areaId}&k=${encodeURIComponent(
+        publicKey
+      )}&cwa=u0DcUHT8Q6f33RP6DoIt7g==`
+    )
     cy.window().then((win) => {
       cy.stub(win, 'open').as('windowOpen') // 'spy' vs 'stub' lets the new tab still open if you are visually watching it
     })
@@ -211,7 +215,7 @@ context('Checkin', () => {
     cy.get('button[name="cwaCheckinUrl"]').click()
     cy.get('@windowOpen').should(
       'be.calledWith',
-      'http://example.com/',
+      'https://e.coronawarn.app/?v=1#CAESDQgBEglUZXN0bG9rYWwafggBEmCDAszMTXne1DAA5/YxmhRdd/NZN2VKl9L32Jl9+ZybE4b2eNIrhFOKYU4XAOHq3RPLDxdHTW6ANiO24rCOO4rj06HzcVZy3pel58+L1KSPG+/PneL2BoyZQRz3qlu2hoAaGHUwRGNVSFQ4UTZmMzNSUDZEb0l0N2c9PSIECAEYAA==',
       '_blank',
       'noopener=yes'
     )
