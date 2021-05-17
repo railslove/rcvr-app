@@ -4,6 +4,8 @@ import { db, Guest } from './'
 export interface Checkin {
   id?: string
   business?: string
+  address?: string
+  locationType?: string
   enteredAt?: Date
   areaId?: string
   leftAt?: Date
@@ -11,6 +13,7 @@ export interface Checkin {
   guest?: Guest
   companyCwaUrl?: string
   k?: string
+  cwaSeed?: string
 }
 
 export async function getCheckin(checkinId: Checkin['id']): Promise<Checkin> {

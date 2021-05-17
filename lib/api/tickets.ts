@@ -5,6 +5,8 @@ import { api, parseDates, stringifyDates } from './'
 export interface TicketRes<DateT = Date> {
   id: string
   companyName: string
+  companyLocationType: string
+  companyAddress: string
   companyCwaUrl: any
   enteredAt: DateT
   leftAt?: DateT

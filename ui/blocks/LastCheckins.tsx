@@ -5,6 +5,7 @@ import { useQueryClient, useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
 import { checkin as checkinAction } from '~lib/actions'
 import { updateCurrentGuest } from '~lib/actions/updateGuest'
+import { generateCwaLink } from '~lib/cwa/generateCwaLink'
 import { Checkin } from '~lib/db'
 import { Guest } from '~lib/db/guest'
 import { useArea } from '~lib/hooks'
@@ -71,7 +72,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   )
 
   const openCwa = () => {
-    window.open(checkin.companyCwaUrl, '_blank', 'noopener=yes')
+    window.open(generateCwaLink(checkin), '_blank', 'noopener=yes')
   }
 
   return (
@@ -98,7 +99,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
-      {!checkedOut && checkin.companyCwaUrl && (
+      {!checkedOut && checkin.cwaSeed && (
         <>
           <Box height={4} />
           <Button onClick={openCwa} name="cwaCheckinUrl">
