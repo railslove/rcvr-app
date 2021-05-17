@@ -687,7 +687,10 @@ function longToNumber(long: Long): number {
   return long.toNumber()
 }
 
+// TODO: replace this as soon as https://github.com/stephenh/ts-proto/issues/217 is closed
+// @ts-ignore
 if (_m0.util.Long !== Long) {
+  // @ts-ignore
   _m0.util.Long = Long as any
   _m0.configure()
 }
