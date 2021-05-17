@@ -35,6 +35,7 @@ export default function CheckinPage() {
 
   const publicKey = router.query.k?.toString()
   const areaId = router.query.a?.toString()
+  const cwaSeed = router.query.cwa?.toString()
 
   const guestInfo = useCurrentGuest()
   const areaInfo = useArea(areaId)
@@ -94,6 +95,7 @@ export default function CheckinPage() {
           ticket,
           guest,
           companyId: areaInfo.data.companyId,
+          cwaSeed,
         })
         router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
       } catch (error) {
@@ -111,6 +113,7 @@ export default function CheckinPage() {
       mutationCheckin,
       mutationCheckout,
       queryClient,
+      cwaSeed,
     ]
   )
 
