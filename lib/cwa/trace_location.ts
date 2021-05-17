@@ -9,7 +9,7 @@
  * protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=. --ts_proto_opt=esModuleInterop=true ./trace_location.proto
  */
 
-import Long from 'long'
+import { Long } from 'long'
 import _m0 from 'protobufjs/minimal'
 
 export const protobufPackage = 'internal.pt'
