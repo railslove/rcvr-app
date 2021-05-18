@@ -13,6 +13,7 @@ export * from './Row'
 export * from './SRText'
 export * from './Table'
 export * from './Text'
+export * from './Select'
 
 export interface As {
   as?: React.ElementType
