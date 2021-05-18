@@ -92,17 +92,12 @@ export const FileInput: React.FC<FileInputProps> = ({
 
   const onDrop = React.useCallback(
     (acceptedFiles) => {
-      helpers.setTouched(true)
-      // setError(undefined)
       if (acceptedFiles.length > 0) {
         helpers.setValue(acceptedFiles[0])
       } else {
         helpers.setValue(null)
       }
-      // if (rejectedFiles.length > 0) {
-      //   helpers.setTouched(true)
-      //   setError('Es können nur pdf-Dateien hochgeladen werden.')
-      // }
+      helpers.setTouched(true)
     },
     [helpers]
   )
