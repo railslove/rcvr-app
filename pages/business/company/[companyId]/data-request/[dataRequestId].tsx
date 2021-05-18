@@ -67,16 +67,12 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     openModal('privateKey', { ownerId: owner.id })
   }, [openModal, owner])
 
-  const {
-    tickets,
-    successCount,
-    errorCount,
-    pendingCount,
-  } = React.useMemo(() => {
-    const encryptedTickets = dataRequest?.tickets || []
-    const { publicKey, privateKey } = owner
-    return decryptTickets(encryptedTickets, publicKey, privateKey)
-  }, [dataRequest, owner])
+  const { tickets, successCount, errorCount, pendingCount } =
+    React.useMemo(() => {
+      const encryptedTickets = dataRequest?.tickets || []
+      const { publicKey, privateKey } = owner
+      return decryptTickets(encryptedTickets, publicKey, privateKey)
+    }, [dataRequest, owner])
 
   const handleDownload = React.useCallback(async () => {
     setLoading(true)
