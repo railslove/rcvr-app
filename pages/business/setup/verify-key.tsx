@@ -105,7 +105,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
                   <Text>
                     {isFormal
                       ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
-                      : 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt deinen Betrieb einrichten.'}
+                      : 'Schlüssel sicher und zugänglich verwahrt? Dann kannst du jetzt deinen Betrieb einrichten.'}
                   </Text>
                   <Box height={4} />
                   <Button
