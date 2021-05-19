@@ -147,7 +147,7 @@ context('Checkin', () => {
 
     cy.contains('Ein negativer Test muss vorliegen')
 
-    cy.get('label[for="haveNegativeTest"]').click()
+    cy.get('label[for="providedHealthDocument"]').click()
 
     cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {
@@ -199,7 +199,7 @@ context('Checkin', () => {
 
     cy.contains('Ein negativer Test muss vorliegen')
 
-    cy.get('label[for="haveNegativeTest"]').click()
+    cy.get('label[for="providedHealthDocument"]').click()
 
     cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {

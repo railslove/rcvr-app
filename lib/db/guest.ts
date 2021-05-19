@@ -1,5 +1,11 @@
 import { db } from './'
 
+export enum GuestHealthDocumentEnum {
+  tested = 'TESTED',
+  vaccinated = 'VACCINATED',
+  hadCorona = 'HAD_CORONA',
+}
+
 export interface Guest {
   id?: number
   name?: string
@@ -9,6 +15,7 @@ export interface Guest {
   city?: string
   resident?: string
   checkedInCompanyIds?: string[]
+  providedHealthDocument?: GuestHealthDocumentEnum
 }
 
 export async function getCurrentGuest(): Promise<Guest> {

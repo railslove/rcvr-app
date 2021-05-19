@@ -2,11 +2,11 @@ import { Form, Formik } from 'formik'
 import * as React from 'react'
 import * as Yup from 'yup'
 import { AreaRes } from '~lib/api'
-import { isCareEnv } from '~lib/config'
-import { Guest } from '~lib/db'
+import { isCareEnv, isFormal } from '~lib/config'
+import { Guest, GuestHealthDocumentEnum } from '~lib/db'
 import { phoneValidator } from '~lib/validators/phoneValidator'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
-import { Box, Button, Checkbox, Input, Text } from '~ui/core'
+import { Box, Button, Checkbox, Radio, Input, Text } from '~ui/core'
 
 type OnboardingProps = {
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
@@ -32,7 +32,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     postalCode: prefilledGuest?.postalCode || '',
     city: prefilledGuest?.city || '',
     rememberMe: prefilledGuest ? true : false,
-    haveNegativeTest: false,
+    providedHealthDocument: prefilledGuest?.providedHealthDocument,
   }
   if (isCareEnv) initialValues['resident'] = ''
 
@@ -46,9 +46,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   }
 
   if (area.companyNeedToShowCoronaTest)
-    yupShape['haveNegativeTest'] = Yup.boolean().oneOf(
-      [true],
-      'Ein negativer Test muss vorliegen'
+    yupShape['providedHealthDocument'] = Yup.string().typeError(
+      isFormal
+        ? 'Sie müssen entweder getestet, genesen oder geimpft sein.'
+        : 'Du musst entweder getestet, genesen oder geimpft sein.'
     )
 
   if (isCareEnv)
@@ -94,9 +95,22 @@ export const Onboarding: React.FC<OnboardingProps> = ({
           {area.companyNeedToShowCoronaTest && (
             <>
               <Box height={3} />
-              <Checkbox
-                name="haveNegativeTest"
-                label="Ich bestätige einen negativen Test vorliegen zu haben"
+              <Radio
+                name="providedHealthDocument"
+                label="Getestet: Ich bestätige ein negatives, nicht älter als 48 Stunden zurückliegendes, Testergebnis vorliegen zu haben und dieses im Prüfall vorweisen zu können."
+                value={GuestHealthDocumentEnum.tested}
+                hideError={true}
+              />
+              <Radio
+                name="providedHealthDocument"
+                label="Genesen: Ich bestätige eine Dokumentation über meine Genesung von einer Corona-Erkrankung vorweisen zu können und diese im Prüffall vorweisen zu können."
+                value={GuestHealthDocumentEnum.hadCorona}
+                hideError={true}
+              />
+              <Radio
+                name="providedHealthDocument"
+                label="Geimpft: Ich bestätige eine Dokumentation (Impfpass) über meine Impfung gegen eine Infektion mit dem Coronavirus vorweisen zu können und diese im Prüffall vorweisen zu können."
+                value={GuestHealthDocumentEnum.vaccinated}
               />
             </>
           )}
