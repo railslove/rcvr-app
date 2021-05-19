@@ -1,10 +1,8 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
-import { toDataURL } from 'qrcode'
-import { saveAs } from 'file-saver'
 
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { CurrentOwner, useCompany, useModals } from '~lib/hooks'
+import { useCompany, useModals } from '~lib/hooks'
 import { IconButton } from '~ui/core'
 import { Edit, Trash, Download } from '~ui/svg'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
@@ -13,12 +11,9 @@ import { ActionCard } from '~ui/blocks/ActionCard'
 import { AddCard } from '~ui/blocks/AddCard'
 import { AreaDeleteModal } from '~ui/modals/AreaDeleteModal'
 import { AreaDataModal } from '~ui/modals/AreaDataModal'
-import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { QrInfoModal } from '~ui/modals/QrInfoModal'
-import { AreaRes, CompanyRes } from '~lib/api'
-import { decrypt } from '~lib/crypto'
 
-const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
+const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)
@@ -26,45 +21,13 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
     delete: AreaDeleteModal,
     data: AreaDataModal,
     qrCode: QrInfoModal,
-    privateKey: PrivateKeyModal,
   })
 
-  const decryptCwaSeed = (company: CompanyRes, owner: CurrentOwner) => {
-    if (owner.privateKey) {
-      try {
-        return decrypt(company.cwaCryptoSeed, owner.publicKey, owner.privateKey)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    return undefined
-  }
+  const handleDownload = (areaId: string) => () => {
+    window.location.href =
+      process.env.NEXT_PUBLIC_API_BASE + 'areas/' + areaId + '.png'
 
-  const generateQrCode = (area: AreaRes, url: string) => {
-    const element = document.createElement('canvas')
-    toDataURL(element, url, (_error, url) => {
-      saveAs(
-        url,
-        `qrcode-${area.name.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`
-      )
-    })
-  }
-
-  const handleDownload = (area: AreaRes) => async () => {
-    if (!area.companyCwaLinkEnabled) {
-      generateQrCode(area, `${area.checkinLink}`)
-    } else {
-      const decrypted = decryptCwaSeed(company, owner)
-      if (decrypted == undefined || decrypted == null) {
-        openModal('privateKey', { ownerId: owner.id })
-      } else {
-        openModal('qrCode')
-        generateQrCode(
-          area,
-          `${area.checkinLink}&cwa=${encodeURIComponent(decrypted)}`
-        )
-      }
-    }
+    openModal('qrCode')
   }
 
   return (
@@ -92,7 +55,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <IconButton
                 icon={Download}
                 color="bluegrey.700"
-                onClick={handleDownload(area)}
+                onClick={handleDownload(area.id)}
                 title="QR-Code"
               />
               <IconButton
