@@ -2,9 +2,9 @@ import * as React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useQueryClient } from 'react-query'
-import crypto from 'crypto'
 
 import {
+  OwnerRes,
   CompanyRes,
   patchCompany,
   postCompany,
@@ -13,13 +13,11 @@ import {
 import { Box, Input, FileInput, Button, Text, Checkbox, Select } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { pdfType } from '~ui/whitelabels'
-import { encrypt } from '~lib/crypto'
-import { CurrentOwner } from '~lib/hooks/useOwner'
 
 interface Props {
   type: 'new' | 'edit'
   company?: CompanyRes
-  owner?: CurrentOwner
+  owner?: OwnerRes
 }
 type MProps = ModalBaseProps & Props
 
@@ -98,13 +96,6 @@ export const BusinessDataModal: React.FC<MProps> = ({
       formData.append('company[menu_link]', safeMenuLink)
       formData.append('company[privacy_policy_link]', safePrivacyPolicyLink)
       formData.append('company[cwa_link_enabled]', cwaLinkEnabled)
-      if (!company?.cwaCryptoSeed) {
-        const randomBytes = btoa(
-          String.fromCharCode.apply(null, crypto.randomBytes(16))
-        )
-        const encrypted = encrypt(owner.publicKey, randomBytes)
-        formData.append('company[cwa_crypto_seed]', encrypted)
-      }
       formData.append('company[location_type]', locationType)
 
       if (menuPdf !== menuPdfFileName(company)) {
@@ -186,13 +177,6 @@ export const BusinessDataModal: React.FC<MProps> = ({
             name="needToShowCoronaTest"
             label="Gäste müssen einen negative Corona-Test vorzeigen"
           />
-          <Checkbox
-            name="cwaLinkEnabled"
-            label="Checkin mit der Corona-Warn-App anbieten"
-            hint="Biete deinen Gästen einen zusätzlichen Checkin mit der Corona-Warn-App an. So werden sie noch schneller über Risikobegegnungen informiert. Die QR-Codes müssen nach der Aktivierung neu ausgedruckt werden."
-            hintEnabled="Deine Gäste können nun nach dem Checkin mit recover ganz einfach zusätzlich mit der Corona-Warn-App einchecken."
-          />
-          <Box height={1} />
           <Input
             name="privacyPolicyLink"
             label={'Datenschutzerklärung als Link'}

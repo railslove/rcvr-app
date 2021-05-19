@@ -7,8 +7,6 @@ export interface CompanyReq extends FormData {
   'company[menu_link]'?: FormDataEntryValue
   'company[privacy_policy_link]'?: FormDataEntryValue
   'company[menu_pdf]'?: File
-  'company[cwa_link_enabled]'?: FormDataEntryValue
-  'company[cwa_crypto_seed]'?: FormDataEntryValue
 }
 
 export const CompanyTypeOptions = {
@@ -33,7 +31,6 @@ export interface CompanyRes {
   menuPdfLink?: string
   areas: AreaRes[]
   cwaLinkEnabled: boolean
-  cwaCryptoSeed?: string
   locationType: string
 }
 
