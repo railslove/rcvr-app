@@ -17,7 +17,6 @@ export interface AreaRes {
   companyId: string
   companyName: string
   companyNeedToShowCoronaTest: boolean
-  companyCwaLinkEnabled: boolean
   menuLink?: string
   privacyPolicyLink?: string
   menuAlias?: string
@@ -25,7 +24,6 @@ export interface AreaRes {
   frontendUrl: string
   publicKey: string
   affiliateLogo?: string
-  checkinLink?: string
 }
 
 export async function getArea(id: AreaRes['id']): Promise<AreaRes> {
