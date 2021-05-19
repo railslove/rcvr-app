@@ -8,6 +8,7 @@ interface DecryptionResult {
     phone: string
     address: string
     resident?: string
+    providedHealthDocument?: string
   }
 }
 
