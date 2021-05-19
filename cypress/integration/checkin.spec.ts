@@ -145,9 +145,9 @@ context('Checkin', () => {
 
     cy.get('button[type="submit"]').click()
 
-    cy.contains('Ein negativer Test muss vorliegen')
+    cy.contains('Du musst entweder getestet, genesen oder geimpft sein.')
 
-    cy.get('label[for="haveNegativeTest"]').click()
+    cy.get('label[for="hasTest"]').click()
 
     cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {
@@ -197,9 +197,9 @@ context('Checkin', () => {
 
     cy.get('button[type="submit"]').click()
 
-    cy.contains('Ein negativer Test muss vorliegen')
+    cy.contains('Du musst entweder getestet, genesen oder geimpft sein.')
 
-    cy.get('label[for="haveNegativeTest"]').click()
+    cy.get('label[for="hasTest"]').click()
 
     cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {
