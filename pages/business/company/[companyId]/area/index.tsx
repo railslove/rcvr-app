@@ -52,6 +52,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const handleDownload = (area: AreaRes) => async () => {
     if (!area.companyCwaLinkEnabled) {
+      openModal('qrCode')
       generateQrCode(area, `${area.checkinLink}`)
     } else {
       const decrypted = decryptCwaSeed(company, owner)
