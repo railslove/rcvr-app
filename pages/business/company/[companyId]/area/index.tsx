@@ -17,6 +17,7 @@ import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { QrInfoModal } from '~ui/modals/QrInfoModal'
 import { AreaRes, CompanyRes } from '~lib/api'
 import { decrypt } from '~lib/crypto'
+import { sortAreas } from '~lib/interactors'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { query } = useRouter()
@@ -81,7 +82,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
           title="Bereich hinzufügen..."
           onClick={() => openModal('data', { companyId: companyId })}
         />
-        {company?.areas.map((area) => (
+        {sortAreas(company?.areas).map((area) => (
           <ActionCard
             key={area.id}
             href="/business/company/[companyId]/area/[areaId]"
