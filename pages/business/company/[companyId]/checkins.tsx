@@ -7,6 +7,7 @@ import { Text, Box } from '~ui/core'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 import { ActionList } from '~ui/blocks/ActionList'
 import { CheckinsActionCard } from '~ui/blocks/CheckinsActionCard'
+import { sortAreas } from '~lib/interactors'
 
 const CheckinsPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
@@ -26,7 +27,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
       </Text>
       <Box height={2} />
       <ActionList grid>
-        {company?.areas.map((area) => {
+        {sortAreas(company?.areas).map((area) => {
           return (
             <CheckinsActionCard
               key={area.id}
