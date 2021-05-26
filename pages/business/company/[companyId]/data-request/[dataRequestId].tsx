@@ -22,15 +22,24 @@ const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   )
 }
 
+const quoteValue = (value: string): string => {
+  return (value ?? '')
+    .trim()
+    .replace(/^=/g, "'=")
+    .replace(/^\+/g, "'+")
+    .replace(/^-/g, "'-")
+    .replace(/^@/g, "'@")
+}
+
 const ticketsToExcel = (tickets: DecryptedTicket[]) => {
   const downloadableTickets = sortTickets(tickets).map((ticket) => ({
     enteredAt: formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm'),
     leftAt: ticket.leftAt ? formatDate(ticket.leftAt, 'DD.MM.YYYY HH:mm') : '-',
-    areaName: ticket.areaName,
-    name: ticket.guest?.name ?? '-',
-    address: ticket.guest?.address ?? '-',
-    phone: ticket.guest?.phone ?? '-',
-    resident: isCareEnv ? ticket.guest?.resident ?? '-' : undefined,
+    areaName: quoteValue(ticket.areaName),
+    name: quoteValue(ticket.guest?.name ?? '-'),
+    address: quoteValue(ticket.guest?.address ?? '-'),
+    phone: quoteValue(ticket.guest?.phone ?? '-'),
+    resident: isCareEnv ? quoteValue(ticket.guest?.resident ?? '-') : undefined,
   }))
   const header = {
     enteredAt: 'Eingecheckt um',
