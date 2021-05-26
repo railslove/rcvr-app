@@ -71,7 +71,10 @@ export function toCSV(guest: Guest): string {
     `${guest.address}, ${guest.postalCode} ${guest.city}`,
     guest.resident,
   ]
-  return values.map((v) => JSON.stringify(v)).join(',')
+  const value = values
+    .map((v) => JSON.stringify(v)?.replaceAll('\\"', '""'))
+    .join(',')
+  return value
 }
 
 interface DecryptedGuest {
