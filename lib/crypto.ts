@@ -70,6 +70,7 @@ export function toCSV(guest: Guest): string {
     guest.phone,
     `${guest.address}, ${guest.postalCode} ${guest.city}`,
     guest.resident,
+    guest.providedHealthDocument,
   ]
   const value = values
     .map((v) => JSON.stringify(v)?.replaceAll('\\"', '""'))
@@ -82,6 +83,7 @@ interface DecryptedGuest {
   phone: string
   address: string
   resident?: string
+  providedHealthDocument?: string
 }
 
 export function fromCSV(csv: string): DecryptedGuest {
@@ -92,5 +94,6 @@ export function fromCSV(csv: string): DecryptedGuest {
     phone: values[1],
     address: values[2],
     resident: values[3],
+    providedHealthDocument: values[4],
   }
 }

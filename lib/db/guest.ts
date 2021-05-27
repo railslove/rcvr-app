@@ -1,6 +1,12 @@
 import { db } from './'
 import { v4 as uuidv4 } from 'uuid'
 
+export enum GuestHealthDocumentEnum {
+  tested = 'TESTED',
+  vaccinated = 'VACCINATED',
+  hadCorona = 'HAD_CORONA',
+}
+
 export interface Guest {
   id?: number
   name?: string
@@ -10,6 +16,7 @@ export interface Guest {
   city?: string
   resident?: string
   checkedInCompanyIds?: string[]
+  providedHealthDocument?: GuestHealthDocumentEnum
 }
 
 let lastGuest: Guest = null

@@ -14,6 +14,8 @@ import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { FilledCircle } from '~ui/core/FilledCircle'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+import { GuestHealthDocumentEnum } from '~lib/db'
+import { CompanyRes } from '~lib/api'
 
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
@@ -31,7 +33,23 @@ const quoteValue = (value: string): string => {
     .replace(/^@/g, "'@")
 }
 
-const ticketsToExcel = (tickets: DecryptedTicket[]) => {
+const providedHealthDocumentToString = (value: string) => {
+  switch (value) {
+    case GuestHealthDocumentEnum.hadCorona:
+      return 'Genesen'
+
+    case GuestHealthDocumentEnum.vaccinated:
+      return 'Geimpft'
+
+    case GuestHealthDocumentEnum.tested:
+      return 'Getestet'
+
+    default:
+      return ''
+  }
+}
+
+const ticketsToExcel = (company: CompanyRes, tickets: DecryptedTicket[]) => {
   const downloadableTickets = sortTickets(tickets).map((ticket) => ({
     enteredAt: formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm'),
     leftAt: ticket.leftAt ? formatDate(ticket.leftAt, 'DD.MM.YYYY HH:mm') : '-',
@@ -40,6 +58,9 @@ const ticketsToExcel = (tickets: DecryptedTicket[]) => {
     address: quoteValue(ticket.guest?.address ?? '-'),
     phone: quoteValue(ticket.guest?.phone ?? '-'),
     resident: isCareEnv ? quoteValue(ticket.guest?.resident ?? '-') : undefined,
+    providedHealthDocument: company.needToShowCoronaTest
+      ? providedHealthDocumentToString(ticket.guest?.providedHealthDocument)
+      : undefined,
   }))
   const header = {
     enteredAt: 'Eingecheckt um',
@@ -49,6 +70,9 @@ const ticketsToExcel = (tickets: DecryptedTicket[]) => {
     address: 'Adresse',
     phone: 'Telefon',
   }
+
+  if (company.needToShowCoronaTest)
+    header['providedHealthDocument'] = 'Vorgelegtes Dokument'
 
   if (isCareEnv) header['resident'] = 'Bewohnername'
 
@@ -85,7 +109,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const handleDownload = React.useCallback(async () => {
     setLoading(true)
-    const rows = ticketsToExcel(tickets)
+    const rows = ticketsToExcel(company, tickets)
 
     // generate xlsx
     const { writeFile, utils: xlsx } = await import('xlsx')
@@ -205,6 +229,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <th>Name</th>
               <th>Adresse</th>
               <th>Telefon</th>
+              {company?.needToShowCoronaTest && <th>Vorgelegtes Dokument</th>}
               {isCareEnv && <th>Bewohner</th>}
             </tr>
           </thead>
@@ -235,6 +260,13 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
                     <td>{ticket.guest.name}</td>
                     <td>{ticket.guest.address}</td>
                     <td>{ticket.guest.phone}</td>
+                    {company?.needToShowCoronaTest && (
+                      <td>
+                        {providedHealthDocumentToString(
+                          ticket.guest.providedHealthDocument
+                        )}
+                      </td>
+                    )}
                     {isCareEnv && <td>{ticket.guest.resident}</td>}
                   </>
                 )}
