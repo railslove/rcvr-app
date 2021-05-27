@@ -58,7 +58,7 @@ context('Checkin', () => {
         privateKey
       )
       expect(decrypted).to.eq(
-        '"John Doe","0221 12312312","ExampleStreet 1, 12345 Example",'
+        '"John Doe","0221 12312312","ExampleStreet 1, 12345 Example",,'
       )
     })
 
@@ -147,7 +147,7 @@ context('Checkin', () => {
 
     cy.contains('Ein negativer Test muss vorliegen')
 
-    cy.get('label[for="haveNegativeTest"]').click()
+    cy.get('label[for="providedHealthDocument"]').click()
 
     cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {
@@ -171,7 +171,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: true,
+      companyNeedToShowCoronaTest: false,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -197,11 +197,6 @@ context('Checkin', () => {
 
     cy.get('button[type="submit"]').click()
 
-    cy.contains('Ein negativer Test muss vorliegen')
-
-    cy.get('label[for="haveNegativeTest"]').click()
-
-    cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {
       expect(request.body.ticket.id).to.match(
         /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
