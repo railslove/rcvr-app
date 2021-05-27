@@ -46,7 +46,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   }
 
   if (area.companyNeedToShowCoronaTest)
-    yupShape['providedHealthDocument'] = Yup.string().typeError(
+    yupShape['providedHealthDocument'] = Yup.string().required(
       isFormal
         ? 'Sie müssen entweder getestet, genesen oder geimpft sein.'
         : 'Du musst entweder getestet, genesen oder geimpft sein.'

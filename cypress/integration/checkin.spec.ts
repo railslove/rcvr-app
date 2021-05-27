@@ -145,14 +145,27 @@ context('Checkin', () => {
 
     cy.get('button[type="submit"]').click()
 
-    cy.contains('Ein negativer Test muss vorliegen')
+    cy.contains('Du musst entweder getestet, genesen oder geimpft sein.')
 
-    cy.get('label[for="providedHealthDocument"]').click()
+    cy.get('label[for="TESTED"]').click()
 
     cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {
       expect(request.body.ticket.id).to.match(
         /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
+      )
+      expect(request.body.ticket.area_id).to.be.eq(areaId)
+      expect(request.body.ticket.public_key).to.be.eq(publicKey)
+      expect(request.body.ticket.entered_at).to.be.eq(
+        '2020-05-11T12:35:00.000Z'
+      )
+      const decrypted = decrypt(
+        request.body.ticket.encrypted_data,
+        publicKey,
+        privateKey
+      )
+      expect(decrypted).to.eq(
+        '"John Doe","0221 12312312","ExampleStreet 1, 12345 Example",,"TESTED"'
       )
     })
     cy.location('pathname', { timeout: 20000 }).should(
