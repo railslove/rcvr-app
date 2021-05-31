@@ -229,7 +229,7 @@ context('Checkin', () => {
     )
   })
 
-  it.only('does not crash the app if auto checkout does not find the ticket', () => {
+  it('does not crash the app if auto checkout does not find the ticket', () => {
     const areaId = '5ac34aab-81f8-4f4d-bc24-97ba8d21eb7b'
     cy.clock(Date.parse('2020-05-11T12:30:00.000Z'), ['Date'])
 
