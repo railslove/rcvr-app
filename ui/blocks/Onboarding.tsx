@@ -97,7 +97,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
               <Box height={3} />
               <Radio
                 name="providedHealthDocument"
-                label="Getestet: Ich bestätige ein negatives, nicht älter als 48 Stunden zurückliegendes, Testergebnis vorliegen zu haben und dieses im Prüfall vorweisen zu können."
+                label="Getestet: Ich bestätige ein negatives, nicht länger als 48 Stunden zurückliegendes, Testergebnis vorliegen zu haben und dieses im Prüffall vorweisen zu können."
                 value={GuestHealthDocumentEnum.tested}
                 hideError={true}
               />
