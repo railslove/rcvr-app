@@ -184,7 +184,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <Box height={4} />
           <Checkbox
             name="needToShowCoronaTest"
-            label="Gäste müssen einen negative Corona-Test vorzeigen"
+            label="Gäste müssen einen negative Corona-Test oder einen Nachweis zur Impfung oder Genesung vorzeigen"
           />
           <Checkbox
             name="cwaLinkEnabled"
