@@ -217,7 +217,7 @@ context('Checkin', () => {
       '/my-checkins'
     )
 
-    cy.get('a[target="_blank"]').click()
+    cy.get('div[name="cwaCheckinUrl"]').click()
     cy.location('pathname', { timeout: 20000 }).should(
       'include',
       'https://e.coronawarn.app/?v=1#CAESDQgBEglUZXN0bG9rYWwadggBEmCDAszMTXne1DAA5/YxmhRdd/NZN2VKl9L32Jl9+ZybE4b2eNIrhFOKYU4XAOHq3RPLDxdHTW6ANiO24rCOO4rj06HzcVZy3pel58+L1KSPG+/PneL2BoyZQRz3qlu2hoAaELtA3FB0/EOn990T+g6CLe4iBAgBGAA='
