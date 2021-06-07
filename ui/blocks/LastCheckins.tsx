@@ -72,7 +72,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   )
 
   const openCwa = () => {
-    window.open(generateCwaLink(checkin), '_blank', 'noopener=yes')
+    location.href=generateCwaLink(checkin)
   }
 
   return (
