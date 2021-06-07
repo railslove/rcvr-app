@@ -98,7 +98,11 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       {!checkedOut && checkin.cwaLinkEnabled && checkin.cwaSeed && (
         <>
           <Box height={4} />
-          <ButtonLink href={generateCwaLink(checkin)} target="_blank" name="cwaCheckinUrl">
+          <ButtonLink
+            href={generateCwaLink(checkin)}
+            target="_blank"
+            name="cwaCheckinUrl"
+          >
             <CwaLink>
               <CwaLogo width="24" height="24" />
               Check-in Corona Warn App
