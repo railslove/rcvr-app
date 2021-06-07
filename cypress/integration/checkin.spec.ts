@@ -198,9 +198,6 @@ context('Checkin', () => {
         publicKey
       )}&cwa=u0DcUHT8Q6f33RP6DoIt7g==`
     )
-    cy.window().then((win) => {
-      cy.stub(win, 'open').as('windowOpen') // 'spy' vs 'stub' lets the new tab still open if you are visually watching it
-    })
 
     cy.get('#name').clear().type('John Doe')
     cy.get('#phone').clear().type('0221 12312312')
@@ -220,12 +217,10 @@ context('Checkin', () => {
       '/my-checkins'
     )
 
-    cy.get('button[name="cwaCheckinUrl"]').click()
-    cy.get('@windowOpen').should(
-      'be.calledWith',
-      'https://e.coronawarn.app/?v=1#CAESDQgBEglUZXN0bG9rYWwadggBEmCDAszMTXne1DAA5/YxmhRdd/NZN2VKl9L32Jl9+ZybE4b2eNIrhFOKYU4XAOHq3RPLDxdHTW6ANiO24rCOO4rj06HzcVZy3pel58+L1KSPG+/PneL2BoyZQRz3qlu2hoAaELtA3FB0/EOn990T+g6CLe4iBAgBGAA=',
-      '_blank',
-      'noopener=yes'
+    cy.get('div[name="cwaCheckinUrl"]').click()
+    cy.location('pathname', { timeout: 20000 }).should(
+      'include',
+      'https://e.coronawarn.app/?v=1#CAESDQgBEglUZXN0bG9rYWwadggBEmCDAszMTXne1DAA5/YxmhRdd/NZN2VKl9L32Jl9+ZybE4b2eNIrhFOKYU4XAOHq3RPLDxdHTW6ANiO24rCOO4rj06HzcVZy3pel58+L1KSPG+/PneL2BoyZQRz3qlu2hoAaELtA3FB0/EOn990T+g6CLe4iBAgBGAA='
     )
   })
 

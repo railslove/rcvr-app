@@ -13,7 +13,7 @@ import { ArrowsLeft, ArrowsRight, Check, Circle, Thumb } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
 import { Onboarding } from '~ui/blocks/Onboarding'
-import { Box, Button, Text } from '~ui/core'
+import { Box, Button, ButtonLink, Text } from '~ui/core'
 import CwaLogo from '~ui/svg/logo-cwa.svg'
 
 interface Props {
@@ -71,10 +71,6 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
     [checkin, setShowProxyCheckin, area, queryClient, mutation]
   )
 
-  const openCwa = () => {
-    window.open(generateCwaLink(checkin), '_blank', 'noopener=yes')
-  }
-
   return (
     <Container>
       <Box height={16} />
@@ -102,12 +98,12 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       {!checkedOut && checkin.cwaLinkEnabled && checkin.cwaSeed && (
         <>
           <Box height={4} />
-          <Button onClick={openCwa} name="cwaCheckinUrl">
+          <ButtonLink href={generateCwaLink(checkin)} target="_blank" name="cwaCheckinUrl">
             <CwaLink>
               <CwaLogo width="24" height="24" />
               Check-in Corona Warn App
             </CwaLink>
-          </Button>
+          </ButtonLink>
           <Box height={4} />
         </>
       )}
