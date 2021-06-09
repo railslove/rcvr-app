@@ -9,6 +9,7 @@ import {
   patchCompany,
   postCompany,
   CompanyTypeOptions,
+  CoronaTestOptions
 } from '~lib/api'
 import { Box, Input, FileInput, Button, Text, Checkbox, Select } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
@@ -31,7 +32,7 @@ const BusinessSchema = Yup.object().shape({
   street: Yup.string().required('Strasse muss angegeben werden.'),
   zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
   city: Yup.string().required('Ort muss angegeben werden.'),
-  needToShowCoronaTest: Yup.boolean(),
+  needToShowCoronaTest: Yup.number(),
   menuLink: Yup.string(),
   privacyPolicyLink: Yup.string(),
   menuPdf: Yup.mixed().test(
@@ -182,9 +183,10 @@ export const BusinessDataModal: React.FC<MProps> = ({
             options={CompanyTypeOptions}
           />
           <Box height={4} />
-          <Checkbox
+          <Select
             name="needToShowCoronaTest"
             label="Gäste müssen einen negative Corona-Test oder einen Nachweis zur Impfung oder Genesung vorzeigen"
+            options={CoronaTestOptions}
           />
           <Checkbox
             name="cwaLinkEnabled"
