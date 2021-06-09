@@ -21,13 +21,19 @@ export const CompanyTypeOptions = {
   other: 'Anderes',
 }
 
+export const CoronaTestOptions = {
+  0: 'kein Test notwendig',
+  24: 'maximal 24 Stunden alter Test notwendig',
+  48: 'maximal 48 Stunden alter Test notwendig',
+}
+
 export interface CompanyRes {
   id: string
   name: string
   street: string
   zip: string
   city: string
-  needToShowCoronaTest: boolean
+  needToShowCoronaTest: integer
   menuLink?: string
   privacyPolicyLink?: string
   menuPdfLink?: string
