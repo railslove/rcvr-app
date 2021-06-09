@@ -58,7 +58,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     )
 
   const OnboardingSchema = Yup.object().shape(yupShape)
-  var provide_test_label="Getestet: Ich bestätige ein negatives, nicht länger als " + area.companyNeedToShowCoronaTest + " Stunden zurückliegendes, Testergebnis vorliegen zu haben und dieses im Prüffall vorweisen zu können."
+  const provide_test_label =
+    'Getestet: Ich bestätige ein negatives, nicht länger als ' +
+    area.companyNeedToShowCoronaTest +
+    ' Stunden zurückliegendes, Testergebnis vorliegen zu haben und dieses im Prüffall vorweisen zu können.'
 
   return (
     <div>

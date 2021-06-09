@@ -9,7 +9,7 @@ import {
   patchCompany,
   postCompany,
   CompanyTypeOptions,
-  CoronaTestOptions
+  CoronaTestOptions,
 } from '~lib/api'
 import { Box, Input, FileInput, Button, Text, Checkbox, Select } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
