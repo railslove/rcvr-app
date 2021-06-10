@@ -156,7 +156,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           city: prefilledWithWhenNew(company?.city, owner?.city),
           menuLink: company?.menuLink || '',
           privacyPolicyLink: company?.privacyPolicyLink || '',
-          needToShowCoronaTest: company?.needToShowCoronaTest || false,
+          needToShowCoronaTest: company?.needToShowCoronaTest || 0,
           menuPdf: menuPdfFileName(company),
           locationType: company?.locationType || 'other',
           cwaLinkEnabled: company?.cwaLinkEnabled || false,
