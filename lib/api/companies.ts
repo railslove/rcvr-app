@@ -33,7 +33,7 @@ export interface CompanyRes {
   street: string
   zip: string
   city: string
-  needToShowCoronaTest: integer
+  needToShowCoronaTest: number
   menuLink?: string
   privacyPolicyLink?: string
   menuPdfLink?: string
