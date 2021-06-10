@@ -58,6 +58,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     )
 
   const OnboardingSchema = Yup.object().shape(yupShape)
+  const provide_test_label =
+    'Getestet: Ich bestätige ein negatives, nicht länger als ' +
+    area.companyNeedToShowCoronaTest +
+    ' Stunden zurückliegendes, Testergebnis vorliegen zu haben und dieses im Prüffall vorweisen zu können.'
 
   return (
     <div>
@@ -92,12 +96,12 @@ export const Onboarding: React.FC<OnboardingProps> = ({
               <Input name="resident" label="Bewohnername" />
             </>
           )}
-          {area.companyNeedToShowCoronaTest && (
+          {area.companyNeedToShowCoronaTest > 0 && (
             <>
               <Box height={3} />
               <Radio
                 name="providedHealthDocument"
-                label="Getestet: Ich bestätige ein negatives, nicht länger als 48 Stunden zurückliegendes, Testergebnis vorliegen zu haben und dieses im Prüffall vorweisen zu können."
+                label={provide_test_label}
                 value={GuestHealthDocumentEnum.tested}
                 hideError={true}
               />
