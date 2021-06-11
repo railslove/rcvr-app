@@ -105,6 +105,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
                     type: 'edit',
                     areaId: area.id,
                     name: area.name,
+                    testExemption: area.testExemption,
                   })
                 }
                 title="Ändern"
