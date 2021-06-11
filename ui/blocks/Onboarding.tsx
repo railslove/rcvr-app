@@ -96,7 +96,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
               <Input name="resident" label="Bewohnername" />
             </>
           )}
-          {area.companyNeedToShowCoronaTest > 0 && (
+          {area.companyNeedToShowCoronaTest > 0 && area.testException != 't' && (
             <>
               <Box height={3} />
               <Radio
