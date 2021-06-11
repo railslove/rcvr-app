@@ -1,15 +1,17 @@
 import { Form, Formik } from 'formik'
+import area from 'pages/business/company/[companyId]/area'
 import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { patchArea, postArea } from '~lib/api'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
-import { Box, Button, Input, Text } from '~ui/core'
+import { Box, Button, Input, Text, Checkbox } from '~ui/core'
 
 interface Props {
   type: 'new' | 'edit'
   name?: string
+  testExemption?: boolean
   areaId?: string
   companyId?: string
 }
@@ -26,6 +28,7 @@ const AreaSchema = Yup.object().shape({
 export const AreaDataModal: React.FC<MProps> = ({
   type = 'new',
   name,
+  testExemption,
   areaId,
   companyId,
   ...baseProps
@@ -36,14 +39,14 @@ export const AreaDataModal: React.FC<MProps> = ({
   const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = React.useCallback(
-    async ({ name }, bag) => {
+    async ({ name, testExemption }, bag) => {
       try {
         setLoading(true)
         if (type === 'edit') {
-          await patchArea(areaId, { name })
+          await patchArea(areaId, { name, testExemption })
         }
         if (type === 'new') {
-          await postArea({ name, companyId })
+          await postArea({ name, companyId, testExemption })
         }
         queryClient.invalidateQueries('areas')
         queryClient.invalidateQueries('companies')
@@ -64,7 +67,10 @@ export const AreaDataModal: React.FC<MProps> = ({
   return (
     <ModalBase {...baseProps} maxWidth={400} loading={loading} title={title}>
       <Formik
-        initialValues={{ name: name || '' }}
+        initialValues={{
+          name: name || '',
+          testExemption: testExemption,
+        }}
         validationSchema={AreaSchema}
         onSubmit={handleSubmit}
       >
@@ -86,6 +92,10 @@ export const AreaDataModal: React.FC<MProps> = ({
                 : 'z.B. "Tisch 1" oder "Theke"'
             }
             autoFocus
+          />
+          <Checkbox
+            name="testExemption"
+            label="Dieser Bereich benötigt KEINE nachweise von impfung, test oder genesung (Betriebsunabhängig)"
           />
           <Box height={4} />
           <Button type="submit" css={{ width: '100%' }}>
