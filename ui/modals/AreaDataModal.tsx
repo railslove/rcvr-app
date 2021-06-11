@@ -11,7 +11,7 @@ import { Box, Button, Input, Text, Checkbox } from '~ui/core'
 interface Props {
   type: 'new' | 'edit'
   name?: string
-  testExemption?: string
+  testExemption?: boolean
   areaId?: string
   companyId?: string
 }
@@ -69,7 +69,7 @@ export const AreaDataModal: React.FC<MProps> = ({
       <Formik
         initialValues={{
           name: name || '',
-          testExemption: String(testExemption) == 't' ? true : false,
+          testExemption: testExemption,
         }}
         validationSchema={AreaSchema}
         onSubmit={handleSubmit}

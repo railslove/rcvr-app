@@ -4,19 +4,19 @@ import { api } from './'
 
 export interface AreaPatch {
   name: string
-  testExemption: string
+  testExemption: boolean
 }
 
 export interface AreaPost {
   name: string
   companyId: string
-  testExemption: string
+  testExemption: boolean
 }
 
 export interface AreaRes {
   id: string
   name: string
-  testExemption: string
+  testExemption: boolean
   companyId: string
   companyName: string
   companyNeedToShowCoronaTest: number
