@@ -11,7 +11,7 @@ import { Box, Button, Input, Text, Checkbox } from '~ui/core'
 interface Props {
   type: 'new' | 'edit'
   name?: string
-  testException?: string
+  testExemption?: string
   areaId?: string
   companyId?: string
 }
@@ -28,7 +28,7 @@ const AreaSchema = Yup.object().shape({
 export const AreaDataModal: React.FC<MProps> = ({
   type = 'new',
   name,
-  testException,
+  testExemption,
   areaId,
   companyId,
   ...baseProps
@@ -39,14 +39,14 @@ export const AreaDataModal: React.FC<MProps> = ({
   const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = React.useCallback(
-    async ({ name, testException }, bag) => {
+    async ({ name, testExemption }, bag) => {
       try {
         setLoading(true)
         if (type === 'edit') {
-          await patchArea(areaId, { name, testException })
+          await patchArea(areaId, { name, testExemption })
         }
         if (type === 'new') {
-          await postArea({ name, companyId, testException })
+          await postArea({ name, companyId, testExemption })
         }
         queryClient.invalidateQueries('areas')
         queryClient.invalidateQueries('companies')
@@ -69,7 +69,7 @@ export const AreaDataModal: React.FC<MProps> = ({
       <Formik
         initialValues={{
           name: name || '',
-          testException: String(testException) == 't' ? true : false,
+          testExemption: String(testExemption) == 't' ? true : false,
         }}
         validationSchema={AreaSchema}
         onSubmit={handleSubmit}
@@ -94,7 +94,7 @@ export const AreaDataModal: React.FC<MProps> = ({
             autoFocus
           />
           <Checkbox
-            name="testException"
+            name="testExemption"
             label="Dieser Bereich benötigt KEINE nachweise von impfung, test oder genesung (Betriebsunabhängig)"
           />
           <Box height={4} />
