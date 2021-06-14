@@ -45,7 +45,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     rememberMe: Yup.boolean(),
   }
 
-  if (area.companyNeedToShowCoronaTest)
+  if (area.companyNeedToShowCoronaTest && (!area.testExemption))
     yupShape['providedHealthDocument'] = Yup.string().required(
       isFormal
         ? 'Sie müssen entweder getestet, genesen oder geimpft sein.'
@@ -69,6 +69,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
         initialValues={initialValues}
         validationSchema={OnboardingSchema}
         onSubmit={({ rememberMe, ...fields }) => {
+          alert(fields)
           onSubmit(fields, { rememberMe })
         }}
       >
@@ -96,7 +97,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
               <Input name="resident" label="Bewohnername" />
             </>
           )}
-          {area.companyNeedToShowCoronaTest > 0 && !area.testExemption && (
+          {area.companyNeedToShowCoronaTest > 0 && (!area.testExemption) && (
             <>
               <Box height={3} />
               <Radio
