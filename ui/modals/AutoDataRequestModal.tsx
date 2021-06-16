@@ -60,13 +60,6 @@ export const AutoDataRequestModal: React.FC<MProps> = ({
         onSubmit={handleSubmit}
       >
         <Form>
-          <Callout variant="danger">
-            <Text>
-              {isFormal ? 'Sie dürfen' : 'Du darfst'} diese Abfrage nur einmal
-              am Tag stellen.
-            </Text>
-          </Callout>
-          <Box height={6} />
           <Input
             name="reason"
             label="Grund für die Abfrage"
