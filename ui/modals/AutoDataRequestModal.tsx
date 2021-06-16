@@ -52,7 +52,7 @@ export const AutoDataRequestModal: React.FC<MProps> = ({
       {...baseProps}
       maxWidth={400}
       loading={loading}
-      title="Automatischen Datenabfrage"
+      title="Automatische Datenabfrage"
     >
       <Formik
         initialValues={{ reason: '' }}
