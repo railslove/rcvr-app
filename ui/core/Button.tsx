@@ -97,12 +97,16 @@ const Center = styled('div')(
   })
 )
 
-type ButtonLinkProps = ButtonProps & { href: string }
+type ButtonLinkProps = ButtonProps & { href: string; target?: string }
 
-export const ButtonLink: React.FC<ButtonLinkProps> = ({ href, ...rest }) => {
+export const ButtonLink: React.FC<ButtonLinkProps> = ({
+  href,
+  target,
+  ...rest
+}) => {
   return (
     <Link href={href}>
-      <a>
+      <a target={target}>
         <Button as="div" {...rest} />
       </a>
     </Link>

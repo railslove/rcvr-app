@@ -5,6 +5,7 @@ import { useQueryClient, useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
 import { checkin as checkinAction } from '~lib/actions'
 import { updateCurrentGuest } from '~lib/actions/updateGuest'
+import { generateCwaLink } from '~lib/cwa/generateCwaLink'
 import { Checkin } from '~lib/db'
 import { Guest } from '~lib/db/guest'
 import { useArea } from '~lib/hooks'
@@ -12,7 +13,7 @@ import { ArrowsLeft, ArrowsRight, Check, Circle, Thumb } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
 import { Onboarding } from '~ui/blocks/Onboarding'
-import { Box, Button, Text } from '~ui/core'
+import { Box, Button, ButtonLink, Text } from '~ui/core'
 import CwaLogo from '~ui/svg/logo-cwa.svg'
 
 interface Props {
@@ -70,10 +71,6 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
     [checkin, setShowProxyCheckin, area, queryClient, mutation]
   )
 
-  const openCwa = () => {
-    window.open(checkin.companyCwaUrl, '_blank', 'noopener=yes')
-  }
-
   return (
     <Container>
       <Box height={16} />
@@ -98,15 +95,19 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
-      {!checkedOut && checkin.companyCwaUrl && (
+      {!checkedOut && checkin.cwaLinkEnabled && checkin.cwaSeed && (
         <>
           <Box height={4} />
-          <Button onClick={openCwa} name="cwaCheckinUrl">
+          <ButtonLink
+            href={generateCwaLink(checkin)}
+            target="_blank"
+            name="cwaCheckinUrl"
+          >
             <CwaLink>
               <CwaLogo width="24" height="24" />
               Check-in Corona Warn App
             </CwaLink>
-          </Button>
+          </ButtonLink>
           <Box height={4} />
         </>
       )}

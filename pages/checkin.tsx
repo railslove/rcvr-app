@@ -35,6 +35,7 @@ export default function CheckinPage() {
 
   const publicKey = router.query.k?.toString()
   const areaId = router.query.a?.toString()
+  const cwaSeed = router.query.cwa?.toString()
 
   const guestInfo = useCurrentGuest()
   const areaInfo = useArea(areaId)
@@ -42,18 +43,26 @@ export default function CheckinPage() {
   const prefillName = router.query.name?.toString()
   const prefillPhone = router.query.phone?.toString()
   const prefillAddress = router.query.address?.toString()
+  const prefillCity = router.query.city?.toString()
+  const prefillPostalCode = router.query.postalCode?.toString()
 
   const prefilledGuest =
     prefillName ||
     prefillPhone ||
     prefillAddress ||
+    prefillCity ||
+    prefillPostalCode ||
     guestInfo.data?.name ||
     guestInfo.data?.phone ||
-    guestInfo.data?.address
+    guestInfo.data?.address ||
+    guestInfo.data?.city ||
+    guestInfo.data?.postalCode
       ? {
-          name: prefillName || guestInfo.data?.name,
-          phone: prefillPhone || guestInfo.data?.phone,
-          address: prefillAddress || guestInfo.data?.address,
+          name: prefillName || guestInfo.data?.name || '',
+          phone: prefillPhone || guestInfo.data?.phone || '',
+          address: prefillAddress || guestInfo.data?.address || '',
+          city: prefillCity || guestInfo.data?.city || '',
+          postalCode: prefillPostalCode || guestInfo.data?.postalCode || '',
         }
       : undefined
 
@@ -94,6 +103,7 @@ export default function CheckinPage() {
           ticket,
           guest,
           companyId: areaInfo.data.companyId,
+          cwaSeed,
         })
         router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
       } catch (error) {
@@ -111,6 +121,7 @@ export default function CheckinPage() {
       mutationCheckin,
       mutationCheckout,
       queryClient,
+      cwaSeed,
     ]
   )
 
@@ -126,25 +137,11 @@ export default function CheckinPage() {
     [guestInfo, checkinAndRedirect]
   )
 
-  const tryAutoCheckin = React.useCallback(() => {
-    const guest = guestInfo.data
-
-    // Check if a guest was already created
-    const hasData = guest?.name && guest?.phone && guest?.address
-    // and has already checked in at this company before
-    const hasAcceptedPrivacy = guest?.checkedInCompanyIds?.includes(
-      areaInfo.data.companyId
-    )
-
-    // then do the checkin cha cha cha.
-    if (hasData && hasAcceptedPrivacy) {
-      checkinAndRedirect(guest)
-    } else {
-      setShowConfirmation(false)
-      setShowOnboarding(true)
-      setShowLoading(false)
-    }
-  }, [guestInfo, areaInfo, checkinAndRedirect])
+  const confirmedScreen = React.useCallback(() => {
+    setShowConfirmation(false)
+    setShowOnboarding(true)
+    setShowLoading(false)
+  }, [setShowConfirmation, setShowOnboarding, setShowLoading])
 
   const isReady =
     publicKey &&
@@ -167,9 +164,11 @@ export default function CheckinPage() {
       setShowConfirmation(true)
       setShowLoading(false)
     } else {
-      tryAutoCheckin()
+      setShowConfirmation(false)
+      setShowOnboarding(true)
+      setShowLoading(false)
     }
-  }, [isReady, publicKey, tryAutoCheckin])
+  }, [isReady, publicKey])
 
   return (
     <MobileApp logoVariant="big" secondaryLogo={areaInfo.data?.affiliateLogo}>
@@ -259,7 +258,7 @@ export default function CheckinPage() {
             </Card>
           )}
 
-          {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
+          {showConfirmation && <Confirmation onSubmit={confirmedScreen} />}
           <Row justifyContent="center" my={6}>
             <a
               href={
