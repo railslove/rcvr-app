@@ -11,7 +11,7 @@ import { KeyViewer } from '~ui/blocks/KeyViewer'
 
 const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { privateKey } = owner
-  const css_inl = '@media print { .no-print{ display: none !important;} }'
+  
   return (
     <MobileApp>
       <Head>
