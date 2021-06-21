@@ -45,13 +45,13 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
         </Box>
 
         <Box height={6} />
-        <Text>
-          <p className="no-print">
+        <TextNoPrint>
+          <p>
             {isFormal
               ? 'Im nächsten Schritt müssen Sie den Schlüssel eingeben. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
               : 'Im nächsten Schritt musst Du den Schlüssel eingeben. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
           </p>
-        </Text>
+        </TextNoPrint>
         <Box height={6} />
 
         <ButtonLinkNoPrint
