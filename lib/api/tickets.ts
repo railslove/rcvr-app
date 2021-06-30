@@ -21,6 +21,7 @@ export interface TicketReq<DateT = Date> {
   encryptedData?: string
   publicKey?: string
   proxyCheckin?: boolean
+  CWACheckedIn?: number
 }
 
 export async function postTicket(ticket: TicketReq): Promise<TicketRes> {
