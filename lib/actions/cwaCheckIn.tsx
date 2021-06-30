@@ -30,7 +30,6 @@ export async function cwaCheckIn(
     const encryptedData = encrypt(updatedCheckin.k, csv)
     await api.patchTicket({
       id: updatedCheckin.id,
-      encryptedData: encryptedData,
       CWACheckedIn: updatedCheckin.guest.CWACheckedIn,
     })
   }
