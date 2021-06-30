@@ -4,6 +4,7 @@ import * as React from 'react'
 import { useQueryClient, useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
 import { checkin as checkinAction } from '~lib/actions'
+import { cwaCheckIn } from '~lib/actions'
 import { updateCurrentGuest } from '~lib/actions/updateGuest'
 import { generateCwaLink } from '~lib/cwa/generateCwaLink'
 import { Checkin } from '~lib/db'
@@ -37,6 +38,13 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const handleEditGuest = (guest, _opts) => {
     setLoading(true)
     updateCurrentGuest(queryClient, guest).then((_checkin) => {
+      setLoading(false)
+      setShowEditData(false)
+    })
+  }
+
+  const trackCWA = (checkin) => {
+    cwaCheckIn(queryClient, checkin.guest).then((_checkin) => {
       setLoading(false)
       setShowEditData(false)
     })
@@ -99,6 +107,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
         <>
           <Box height={4} />
           <ButtonLink
+            onClick={() => trackCWA(checkin)}
             href={generateCwaLink(checkin)}
             target="_blank"
             name="cwaCheckinUrl"
