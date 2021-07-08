@@ -5,7 +5,7 @@ import { IconButton } from '~ui/core'
 import { Edit, Trash } from '~ui/svg'
 import { pdfType } from '~ui/whitelabels'
 
-export const CompanyCard = ({ company, onEdit, onDelete, menuAlias }) => {
+export const CompanyCard = ({ company, onEdit, onDelete }) => {
   const menuText = React.useMemo(() => {
     if (company.menuPdfLink) return 'PDF Anhang'
 
@@ -19,7 +19,7 @@ export const CompanyCard = ({ company, onEdit, onDelete, menuAlias }) => {
     >
       <ActionCard.Main
         title={company.name}
-        subtitle={`${menuAlias || pdfType}: ${menuText}`}
+        subtitle={`${company.menuAlias || pdfType}: ${menuText}`}
       />
       <ActionCard.Actions>
         <IconButton
