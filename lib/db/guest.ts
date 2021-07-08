@@ -17,6 +17,7 @@ export interface Guest {
   resident?: string
   checkedInCompanyIds?: string[]
   providedHealthDocument?: GuestHealthDocumentEnum
+  CWACheckedIn?: number
 }
 
 let lastGuest: Guest = null
