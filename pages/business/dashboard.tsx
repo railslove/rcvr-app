@@ -14,7 +14,6 @@ import { CompanyCard } from '~ui/blocks/CompanyCard'
 
 const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { data: companies } = useCompanies()
-  console.log(companies)
   const { modals, openModal } = useModals({
     data: BusinessDataModal,
     delete: BusinessDeleteModal,
