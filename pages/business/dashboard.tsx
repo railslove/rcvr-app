@@ -14,6 +14,7 @@ import { CompanyCard } from '~ui/blocks/CompanyCard'
 
 const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { data: companies } = useCompanies()
+  console.log(companies)
   const { modals, openModal } = useModals({
     data: BusinessDataModal,
     delete: BusinessDeleteModal,
@@ -36,7 +37,6 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <CompanyCard
             key={company.id}
             company={company}
-            menuAlias={owner.menuAlias}
             onEdit={() =>
               owner.privateKey
                 ? openModal('data', {
