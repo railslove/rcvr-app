@@ -5,6 +5,7 @@ export interface CompanyReq extends FormData {
   'company[name]'?: FormDataEntryValue
   'company[need_to_show_corona_test]'?: FormDataEntryValue
   'company[menu_link]'?: FormDataEntryValue
+  'company[menu_alias]'?: FormDataEntryValue
   'company[privacy_policy_link]'?: FormDataEntryValue
   'company[menu_pdf]'?: File
   'company[cwa_link_enabled]'?: FormDataEntryValue
@@ -35,6 +36,7 @@ export interface CompanyRes {
   city: string
   needToShowCoronaTest: number
   menuLink?: string
+  menuAlias?: string
   privacyPolicyLink?: string
   menuPdfLink?: string
   areas: AreaRes[]

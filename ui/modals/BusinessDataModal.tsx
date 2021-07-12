@@ -34,6 +34,7 @@ const BusinessSchema = Yup.object().shape({
   city: Yup.string().required('Ort muss angegeben werden.'),
   needToShowCoronaTest: Yup.number(),
   menuLink: Yup.string(),
+  menuAlias: Yup.string(),
   privacyPolicyLink: Yup.string(),
   menuPdf: Yup.mixed().test(
     'isPDF',
@@ -80,6 +81,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         city,
         needToShowCoronaTest,
         menuLink,
+        menuAlias,
         menuPdf,
         privacyPolicyLink,
         cwaLinkEnabled,
@@ -97,6 +99,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
       formData.append('company[city]', city)
       formData.append('company[need_to_show_corona_test]', needToShowCoronaTest)
       formData.append('company[menu_link]', safeMenuLink)
+      formData.append('company[menu_alias]', menuAlias)
       formData.append('company[privacy_policy_link]', safePrivacyPolicyLink)
       formData.append('company[cwa_link_enabled]', cwaLinkEnabled)
       if (!company?.cwaCryptoSeed) {
@@ -154,6 +157,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           street: prefilledWithWhenNew(company?.street, owner?.street),
           zip: prefilledWithWhenNew(company?.zip, owner?.zip),
           city: prefilledWithWhenNew(company?.city, owner?.city),
+          menuAlias: company?.menuAlias || '',
           menuLink: company?.menuLink || '',
           privacyPolicyLink: company?.privacyPolicyLink || '',
           needToShowCoronaTest: company?.needToShowCoronaTest || 0,
@@ -201,9 +205,11 @@ export const BusinessDataModal: React.FC<MProps> = ({
           />
           <Box height={4} />
           <Input
-            name="menuLink"
-            label={`${owner?.menuAlias || pdfType} als Link`}
+            name="menuAlias"
+            label={'Name der Zustatzinformationen-Sektion'}
           />
+          <Box height={4} />
+          <Input name="menuLink" label={`${pdfType} als Link`} />
           <Box height={4} />
           <Text variant="shy" textAlign="center">
             – oder –
@@ -212,7 +218,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <FileInput
             name="menuPdf"
             type="file"
-            label={`${owner?.menuAlias || pdfType} als PDF`}
+            label={`${pdfType} als PDF`}
             hint="Es können nur pdf-Dateien hochgeladen werden."
             accept="application/pdf"
           />
