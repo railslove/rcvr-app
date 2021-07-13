@@ -11,7 +11,17 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { useA11yFocusRing } from '~lib/hooks'
 import { theme, globalStyles } from '~ui/theme'
 
+import TagManager from 'react-gtm-module'
+
 const queryClient = new QueryClient()
+
+const tagManagerArgs = {
+  gtmId: 'G-HCM7KT2QBZ'
+}
+
+if (process.browser) {
+  TagManager.initialize(tagManagerArgs);
+}
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   useA11yFocusRing()
