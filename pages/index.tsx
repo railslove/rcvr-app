@@ -4,14 +4,14 @@ import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { indexIntro } from '~ui/whitelabels'
+import useTranslation from 'next-translate/useTranslation'
 
 export default function IndexPage() {
+  const { t, lang } = useTranslation('common')
   return (
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
-        Checkins per QR-Code.
-        <br />
-        Ohne App, einfach für alle.
+        {t('title')}<br />{t('subtitle')}
       </Text>
       <Box height={4} />
       <Text>
