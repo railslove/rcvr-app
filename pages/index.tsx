@@ -3,30 +3,28 @@ import { isCareEnv, isFormal, formalPostfix, isHealthEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { indexIntro } from '~ui/whitelabels'
-import useTranslation from 'next-translate/useTranslation'
+import { translate } from '~lib/translate'
 
 export default function IndexPage() {
-  // optional: const {t, lang } = useTranslation('checkin')
-  const {t} = useTranslation('checkin')
+
   return (
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
-        {t('title')}<br />{t('subtitle')}
+        {translate('title')}<br />{translate('subtitle')}
       </Text>
       <Box height={4} />
       <Text>
-        <p>{indexIntro}</p>
+        <p>{translate('indexIntro',{'variant':true})}</p>
       </Text>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {t(`forVisitorsAndGuests${formalPostfix}`)}
+          {translate(`forVisitorsAndGuests${formalPostfix}`)}
         </Text>
         <Box height={4} />
         <Text>
-          <p>{t(`rcvrProtectsData${formalPostfix}`)}</p>
+          <p>{translate(`rcvrProtectsData${formalPostfix}`)}</p>
         </Text>
         <Box height={8} />
 
@@ -35,25 +33,25 @@ export default function IndexPage() {
           left={<ArrowsRight color="green" />}
           right={<ArrowsLeft color="green" />}
         >
-          {t('scanCode')}
+          {translate('scanCode')}
         </ButtonLink>
         <Box height={4} />
         <ButtonLink href="/my-checkins">
-        {t(`yourTickets${formalPostfix}`)}
+        {translate(`yourTickets${formalPostfix}`)}
         </ButtonLink>
       </Card>
       <Box height={4} />
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-        {t(`forYourCompany${formalPostfix}`)}
+        {translate(`forYourCompany${formalPostfix}`)}
         </Text>
         <Box height={4} />
         <Text>
-          <p>{t(`goodbyePaperwork${formalPostfix}`)}</p>
+          <p>{translate(`goodbyePaperwork${formalPostfix}`)}</p>
         </Text>
         <Box height={8} />
         <ButtonLink href="/business">
-        {t(`recoverForCompanies${formalPostfix}`)}
+        {translate(`recoverForCompanies${formalPostfix}`)}
         </ButtonLink>
       </Card>
       <Row justifyContent="center" my={6}>
@@ -68,7 +66,7 @@ export default function IndexPage() {
           target="_blank"
           rel="noreferrer noopener"
         >
-          <Text variant="link">{t('whatIsRecover')}</Text>
+          <Text variant="link">{translate('whatIsRecover')}</Text>
         </a>
       </Row>
     </MobileApp>

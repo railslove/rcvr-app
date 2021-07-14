@@ -4,11 +4,10 @@ import { isFormal, formalPostfix } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import useTranslation from 'next-translate/useTranslation'
+import { translate } from '~lib/translate'
 
 export default function QRCodePage() {
   const videoEl = React.useRef<HTMLVideoElement>()
-  const {t} = useTranslation('checkin')
 
   function appendUrlParams(url: URL): any {
     const params = new URLSearchParams(new URL(window.location.href).search)
@@ -56,11 +55,11 @@ export default function QRCodePage() {
         <title key="title">QR-Code scannen | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        {t('scanCode')}
+        {translate('scanCode')}
       </Text>
       <Box height={4} />
       <Text>
-        {t(`scanCodeArea${formalPostfix}`)}
+        {translate(`scanCodeArea${formalPostfix}`)}
       </Text>
       <Card my={8} css={{ position: 'relative' }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}

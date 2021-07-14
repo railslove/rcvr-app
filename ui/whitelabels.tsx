@@ -23,8 +23,7 @@ const envs = {
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
     instruction: 'Account erstellen',
-    indexIntro:
-      'recover ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.',
+    
     setupIntro: (
       <>
         <p>
@@ -140,8 +139,6 @@ const envs = {
     logoBigHeight: '40px',
     privacyUrl: 'https://www.recovercare.de/datenschutzerklarung',
     formalAddress: true,
-    indexIntro:
-      'recover ist die digitale Kontaktdatenliste für Pflegeeinrichtungen, deren Besucher und Gäste. Einfach, sicher, schnell.',
     introText:
       'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Pflegeeinrichtungen | recover',
@@ -240,8 +237,6 @@ const envs = {
     logoBigHeight: '40px',
     privacyUrl: 'https://www.recover-health.de/datenschutzerklarung',
     formalAddress: true,
-    indexIntro:
-      'recover ist die digitale Kontaktdatenliste für Krankenhäuser, deren Besucher und Gäste. Einfach, sicher, schnell.',
     introText:
       'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Krankenhäuser. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Krankenhäuser | recover',
@@ -440,6 +435,8 @@ const envs = {
     ),
   },
 }
+
+
 
 const {
   pdfType,
