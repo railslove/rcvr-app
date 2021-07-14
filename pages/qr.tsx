@@ -59,7 +59,7 @@ export default function QRCodePage() {
       </Text>
       <Box height={4} />
       <Text>
-        {translate(`scanCodeArea${formalPostfix}`)}
+        {translate(`scanCodeArea`)}
       </Text>
       <Card my={8} css={{ position: 'relative' }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}

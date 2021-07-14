@@ -6,7 +6,6 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { translate } from '~lib/translate'
 
 export default function IndexPage() {
-
   return (
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
@@ -14,17 +13,17 @@ export default function IndexPage() {
       </Text>
       <Box height={4} />
       <Text>
-        <p>{translate('indexIntro',{'variant':true})}</p>
+        <p>{translate('indexIntro')}</p>
       </Text>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {translate(`forVisitorsAndGuests${formalPostfix}`)}
+          {translate(`forVisitorsAndGuests`)}
         </Text>
         <Box height={4} />
         <Text>
-          <p>{translate(`rcvrProtectsData${formalPostfix}`)}</p>
+          <p>{translate(`rcvrProtectsData`)}</p>
         </Text>
         <Box height={8} />
 
@@ -37,21 +36,21 @@ export default function IndexPage() {
         </ButtonLink>
         <Box height={4} />
         <ButtonLink href="/my-checkins">
-        {translate(`yourTickets${formalPostfix}`)}
+        {translate(`yourTickets`)}
         </ButtonLink>
       </Card>
       <Box height={4} />
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-        {translate(`forYourCompany${formalPostfix}`)}
+        {translate(`forYourCompany`)}
         </Text>
         <Box height={4} />
         <Text>
-          <p>{translate(`goodbyePaperwork${formalPostfix}`)}</p>
+          <p>{translate(`goodbyePaperwork`)}</p>
         </Text>
         <Box height={8} />
         <ButtonLink href="/business">
-        {translate(`recoverForCompanies${formalPostfix}`)}
+        {translate(`recoverForCompanies`)}
         </ButtonLink>
       </Card>
       <Row justifyContent="center" my={6}>
