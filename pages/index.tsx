@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { isCareEnv, isFormal, formalPostfix, isHealthEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
@@ -7,7 +7,8 @@ import { indexIntro } from '~ui/whitelabels'
 import useTranslation from 'next-translate/useTranslation'
 
 export default function IndexPage() {
-  const { t, lang } = useTranslation('common')
+  // optional: const {t, lang } = useTranslation('checkin')
+  const {t} = useTranslation('checkin')
   return (
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
@@ -21,15 +22,11 @@ export default function IndexPage() {
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {isFormal ? 'Für Besucher und Gäste' : 'Für Gäste'}
+          {t(`forVisitorsAndGuests${formalPostfix}`)}
         </Text>
         <Box height={4} />
         <Text>
-          <p>
-            {isFormal
-              ? 'recover schützt Ihre Daten besser als Papier'
-              : 'recover schützt Deine Daten besser als jedes Papier.'}
-          </p>
+          <p>{t(`rcvrProtectsData${formalPostfix}`)}</p>
         </Text>
         <Box height={8} />
 
@@ -38,29 +35,25 @@ export default function IndexPage() {
           left={<ArrowsRight color="green" />}
           right={<ArrowsLeft color="green" />}
         >
-          QR-Code scannen
+          {t('scanCode')}
         </ButtonLink>
         <Box height={4} />
         <ButtonLink href="/my-checkins">
-          {isFormal ? 'Ihre Tickets' : 'Deine Tickets'}
+        {t(`yourTickets${formalPostfix}`)}
         </ButtonLink>
       </Card>
       <Box height={4} />
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {isFormal ? 'Für Ihre Einrichtung' : 'Für Deinen Betrieb'}
+        {t(`forYourCompany${formalPostfix}`)}
         </Text>
         <Box height={4} />
         <Text>
-          <p>
-            {isFormal
-              ? 'Tschüss, Zettelwirtschaft! recover ist die digitale Kontaktdatenliste Ihrer Besucher und Gäste. Einfach, sicher, schnell.'
-              : 'Tschüss, Zettelwirtschaft! recover ist die digitale Kontaktdatenliste deiner Gäste. Einfach, sicher, schnell.'}
-          </p>
+          <p>{t(`goodbyePaperwork${formalPostfix}`)}</p>
         </Text>
         <Box height={8} />
         <ButtonLink href="/business">
-          Recover für {isFormal ? 'Einrichtungen' : 'Betriebe'}
+        {t(`recoverForCompanies${formalPostfix}`)}
         </ButtonLink>
       </Card>
       <Row justifyContent="center" my={6}>
@@ -75,7 +68,7 @@ export default function IndexPage() {
           target="_blank"
           rel="noreferrer noopener"
         >
-          <Text variant="link">Was ist recover?</Text>
+          <Text variant="link">{t('whatIsRecover')}</Text>
         </a>
       </Row>
     </MobileApp>
