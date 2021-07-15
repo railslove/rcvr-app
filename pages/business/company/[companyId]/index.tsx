@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
+import { orderBy } from 'lodash'
 
 import { isFormal } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
@@ -40,6 +41,13 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
     )
   }
 
+  const sortRequests = (dataRequests: DataRequestRes[]) =>
+    orderBy(
+      dataRequests,
+      [(dataRequest: DataRequestRes) => dataRequest.acceptedAt != null, 'to'],
+      ['asc', 'desc']
+    )
+
   const RequestList = ({
     dataRequests,
   }: {
@@ -48,7 +56,7 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
     <>
       <Box height={6} />
       <ActionList grid>
-        {dataRequests?.map((dataRequest) => (
+        {sortRequests(dataRequests)?.map((dataRequest) => (
           <ActionCard
             key={dataRequest.id}
             href="/business/company/[companyId]/data-request/[dataRequestId]"
