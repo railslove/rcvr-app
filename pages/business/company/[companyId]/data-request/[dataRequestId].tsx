@@ -21,7 +21,6 @@ import { postAcceptDataRequest } from '~lib/api'
 import { GuestHealthDocumentEnum } from '~lib/db'
 import { CompanyRes } from '~lib/api'
 
-
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
     (c1: DecryptedTicket, c2: DecryptedTicket) =>
@@ -55,7 +54,7 @@ const providedHealthDocumentToString = (value: string) => {
 }
 
 const queryCache = new QueryCache({
-  onError: error => {
+  onError: (error) => {
     console.log(error)
   },
 })

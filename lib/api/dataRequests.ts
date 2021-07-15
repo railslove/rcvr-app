@@ -114,10 +114,9 @@ export async function getUnacceptedDataRequests() {
     .then((res) => camelcaseKeys(res, { deep: true }))
     .then((res: UnacceptedDataRequestsReq[]) =>
       res.reduce((obj, item) => {
-        obj[
-          item.id
-        ] = item.unacceptedDataRequests.map((dataRequest: DataRequestRes) =>
-          parseDates<DataRequestRes>(dataRequest, 'from', 'to', 'acceptedAt')
+        obj[item.id] = item.unacceptedDataRequests.map(
+          (dataRequest: DataRequestRes) =>
+            parseDates<DataRequestRes>(dataRequest, 'from', 'to', 'acceptedAt')
         )
         return obj
       }, {})
