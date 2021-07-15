@@ -2,6 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
+import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 
 import { isFormal } from '~lib/config'
@@ -22,11 +23,12 @@ import { commitSetupPublicKey } from '~lib/actions'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const handleSubmit = async () => {
     // user has confirmed the temporary setupPublicKey..
     // extract it and set it as the real publicKey on front- and backend
-    await commitSetupPublicKey(owner)
+    await commitSetupPublicKey(queryClient, owner)
     router.push('/business/setup/finished')
   }
 
@@ -103,7 +105,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
                   <Text>
                     {isFormal
                       ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
-                      : 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt deinen Betrieb einrichten.'}
+                      : 'Schlüssel sicher und zugänglich verwahrt? Dann kannst du jetzt deinen Betrieb einrichten.'}
                   </Text>
                   <Box height={4} />
                   <Button

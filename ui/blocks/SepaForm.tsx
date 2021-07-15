@@ -4,7 +4,7 @@ import { Box, Button, Input, Text } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import * as IBAN from 'iban'
+import IBAN from 'iban'
 
 const SepaSchema = Yup.object().shape({
   name: Yup.string().required('Kontoinhaber muss angegeben werden.'),

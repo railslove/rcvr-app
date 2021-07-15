@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 import { useEffectOnce } from 'react-use'
-import { queryCache } from 'react-query'
+import { QueryCache } from 'react-query'
 
 import { isCareEnv, isFormal } from '~lib/config'
 import { decryptTickets, DecryptedTicket } from '~lib/actions'
@@ -15,7 +15,12 @@ import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { FilledCircle } from '~ui/core/FilledCircle'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+
 import { postAcceptDataRequest } from '~lib/api'
+
+import { GuestHealthDocumentEnum } from '~lib/db'
+import { CompanyRes } from '~lib/api'
+
 
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
@@ -24,15 +29,49 @@ const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   )
 }
 
-const ticketsToExcel = (tickets: DecryptedTicket[]) => {
+const quoteValue = (value: string): string => {
+  return (value ?? '')
+    .trim()
+    .replace(/^=/g, "'=")
+    .replace(/^\+/g, "'+")
+    .replace(/^-/g, "'-")
+    .replace(/^@/g, "'@")
+}
+
+const providedHealthDocumentToString = (value: string) => {
+  switch (value) {
+    case GuestHealthDocumentEnum.hadCorona:
+      return 'Genesen'
+
+    case GuestHealthDocumentEnum.vaccinated:
+      return 'Geimpft'
+
+    case GuestHealthDocumentEnum.tested:
+      return 'Getestet'
+
+    default:
+      return ''
+  }
+}
+
+const queryCache = new QueryCache({
+  onError: error => {
+    console.log(error)
+  },
+})
+
+const ticketsToExcel = (company: CompanyRes, tickets: DecryptedTicket[]) => {
   const downloadableTickets = sortTickets(tickets).map((ticket) => ({
     enteredAt: formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm'),
     leftAt: ticket.leftAt ? formatDate(ticket.leftAt, 'DD.MM.YYYY HH:mm') : '-',
-    areaName: ticket.areaName,
-    name: ticket.guest?.name ?? '-',
-    address: ticket.guest?.address ?? '-',
-    phone: ticket.guest?.phone ?? '-',
-    resident: isCareEnv ? ticket.guest?.resident ?? '-' : undefined,
+    areaName: quoteValue(ticket.areaName),
+    name: quoteValue(ticket.guest?.name ?? '-'),
+    address: quoteValue(ticket.guest?.address ?? '-'),
+    phone: quoteValue(ticket.guest?.phone ?? '-'),
+    resident: isCareEnv ? quoteValue(ticket.guest?.resident ?? '-') : undefined,
+    providedHealthDocument: company.needToShowCoronaTest
+      ? providedHealthDocumentToString(ticket.guest?.providedHealthDocument)
+      : undefined,
   }))
   const header = {
     enteredAt: 'Eingecheckt um',
@@ -42,6 +81,9 @@ const ticketsToExcel = (tickets: DecryptedTicket[]) => {
     address: 'Adresse',
     phone: 'Telefon',
   }
+
+  if (company.needToShowCoronaTest)
+    header['providedHealthDocument'] = 'Vorgelegtes Dokument'
 
   if (isCareEnv) header['resident'] = 'Bewohnername'
 
@@ -70,20 +112,16 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     openModal('privateKey', { ownerId: owner.id })
   }, [openModal, owner])
 
-  const {
-    tickets,
-    successCount,
-    errorCount,
-    pendingCount,
-  } = React.useMemo(() => {
-    const encryptedTickets = dataRequest?.tickets || []
-    const { publicKey, privateKey } = owner
-    return decryptTickets(encryptedTickets, publicKey, privateKey)
-  }, [dataRequest, owner])
+  const { tickets, successCount, errorCount, pendingCount } =
+    React.useMemo(() => {
+      const encryptedTickets = dataRequest?.tickets || []
+      const { publicKey, privateKey } = owner
+      return decryptTickets(encryptedTickets, publicKey, privateKey)
+    }, [dataRequest, owner])
 
   const handleDownload = React.useCallback(async () => {
     setLoading(true)
-    const rows = ticketsToExcel(tickets)
+    const rows = ticketsToExcel(company, tickets)
 
     // generate xlsx
     const { writeFile, utils: xlsx } = await import('xlsx')
@@ -102,8 +140,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const approveRequest = React.useCallback(async () => {
     postAcceptDataRequest(dataRequestId).then(() => {
-      queryCache.refetchQueries(['dataRequests', companyId, dataRequestId])
-      queryCache.refetchQueries(['unacceptedDataRequests'])
+      queryCache.find(['dataRequests', companyId, dataRequestId])
+      queryCache.find(['unacceptedDataRequests'])
     })
   }, [])
 
@@ -151,7 +189,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               </Text>
               <Box height={4} />
               <Text as="h2">Anfragende Behörde:</Text>
-              <Text>{dataRequest.irisHealthDepartment}</Text>
+              <Text>{dataRequest.irisClientName}</Text>
               <Box height={4} />
               <Text as="h2">Grund der Anfrage:</Text>
               <Text>{dataRequest.reason}</Text>
@@ -228,6 +266,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <th>Name</th>
               <th>Adresse</th>
               <th>Telefon</th>
+              {company?.needToShowCoronaTest && <th>Vorgelegtes Dokument</th>}
               {isCareEnv && <th>Bewohner</th>}
             </tr>
           </thead>
@@ -258,6 +297,13 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
                     <td>{ticket.guest.name}</td>
                     <td>{ticket.guest.address}</td>
                     <td>{ticket.guest.phone}</td>
+                    {company?.needToShowCoronaTest && (
+                      <td>
+                        {providedHealthDocumentToString(
+                          ticket.guest.providedHealthDocument
+                        )}
+                      </td>
+                    )}
                     {isCareEnv && <td>{ticket.guest.resident}</td>}
                   </>
                 )}

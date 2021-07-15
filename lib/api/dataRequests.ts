@@ -41,7 +41,12 @@ export async function getDataRequests(
     .then((res) => camelcaseKeys(res, { deep: true }))
     .then((res: DataRequestRes<string>[]) => {
       return res.map((dataRequest) =>
-        parseDates<DataRequestRes>(dataRequest, 'from', 'to', 'acceptedAt')
+        parseDates<DataRequestRes<string>, DataRequestRes>(
+          dataRequest,
+          'from',
+          'to',
+          'acceptedAt'
+        )
       )
     })
 }
@@ -53,9 +58,18 @@ export async function getDataRequest(id: string): Promise<DataRequestRes> {
     .then((res: DataRequestRes<string>) => camelcaseKeys(res, { deep: true }))
     .then((res) => {
       return {
-        ...parseDates<DataRequestRes>(res, 'from', 'to', 'acceptedAt'),
+        ...parseDates<DataRequestRes<string>, DataRequestRes>(
+          res,
+          'from',
+          'to',
+          'acceptedAt'
+        ),
         tickets: res.tickets?.map((ticket) =>
-          parseDates<DataRequestTicket>(ticket, 'enteredAt', 'leftAt')
+          parseDates<DataRequestTicket<string>, DataRequestTicket>(
+            ticket,
+            'enteredAt',
+            'leftAt'
+          )
         ),
       }
     })
@@ -70,9 +84,18 @@ export async function postAutoDataRequest(reason: string, companyId: string) {
     .then((res: DataRequestRes<string>) => camelcaseKeys(res, { deep: true }))
     .then((res) => {
       return {
-        ...parseDates<DataRequestRes>(res, 'from', 'to', 'acceptedAt'),
+        ...parseDates<DataRequestRes<string>, DataRequestRes>(
+          res,
+          'from',
+          'to',
+          'acceptedAt'
+        ),
         tickets: res.tickets?.map((ticket) =>
-          parseDates<DataRequestTicket>(ticket, 'enteredAt', 'leftAt')
+          parseDates<DataRequestTicket<string>, DataRequestTicket>(
+            ticket,
+            'enteredAt',
+            'leftAt'
+          )
         ),
       }
     })

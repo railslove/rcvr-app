@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
 import { AnimatePresence, motion } from 'framer-motion'
 import * as React from 'react'
-import { queryCache, useMutation } from 'react-query'
+import { useQueryClient, useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
 import { checkin as checkinAction } from '~lib/actions'
 import { updateCurrentGuest } from '~lib/actions/updateGuest'
+import { generateCwaLink } from '~lib/cwa/generateCwaLink'
 import { Checkin } from '~lib/db'
 import { Guest } from '~lib/db/guest'
 import { useArea } from '~lib/hooks'
@@ -12,7 +13,8 @@ import { ArrowsLeft, ArrowsRight, Check, Circle, Thumb } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
 import { Onboarding } from '~ui/blocks/Onboarding'
-import { Box, Button, Text } from '~ui/core'
+import { Box, Button, ButtonLink, Text } from '~ui/core'
+import CwaLogo from '~ui/svg/logo-cwa.svg'
 
 interface Props {
   checkins: Checkin[]
@@ -28,13 +30,13 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const [isLoading, setLoading] = React.useState(false)
   const [showEditData, setShowEditData] = React.useState(false)
 
-  const [checkinFn] = useMutation(checkinAction, {
-    throwOnError: true,
-  })
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(checkinAction)
 
   const handleEditGuest = (guest, _opts) => {
     setLoading(true)
-    updateCurrentGuest(guest).then((_checkin) => {
+    updateCurrentGuest(queryClient, guest).then((_checkin) => {
       setLoading(false)
       setShowEditData(false)
     })
@@ -56,17 +58,17 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
           enteredAt: new Date(),
         }
 
-        await checkinFn({ ticket, guest })
+        await mutation.mutateAsync({ ticket, guest })
 
         idRef.current = uuidv4() // add a new one for the next
-        await queryCache.refetchQueries('checkins')
+        await queryClient.invalidateQueries('checkins')
         setShowProxyCheckin(false)
         setLoading(false)
       } catch (error) {
         console.error(error)
       }
     },
-    [checkin, checkinFn, setShowProxyCheckin, area]
+    [checkin, setShowProxyCheckin, area, queryClient, mutation]
   )
 
   return (
@@ -82,7 +84,9 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       <Box height={4} />
       <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
       <Box height={1} />
-      <Text variant="h4">{checkin.business}</Text>
+      <Text variant="h4" data-wfd-location={checkin.business}>
+        {checkin.business}
+      </Text>
       {checkins.length > 1 && (
         <>
           <Box height={1} />
@@ -91,6 +95,22 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
+      {!checkedOut && checkin.cwaLinkEnabled && checkin.cwaSeed && (
+        <>
+          <Box height={4} />
+          <ButtonLink
+            href={generateCwaLink(checkin)}
+            target="_blank"
+            name="cwaCheckinUrl"
+          >
+            <CwaLink>
+              <CwaLogo width="24" height="24" />
+              Check-in Corona Warn App
+            </CwaLink>
+          </ButtonLink>
+          <Box height={4} />
+        </>
+      )}
       <Box height={2} />
       {checkins
         .map(({ guest }) => guest)
@@ -135,6 +155,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
               left={<ArrowsRight color="pink" />}
               right={<ArrowsLeft color="pink" />}
               onClick={() => onCheckout(checkins)}
+              dataAttributes={{ 'wfd-action': 'check-out' }}
             >
               Check out
             </Button>
@@ -215,4 +236,10 @@ const Container = styled.div({
 
 const GuestDetails = styled.div({
   width: '100%',
+})
+
+const CwaLink = styled.div({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
 })

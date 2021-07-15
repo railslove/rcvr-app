@@ -46,7 +46,6 @@ export default function IndexPage() {
         </ButtonLink>
       </Card>
       <Box height={4} />
-
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
           {isFormal ? 'Für Ihre Einrichtung' : 'Für Deinen Betrieb'}
@@ -70,7 +69,7 @@ export default function IndexPage() {
             isCareEnv
               ? 'https://recovercare.de/'
               : isHealthEnv
-              ? 'recover-health.de'
+              ? 'https://www.recover-health.de'
               : 'https://www.recoverapp.de/'
           }
           target="_blank"

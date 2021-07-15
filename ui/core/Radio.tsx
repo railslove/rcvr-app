@@ -13,21 +13,24 @@ interface Props {
   hint?: string
   hintEnabled?: string
   label: string | React.ReactElement
+  hideError?: boolean
 }
-type CheckboxProps = JSX.IntrinsicElements['input'] & Props
+type RadioProps = JSX.IntrinsicElements['input'] & Props
 
-export const Checkbox: React.FC<CheckboxProps> = ({
+export const Radio: React.FC<RadioProps> = ({
   label,
   hint,
   hintEnabled,
+  hideError,
   ...rest
 }) => {
-  const [field, meta] = useField({ ...rest, type: 'checkbox' })
+  const [field, meta] = useField({ ...rest, type: 'radio' })
   const showError = Boolean(meta.touched && meta.error)
+  const fieldId = field.value.replace(/[^a-z0-9]/gi, '-')
 
   return (
     <div>
-      <CheckboxContainer htmlFor={field.name}>
+      <RadioboxContainer htmlFor={fieldId}>
         <div css={{ position: 'relative' }}>
           <FakeCheckbox />
           <CheckboxCircle
@@ -37,10 +40,11 @@ export const Checkbox: React.FC<CheckboxProps> = ({
           {field.checked && <Check />}
         </div>
         <Text variant="label">{label}</Text>
-      </CheckboxContainer>
+      </RadioboxContainer>
       <input
-        id={field.name}
-        type="checkbox"
+        id={fieldId}
+        type="radio"
+        checked={field.name == field.value}
         {...field}
         {...rest}
         css={{ display: 'none' }}
@@ -51,12 +55,14 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       {hint && !(field.checked && hintEnabled) && (
         <HintText variant="fineprint">{hint}</HintText>
       )}
-      {showError && <ErrorText variant="fineprint">{meta.error}</ErrorText>}
+      {!hideError && showError && (
+        <ErrorText variant="fineprint">{meta.error}</ErrorText>
+      )}
     </div>
   )
 }
 
-const CheckboxContainer = styled('label')(
+const RadioboxContainer = styled('label')(
   css({
     display: 'flex',
     pr: 3,

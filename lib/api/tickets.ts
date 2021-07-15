@@ -5,6 +5,10 @@ import { api, parseDates, stringifyDates } from './'
 export interface TicketRes<DateT = Date> {
   id: string
   companyName: string
+  companyLocationType: string
+  companyAddress: string
+  companyCwaLinkEnabled: boolean
+  companyAutoCheckoutTime: number
   enteredAt: DateT
   leftAt?: DateT
 }
@@ -21,15 +25,26 @@ export interface TicketReq<DateT = Date> {
 
 export async function postTicket(ticket: TicketReq): Promise<TicketRes> {
   const json = snakecaseKeys(
-    { ticket: stringifyDates(ticket, 'enteredAt', 'leftAt') },
+    {
+      ticket: stringifyDates<TicketReq, TicketReq<string>>(
+        ticket,
+        'enteredAt',
+        'leftAt'
+      ),
+    },
     { deep: true }
   )
 
   return await api
     .post('tickets', { json })
     .json()
-    .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<TicketRes>(res, 'enteredAt', 'leftAt'))
+    .then(
+      (res: unknown): TicketRes<string> =>
+        camelcaseKeys(res, { deep: true }) as TicketRes<string>
+    )
+    .then((res: TicketRes<string>) =>
+      parseDates<TicketRes<string>, TicketRes>(res, 'enteredAt', 'leftAt')
+    )
 }
 
 export async function patchTicket(ticket: TicketReq): Promise<TicketRes> {
@@ -42,8 +57,10 @@ export async function patchTicket(ticket: TicketReq): Promise<TicketRes> {
   return await api
     .patch(`tickets/${id}`, { json })
     .json()
-    .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<TicketRes>(res, 'enteredAt', 'leftAt'))
+    .then((res: unknown) => camelcaseKeys(res, { deep: true }))
+    .then((res: TicketRes<string>) =>
+      parseDates<TicketRes<string>, TicketRes>(res, 'enteredAt', 'leftAt')
+    )
 }
 
 export interface CompanyTicketRes<DateT = Date> {
@@ -72,7 +89,7 @@ export async function getTickets(
       },
     })
     .json()
-    .then((res: object) => camelcaseKeys(res, { deep: true }))
+    .then((res: unknown) => camelcaseKeys(res, { deep: true }))
     .then((res: CompanyTicketRes<string>[]) => {
       return res.map((ticket) => parseDates(ticket, 'enteredAt', 'leftAt'))
     })

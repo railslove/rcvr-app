@@ -19,7 +19,7 @@ const envs = {
     privacyUrl: 'https://railslove.com/privacy/',
     formalAddress: false,
     introText:
-      'Durch die aktuellen Corona-Verordnungen musst du Deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
+      'Durch die aktuellen Corona-Verordnungen musst du Deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B. Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
     instruction: 'Account erstellen',
@@ -329,7 +329,7 @@ const envs = {
         </p>
         <p>
           Bei Fragen zum Pricing können Sie sich jederzeit bei unserem Support
-          unter team@recoverapp.com melden.
+          unter team@recoverapp.de melden.
         </p>
       </>
     ),

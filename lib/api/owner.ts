@@ -23,7 +23,7 @@ export interface PostSepaSubscription {
   token: string
 }
 
-export interface OwnerRes {
+export interface OwnerRes<DateT = Date> {
   id: number
   email: string
   name: string
@@ -35,8 +35,8 @@ export interface OwnerRes {
   canUseForFree: boolean
   publicKey?: string
   affiliate?: string
-  trialEndsAt?: Date
-  blockAt?: Date
+  trialEndsAt?: DateT
+  blockAt?: DateT
   menuAlias?: string
   stripeSubscriptionStatus?:
     | 'trialing'
@@ -72,8 +72,10 @@ export async function postSignup(signup: PostSignup): Promise<OwnerRes> {
   return await api
     .post('signup', { json })
     .json()
-    .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt', 'blockAt'))
+    .then((res: unknown) => camelcaseKeys(res, { deep: true }))
+    .then((res: OwnerRes<string>) =>
+      parseDates<OwnerRes<string>, OwnerRes>(res, 'trialEndsAt', 'blockAt')
+    )
 }
 
 export async function postLogin(login: PostLogin): Promise<OwnerRes> {
@@ -82,16 +84,20 @@ export async function postLogin(login: PostLogin): Promise<OwnerRes> {
   return await api
     .post('login', { json })
     .json()
-    .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt', 'blockAt'))
+    .then((res: unknown) => camelcaseKeys(res, { deep: true }))
+    .then((res: OwnerRes<string>) =>
+      parseDates<OwnerRes<string>, OwnerRes>(res, 'trialEndsAt', 'blockAt')
+    )
 }
 
 export async function getOwner(): Promise<OwnerRes> {
   return await api
     .get('owner')
     .json()
-    .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt', 'blockAt'))
+    .then((res: unknown) => camelcaseKeys(res, { deep: true }))
+    .then((res: OwnerRes<string>) =>
+      parseDates<OwnerRes<string>, OwnerRes>(res, 'trialEndsAt', 'blockAt')
+    )
 }
 
 export async function patchOwner(owner: OwnerReq): Promise<OwnerRes> {
@@ -100,8 +106,10 @@ export async function patchOwner(owner: OwnerReq): Promise<OwnerRes> {
   return await api
     .patch('owner', { json })
     .json()
-    .then((res: object) => camelcaseKeys(res, { deep: true }))
-    .then((res: object) => parseDates<OwnerRes>(res, 'trialEndsAt', 'blockAt'))
+    .then((res: unknown) => camelcaseKeys(res, { deep: true }))
+    .then((res: OwnerRes<string>) =>
+      parseDates<OwnerRes<string>, OwnerRes>(res, 'trialEndsAt', 'blockAt')
+    )
 }
 
 export interface OwnerCheckoutRes {

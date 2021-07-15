@@ -2,7 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 
 import { isCareEnv, isFormal, isHealthEnv, isRcvrEnv } from '~lib/config'
 import { introText, formalAddress } from '~ui/whitelabels'
@@ -19,23 +19,23 @@ import { Loading } from '~ui/blocks/Loading'
 export default function CheckinPage() {
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())
-  const [checkinFn, { error }] = useMutation(checkin, {
-    throwOnError: true,
-  })
-  const [checkoutFn] = useMutation(checkout)
+  const mutationCheckin = useMutation(checkin)
+  const mutationCheckout = useMutation(checkout)
   const [showOnboarding, setShowOnboarding] = React.useState(false)
   const [showConfirmation, setShowConfirmation] = React.useState(false)
   const [showLoading, setShowLoading] = React.useState(true)
   const router = useRouter()
+  const queryClient = useQueryClient()
 
-  if (error && !(error instanceof TypeError)) {
+  if (mutationCheckin.error && !(mutationCheckin.error instanceof TypeError)) {
     // Something went very wrong during the checkin and we can't
     // recover ( ☜(ﾟヮﾟ☜) ayyyy) from it
-    throw error
+    throw mutationCheckin.error
   }
 
   const publicKey = router.query.k?.toString()
   const areaId = router.query.a?.toString()
+  const cwaSeed = router.query.cwa?.toString()
 
   const guestInfo = useCurrentGuest()
   const areaInfo = useArea(areaId)
@@ -43,18 +43,26 @@ export default function CheckinPage() {
   const prefillName = router.query.name?.toString()
   const prefillPhone = router.query.phone?.toString()
   const prefillAddress = router.query.address?.toString()
+  const prefillCity = router.query.city?.toString()
+  const prefillPostalCode = router.query.postalCode?.toString()
 
   const prefilledGuest =
     prefillName ||
     prefillPhone ||
     prefillAddress ||
+    prefillCity ||
+    prefillPostalCode ||
     guestInfo.data?.name ||
     guestInfo.data?.phone ||
-    guestInfo.data?.address
+    guestInfo.data?.address ||
+    guestInfo.data?.city ||
+    guestInfo.data?.postalCode
       ? {
-          name: prefillName || guestInfo.data?.name,
-          phone: prefillPhone || guestInfo.data?.phone,
-          address: prefillAddress || guestInfo.data?.address,
+          name: prefillName || guestInfo.data?.name || '',
+          phone: prefillPhone || guestInfo.data?.phone || '',
+          address: prefillAddress || guestInfo.data?.address || '',
+          city: prefillCity || guestInfo.data?.city || '',
+          postalCode: prefillPostalCode || guestInfo.data?.postalCode || '',
         }
       : undefined
 
@@ -80,12 +88,23 @@ export default function CheckinPage() {
       // auto checkout
       const lastCheckin = await getLastCheckin()
       if (lastCheckin && !lastCheckin.leftAt) {
-        await checkoutFn({ id: lastCheckin.id, leftAt: enteredAt })
+        await mutationCheckout.mutateAsync({
+          queryClient,
+          checkin: {
+            id: lastCheckin.id,
+            leftAt: enteredAt,
+          },
+        })
       }
 
       try {
         const ticket = { id, publicKey, areaId, enteredAt }
-        await checkinFn({ ticket, guest, companyId: areaInfo.data.companyId })
+        await mutationCheckin.mutateAsync({
+          ticket,
+          guest,
+          companyId: areaInfo.data.companyId,
+          cwaSeed,
+        })
         router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
       } catch (error) {
         if (error instanceof TypeError) {
@@ -94,7 +113,16 @@ export default function CheckinPage() {
         }
       }
     },
-    [publicKey, areaId, areaInfo, router, checkinFn, checkoutFn]
+    [
+      publicKey,
+      areaId,
+      areaInfo,
+      router,
+      mutationCheckin,
+      mutationCheckout,
+      queryClient,
+      cwaSeed,
+    ]
   )
 
   const handleSubmitOnboarding = React.useCallback(
@@ -109,25 +137,11 @@ export default function CheckinPage() {
     [guestInfo, checkinAndRedirect]
   )
 
-  const tryAutoCheckin = React.useCallback(() => {
-    const guest = guestInfo.data
-
-    // Check if a guest was already created
-    const hasData = guest?.name && guest?.phone && guest?.address
-    // and has already checked in at this company before
-    const hasAcceptedPrivacy = guest?.checkedInCompanyIds?.includes(
-      areaInfo.data.companyId
-    )
-
-    // then do the checkin cha cha cha.
-    if (hasData && hasAcceptedPrivacy) {
-      checkinAndRedirect(guest)
-    } else {
-      setShowConfirmation(false)
-      setShowOnboarding(true)
-      setShowLoading(false)
-    }
-  }, [guestInfo, areaInfo, checkinAndRedirect])
+  const confirmedScreen = React.useCallback(() => {
+    setShowConfirmation(false)
+    setShowOnboarding(true)
+    setShowLoading(false)
+  }, [setShowConfirmation, setShowOnboarding, setShowLoading])
 
   const isReady =
     publicKey &&
@@ -150,9 +164,11 @@ export default function CheckinPage() {
       setShowConfirmation(true)
       setShowLoading(false)
     } else {
-      tryAutoCheckin()
+      setShowConfirmation(false)
+      setShowOnboarding(true)
+      setShowLoading(false)
     }
-  }, [isReady, publicKey, tryAutoCheckin])
+  }, [isReady, publicKey])
 
   return (
     <MobileApp logoVariant="big" secondaryLogo={areaInfo.data?.affiliateLogo}>
@@ -207,7 +223,7 @@ export default function CheckinPage() {
           </Text>
           <Box height={6} />
 
-          {error && (
+          {mutationCheckin.error && (
             <Box mb={6} mx={-4}>
               <Callout variant="danger">
                 <Text>
@@ -242,7 +258,7 @@ export default function CheckinPage() {
             </Card>
           )}
 
-          {showConfirmation && <Confirmation onSubmit={tryAutoCheckin} />}
+          {showConfirmation && <Confirmation onSubmit={confirmedScreen} />}
           <Row justifyContent="center" my={6}>
             <a
               href={

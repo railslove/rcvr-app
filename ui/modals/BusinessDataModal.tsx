@@ -1,17 +1,26 @@
 import * as React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
-import { queryCache } from 'react-query'
+import { useQueryClient } from 'react-query'
+import crypto from 'crypto'
 
-import { OwnerRes, CompanyRes, patchCompany, postCompany } from '~lib/api'
-import { Box, Input, FileInput, Button, Text, Checkbox } from '~ui/core'
+import {
+  CompanyRes,
+  patchCompany,
+  postCompany,
+  CompanyTypeOptions,
+  CoronaTestOptions,
+} from '~lib/api'
+import { Box, Input, FileInput, Button, Text, Checkbox, Select } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { pdfType } from '~ui/whitelabels'
+import { encrypt } from '~lib/crypto'
+import { CurrentOwner } from '~lib/hooks/useOwner'
 
 interface Props {
   type: 'new' | 'edit'
   company?: CompanyRes
-  owner?: OwnerRes
+  owner?: CurrentOwner
 }
 type MProps = ModalBaseProps & Props
 
@@ -23,8 +32,9 @@ const BusinessSchema = Yup.object().shape({
   street: Yup.string().required('Strasse muss angegeben werden.'),
   zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
   city: Yup.string().required('Ort muss angegeben werden.'),
-  needToShowCoronaTest: Yup.boolean(),
+  needToShowCoronaTest: Yup.number(),
   menuLink: Yup.string(),
+  menuAlias: Yup.string(),
   privacyPolicyLink: Yup.string(),
   menuPdf: Yup.mixed().test(
     'isPDF',
@@ -49,6 +59,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
   company,
   ...baseProps
 }) => {
+  const queryClient = useQueryClient()
   const title = { new: 'Neuer Betrieb', edit: 'Betrieb ändern' }[type]
   const button = { new: 'Hinzufügen', edit: 'Speichern' }[type]
   const [loading, setLoading] = React.useState(false)
@@ -70,8 +81,11 @@ export const BusinessDataModal: React.FC<MProps> = ({
         city,
         needToShowCoronaTest,
         menuLink,
+        menuAlias,
         menuPdf,
         privacyPolicyLink,
+        cwaLinkEnabled,
+        locationType,
       },
       bag
     ) => {
@@ -85,7 +99,17 @@ export const BusinessDataModal: React.FC<MProps> = ({
       formData.append('company[city]', city)
       formData.append('company[need_to_show_corona_test]', needToShowCoronaTest)
       formData.append('company[menu_link]', safeMenuLink)
+      formData.append('company[menu_alias]', menuAlias)
       formData.append('company[privacy_policy_link]', safePrivacyPolicyLink)
+      formData.append('company[cwa_link_enabled]', cwaLinkEnabled)
+      if (!company?.cwaCryptoSeed) {
+        const randomBytes = btoa(
+          String.fromCharCode.apply(null, crypto.randomBytes(16))
+        )
+        const encrypted = encrypt(owner.publicKey, randomBytes)
+        formData.append('company[cwa_crypto_seed]', encrypted)
+      }
+      formData.append('company[location_type]', locationType)
 
       if (menuPdf !== menuPdfFileName(company)) {
         if (menuPdf === undefined || menuPdf === null || menuPdf == '') {
@@ -103,7 +127,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         if (type === 'new') {
           await postCompany(formData)
         }
-        queryCache.refetchQueries('companies')
+        queryClient.invalidateQueries('companies')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(
@@ -115,7 +139,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [type, baseProps, company, company?.id, company?.menuPdfLink]
+    [type, baseProps, company, queryClient]
   )
 
   const prefilledWithWhenNew = (value, prefilledValue) => {
@@ -133,10 +157,13 @@ export const BusinessDataModal: React.FC<MProps> = ({
           street: prefilledWithWhenNew(company?.street, owner?.street),
           zip: prefilledWithWhenNew(company?.zip, owner?.zip),
           city: prefilledWithWhenNew(company?.city, owner?.city),
+          menuAlias: company?.menuAlias || '',
           menuLink: company?.menuLink || '',
           privacyPolicyLink: company?.privacyPolicyLink || '',
-          needToShowCoronaTest: company?.needToShowCoronaTest || false,
+          needToShowCoronaTest: company?.needToShowCoronaTest || 0,
           menuPdf: menuPdfFileName(company),
+          locationType: company?.locationType || 'other',
+          cwaLinkEnabled: company?.cwaLinkEnabled || false,
         }}
         validationSchema={BusinessSchema}
         onSubmit={handleSubmit}
@@ -154,9 +181,22 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <Box height={4} />
           <Input name="city" label="Ort" autoComplete="address-level2" />
           <Box height={4} />
-          <Checkbox
+          <Select
+            name="locationType"
+            label="Art des Betriebes"
+            options={CompanyTypeOptions}
+          />
+          <Box height={4} />
+          <Select
             name="needToShowCoronaTest"
-            label="Gäste müssen einen negative Corona-Test vorzeigen"
+            label="Gäste müssen einen negative Corona-Test oder einen Nachweis zur Impfung oder Genesung vorzeigen"
+            options={CoronaTestOptions}
+          />
+          <Checkbox
+            name="cwaLinkEnabled"
+            label="Checkin mit der Corona-Warn-App anbieten"
+            hint="Biete deinen Gästen einen zusätzlichen Checkin mit der Corona-Warn-App an. So werden sie noch schneller über Risikobegegnungen informiert. Die QR-Codes müssen nach der Aktivierung neu ausgedruckt werden."
+            hintEnabled="Deine Gäste können nun nach dem Checkin mit recover ganz einfach zusätzlich mit der Corona-Warn-App einchecken."
           />
           <Box height={1} />
           <Input
@@ -165,9 +205,11 @@ export const BusinessDataModal: React.FC<MProps> = ({
           />
           <Box height={4} />
           <Input
-            name="menuLink"
-            label={`${owner?.menuAlias || pdfType} als Link`}
+            name="menuAlias"
+            label={'Name der Zustatzinformationen-Sektion'}
           />
+          <Box height={4} />
+          <Input name="menuLink" label={`${pdfType} als Link`} />
           <Box height={4} />
           <Text variant="shy" textAlign="center">
             – oder –
@@ -176,7 +218,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <FileInput
             name="menuPdf"
             type="file"
-            label={`${owner?.menuAlias || pdfType} als PDF`}
+            label={`${pdfType} als PDF`}
             hint="Es können nur pdf-Dateien hochgeladen werden."
             accept="application/pdf"
           />
