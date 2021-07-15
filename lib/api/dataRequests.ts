@@ -116,7 +116,7 @@ export async function getUnacceptedDataRequests() {
       res.reduce((obj, item) => {
         obj[item.id] = item.unacceptedDataRequests.map(
           (dataRequest: DataRequestRes) =>
-            parseDates<DataRequestRes>(dataRequest, 'from', 'to', 'acceptedAt')
+            parseDates<DataRequestRes, string>(dataRequest, 'from', 'to', 'acceptedAt')
         )
         return obj
       }, {})
