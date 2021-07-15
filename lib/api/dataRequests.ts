@@ -4,6 +4,8 @@ import { api, parseDates } from './'
 
 export interface DataRequestRes<DateT = Date> {
   id: string
+  reason: string
+  irisClientName: string
   from: DateT
   to: DateT
   acceptedAt: DateT
@@ -18,6 +20,16 @@ export interface DataRequestTicket<DateT = Date> {
   areaName: string
   companyName: string
   encryptedData: string
+}
+
+export interface UnacceptedDataRequestsRes {
+  [companyId: string]: DataRequestRes[]
+}
+
+interface UnacceptedDataRequestsReq {
+  id: string
+  name: string
+  unacceptedDataRequests: DataRequestRes[]
 }
 
 export async function getDataRequests(
@@ -87,4 +99,26 @@ export async function postAutoDataRequest(reason: string, companyId: string) {
         ),
       }
     })
+}
+
+export async function postAcceptDataRequest(dataRequestId: string) {
+  return await api
+    .patch(`unaccepted_data_requests/${dataRequestId}/accept`, {})
+    .json()
+}
+
+export async function getUnacceptedDataRequests() {
+  return await api
+    .get(`unaccepted_data_requests`, {})
+    .json()
+    .then((res) => camelcaseKeys(res, { deep: true }))
+    .then((res: UnacceptedDataRequestsReq[]) =>
+      res.reduce((obj, item) => {
+        obj[item.id] = item.unacceptedDataRequests.map(
+          (dataRequest: DataRequestRes) =>
+            parseDates<DataRequestRes, string>(dataRequest, 'from', 'to', 'acceptedAt')
+        )
+        return obj
+      }, {})
+    )
 }

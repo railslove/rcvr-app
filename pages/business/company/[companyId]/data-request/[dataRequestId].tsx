@@ -2,11 +2,12 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 import { useEffectOnce } from 'react-use'
+import { QueryCache } from 'react-query'
 
 import { isCareEnv, isFormal } from '~lib/config'
 import { decryptTickets, DecryptedTicket } from '~lib/actions'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { useCompany, useDataRequest, useModals } from '~lib/hooks'
+import { useCompanies, useCompany, useDataRequest, useModals } from '~lib/hooks'
 import { Text, Box, Callout, Table, Button } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
@@ -14,6 +15,9 @@ import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { FilledCircle } from '~ui/core/FilledCircle'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+
+import { postAcceptDataRequest } from '~lib/api'
+
 import { GuestHealthDocumentEnum } from '~lib/db'
 import { CompanyRes } from '~lib/api'
 
@@ -49,6 +53,12 @@ const providedHealthDocumentToString = (value: string) => {
   }
 }
 
+const queryCache = new QueryCache({
+  onError: (error) => {
+    console.log(error)
+  },
+})
+
 const ticketsToExcel = (company: CompanyRes, tickets: DecryptedTicket[]) => {
   const downloadableTickets = sortTickets(tickets).map((ticket) => ({
     enteredAt: formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm'),
@@ -81,6 +91,7 @@ const ticketsToExcel = (company: CompanyRes, tickets: DecryptedTicket[]) => {
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { query } = useRouter()
+  const { data: companies } = useCompanies()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()
   const { data: company } = useCompany(companyId)
@@ -126,6 +137,13 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     setLoading(false)
   }, [tickets, company, dataRequest])
 
+  const approveRequest = React.useCallback(async () => {
+    postAcceptDataRequest(dataRequestId).then(() => {
+      queryCache.find(['dataRequests', companyId, dataRequestId])
+      queryCache.find(['unacceptedDataRequests'])
+    })
+  }, [])
+
   const dateRange =
     dataRequest?.from && dataRequest?.to
       ? formatDate(dataRequest.from, 'DD.MM.YYYY HH:mm') +
@@ -140,6 +158,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const twoHoursBefore = new Date()
   twoHoursBefore.setHours(new Date().getHours() - 2)
+
   return (
     <OwnerApp title={title}>
       <Loading show={loading} />
@@ -153,15 +172,32 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Box height={2} />
       {status !== 'success' && <Text variant="shy">Lade...</Text>}
 
-      {dataRequest && !dataRequest.acceptedAt && (
-        <Callout>
-          <Text>
-            Die Daten für diesen Zeitraum wurden noch nicht für{' '}
-            {isFormal ? 'Sie' : 'Dich'}
-            freigegeben.
-          </Text>
-        </Callout>
-      )}
+      {dataRequest &&
+        !dataRequest.acceptedAt &&
+        pendingCount === 0 &&
+        errorCount === 0 && (
+          <>
+            <Callout variant="danger">
+              <Text>
+                {isFormal ? 'Sie' : 'Du'} hast diese Daten noch nicht für das
+                Gesundheitsamt freigegeben. Sobald{' '}
+                {isFormal
+                  ? 'sie diese Daten freigeben'
+                  : 'du diese Daten freigibst'}
+                , werden diese verschlüsselt an das Gesundheitsamt gesendet.
+              </Text>
+              <Box height={4} />
+              <Text as="h2">Anfragende Behörde:</Text>
+              <Text>{dataRequest.irisClientName}</Text>
+              <Box height={4} />
+              <Text as="h2">Grund der Anfrage:</Text>
+              <Text>{dataRequest.reason}</Text>
+              <Box height={4} />
+              <Button onClick={approveRequest}>Daten freigeben</Button>
+            </Callout>
+            <Box height={4} />
+          </>
+        )}
 
       {dataRequest?.tickets && !owner.privateKey && (
         <Box mb={4}>
