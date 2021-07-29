@@ -1,4 +1,6 @@
-module.exports = {
+const nextTranslate = require('next-translate')
+
+module.exports = nextTranslate({
   typescript: {
     ignoreDevErrors: true,
   },
@@ -9,4 +11,4 @@ module.exports = {
     })
     return config
   },
-}
+})
