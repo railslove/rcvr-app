@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 import { useEffectOnce } from 'react-use'
 import { QueryCache } from 'react-query'
-
 import { isCareEnv, isFormal } from '~lib/config'
 import { decryptTickets, DecryptedTicket } from '~lib/actions'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
@@ -15,7 +14,7 @@ import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { FilledCircle } from '~ui/core/FilledCircle'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-
+import ky from 'ky-universal'
 import { postAcceptDataRequest } from '~lib/api'
 
 import { GuestHealthDocumentEnum } from '~lib/db'
@@ -137,13 +136,6 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     setLoading(false)
   }, [tickets, company, dataRequest])
 
-  const approveRequest = React.useCallback(async () => {
-    postAcceptDataRequest(dataRequestId).then(() => {
-      queryCache.find(['dataRequests', companyId, dataRequestId])
-      queryCache.find(['unacceptedDataRequests'])
-    })
-  }, [])
-
   const dateRange =
     dataRequest?.from && dataRequest?.to
       ? formatDate(dataRequest.from, 'DD.MM.YYYY HH:mm') +
@@ -158,6 +150,68 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const twoHoursBefore = new Date()
   twoHoursBefore.setHours(new Date().getHours() - 2)
+
+  const approveRequest = React.useCallback(async () => {
+    if (didDecrypt) {
+      const json = {
+        method: 'submitGuestList',
+        jsonrpc: '2.0',
+        params: {
+          _client: {
+            name: 'Recover',
+          },
+          dataAuthorizationToken: dataRequest.irisDataAuthorizationToken,
+          guestList: {
+            dataProvider: {
+              name: company.name,
+              address: {
+                street: company.street.split(',')[0],
+                houseNumber: company.street.split(',')[1],
+                zipCode: company.zip,
+                city: company.city,
+              },
+            },
+
+            startDate: dataRequest.from,
+            endDate: dataRequest.to,
+            additionalInformation: dataRequest.reason,
+            guests: tickets.map((ticket) => {
+              const result = {
+                firstName: ticket.guest.name,
+                phone: ticket.guest.phone,
+                address: {
+                  street: ticket.guest.address,
+                },
+                attendanceInformation: {
+                  attendFrom: ticket.enteredAt,
+                  attendTo: ticket.leftAt,
+                  additionalInformation: ticket.areaName,
+                },
+              }
+              return result
+            }),
+          },
+        },
+      }
+
+      return await ky
+        .post(
+          `https://${dataRequest.proxyEndpoint}:32325/data-submission-rpc`,
+          { json }
+        )
+        .json()
+        .then((res) => {
+          if (res['result'] == 'OK') {
+            postAcceptDataRequest(dataRequestId).then(() => {
+              queryCache.find(['dataRequests', companyId, dataRequestId])
+              queryCache.find(['unacceptedDataRequests'])
+            })
+          } else {
+            console.log(res)
+          }
+        })
+    }
+  }, [didDecrypt, tickets, company, dataRequest])
 
   return (
     <OwnerApp title={title}>

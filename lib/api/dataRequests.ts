@@ -9,6 +9,8 @@ export interface DataRequestRes<DateT = Date> {
   from: DateT
   to: DateT
   acceptedAt: DateT
+  irisDataAuthorizationToken: string
+  proxyEndpoint: string
   tickets?: DataRequestTicket<DateT>[]
 }
 
@@ -71,6 +73,8 @@ export async function getDataRequest(id: string): Promise<DataRequestRes> {
             'leftAt'
           )
         ),
+        proxyEndpoint: res.proxyEndpoint,
+        irisDataAuthorizationToken: res.irisDataAuthorizationToken,
       }
     })
 }
