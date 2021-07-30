@@ -1,3 +1,4 @@
+import React from 'react'
 import { Box } from '~ui/core'
 import { Warning } from './svg'
 import LogoCare from './svg/logo-care.svg'

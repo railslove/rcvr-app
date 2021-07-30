@@ -15,9 +15,10 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { Onboarding } from '~ui/blocks/Onboarding'
 import { Confirmation } from '~ui/blocks/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
+import { defaultLocaleOptions } from '~locales/i18n'
 
 export default function CheckinPage() {
-  const { t } = useTranslation('checkin')
+  const { t } = useTranslation('checkinPage')
 
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())
@@ -202,7 +203,7 @@ export default function CheckinPage() {
           <Text>
             <p>{t('introText')}</p>
             <p>{t('address')}</p>
-            <p>{t('dataProtection')}</p>
+            <p>{t('dataProtection', defaultLocaleOptions)}</p>
           </Text>
           <Box height={6} />
 

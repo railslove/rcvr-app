@@ -1,8 +1,8 @@
-import { LocalesMain } from 'locales/types'
+import localesDE from '~locales/de'
 
 import checkin from './checkin'
 
-const locales = {
+const locales: typeof localesDE = {
   checkin,
 }
 

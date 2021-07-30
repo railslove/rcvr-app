@@ -1,6 +1,7 @@
 export default {
   title: 'Checkin via QR-Code.',
   subtitle: 'No app, simple as that.',
+
   forVisitorsAndGuests: 'For guests',
   forVisitorsAndGuests_f: 'For visitors',
   rcvrProtectsData: 'recover protects your data better than any paper.',

@@ -1,9 +1,11 @@
-import { LocalesMain } from 'locales/types'
+import localesDE from '../de'
 
-import checkin from './checkin'
+import indexPage from './indexPage'
+import checkinPage from './checkinPage'
 
-const locales = {
-  checkin,
+const locales: typeof localesDE = {
+  indexPage,
+  checkinPage,
 }
 
 export default locales

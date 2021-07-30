@@ -1,9 +1,7 @@
-import { LocalesMain } from 'locales/types'
+import indexPage from './indexPage'
+import checkinPage from './checkinPage'
 
-import checkin from './checkin'
-
-const locales: LocalesMain = {
-  checkin,
+export default {
+  indexPage,
+  checkinPage,
 }
-
-export default locales
