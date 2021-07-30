@@ -8,3 +8,12 @@ export function indexIntro() {
     </>
     )
 }
+
+
+export function introText() {
+    return (
+    <>
+    Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Krankenhäuser. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.
+    </>
+    )
+}

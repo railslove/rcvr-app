@@ -16,6 +16,9 @@ import { Onboarding } from '~ui/blocks/Onboarding'
 import { Confirmation } from '~ui/blocks/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
 
+import { translate } from '~lib/translate'
+
+
 export default function CheckinPage() {
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())
@@ -199,25 +202,23 @@ export default function CheckinPage() {
           </Text>
           <Box height={5} />
           <Text as="h3" variant="h5">
-            Willkommen!
+            {translate(`welcome`)}
+                        
           </Text>
           <Box height={1} />
           <Text>
-            <p>{introText}</p>
+            <p>{translate('introText')}</p>
+            <p>{translate('address')}</p>
             <p>
-              {formalAddress
-                ? 'So kann das Gesundheitsamt Sie anrufen, wenn es notwendig ist.'
-                : 'So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.'}
-            </p>
-            <p>
-              Datenschutz ist uns dabei sehr wichtig!{' '}
+              {translate('dataProtection')}{' '}<br></br>
+              
               {isRcvrEnv ? (
                 <>
-                  <strong>recover</strong> speichert Deine Daten verschlüsselt
-                  und sicher.
+                  <strong>recover</strong> {translate('protectionEnsurance_rcvr')}
+
                 </>
               ) : (
-                'Ihre Daten werden verschlüsselt und sicher gespeichert.'
+                translate('protectionEnsurance_rcvr')
               )}
             </p>
           </Text>

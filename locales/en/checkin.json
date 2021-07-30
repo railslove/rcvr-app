@@ -17,5 +17,11 @@
   "whatIsRecover": "About Recover",
   "invalidQRCode": "Warnung, this QR code is invalid. You can open this page, but all entered data will be sent to {{hostname}}.",
   "scanCodeArea": "Scan the QR-Code you find on the table.",
-  "scanCodeArea_f": "Scan the QR-Code in the entry area."
+  "scanCodeArea_f": "Scan the QR-Code in the entry area.",
+  "welcome": "Welcome!",
+  "address": "This is so the health department can contact you if necessary.",
+  "address_f": "This is so the health department can contact you if necessary.",
+  "dataProtection": "Data protection is very important to us!",
+  "protectionEnsurance_rcvr":"saves your data encrypted and safe.",
+  "protectionEnsurance": "Your data will be stored safely and fully encrypted."
 }

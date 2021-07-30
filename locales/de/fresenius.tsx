@@ -8,3 +8,11 @@ export function indexIntro() {
     </>
     )
 }
+
+export function introText() {
+    return (
+    <>
+     Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.
+    </>
+    )
+}
