@@ -58,9 +58,7 @@ export default function QRCodePage() {
         {translate('scanCode')}
       </Text>
       <Box height={4} />
-      <Text>
-        {translate(`scanCodeArea`)}
-      </Text>
+      <Text>{translate(`scanCodeArea`)}</Text>
       <Card my={8} css={{ position: 'relative' }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video

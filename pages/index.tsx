@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { isCareEnv, isFormal, formalPostfix, isHealthEnv } from '~lib/config'
+import { isCareEnv, isHealthEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
@@ -9,7 +8,9 @@ export default function IndexPage() {
   return (
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
-        {translate('title')}<br />{translate('subtitle')}
+        {translate('title')}
+        <br />
+        {translate('subtitle')}
       </Text>
       <Box height={4} />
       <Text>
@@ -35,14 +36,12 @@ export default function IndexPage() {
           {translate('scanCode')}
         </ButtonLink>
         <Box height={4} />
-        <ButtonLink href="/my-checkins">
-        {translate(`yourTickets`)}
-        </ButtonLink>
+        <ButtonLink href="/my-checkins">{translate(`yourTickets`)}</ButtonLink>
       </Card>
       <Box height={4} />
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-        {translate(`forYourCompany`)}
+          {translate(`forYourCompany`)}
         </Text>
         <Box height={4} />
         <Text>
@@ -50,7 +49,7 @@ export default function IndexPage() {
         </Text>
         <Box height={8} />
         <ButtonLink href="/business">
-        {translate(`recoverForCompanies`)}
+          {translate(`recoverForCompanies`)}
         </ButtonLink>
       </Card>
       <Row justifyContent="center" my={6}>

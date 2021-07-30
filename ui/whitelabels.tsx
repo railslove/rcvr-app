@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { Box } from '~ui/core'
 import { Warning } from './svg'
 import LogoCare from './svg/logo-care.svg'
@@ -21,7 +20,6 @@ const envs = {
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
     instruction: 'Account erstellen',
-    
     setupIntro: (
       <>
         <p>
@@ -427,8 +425,6 @@ const envs = {
     ),
   },
 }
-
-
 
 const {
   pdfType,
