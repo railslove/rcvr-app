@@ -1,21 +1,15 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
+
+import * as resources from './resources'
 import { isCareEnv, isHealthEnv } from '~lib/config'
-
-import de from './de'
-import en from './en'
-
-export const resources = {
-  de,
-  en,
-}
 
 export const defaultLocaleOptions = {
   context: isCareEnv ? 'care' : isHealthEnv ? 'health' : undefined,
 }
 
 i18n.use(initReactI18next).init({
-  ns: Object.keys(en),
+  ns: Object.keys(resources.de),
   lng: 'en',
 
   interpolation: {

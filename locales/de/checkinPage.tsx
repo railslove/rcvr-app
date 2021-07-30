@@ -1,45 +1,45 @@
 import { isCareEnv, isFormal, isHealthEnv, isRcvrEnv } from '~lib/config'
 
 export default {
-  whatIsRecover: 'What is Recover?',
+  whatIsRecover: 'Was ist Recover?',
   invalidQRCode:
-    'Warning, this QR code is not part of the RecoverApp. You can open this page, but any data you enter there will be sent to {{hostname}}',
+    'Warnung, dieser QR code ist nicht Teil der RecoverApp. Sie können diese Seite öffnen, aber alle Daten, die Sie dort eingeben, werden an {{hostname}} geschickt.',
   scanCodeArea: isFormal
-    ? 'Scan the QR code in the input area.'
-    : 'Scan the QR code you will find on the table of participating businesses.',
+    ? 'Scannen Sie den QR-Code im Eingangsbereich.'
+    : 'Scanne den QR-Code, den Du auf dem Tisch teilnehmender Betriebe findest.',
 
-  welcome: 'Welcome!',
+  welcome: 'Willkommen!',
 
   address: isFormal
-    ? 'So the health department can call you if it is necessary.'
-    : 'So the health department can call you if it is necessary',
+    ? 'So kann das Gesundheitsamt Sie anrufen, wenn es notwendig ist.'
+    : 'So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.',
 
   coronaRegulations:
-    'Current corona regulations require you to leave your contact information if you are in a business that is required to take protective measures, such as restaurants. The app can also be used voluntarily to assist with tracking.',
+    'Durch die aktuellen Corona-Verordnungen musst du Deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B. Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
 
   dataProtection: [
-    'Privacy is very important to us in this!',
+    'Datenschutz ist uns dabei sehr wichtig!',
     isRcvrEnv
-      ? '<b>recover</b> stores your data encrypted and secure.'
-      : 'Your data will be stored encrypted and securely.',
-    'Your data will be stored encrypted and secure.',
+      ? '<b>recover</b> speichert Deine Daten verschlüsselt und sicher.'
+      : 'Ihre Daten werden verschlüsselt und sicher gespeichert.',
+    'Ihre Daten werden verschlüsselt und sicher gespeichert.',
   ].join(' '),
 
   ownerIsBlockedMessage: [
-    'Sorry, contact data collection with recover is no longer active for this business. Please',
-    isFormal ? 'ask' : 'ask',
-    'on site for another type of contact data capture.',
+    'Die Kontaktdatenerfassung mit recover ist für diesen Betrieb leider nicht mehr aktiv. Bitte',
+    isFormal ? 'fragen Sie' : 'frag',
+    'vor Ort nach einer anderen Art der Kontaktdatenerfassung.',
   ].join(' '),
 
   introText: '',
 
   checkinError: isFormal
-    ? 'We could not establish a connection. Do you perhaps not have internet right now?'
-    : 'We could not connect. Do you perhaps not have internet right now?',
+    ? 'Wir konnten keine Verbindung herstellen. Haben Sie vielleicht gerade kein Internet?'
+    : 'Wir konnten keine Verbindung herstellen. Hast du vielleicht gerade kein Internet?',
 
-  privacyPolicyLink: 'Privacy policy of {{companyName}}',
+  privacyPolicyLink: 'Datenschutzerklärung von {{companyName}}',
 
-  howDoesItWorkText: 'How does recover work?',
+  howDoesItWorkText: 'Wie funktioniert recover?',
 
   howDoesItWorkLink: isCareEnv
     ? 'https://www.recovercare.de/fur-besucher'
