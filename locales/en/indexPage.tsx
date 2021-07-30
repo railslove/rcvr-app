@@ -1,6 +1,7 @@
+import indexPageDE from '../de/indexPage'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 
-export default {
+const indexPageEN: typeof indexPageDE = {
   title1: 'Checkins via QR code.',
   title2: 'Without app, easy for everyone.',
 
@@ -39,3 +40,5 @@ export default {
 
   whatIsRecoverLinkText: 'What is recover?',
 }
+
+export default indexPageEN
