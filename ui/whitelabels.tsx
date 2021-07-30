@@ -18,13 +18,10 @@ const envs = {
     logoBigHeight: '40px',
     privacyUrl: 'https://railslove.com/privacy/',
     formalAddress: false,
-    introText:
-      'Durch die aktuellen Corona-Verordnungen musst du Deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B. Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
     instruction: 'Account erstellen',
-    indexIntro:
-      'recover ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.',
+    
     setupIntro: (
       <>
         <p>
@@ -140,10 +137,6 @@ const envs = {
     logoBigHeight: '40px',
     privacyUrl: 'https://www.recovercare.de/datenschutzerklarung',
     formalAddress: true,
-    indexIntro:
-      'recover ist die digitale Kontaktdatenliste für Pflegeeinrichtungen, deren Besucher und Gäste. Einfach, sicher, schnell.',
-    introText:
-      'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Pflegeeinrichtungen | recover',
     pageTitle: 'recover care',
     instruction: 'Account erstellen',
@@ -240,10 +233,6 @@ const envs = {
     logoBigHeight: '40px',
     privacyUrl: 'https://www.recover-health.de/datenschutzerklarung',
     formalAddress: true,
-    indexIntro:
-      'recover ist die digitale Kontaktdatenliste für Krankenhäuser, deren Besucher und Gäste. Einfach, sicher, schnell.',
-    introText:
-      'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Krankenhäuser. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Krankenhäuser | recover',
     pageTitle: 'recover health',
     instruction: 'Account erstellen',
@@ -346,8 +335,6 @@ const envs = {
     privacyUrl:
       'https://www.hs-fresenius.de/datenschutzerklaerung-recover-app/',
     formalAddress: true,
-    introText:
-      'Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
     instruction: 'So nutzt Du recover für Deinen Betrieb',
@@ -440,6 +427,8 @@ const envs = {
     ),
   },
 }
+
+
 
 const {
   pdfType,
