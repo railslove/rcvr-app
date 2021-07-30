@@ -1,24 +1,23 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import formatDate from 'intl-dateformat'
-import { useEffectOnce } from 'react-use'
-import { QueryCache } from 'react-query'
-import { isCareEnv, isFormal } from '~lib/config'
-import { decryptTickets, DecryptedTicket } from '~lib/actions'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { useCompanies, useCompany, useDataRequest, useModals } from '~lib/hooks'
-import { Text, Box, Callout, Table, Button } from '~ui/core'
-import { Loading } from '~ui/blocks/Loading'
-import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
-import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
-import { FilledCircle } from '~ui/core/FilledCircle'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+import formatDate from 'intl-dateformat'
 import ky from 'ky-universal'
-import { postAcceptDataRequest } from '~lib/api'
-
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import { QueryCache } from 'react-query'
+import { useEffectOnce } from 'react-use'
+import { DecryptedTicket, decryptTickets } from '~lib/actions'
+import { CompanyRes, postAcceptDataRequest } from '~lib/api'
+import { isCareEnv, isFormal } from '~lib/config'
 import { GuestHealthDocumentEnum } from '~lib/db'
-import { CompanyRes } from '~lib/api'
+import { useCompanies, useCompany, useDataRequest, useModals } from '~lib/hooks'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Callout, Table, Text } from '~ui/core'
+import { FilledCircle } from '~ui/core/FilledCircle'
+import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
+import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
+
 
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
@@ -196,7 +195,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
       return await ky
         .post(
-          `https://${dataRequest.proxyEndpoint}:32325/data-submission-rpc`,
+          `https://${dataRequest.proxyEndpoint}:32325`,
           { json }
         )
         .json()
