@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { QueryCache } from 'react-query'
 import { useEffectOnce } from 'react-use'
+import { v4 as uuidv4 } from 'uuid'
 import { DecryptedTicket, decryptTickets } from '~lib/actions'
 import { CompanyRes, postAcceptDataRequest } from '~lib/api'
 import { isCareEnv, isFormal } from '~lib/config'
@@ -17,7 +18,6 @@ import { Box, Button, Callout, Table, Text } from '~ui/core'
 import { FilledCircle } from '~ui/core/FilledCircle'
 import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
-
 
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
@@ -155,6 +155,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       const json = {
         method: 'submitGuestList',
         jsonrpc: '2.0',
+        id: uuidv4(),
         params: {
           _client: {
             name: 'Recover',
