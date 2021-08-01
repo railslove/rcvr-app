@@ -1,15 +1,21 @@
-import indexPageDE from './de/indexPage'
-import checkingPageDE from './de/checkinPage'
-
-import indexPageEN from './en/indexPage'
-import checkingPageEN from './en/checkinPage'
+import deErrorPage from './deErrorPage'
+import deIndexPage from './deIndexPage'
+import deScanQRPage from './deScanQRPage'
+import deCoronaPage from './deCoronaPage'
+import deCheckinPage from './deCheckinPage'
+import deError404Page from './deError404Page'
+import deMyCheckinsPage from './deMyCheckinsPage'
 
 export const de = {
-  indexPage: indexPageDE,
-  checkinPage: checkingPageDE,
+  indexPage: deIndexPage,
+  errorPage: deErrorPage,
+  scanQRPage: deScanQRPage,
+  coronaPage: deCoronaPage,
+  checkinPage: deCheckinPage,
+  error404Page: deError404Page,
+  myCheckinsPage: deMyCheckinsPage,
 }
 
 export const en: typeof de = {
-  indexPage: indexPageEN,
-  checkinPage: checkingPageEN,
+  ...de,
 }

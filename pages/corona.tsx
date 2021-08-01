@@ -7,32 +7,24 @@ import { Circle } from '~ui/anicons'
 import { Phone } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
+import { useTranslation } from 'react-i18next'
 
 export default function CoronaPage() {
+  const { t } = useTranslation('coronaPage')
+
   return (
     <MobileApp>
       <Head>
-        <title key="title">Corona, was nun? | recover</title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Was soll ich tun, wenn ich Kontaktperson bin?
+        {t('title')}
       </Text>
       <Box height={5} />
       <Text>
-        <p>In erster Linie: ruhig bleiben.</p>
-        <p>
-          Wenn {isFormal ? 'Sie' : 'du'} eine bestätigte Kontaktperson{' '}
-          {isFormal ? 'sind' : 'bist'}, wird sich das Gesundheitsamt bei{' '}
-          {isFormal ? 'Ihnen' : 'dir'} telefonisch innerhalb von 48 Stunden
-          melden.
-        </p>
-        <p>
-          Falls {isFormal ? 'Sie' : 'du'} bereits typische Symptome wie Fieber,
-          Müdigkeit und trockenen Husten{' '}
-          {isFormal ? 'haben, sollten Sie' : 'hast, solltest du'}{' '}
-          vorsichtshalber in häuslicher Quarantäne bleiben und das
-          Gesundheitsamt informieren.
-        </p>
+        {t('description', { returnObjects: true }).map((line, index) => {
+          return <p key={index}>{line}</p>
+        })}
       </Text>
       <Box height={6} />
       <Row>
@@ -40,29 +32,28 @@ export default function CoronaPage() {
           <Phone />
         </Circle>
         <Box ml={3}>
-          <Text variant="h3">Hotline zum Coronavirus</Text>
+          <Text variant="h3">{t('hotlineTitle')}</Text>
           <Text variant="h2">
-            <a href="tel:+4930346465100">030 346465100</a>
+            <a href={`tel:${t('coronaHotlinePhoneValue')}`}>
+              {t('coronaHotlinePhoneText')}
+            </a>
           </Text>
         </Box>
       </Row>
       <Box height={6} />
-      <Text variant="h3">Noch Fragen?</Text>
+      <Text variant="h3">{t('moreQuestionsTitle')}</Text>
       <Box height={2} />
       <Text>
         <p>
-          Eine Vielzahl von ständig aktualisierten Informationen gibt es auf der
-          Internetseite des Bundesgesundheitsministeriums:{' '}
+          {t('moreQuestionsText1')}{' '}
           <a
-            href="https://www.bundesgesundheitsministerium.de/coronavirus.html"
+            href={t('moreQuestionsLinkValue')}
             target="blank"
             rel="noopener noreferrer"
           >
-            www.bundesgesundheitsministerium.de/coronavirus
+            {t('moreQuestionsLinkText')}
           </a>
-          . Dort finden sich insbesondere auch Links zu den
-          Informationsangeboten der Bundeszentrale für gesundheitliche
-          Aufklärung und des Robert Koch-Instituts.
+          . {t('moreQuestionsText2')}
         </p>
       </Text>
       <FixedBottomBar />

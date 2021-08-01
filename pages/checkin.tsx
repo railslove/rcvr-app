@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 
-import { isFormal } from '~lib/config'
+import { isFormal, isRcvrEnv } from '~lib/config'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
@@ -203,7 +203,11 @@ export default function CheckinPage() {
           <Text>
             <p>{t('introText')}</p>
             <p>{t('address')}</p>
-            <p>{t('dataProtection', defaultLocaleOptions)}</p>
+            <p>
+              {isRcvrEnv ? <b>recover</b> : null}
+              {isRcvrEnv ? ' ' : null}
+              {t('dataProtection')}
+            </p>
           </Text>
           <Box height={6} />
 
