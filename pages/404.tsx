@@ -1,13 +1,15 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { Text, Box, Row } from '~ui/core'
 import { Circle, Question } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
+import useLocale from '~locales/useLocale'
+
+import de from './404.de'
 
 export default function Custom404() {
-  const { t } = useTranslation('error404Page')
+  const t = useLocale('error404', { de })
 
   return (
     <MobileApp logoVariant="big">

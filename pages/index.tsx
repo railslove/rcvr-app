@@ -2,12 +2,14 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { defaultLocaleOptions } from '~locales/i18n'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 
+import de from './index.de'
+import useLocale from '~locales/useLocale'
+
 export default function IndexPage() {
-  const { t } = useTranslation('indexPage')
+  const t = useLocale('index', { de })
 
   return (
     <MobileApp logoVariant="big">
@@ -18,7 +20,7 @@ export default function IndexPage() {
       </Text>
       <Box height={4} />
       <Text>
-        <p>{t('intro', defaultLocaleOptions)}</p>
+        <p>{t('intro')}</p>
       </Text>
       <Box height={4} />
 

@@ -4,10 +4,7 @@ module.exports = nextTranslate({
   typescript: {
     ignoreDevErrors: true,
   },
-  i18n: {
-    defaultLocale: 'de',
-    locales: ['de', 'en', 'pl'],
-  },
+  pageExtensions: ['.tsx'],
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,

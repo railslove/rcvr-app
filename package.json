@@ -11,7 +11,8 @@
     "typecheck": "tsc --noemit",
     "test": "cypress run",
     "cypress": "cypress",
-    "start:ci": "NODE_ENV=test next dev -- -p 4040"
+    "start:ci": "NODE_ENV=test next dev -- -p 4040",
+    "locales:write": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",

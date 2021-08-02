@@ -3,10 +3,12 @@ import * as React from 'react'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { useTranslation } from 'react-i18next'
+import useLocale from '~locales/useLocale'
+
+import de from './qr.de'
 
 export default function QRCodePage() {
-  const { t } = useTranslation('scanQRPage')
+  const t = useLocale('qr', { de })
   const videoEl = React.useRef<HTMLVideoElement>()
 
   function appendUrlParams(url: URL): any {
@@ -52,13 +54,13 @@ export default function QRCodePage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">QR-Code scannen | recover</title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
         {t('scanCode')}
       </Text>
       <Box height={4} />
-      <Text>{t(`scanCodeArea`)}</Text>
+      <Text>{t('scanCodeArea')}</Text>
       <Card my={8} css={{ position: 'relative' }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video

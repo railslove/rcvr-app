@@ -2,10 +2,10 @@ import * as React from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
-import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 
 import { isFormal, isRcvrEnv } from '~lib/config'
+import useLocale from '~locales/useLocale'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
@@ -15,10 +15,11 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { Onboarding } from '~ui/blocks/Onboarding'
 import { Confirmation } from '~ui/blocks/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
-import { defaultLocaleOptions } from '~locales/i18n'
+
+import de from './checkin.de'
 
 export default function CheckinPage() {
-  const { t } = useTranslation('checkinPage')
+  const t = useLocale('checkin', { de })
 
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())

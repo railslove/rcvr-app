@@ -1,4 +1,5 @@
 export default {
+  pageTitle: 'QR-Code scannen',
   scanCode: 'scan QR code',
   invalidQRCode:
     'Warnung, dieser QR code ist nicht Teil der RecoverApp. Sie können diese Seite öffnen, aber alle Daten, die Sie dort eingeben, werden an {{hostname}} geschickt.',

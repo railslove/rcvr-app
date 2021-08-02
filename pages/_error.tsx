@@ -3,11 +3,14 @@ import { NextPageContext, NextPage } from 'next'
 import { detect as detectBrowser, BrowserInfo } from 'detect-browser'
 import Link from 'next/link'
 
+import useLocale from '~locales/useLocale'
 import { Text, Box, Card, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { useTranslation } from 'react-i18next'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
+
+import de from './_error.de'
 
 export type ErrorProps = {
   statusCode: number
@@ -15,7 +18,7 @@ export type ErrorProps = {
 }
 
 function DefaultError() {
-  const { t } = useTranslation('errorPage')
+  const t = useLocale('error', { de })
 
   return (
     <Text>
@@ -25,7 +28,7 @@ function DefaultError() {
 }
 
 function InvalidPubkeyEncoding() {
-  const { t } = useTranslation('errorPage')
+  const t = useLocale('error', { de })
 
   return (
     <>
@@ -54,7 +57,8 @@ const errorMappings = {
 }
 
 const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
-  const { t } = useTranslation('errorPage')
+  const t = useLocale('error', { de })
+
   const [browser, setBrowser] = React.useState<BrowserInfo>()
 
   React.useEffect(() => {

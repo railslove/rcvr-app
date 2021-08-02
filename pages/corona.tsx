@@ -8,9 +8,12 @@ import { Phone } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
 import { useTranslation } from 'react-i18next'
+import useLocale from '~locales/useLocale'
+
+import de from './corona.de'
 
 export default function CoronaPage() {
-  const { t } = useTranslation('coronaPage')
+  const t = useLocale('corona', { de })
 
   return (
     <MobileApp>

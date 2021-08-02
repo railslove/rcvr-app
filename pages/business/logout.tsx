@@ -6,8 +6,14 @@ import { useQueryClient } from 'react-query'
 import { Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
+import { ta } from 'date-fns/locale'
+import useLocale from '~locales/useLocale'
+
+import de from './logout.de'
 
 export default function BusinessIndexPage() {
+  const t = useLocale('businessLogout', { de })
+
   const router = useRouter()
   const queryClient = useQueryClient()
   React.useEffect(() => {
@@ -19,10 +25,10 @@ export default function BusinessIndexPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">Logout... | recover</title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Logout...
+        {t('title')}
       </Text>
       <Loading show />
     </MobileApp>
