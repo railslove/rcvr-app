@@ -195,10 +195,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       }
 
       return await ky
-        .post(
-          `https://${dataRequest.proxyEndpoint}:32325`,
-          { json }
-        )
+        .post(`https://${dataRequest.proxyEndpoint}:32325`, { json })
         .json()
         .then((res) => {
           if (res['result'] == 'OK') {
@@ -244,9 +241,13 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <Text as="h2">Anfragende Behörde:</Text>
               <Text>{dataRequest.irisClientName}</Text>
               <Box height={4} />
-              <Text as="h2">Grund der Anfrage:</Text>
-              <Text>{dataRequest.reason}</Text>
-              <Box height={4} />
+              {dataRequest.reason && (
+                <>
+                  <Text as="h2">Grund der Anfrage:</Text>
+                  <Text>{dataRequest.reason}</Text>
+                  <Box height={4} />
+                </>
+              )}
               <Button onClick={approveRequest}>Daten freigeben</Button>
             </Callout>
             <Box height={4} />
