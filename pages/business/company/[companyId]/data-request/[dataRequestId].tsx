@@ -90,6 +90,7 @@ const ticketsToExcel = (company: CompanyRes, tickets: DecryptedTicket[]) => {
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { query } = useRouter()
+  const router = useRouter()
   const { data: companies } = useCompanies()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()
@@ -204,7 +205,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               queryCache.find(['dataRequests', companyId, dataRequestId])
               queryCache.find(['unacceptedDataRequests'])
               alert('Ihre Kundenkontaktdaten wurden erfolgreich übermittelt')
-              companies
+              router.push(`/business/company/${companyId}`)
             })
           } else {
             console.log(res)
@@ -212,8 +213,6 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
         })
     }
   }, [didDecrypt, tickets, company, dataRequest])
-
-  
 
   return (
     <OwnerApp title={title}>
