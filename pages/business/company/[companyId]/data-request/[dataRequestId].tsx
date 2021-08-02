@@ -18,6 +18,7 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Table, Text } from '~ui/core'
 import { FilledCircle } from '~ui/core/FilledCircle'
 import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
+import { RedirectModal } from '~ui/modals/RedirectModal'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
@@ -90,7 +91,6 @@ const ticketsToExcel = (company: CompanyRes, tickets: DecryptedTicket[]) => {
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { query } = useRouter()
-  const router = useRouter()
   const { data: companies } = useCompanies()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()
@@ -99,6 +99,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const [loading, setLoading] = React.useState(false)
   const { modals, openModal } = useModals({
     privateKey: PrivateKeyModal,
+    success: RedirectModal,
   })
 
   useEffectOnce(() => {
@@ -204,8 +205,11 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
             postAcceptDataRequest(dataRequestId).then(() => {
               queryCache.find(['dataRequests', companyId, dataRequestId])
               queryCache.find(['unacceptedDataRequests'])
-              alert('Ihre Kundenkontaktdaten wurden erfolgreich übermittelt')
-              router.push(`/business/company/${companyId}`)
+              openModal('success', {
+                returnUrl: `/business/company/${companyId}`,
+                text: 'Die Kontaktdaten wurden erfolgreich übermittelt',
+                title: 'Anfrage vom Gesundheitsamt',
+              })
             })
           } else {
             console.log(res)
