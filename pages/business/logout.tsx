@@ -6,7 +6,6 @@ import { useQueryClient } from 'react-query'
 import { Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
-import { ta } from 'date-fns/locale'
 import useLocale from '~locales/useLocale'
 
 import de from './logout.de'
@@ -20,7 +19,7 @@ export default function BusinessIndexPage() {
     localStorage.removeItem('rcvr_olt')
     queryClient.clear()
     router.replace('/business')
-  }, [router])
+  }, [router, queryClient])
 
   return (
     <MobileApp logoVariant="big">

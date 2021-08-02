@@ -1,5 +1,4 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'

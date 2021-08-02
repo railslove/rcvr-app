@@ -1,12 +1,11 @@
 import { motion } from 'framer-motion'
 import Head from 'next/head'
 import * as React from 'react'
-import { useTranslation } from 'react-i18next'
 import { useMutation, useQueryClient } from 'react-query'
 import { checkout } from '~lib/actions'
-import { isCareEnv } from '~lib/config'
 import { Checkin } from '~lib/db'
 import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
+import useLocale from '~locales/useLocale'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
 import { LastCheckins } from '~ui/blocks/LastCheckins'
@@ -15,8 +14,10 @@ import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
+import de from './my-checkins.de'
+
 export default function MyCheckinsPage() {
-  const { t } = useTranslation('myCheckinsPage')
+  const t = useLocale({ de })
   const checkinsInfo = useCheckins()
 
   const [isLoading, setIsLoading] = useDelayedLoading(false)

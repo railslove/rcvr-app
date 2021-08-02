@@ -49,7 +49,7 @@ export default function QRCodePage() {
     mountAndWaitForScan()
 
     return () => qrCodeReader?.reset()
-  }, [])
+  })
 
   return (
     <MobileApp logoVariant="big">

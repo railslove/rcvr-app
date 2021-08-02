@@ -1,4 +1,3 @@
-import { ta } from 'date-fns/locale'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import * as React from 'react'
