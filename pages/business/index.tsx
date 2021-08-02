@@ -9,7 +9,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import de from './index.de'
 
 export default function BusinessIndexPage() {
-  const t = useLocale('businessIndex', { de })
+  const t = useLocale({ de })
 
   return (
     <MobileApp logoVariant="big">

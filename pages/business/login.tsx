@@ -22,7 +22,7 @@ const LoginSchema = Yup.object().shape({
 
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
-  const t = useLocale('businessLogin', { de })
+  const t = useLocale({ de })
 
   const [loading, setLoading] = React.useState(false)
   const queryClient = useQueryClient()

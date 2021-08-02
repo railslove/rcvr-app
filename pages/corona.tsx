@@ -1,19 +1,17 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import { isFormal } from '~lib/config'
 import { Box, Text, Row } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Phone } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
-import { useTranslation } from 'react-i18next'
 import useLocale from '~locales/useLocale'
 
 import de from './corona.de'
 
 export default function CoronaPage() {
-  const t = useLocale('corona', { de })
+  const t = useLocale({ de })
 
   return (
     <MobileApp>
@@ -25,9 +23,9 @@ export default function CoronaPage() {
       </Text>
       <Box height={5} />
       <Text>
-        {t('description', { returnObjects: true }).map((line, index) => {
-          return <p key={index}>{line}</p>
-        })}
+        <p>{t('description1')}</p>
+        <p>{t('description2')}</p>
+        <p>{t('description3')}</p>
       </Text>
       <Box height={6} />
       <Row>

@@ -19,7 +19,7 @@ import { Loading } from '~ui/blocks/Loading'
 import de from './checkin.de'
 
 export default function CheckinPage() {
-  const t = useLocale('checkin', { de })
+  const t = useLocale({ de })
 
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())

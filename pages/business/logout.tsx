@@ -12,7 +12,7 @@ import useLocale from '~locales/useLocale'
 import de from './logout.de'
 
 export default function BusinessIndexPage() {
-  const t = useLocale('businessLogout', { de })
+  const t = useLocale({ de })
 
   const router = useRouter()
   const queryClient = useQueryClient()

@@ -3,21 +3,19 @@ import { isFormal } from '~lib/config'
 export default {
   title: 'Was soll ich tun, wenn ich Kontaktperson bin?',
   pageTitle: 'Corona, was nun?',
-  description: [
-    'In erster Linie: ruhig bleiben.',
-    [
-      `Wenn ${isFormal ? 'Sie' : 'du'} eine bestätigte Kontaktperson`,
-      `${isFormal ? 'sind' : 'bist'}, wird sich das Gesundheitsamt bei`,
-      `${isFormal ? 'Ihnen' : 'dir'} telefonisch innerhalb von 48 Stunden`,
-      'melden',
-    ].join(' '),
-    [
-      `Falls ${isFormal ? 'Sie' : 'du'} bereits typische Symptome wie Fieber,`,
-      `${isFormal ? 'haben, sollten Sie' : 'hast, solltest du'}`,
-      `vorsichtshalber in häuslicher Quarantäne bleiben und das`,
-      'Gesundheitsamt informieren.',
-    ].join(' '),
-  ],
+  description1: 'In erster Linie: ruhig bleiben.',
+  description2: [
+    `Wenn ${isFormal ? 'Sie' : 'du'} eine bestätigte Kontaktperson`,
+    `${isFormal ? 'sind' : 'bist'}, wird sich das Gesundheitsamt bei`,
+    `${isFormal ? 'Ihnen' : 'dir'} telefonisch innerhalb von 48 Stunden`,
+    'melden',
+  ].join(' '),
+  description3: [
+    `Falls ${isFormal ? 'Sie' : 'du'} bereits typische Symptome wie Fieber,`,
+    `${isFormal ? 'haben, sollten Sie' : 'hast, solltest du'}`,
+    `vorsichtshalber in häuslicher Quarantäne bleiben und das`,
+    'Gesundheitsamt informieren.',
+  ].join(' '),
 
   hotlineTitle: 'Hotline zum Coronavirus',
 

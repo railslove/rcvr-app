@@ -8,7 +8,7 @@ import useLocale from '~locales/useLocale'
 import de from './qr.de'
 
 export default function QRCodePage() {
-  const t = useLocale('qr', { de })
+  const t = useLocale({ de })
   const videoEl = React.useRef<HTMLVideoElement>()
 
   function appendUrlParams(url: URL): any {

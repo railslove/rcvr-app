@@ -17,7 +17,7 @@ import { CompanyCard } from '~ui/blocks/CompanyCard'
 import de from '~pages/business/dashboard.de'
 
 const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale('businessDashboard', { de })
+  const t = useLocale({ de })
 
   const { data: companies } = useCompanies()
   const { modals, openModal } = useModals({

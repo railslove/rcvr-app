@@ -7,7 +7,6 @@ import useLocale from '~locales/useLocale'
 import { Text, Box, Card, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { useTranslation } from 'react-i18next'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 
 import de from './_error.de'
@@ -18,7 +17,7 @@ export type ErrorProps = {
 }
 
 function DefaultError() {
-  const t = useLocale('error', { de })
+  const t = useLocale({ de })
 
   return (
     <Text>
@@ -28,7 +27,7 @@ function DefaultError() {
 }
 
 function InvalidPubkeyEncoding() {
-  const t = useLocale('error', { de })
+  const t = useLocale({ de })
 
   return (
     <>
@@ -57,7 +56,7 @@ const errorMappings = {
 }
 
 const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
-  const t = useLocale('error', { de })
+  const t = useLocale({ de })
 
   const [browser, setBrowser] = React.useState<BrowserInfo>()
 

@@ -1,24 +1,31 @@
-import { useTranslation } from 'react-i18next'
-import { LocaleLanguages, LocaleResources } from 'types/react-i18next'
-import { isCareEnv, isHealthEnv } from '~lib/config'
+import { useRouter } from 'next/router'
+import pupa from 'pupa'
 
-const BUILD_ENV = isCareEnv ? 'care' : isHealthEnv ? 'health' : 'recover'
-const FORMAL_SUFFIX = 'formal'
-const BUILD_ENV_FORMAL = `${BUILD_ENV}_${FORMAL_SUFFIX}`
+// const BUILD_ENV = isCareEnv ? 'care' : isHealthEnv ? 'health' : 'recover'
+// const FORMAL_SUFFIX = 'formal'
+// const BUILD_ENV_FORMAL = `${BUILD_ENV}_${FORMAL_SUFFIX}`
 
-const useLocale = <NSKey extends keyof LocaleResources, NSValue>(
-  ns: NSKey,
-  data: { [key in LocaleLanguages]: NSValue }
-) => {
-  const { t, i18n } = useTranslation(ns)
+export type Language = 'de'
 
-  Object.keys(data).forEach((lang) => {
-    if (!i18n.hasResourceBundle(lang, ns)) {
-      i18n.addResources(lang, ns, data[lang])
+const useLocale = <NSValue>(data: { [key in Language]: NSValue }) => {
+  const router = useRouter()
+  const { locale } = router
+  const lang = (locale || 'de').replace(/-[A-Z]+$/, '') as Language
+
+  function translate<TKey extends keyof NSValue>(
+    key: TKey,
+    options?: Record<string, unknown>
+  ) {
+    const result = data[lang] != null ? data[lang][key] : data.de[key]
+
+    if (typeof result === 'string' && options) {
+      return pupa(result, options)
     }
-  })
 
-  return t
+    return result
+  }
+
+  return translate
 }
 
 export default useLocale

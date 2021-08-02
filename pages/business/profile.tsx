@@ -24,7 +24,7 @@ import { pricingInfoDuringTest } from '~ui/whitelabels'
 import de from './profile.de'
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale('businessProfile', { de })
+  const t = useLocale({ de })
 
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()

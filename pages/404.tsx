@@ -9,7 +9,7 @@ import useLocale from '~locales/useLocale'
 import de from './404.de'
 
 export default function Custom404() {
-  const t = useLocale('error404', { de })
+  const t = useLocale({ de })
 
   return (
     <MobileApp logoVariant="big">

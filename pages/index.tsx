@@ -9,7 +9,7 @@ import de from './index.de'
 import useLocale from '~locales/useLocale'
 
 export default function IndexPage() {
-  const t = useLocale('index', { de })
+  const t = useLocale({ de })
 
   return (
     <MobileApp logoVariant="big">
