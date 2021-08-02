@@ -177,7 +177,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
             additionalInformation: dataRequest.reason,
             guests: tickets.map((ticket) => {
               const result = {
-                firstName: ticket.guest.name,
+                lastName: ticket.guest.name,
                 phone: ticket.guest.phone,
                 address: {
                   street: ticket.guest.address,
