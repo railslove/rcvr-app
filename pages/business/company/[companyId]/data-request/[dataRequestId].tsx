@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { QueryCache } from 'react-query'
 import { useEffectOnce } from 'react-use'
+import { box } from 'tweetnacl'
 import { v4 as uuidv4 } from 'uuid'
 import { DecryptedTicket, decryptTickets } from '~lib/actions'
 import { CompanyRes, postAcceptDataRequest } from '~lib/api'
@@ -202,6 +203,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
             postAcceptDataRequest(dataRequestId).then(() => {
               queryCache.find(['dataRequests', companyId, dataRequestId])
               queryCache.find(['unacceptedDataRequests'])
+              alert('Ihre Kundenkontaktdaten wurden erfolgreich übermittelt')
+              companies
             })
           } else {
             console.log(res)
@@ -209,6 +212,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
         })
     }
   }, [didDecrypt, tickets, company, dataRequest])
+
+  
 
   return (
     <OwnerApp title={title}>
