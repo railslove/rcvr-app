@@ -8,7 +8,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 import useLocale from '~locales/useLocale'
 
-import locales from '~locales/business-setup/finished'
+import locales from './finished.locales'
 
 const FinishedText: React.FC = () => {
   const t = useLocale(locales)

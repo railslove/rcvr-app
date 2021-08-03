@@ -12,7 +12,7 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import locales from '~locales/business/login'
+import locales from './login.locales'
 
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()

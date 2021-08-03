@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 
-import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { WithOwnerProps, withValidPrivateKey } from '~lib/pageWrappers'
 import { Text, Box, Button, Row, FileInput, Card } from '~ui/core'
@@ -50,7 +49,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
         }
       ),
     })
-  }, [owner])
+  }, [owner, t])
 
   const { privateKey } = owner
 

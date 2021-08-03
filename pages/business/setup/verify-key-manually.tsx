@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
 
-import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Text, Box, Button, ButtonLink, Row, Input } from '~ui/core'
@@ -33,7 +32,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           .then(() => window.scrollTo(0, 0))
       }
     },
-    [router, owner, queryClient]
+    [router, owner, queryClient, t]
   )
 
   return (

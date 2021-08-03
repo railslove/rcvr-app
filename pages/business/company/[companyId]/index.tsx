@@ -2,7 +2,6 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 
-import { isFormal } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany, useDataRequests, useModals } from '~lib/hooks'
 import { Text, Box, Divider, Callout, Button } from '~ui/core'
@@ -14,7 +13,7 @@ import { AutoDataRequestModal } from '~ui/modals/AutoDataRequestModal'
 import { DataRequestRes } from '~lib/api'
 import useLocale from '~locales/useLocale'
 
-import locales from '~locales/business-company-[companyId]/index'
+import locales from './index.locales'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 
 const CompanyPage: React.FC<WithOwnerProps> = () => {

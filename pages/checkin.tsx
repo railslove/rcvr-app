@@ -234,11 +234,7 @@ export default function CheckinPage() {
                     rel="noreferrer noopener"
                     href={areaInfo.data.privacyPolicyLink}
                   >
-                    <Text variant="link">
-                      {t('privacyPolicyLink', {
-                        companyName: areaInfo.data.companyName,
-                      })}
-                    </Text>
+                    <Text variant="link">{t('privacyPolicyLink')}</Text>
                   </a>
                 </>
               )}

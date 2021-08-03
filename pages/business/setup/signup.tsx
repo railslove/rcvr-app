@@ -7,7 +7,7 @@ import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { signup } from '~lib/actions'
-import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { isCareEnv, isHealthEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { createPasswordValidator } from '~lib/validators/passwordValidator'
 import { phoneValidator } from '~lib/validators/phoneValidator'
@@ -16,7 +16,6 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
-import { signupText } from '~ui/whitelabels'
 import Avv from './avv'
 
 import locales from './signup.locales'
@@ -92,7 +91,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         <PersonalData />
       </Row>
       <Box height={6} />
-      <Text>{signupText}</Text>
+      <Text>{t('signupText')}</Text>
       <Box height={6} />
       <Formik
         initialValues={{
@@ -114,11 +113,11 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
             <Text as="h2" variant="h2">
-              1. Persönliche Angaben
+              1. {t('headline')}
             </Text>
             <Box height={4} />
             <Form>
-              <Input name="name" label={isFormal ? 'Ihr Name' : 'Dein Name'} />
+              <Input name="name" label={t('nameLabel')} />
               <Box height={4} />
               <Input name="companyName" label={t('companyNameLabel')} />
               <Box height={4} />
@@ -164,7 +163,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Input
                 type="password"
                 name="confirmPassword"
-                label="Passwort wiederholen"
+                label={t('passwordConfirmLabel')}
                 autoComplete="new-password"
               />
               {isCareEnv && (

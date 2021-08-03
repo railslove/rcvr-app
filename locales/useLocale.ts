@@ -11,10 +11,7 @@ const useLocale = <NSValue>(data: { [key in Language]: NSValue }) => {
   const { locale } = router
   const lang = (locale || 'de').replace(/-[A-Z]+$/, '') as Language
 
-  function translate<TKey extends keyof NSValue>(
-    key: TKey,
-    options?: Record<string, unknown>
-  ) {
+  function translate<TKey extends keyof NSValue>(key: TKey) {
     const result = data[lang] != null ? data[lang][key] : data.de[key]
 
     return result

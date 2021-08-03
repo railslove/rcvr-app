@@ -1,7 +1,0 @@
-{
-  "locales": ["en", "de"],
-  "defaultLocale": "en",
-  "pages": {
-    "*": ["checkin"]
-  }
-}

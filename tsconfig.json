@@ -9,7 +9,6 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
-    "typeRoots": ["./types", "./node_modules/@types"],
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,

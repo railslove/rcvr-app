@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import formatDate from 'intl-dateformat'
 import { useEffectOnce } from 'react-use'
 
-import { isCareEnv, isFormal } from '~lib/config'
+import { isCareEnv } from '~lib/config'
 import { decryptTickets, DecryptedTicket } from '~lib/actions'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany, useDataRequest, useModals } from '~lib/hooks'
@@ -121,28 +121,34 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     privateKey: PrivateKeyModal,
   })
 
-  const headerMessages = {
-    headerFrom: t('headerFrom'),
-    headerName: t('headerName'),
-    headerPhone: t('headerPhone'),
-    headerUntil: t('headerUntil'),
-    headerLeftAt: t('headerLeftAt'),
-    headerAddress: t('headerAddress'),
-    headerAreaName: t('headerAreaName'),
-    headerEnteredAt: t('headerEnteredAt'),
-    headerResidents: t('headerResidents'),
-    headerProvidedHealthDocument: t('headerProvidedHealthDocument'),
-  }
+  const headerMessages = React.useMemo(
+    () => ({
+      headerFrom: t('headerFrom'),
+      headerName: t('headerName'),
+      headerPhone: t('headerPhone'),
+      headerUntil: t('headerUntil'),
+      headerLeftAt: t('headerLeftAt'),
+      headerAddress: t('headerAddress'),
+      headerAreaName: t('headerAreaName'),
+      headerEnteredAt: t('headerEnteredAt'),
+      headerResidents: t('headerResidents'),
+      headerProvidedHealthDocument: t('headerProvidedHealthDocument'),
+    }),
+    [t]
+  )
 
-  const downloadFileMessages: DownloadFileMessages = {
-    tested: t('tested'),
-    vaccinated: t('vaccinated'),
-    recovering: t('recovering'),
-    contactData: t('contactData'),
-    customerContactData: t('customerContactData'),
-    customerContactDataFrom: t('customerContactDataFrom'),
-    ...headerMessages,
-  }
+  const downloadFileMessages: DownloadFileMessages = React.useMemo(
+    () => ({
+      tested: t('tested'),
+      vaccinated: t('vaccinated'),
+      recovering: t('recovering'),
+      contactData: t('contactData'),
+      customerContactData: t('customerContactData'),
+      customerContactDataFrom: t('customerContactDataFrom'),
+      ...headerMessages,
+    }),
+    [t, headerMessages]
+  )
 
   const {
     headerName,

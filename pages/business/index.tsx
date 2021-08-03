@@ -6,7 +6,7 @@ import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import locales from '~locales/business/index'
+import locales from './index.locales'
 
 export default function BusinessIndexPage() {
   const t = useLocale(locales)

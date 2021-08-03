@@ -9,10 +9,10 @@ import { Box, ButtonLink, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 
-import de from './_locales/intro.de'
+import locales from './intro.locales'
 
 const SetupIntro: React.FC = () => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   switch (BUILD_VARIANT) {
     case 'care':
@@ -37,7 +37,7 @@ const SetupIntro: React.FC = () => {
 }
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const { query } = useRouter()
 
   React.useEffect(() => {
