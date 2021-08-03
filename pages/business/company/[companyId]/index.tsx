@@ -14,11 +14,11 @@ import { AutoDataRequestModal } from '~ui/modals/AutoDataRequestModal'
 import { DataRequestRes } from '~lib/api'
 import useLocale from '~locales/useLocale'
 
-import de from './index.de'
+import locales from '~locales/business-company-[companyId]/index'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 
 const CompanyPage: React.FC<WithOwnerProps> = () => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)

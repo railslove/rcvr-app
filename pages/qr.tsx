@@ -3,12 +3,12 @@ import * as React from 'react'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
+
+import locales from './qr.locales'
 import useLocale from '~locales/useLocale'
 
-import de from './qr.de'
-
 export default function QRCodePage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const videoEl = React.useRef<HTMLVideoElement>()
 
   function appendUrlParams(url: URL): any {

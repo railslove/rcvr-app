@@ -8,10 +8,10 @@ import { DataList, DataListItem } from '~ui/blocks/DataList'
 import { Box, Text } from '~ui/core'
 import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
 
-import de from './[areaId].de'
+import locales from './[areaId].locales'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const areaId = query.areaId.toString()

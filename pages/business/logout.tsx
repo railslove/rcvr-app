@@ -8,10 +8,10 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
 import useLocale from '~locales/useLocale'
 
-import de from './logout.de'
+import locales from './logout.locales'
 
 export default function BusinessIndexPage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -24,7 +24,7 @@ export default function BusinessIndexPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('pageTitle')} | recover</title>
+        <title key="title">{t('title')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
         {t('title')}

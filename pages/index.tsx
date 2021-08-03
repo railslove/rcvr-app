@@ -4,11 +4,13 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 
-import de from './index.de'
+import { isRcvrEnv } from '~lib/config'
+
+import locales from './index.locales'
 import useLocale from '~locales/useLocale'
 
 export default function IndexPage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   return (
     <MobileApp logoVariant="big">
@@ -19,7 +21,13 @@ export default function IndexPage() {
       </Text>
       <Box height={4} />
       <Text>
-        <p>{t('intro')}</p>
+        {isRcvrEnv ? (
+          <>
+            <b>recover</b> <p>{t('intro')}</p>
+          </>
+        ) : (
+          <p>{t('intro')}</p>
+        )}
       </Text>
       <Box height={4} />
 

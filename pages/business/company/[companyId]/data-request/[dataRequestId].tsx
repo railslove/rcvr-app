@@ -17,11 +17,8 @@ import { css } from '@styled-system/css'
 import { GuestHealthDocumentEnum } from '~lib/db'
 import { CompanyRes } from '~lib/api'
 import useLocale from '~locales/useLocale'
-import de from './[dataRequestId].de'
 
-type PageLocales = {
-  de: typeof de
-}
+import locales from './[dataRequestId].locales'
 
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
@@ -113,7 +110,7 @@ const ticketsToExcel = (
 }
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()

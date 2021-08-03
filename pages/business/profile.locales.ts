@@ -1,6 +1,6 @@
 import { isFormal } from '~lib/config'
 
-export default {
+const de = {
   pageTitle: 'Mein Profil',
   editProfile: 'Profil bearbeiten',
   myMembership: 'Meine Mitgliedschaft',
@@ -12,3 +12,15 @@ export default {
   writeEmailButtonText: 'Email schreiben',
   upgradeNow: 'Jetzt upgraden',
 }
+
+const en: typeof de = {
+  pageTitle: 'My Profile',
+  editProfile: 'Edit Profile',
+  myMembership: 'My membership',
+  hasNoCompaniesMessage: `You must create a company first `,
+  writeEmailMessage: 'If you want to continue using recover, please email us.',
+  writeEmailButtonText: 'Write an email',
+  upgradeNow: 'upgrade now',
+}
+
+export default { de, en }

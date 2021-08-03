@@ -22,10 +22,10 @@ import { readTextFile } from '~lib/file'
 import { commitSetupPublicKey } from '~lib/actions'
 import useLocale from '~locales/useLocale'
 
-import de from './verify-key.de'
+import locales from './verify-key.locales'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -59,10 +59,10 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <>
         <ScreenView>
           <Head>
-            <title key="title">{t('pageTitle')}</title>
+            <title key="title">{t('pageTitle')} | recover</title>
           </Head>
           <Text as="h3" variant="h3">
-            {`${t('createAccountStep')} (3/3)`}
+            {t('createAccountStep')} (3/3)
           </Text>
           <Box height={4} />
           <Row justifyContent="center">

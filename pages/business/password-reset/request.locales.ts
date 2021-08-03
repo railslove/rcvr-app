@@ -1,6 +1,6 @@
 import { isFormal } from '~lib/config'
 
-export default {
+const de = {
   pageTitle: 'Passwort Vergessen | recover',
   pageHeadline: 'Passwort Vergessen',
   pageExplanation: `Bitte ${
@@ -10,3 +10,14 @@ export default {
   angegebene Email Adresse.`,
   emailRequired: 'Email muss angegeben werden.',
 }
+
+const en: typeof de = {
+  pageTitle: 'Forgot Password | recover',
+  pageHeadline: 'Forgot Password',
+  pageExplanation: `Please enter your email address.
+  We will then send a link to reset the password to the
+  given email address.`,
+  emailRequired: 'Email must be provided.',
+}
+
+export default { de, en }

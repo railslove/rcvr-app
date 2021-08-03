@@ -6,12 +6,12 @@ import { Circle } from '~ui/anicons'
 import { Phone } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
+
+import locales from './corona.locales'
 import useLocale from '~locales/useLocale'
 
-import de from './corona.de'
-
 export default function CoronaPage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   return (
     <MobileApp>

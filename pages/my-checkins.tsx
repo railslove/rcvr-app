@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from 'react-query'
 import { checkout } from '~lib/actions'
 import { Checkin } from '~lib/db'
 import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
-import useLocale from '~locales/useLocale'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
 import { LastCheckins } from '~ui/blocks/LastCheckins'
@@ -14,10 +13,11 @@ import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import de from './my-checkins.de'
+import locales from './my-checkins.locales'
+import useLocale from '~locales/useLocale'
 
 export default function MyCheckinsPage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const checkinsInfo = useCheckins()
 
   const [isLoading, setIsLoading] = useDelayedLoading(false)

@@ -19,10 +19,10 @@ import { PersonalData } from '~ui/svg'
 import { signupText } from '~ui/whitelabels'
 import Avv from './avv'
 
-import de from './signup.de'
+import locales from './signup.locales'
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
@@ -82,10 +82,10 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">{t('pageTitle')}</title>
+        <title key="title">{t('title')} | recover</title>
       </Head>
       <Text as="h3" variant="h3">
-        {t('title')}
+        {t('title')} (1/3)
       </Text>
       <Box height={6} />
       <Row justifyContent="center">

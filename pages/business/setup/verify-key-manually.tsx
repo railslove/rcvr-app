@@ -14,10 +14,10 @@ import { commitSetupPublicKey } from '~lib/actions'
 import { useQueryClient } from 'react-query'
 import useLocale from '~locales/useLocale'
 
-import de from './verify-key-manually.de'
+import locales from './verify-key-manually.locales'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -39,7 +39,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">{t('pageTitle')}</title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
         {t('headline')}

@@ -9,7 +9,7 @@ import { Box, ButtonLink, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 
-import de from './intro.de'
+import de from './_locales/intro.de'
 
 const SetupIntro: React.FC = () => {
   const t = useLocale({ de })

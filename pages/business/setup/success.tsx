@@ -12,10 +12,10 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { KeyPaper } from '~ui/svg'
 import { contactInformation, privateKeyExplanation } from '~ui/whitelabels'
 
-import de from './success.de'
+import locales from './success.locales'
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -46,10 +46,10 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('pageTitle')}</title>
+        <title key="title">{t('title')} | recover</title>
       </Head>
       <Text as="h3" variant="h3">
-        {t('stepMessage')}
+        {t('title')} (2/3)
       </Text>
       <Box height={6} />
       <Row justifyContent="center">

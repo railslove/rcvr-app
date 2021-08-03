@@ -14,10 +14,10 @@ import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { CompanyCard } from '~ui/blocks/CompanyCard'
 
-import de from '~pages/business/dashboard.de'
+import locales from './dashboard.locales'
 
 const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   const { data: companies } = useCompanies()
   const { modals, openModal } = useModals({

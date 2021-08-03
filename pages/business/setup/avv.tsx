@@ -2,10 +2,10 @@ import * as React from 'react'
 import useLocale from '~locales/useLocale'
 import { Text } from '~ui/core'
 
-import de from './avv.de'
+import locales from './avv.locales'
 
 const Avv: React.FC = () => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   return (
     <Text variant="fineprint">

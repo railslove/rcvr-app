@@ -7,12 +7,11 @@ import { ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 
+import locales from './keys.locales'
 import useLocale from '~locales/useLocale'
 
-import de from './keys.de'
-
 const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const { privateKey } = owner
   return (
     <MobileApp>

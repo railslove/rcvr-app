@@ -12,16 +12,16 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import de from './login.de'
-
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().required('Email muss angegeben werden.'),
-  password: Yup.string().required('Password muss angegeben werden.'),
-})
+import locales from '~locales/business/login'
 
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
-  const t = useLocale({ de })
+  const t = useLocale(locales)
+
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().required(t('emailRequired')),
+    password: Yup.string().required(t('passwordRequired')),
+  })
 
   const [loading, setLoading] = React.useState(false)
   const queryClient = useQueryClient()

@@ -6,10 +6,10 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 import useLocale from '~locales/useLocale'
 
-import de from './404.de'
+import locales from './404.locales'
 
 export default function Custom404() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   return (
     <MobileApp logoVariant="big">

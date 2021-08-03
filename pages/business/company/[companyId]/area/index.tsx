@@ -20,10 +20,10 @@ import { decrypt } from '~lib/crypto'
 import { sortAreas } from '~lib/interactors'
 import useLocale from '~locales/useLocale'
 
-import de from './index.de'
+import locales from './index.locales'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)

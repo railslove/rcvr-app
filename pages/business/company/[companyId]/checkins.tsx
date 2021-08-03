@@ -10,10 +10,10 @@ import { CheckinsActionCard } from '~ui/blocks/CheckinsActionCard'
 import { sortAreas } from '~lib/interactors'
 import useLocale from '~locales/useLocale'
 
-import de from './checkins.de'
+import locales from '~locales/business-company-[companyId]/checkins'
 
 const CheckinsPage: React.FC<WithOwnerProps> = () => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)

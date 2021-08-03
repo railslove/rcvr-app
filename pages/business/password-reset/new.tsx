@@ -11,10 +11,10 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import de from './new.de'
+import locales from './new.locales'
 
 export default function PasswordResetNewPage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)

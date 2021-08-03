@@ -6,10 +6,10 @@ import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import de from './index.de'
+import locales from '~locales/business/index'
 
 export default function BusinessIndexPage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   return (
     <MobileApp logoVariant="big">

@@ -8,10 +8,10 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 import useLocale from '~locales/useLocale'
 
-import de from './finished.de'
+import locales from '~locales/business-setup/finished'
 
 const FinishedText: React.FC = () => {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   switch (BUILD_VARIANT) {
     case 'care': {
@@ -52,7 +52,7 @@ const FinishedText: React.FC = () => {
 }
 
 function SetupSuccessPage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   return (
     <MobileApp logoVariant="big">

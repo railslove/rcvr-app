@@ -16,10 +16,10 @@ import { Onboarding } from '~ui/blocks/Onboarding'
 import { Confirmation } from '~ui/blocks/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
 
-import de from './checkin.de'
+import locales from './checkin.locales'
 
 export default function CheckinPage() {
-  const t = useLocale({ de })
+  const t = useLocale(locales)
 
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())
