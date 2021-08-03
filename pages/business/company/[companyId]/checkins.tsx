@@ -8,8 +8,12 @@ import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 import { ActionList } from '~ui/blocks/ActionList'
 import { CheckinsActionCard } from '~ui/blocks/CheckinsActionCard'
 import { sortAreas } from '~lib/interactors'
+import useLocale from '~locales/useLocale'
+
+import de from './checkins.de'
 
 const CheckinsPage: React.FC<WithOwnerProps> = () => {
+  const t = useLocale({ de })
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)
@@ -22,9 +26,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
       >
         {company?.name}
       </BackLink>
-      <Text variant="shy">
-        Checkins der letzten 24 Stunden. Aktualisiert sich automatisch.
-      </Text>
+      <Text variant="shy">{t('lastCheckinsText')}</Text>
       <Box height={2} />
       <ActionList grid>
         {sortAreas(company?.areas).map((area) => {
