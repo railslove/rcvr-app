@@ -5,15 +5,15 @@ import * as React from 'react'
 import * as Yup from 'yup'
 import { postRequestPasswordReset } from '~lib/api'
 import { isFormal } from '~lib/config'
+import useLocale from '~locales/useLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-const EmailSchema = Yup.object().shape({
-  email: Yup.string().required('Email muss angegeben werden.'),
-})
+import de from './request.de'
 
 export default function PasswordResetRequestPage() {
+  const t = useLocale({ de })
   const [loading, setLoading] = React.useState(false)
   const [done, setDone] = React.useState(false)
 
@@ -26,21 +26,21 @@ export default function PasswordResetRequestPage() {
     setLoading(false)
   }
 
+  const EmailSchema = Yup.object().shape({
+    email: Yup.string().required(t('emailRequired')),
+  })
+
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">Passwort Vergessen | recover</title>
+        <title key="title">{t('pageTitle')}</title>
       </Head>
       <Text as="h2" variant="h2">
-        Passwort Vergessen
+        {t('pageHeadline')}
       </Text>
       <Box height={4} />
       <Text>
-        <p>
-          Bitte {isFormal ? 'geben Sie Ihre' : 'gib Deine'} Email Adresse ein.
-          Wir schicken dann einen Link um das Passwort zurückzusetzen an die
-          angegebene Email Adresse.
-        </p>
+        <p>{t('pageExplanation')}</p>
       </Text>
       <Box height={4} />
 

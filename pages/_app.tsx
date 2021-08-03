@@ -8,6 +8,7 @@ import { Global, ThemeProvider } from '@emotion/react'
 
 import { AnimateSharedLayout } from 'framer-motion'
 import { QueryClient, QueryClientProvider } from 'react-query'
+
 import { useA11yFocusRing } from '~lib/hooks'
 import { theme, globalStyles } from '~ui/theme'
 
