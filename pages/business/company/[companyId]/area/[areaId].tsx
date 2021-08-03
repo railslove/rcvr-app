@@ -3,11 +3,15 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useArea, useLastAreaTickets } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import useLocale from '~locales/useLocale'
 import { DataList, DataListItem } from '~ui/blocks/DataList'
 import { Box, Text } from '~ui/core'
 import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
 
+import de from './[areaId].de'
+
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
+  const t = useLocale({ de })
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const areaId = query.areaId.toString()
@@ -20,11 +24,9 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
         href="/business/company/[companyId]/checkins"
         as={`/business/company/${companyId}/checkins`}
       >
-        Checkins
+        {t('backLinkText')}
       </BackLink>
-      <Text variant="shy">
-        Checkins der letzten 24 Stunden. Aktualisiert sich automatisch.
-      </Text>
+      <Text variant="shy">{t('lastCheckins')}</Text>
       <Box height={2} />
       <DataList>
         {tickets?.map((ticket) => (
@@ -37,7 +39,9 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
                 {ticket.leftAt && ' – ' + formatDate(ticket.leftAt, 'HH:mm')}
               </Text>
             }
-            right={<Text>{ticket.leftAt ? 'ausgecheckt' : 'eingecheckt'}</Text>}
+            right={
+              <Text>{ticket.leftAt ? t('checkedOut') : t('checkedIn')}</Text>
+            }
           />
         ))}
       </DataList>

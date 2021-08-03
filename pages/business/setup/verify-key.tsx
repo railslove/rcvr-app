@@ -20,8 +20,12 @@ import { downloadKey } from '~lib/actions/downloadKey'
 import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
 import { commitSetupPublicKey } from '~lib/actions'
+import useLocale from '~locales/useLocale'
+
+import de from './verify-key.de'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const t = useLocale({ de })
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -36,7 +40,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
     return Yup.object().shape({
       privateKey: Yup.mixed().test(
         'validKey',
-        'Schlüsseldatei stimmt nicht überein.',
+        t('verifyPrivateKeyError'),
         async (value) => {
           if (value) {
             const key = await readTextFile(value)
@@ -55,12 +59,10 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <>
         <ScreenView>
           <Head>
-            <title key="title">
-              {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
-            </title>
+            <title key="title">{t('pageTitle')}</title>
           </Head>
           <Text as="h3" variant="h3">
-            Account erstellen (3/3)
+            {`${t('createAccountStep')} (3/3)`}
           </Text>
           <Box height={4} />
           <Row justifyContent="center">
@@ -69,11 +71,11 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <Box height={6} />
           <Card variant="form" mx={-4}>
             <Text as="h2" variant="h2">
-              3. Schlüssel herunterladen
+              3. {t('headline')}
             </Text>
             <Box height={6} />
             <SubActionButton onClick={() => downloadKey(privateKey)}>
-              Schlüssel herunterladen
+              {t('downloadKeyButtonText')}
             </SubActionButton>
             <Box height={6} />
             {verifyPrivateKeyExplanation}
@@ -87,33 +89,25 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
                   <FileInput
                     name="privateKey"
                     type="file"
-                    label="Hier die Schlüsseldatei einfügen"
-                    hint="Falls Sie die Datei nicht haben, können Sie sie oben herunterladen."
+                    label={t('privateKeyInputLabel')}
+                    hint={t('privateKeyInputHint')}
                     accept="text/plain"
                   />
                   <Box height={4} />
-                  <Text>
-                    Nun erstellen Sie bitte eine Sicherheitskopie, indem Sie die
-                    Schlüssel-Datei ausdrucken, auf einen USB-Stick übertragen
-                    oder den Inhalt in einem Passwortmanager speichern.
-                  </Text>
+                  <Text>{t('privateKeyInputMessage')}</Text>
                   <Box height={6} />
                   <SubActionButton onClick={window.print}>
-                    Schlüssel drucken
+                    {t('privateKeyPrintButton')}
                   </SubActionButton>
                   <Box height={4} />
-                  <Text>
-                    {isFormal
-                      ? 'Schlüssel sicher und zugänglich verwahrt? Dann können sie jetzt ihren Betrieb einrichten.'
-                      : 'Schlüssel sicher und zugänglich verwahrt? Dann kannst du jetzt deinen Betrieb einrichten.'}
-                  </Text>
+                  <Text>{t('privateKeySecureQuestion')}</Text>
                   <Box height={4} />
                   <Button
                     type="submit"
                     right={<ArrowsRight color="green" />}
                     css={{ width: '100%' }}
                   >
-                    weiter
+                    {t('continueButtonText')}
                   </Button>
                 </Form>
               )}
@@ -123,15 +117,9 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
         <PrintView>
           <Text>
             <p>
-              <strong>
-                Sie werden diesen Schlüssel wieder brauchen, wenn das
-                Gesundheitsamt anruft.
-              </strong>
+              <strong>{t('youWillNeedKey1')}</strong>
             </p>
-            <p>
-              Bitte bewahren sie diesen Schlüssel an einem sicheren, aber für
-              sie gut zugänglichen Ort auf.
-            </p>
+            <p>{t('youWillNeedKey2')}</p>
           </Text>
           <Box height={8} />
           <KeyViewer value={owner.privateKey} />
