@@ -1,5 +1,4 @@
 import { Form, Formik } from 'formik'
-import area from 'pages/business/company/[companyId]/area'
 import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
@@ -61,7 +60,7 @@ export const AreaDataModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [type, areaId, baseProps, companyId]
+    [type, areaId, baseProps, companyId, queryClient]
   )
 
   return (

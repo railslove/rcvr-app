@@ -1,34 +1,22 @@
 import * as React from 'react'
-import { isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
+import useLocale from '~locales/useLocale'
 import { Text } from '~ui/core'
-import { privacyUrl } from '~ui/whitelabels'
+
+import locales from './avv.locales'
 
 const Avv: React.FC = () => {
-  const getAvvLink = () => {
-    if (isCareEnv) {
-      return '/avv/2021_AVV_recover.care.pdf'
-    } else if (isHealthEnv) {
-      return '/avv/AVV_recover.health.pdf'
-    } else {
-      return '/avv/AVV_recover.pdf'
-    }
-  }
+  const t = useLocale(locales)
 
   return (
     <Text variant="fineprint">
       <p>
-        Mit dem Betätigen des Buttons{' '}
-        {isFormal ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
-        <a
-          href={isFreseniusEnv ? privacyUrl : 'https://railslove.com/privacy/'}
-        >
-          Datenschutzbestimmungen
+        {t('message1')}{' '}
+        <a href={t('privacyPolicyLink')}>{t('privacyPolicyText')}</a>{' '}
+        {t('message2')}{' '}
+        <a href={t('avvLink')} target="_blank" rel="noopener noreferrer">
+          {t('avvLinkText')}
         </a>{' '}
-        sowie der{' '}
-        <a href={getAvvLink()} target="_blank" rel="noopener noreferrer">
-          Auftragsverarbeitungsvereinbarung
-        </a>{' '}
-        einverstanden.
+        {t('message3')}.
       </p>
     </Text>
   )
