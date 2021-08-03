@@ -7,6 +7,7 @@ module.exports = {
     defaultLocale: 'de',
     localeDetection: true,
   },
+  pageExtensions: ['tsx'],
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
