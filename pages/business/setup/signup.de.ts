@@ -27,6 +27,11 @@ export default {
   confirmContractRequired: 'Sie müssen dem Vertrag zustimmen.',
   confirmPasswordRequired: 'Passwordwiederholung muss angegeben werden.',
 
+  passwordRequired: 'Passwort muss angegeben werden.',
+  passwordMaxLength: 'Das Passwort darf nicht länger als 128 Zeichen sein.',
+  passwordShouldMatch:
+    'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.',
+
   emailRegisteredError: 'Diese Email ist bereits registriert.',
 
   termsOfUse1: 'Ich akzeptiere den',

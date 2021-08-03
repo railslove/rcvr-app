@@ -9,7 +9,7 @@ import * as Yup from 'yup'
 import { signup } from '~lib/actions'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { passwordValidator } from '~lib/validators/passwordValidator'
+import { createPasswordValidator } from '~lib/validators/passwordValidator'
 import { phoneValidator } from '~lib/validators/phoneValidator'
 import useLocale from '~locales/useLocale'
 import { Loading } from '~ui/blocks/Loading'
@@ -36,7 +36,11 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
     zip: Yup.string().required(t('zipRequired')),
     city: Yup.string().required(t('cityRequired')),
     companyName: Yup.string().required(t('companyNameRequired')),
-    password: passwordValidator,
+    password: createPasswordValidator({
+      requiredText: t('passwordRequired'),
+      maxLengthText: t('passwordMaxLength'),
+      shouldMatchText: t('passwordShouldMatch'),
+    }),
     confirmPassword: Yup.string()
       .required(t('confirmPasswordRequired'))
       .oneOf([Yup.ref('password'), null], t('passwordsDoNotMatch')),
