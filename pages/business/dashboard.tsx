@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Link from 'next/link'
 
+import useLocale from '~locales/useLocale'
+
 import { useModals, useCompanies } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { OwnerApp } from '~ui/layouts/OwnerApp'
@@ -12,7 +14,11 @@ import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { CompanyCard } from '~ui/blocks/CompanyCard'
 
+import locales from './dashboard.locales'
+
 const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const t = useLocale(locales)
+
   const { data: companies } = useCompanies()
   const { modals, openModal } = useModals({
     data: BusinessDataModal,
@@ -21,11 +27,11 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
   })
 
   return (
-    <OwnerApp title="Meine Betriebe">
+    <OwnerApp title={t('title')}>
       {modals}
       <ActionList>
         <AddCard
-          title="Betrieb anlegen..."
+          title={t('actionTitle')}
           onClick={() =>
             owner.privateKey
               ? openModal('data', { type: 'new', owner: owner })
@@ -53,7 +59,7 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Text textAlign={['center', 'center', 'left']}>
         <Link href="/business/logout" passHref>
           <Text variant="h5" as="a" color="bluegrey.400">
-            Logout
+            {t('logout')}
           </Text>
         </Link>
       </Text>
