@@ -2,13 +2,42 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import useLocale from '~locales/useLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { AffiliateCard } from '~ui/blocks/AffiliateCard'
 import { Box, ButtonLink, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { instruction, setupIntro, title } from '~ui/whitelabels'
+import { BUILD_VARIANT } from '~ui/whitelabels'
+
+import locales from './intro.locales'
+
+const SetupIntro: React.FC = () => {
+  const t = useLocale(locales)
+
+  switch (BUILD_VARIANT) {
+    case 'care':
+    case 'health': {
+      return (
+        <>
+          <p>{t('setupIntro1_care')}</p>
+          <p>{t('setupIntro2_care')}</p>
+        </>
+      )
+    }
+    default: {
+      return (
+        <>
+          <p>{t('setupIntro1')}</p>
+          <p>{t('setupIntro2')}</p>
+          <p>{t('setupIntro3')}</p>
+        </>
+      )
+    }
+  }
+}
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
+  const t = useLocale(locales)
   const { query } = useRouter()
 
   React.useEffect(() => {
@@ -20,20 +49,22 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title"> {title} </title>
+        <title key="title"> {t('pageTitle')} </title>
       </Head>
       <Text as="h2" variant="h2">
-        {instruction}
+        {t('instruction')}
       </Text>
       <Box height={6} />
-      <Text>{setupIntro}</Text>
+      <Text>
+        <SetupIntro />
+      </Text>
       <Box height={12} />
 
       <ButtonLink
         href="/business/setup/signup"
         right={<ArrowsRight color="green" />}
       >
-        Los geht{"'"}s
+        {t('letsGo')}
       </ButtonLink>
       {query.affiliate && (
         <>

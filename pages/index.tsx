@@ -1,35 +1,43 @@
-import * as React from 'react'
-import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import React from 'react'
+
+import { MobileApp } from '~ui/layouts/MobileApp'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
-import { MobileApp } from '~ui/layouts/MobileApp'
-import { indexIntro } from '~ui/whitelabels'
+
+import { isRcvrEnv } from '~lib/config'
+
+import locales from './index.locales'
+import useLocale from '~locales/useLocale'
 
 export default function IndexPage() {
+  const t = useLocale(locales)
+
   return (
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
-        Checkins per QR-Code.
+        {t('title1')}
         <br />
-        Ohne App, einfach für alle.
+        {t('title2')}
       </Text>
       <Box height={4} />
       <Text>
-        <p>{indexIntro}</p>
+        {isRcvrEnv ? (
+          <>
+            <b>recover</b> <p>{t('intro')}</p>
+          </>
+        ) : (
+          <p>{t('intro')}</p>
+        )}
       </Text>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {isFormal ? 'Für Besucher und Gäste' : 'Für Gäste'}
+          {t('forVisitorsAndGuests')}
         </Text>
         <Box height={4} />
         <Text>
-          <p>
-            {isFormal
-              ? 'recover schützt Ihre Daten besser als Papier'
-              : 'recover schützt Deine Daten besser als jedes Papier.'}
-          </p>
+          <p>{t('rcvrProtectsData')}</p>
         </Text>
         <Box height={8} />
 
@@ -38,44 +46,30 @@ export default function IndexPage() {
           left={<ArrowsRight color="green" />}
           right={<ArrowsLeft color="green" />}
         >
-          QR-Code scannen
+          {t('scanCode')}
         </ButtonLink>
         <Box height={4} />
-        <ButtonLink href="/my-checkins">
-          {isFormal ? 'Ihre Tickets' : 'Deine Tickets'}
-        </ButtonLink>
+        <ButtonLink href="/my-checkins">{t('yourTickets')}</ButtonLink>
       </Card>
       <Box height={4} />
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {isFormal ? 'Für Ihre Einrichtung' : 'Für Deinen Betrieb'}
+          {t(`forYourCompany`)}
         </Text>
         <Box height={4} />
         <Text>
-          <p>
-            {isFormal
-              ? 'Tschüss, Zettelwirtschaft! recover ist die digitale Kontaktdatenliste Ihrer Besucher und Gäste. Einfach, sicher, schnell.'
-              : 'Tschüss, Zettelwirtschaft! recover ist die digitale Kontaktdatenliste deiner Gäste. Einfach, sicher, schnell.'}
-          </p>
+          <p>{t('goodbyePaperwork')}</p>
         </Text>
         <Box height={8} />
-        <ButtonLink href="/business">
-          Recover für {isFormal ? 'Einrichtungen' : 'Betriebe'}
-        </ButtonLink>
+        <ButtonLink href="/business">{t('recoverForCompanies')}</ButtonLink>
       </Card>
       <Row justifyContent="center" my={6}>
         <a
-          href={
-            isCareEnv
-              ? 'https://recovercare.de/'
-              : isHealthEnv
-              ? 'https://www.recover-health.de'
-              : 'https://www.recoverapp.de/'
-          }
+          href={t('whatIsRecoverLink')}
           target="_blank"
           rel="noreferrer noopener"
         >
-          <Text variant="link">Was ist recover?</Text>
+          <Text variant="link">{t('whatIsRecoverLinkText')}</Text>
         </a>
       </Row>
     </MobileApp>

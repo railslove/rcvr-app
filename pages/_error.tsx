@@ -3,9 +3,13 @@ import { NextPageContext, NextPage } from 'next'
 import { detect as detectBrowser, BrowserInfo } from 'detect-browser'
 import Link from 'next/link'
 
+import useLocale from '~locales/useLocale'
 import { Text, Box, Card, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import { RECOVER_TEAM_EMAIL } from '~locales/constants'
+
+import locales from './_error.locales'
 
 export type ErrorProps = {
   statusCode: number
@@ -13,26 +17,25 @@ export type ErrorProps = {
 }
 
 function DefaultError() {
+  const t = useLocale(locales)
+
   return (
     <Text>
-      <p>Tut uns leid, es ist zu einem unerwarteten Fehler gekommen.</p>
+      <p>{t('defaultErrorMessage')}</p>
     </Text>
   )
 }
 
 function InvalidPubkeyEncoding() {
+  const t = useLocale(locales)
+
   return (
     <>
       <Text>
         <p>
-          <strong>
-            Scheinbar funktioniert dein QR-Code Scanner nicht korrekt.
-          </strong>
+          <strong>{t('invalidPubkeyEncodingText1')}</strong>
         </p>
-        <p>
-          Die meisten Handykameras können QR-Codes ohne eine zusätzliche App
-          scannen. Oder nutze unseren QR-Code Scanner:
-        </p>
+        <p>{t('invalidPubkeyEncodingText2')}:</p>
       </Text>
       <Box height={6} />
       <Link href="/qr" passHref>
@@ -41,7 +44,7 @@ function InvalidPubkeyEncoding() {
           left={<ArrowsRight color="green" />}
           right={<ArrowsLeft color="green" />}
         >
-          QR-Code scannen
+          {t('scanQR')}
         </Button>
       </Link>
     </>
@@ -53,7 +56,10 @@ const errorMappings = {
 }
 
 const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
+  const t = useLocale(locales)
+
   const [browser, setBrowser] = React.useState<BrowserInfo>()
+
   React.useEffect(() => {
     const result = detectBrowser()
     if (result.type === 'browser') setBrowser(result)
@@ -66,26 +72,19 @@ const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
   return (
     <MobileApp logoVariant="big">
       <Text variant="h3" as="h1" color="red.500">
-        Das hat leider nicht funktioniert...
+        {t('title')}
       </Text>
       <Box height={4} />
       <ErrorDetails />
       <Box height={6} />
       <Card mx={-4} p={6}>
         <Text>
+          <p>{t('message1')}</p>
           <p>
-            Im Sinne der Datensparsamkeit werden Fehler nicht automatisch an uns
-            übermittelt.
+            {t('message2')}{' '}
+            <a href={RECOVER_TEAM_EMAIL}>{RECOVER_TEAM_EMAIL}</a>.
           </p>
-          <p>
-            Wenn Du glaubst, dass dieser Fehler nicht hätte passieren sollen,
-            oder du diesen Fehler öfter siehst, schreib uns bitte eine Mail an{' '}
-            <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>.
-          </p>
-          <p>
-            Damit wir dir besser helfen können, schicke uns außerdem folgende
-            Fehlerdetails:
-          </p>
+          <p>{t('message3')}</p>
         </Text>
         <Box height={4} />
         <Text fontFamily="monospace" color="bluegrey.500" fontSize="xs">
