@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import { updateOwner } from '~lib/actions'
-import { isFormal } from '~lib/config'
 import { generateKeys } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import useLocale from '~locales/useLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { Box, Button, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
@@ -13,6 +13,7 @@ import { KeyPaper } from '~ui/svg'
 import { contactInformation, privateKeyExplanation } from '~ui/whitelabels'
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = useLocale('business/setup/success')
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -43,10 +44,10 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">Account erstellt | recover</title>
+        <title key="title">{t('title')} | recover</title>
       </Head>
       <Text as="h3" variant="h3">
-        Account erstellen (2/3)
+        {t('title')} (2/3)
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
@@ -56,7 +57,7 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Card variant="form" mx={-4}>
         <Text as="h2" variant="h2">
           2.
-          {isFormal ? ' Ihr privater Schlüssel.' : ' Dein privater Schlüssel.'}
+          {t('headline')}
         </Text>
         <Box height={4} />
         <Text>{privateKeyExplanation}</Text>
