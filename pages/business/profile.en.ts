@@ -1,4 +1,3 @@
-import { isFormal } from '~lib/config'
 import profileDe from '~pages/business/profile.de'
 
 const en: typeof profileDe = {

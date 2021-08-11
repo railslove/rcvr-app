@@ -9,8 +9,6 @@ import { Box, ButtonLink, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 
-import locales from './intro.en'
-
 const SetupIntro: React.FC = () => {
   const { t } = useLocale('business/setup/intro')
 

@@ -32,8 +32,6 @@ function generateLocalesConfig() {
       {
         pages: {},
         namespaces: [],
-        locales: ['en', 'de', 'pl'],
-        defaultLocale: 'en',
       }
     )
 
@@ -53,15 +51,18 @@ function generateLocalesConfig() {
   const LocalesResourcesString = JSON.stringify(LocalesResources, null, 2)
     .replace(/"typeof/g, 'typeof')
     .replace(/\.default",?/g, '.default')
+    .replace(/"(\S+)":/g, "'$1':")
+    .replace(/'([^0-9-/\s]+)':/g, '$1:')
 
   fs.writeFileSync('locales/config.json', JSON.stringify(config, null, 2))
 
   fs.writeFileSync(
     'locales/LocalesResources.d.ts',
     [
-      `type ${LocalesResourcesType} = ${LocalesResourcesString}`,
+      `type ${LocalesResourcesType} = ${LocalesResourcesString}\n`,
       `export default ${LocalesResourcesType}`,
-    ].join('\n\n')
+      '',
+    ].join('\n')
   )
 }
 

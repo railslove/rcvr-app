@@ -110,11 +110,5 @@
     "index",
     "my-checkins",
     "qr"
-  ],
-  "locales": [
-    "en",
-    "de",
-    "pl"
-  ],
-  "defaultLocale": "en"
+  ]
 }

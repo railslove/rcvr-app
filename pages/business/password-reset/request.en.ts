@@ -1,4 +1,3 @@
-import { isFormal } from '~lib/config'
 import requestDe from '~pages/business/password-reset/request.de'
 
 const en: typeof requestDe = {

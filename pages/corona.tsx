@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Head from 'next/head'
-import useTranslation from 'next-translate/useTranslation'
 
 import { Box, Text, Row } from '~ui/core'
 import { Circle } from '~ui/anicons'

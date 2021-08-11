@@ -1,4 +1,3 @@
-import { isFormal } from '~lib/config'
 import coronaDe from '~pages/corona.de'
 
 const en: typeof coronaDe = {
