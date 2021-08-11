@@ -1,6 +1,6 @@
 const nextTranslate = require('next-translate')
 const localesDefaults = require('./locales/config.defaults.json')
-const { generateLocalesConfig } = require('./locales/build')
+const { generateLocalesConfig } = require('./scripts/locales')
 
 module.exports = nextTranslate({
   typescript: {

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import * as React from 'react'
 import * as Yup from 'yup'
 import { postRequestPasswordReset } from '~lib/api'
-import { isFormal } from '~lib/config'
+import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 import useLocale from '~locales/useLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
@@ -54,7 +54,7 @@ export default function PasswordResetRequestPage() {
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={5} />
               <Button type="submit" css={{ width: '100%' }}>
-                Passwort Zurücksetzen
+                {t('resetPasswordButtonText')}
               </Button>
             </Form>
           </Card>
@@ -63,20 +63,15 @@ export default function PasswordResetRequestPage() {
       {done && (
         <Callout>
           <Text>
-            Falls {isFormal ? 'Ihre' : 'Deine'} Email Adresse bei uns
-            registriert war haben wir {isFormal ? 'Ihnen' : 'dir'} einen Link
-            zum Passwort zurückzusetzen geschickt. Bitte{' '}
-            {isFormal ? 'überprüfen Sie Ihr' : 'überprüfe dein'} Email Konto.
-            Sollte das nicht funktioniert haben,
-            {isFormal ? 'wenden Sie' : 'wende Dich'} bitte an useren{' '}
-            <a href="mailto:team@recoverapp.de">support</a>.
+            {t('doneMessage')}
+            <a href={`mailto:${RECOVER_TEAM_EMAIL}`}>support</a>.
           </Text>
         </Callout>
       )}
 
       <Row justifyContent="center" my={6}>
         <Link href="/business/login" as="a" passHref>
-          <Text variant="link">Zum login</Text>
+          <Text variant="link">{t('goToLoginLinkText')}</Text>
         </Link>
       </Row>
     </MobileApp>
