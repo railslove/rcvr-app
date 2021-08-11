@@ -1,8 +1,8 @@
 import qrDe from '~pages/qr.de'
 
 const en: typeof qrDe = {
-  pageTitle: 'scan QR code',
-  scanCode: 'scan QR code',
+  pageTitle: 'Scan QR code',
+  scanCode: 'Scan QR code',
   invalidQRCode:
     'Warning, this QR code is not part of the RecoverApp. You can open this page, but any data you enter there will be sent to {{hostname}}',
   scanCodeArea:
