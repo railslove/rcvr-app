@@ -6,13 +6,12 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { QueryCache } from 'react-query'
 import { useEffectOnce } from 'react-use'
-import { box } from 'tweetnacl'
 import { v4 as uuidv4 } from 'uuid'
 import { DecryptedTicket, decryptTickets } from '~lib/actions'
 import { CompanyRes, postAcceptDataRequest } from '~lib/api'
 import { isCareEnv, isFormal } from '~lib/config'
 import { GuestHealthDocumentEnum } from '~lib/db'
-import { useCompanies, useCompany, useDataRequest, useModals } from '~lib/hooks'
+import { useCompany, useDataRequest, useModals } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Table, Text } from '~ui/core'
@@ -122,7 +121,6 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     'business/company/[companyId]/data-request/[dataRequestId]'
   )
   const { query } = useRouter()
-  const { data: companies } = useCompanies()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()
   const { data: company } = useCompany(companyId)
@@ -291,7 +289,15 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
           }
         })
     }
-  }, [didDecrypt, tickets, company, dataRequest])
+  }, [
+    didDecrypt,
+    tickets,
+    company,
+    dataRequest,
+    dataRequestId,
+    companyId,
+    openModal,
+  ])
 
   return (
     <OwnerApp title={title}>
