@@ -15,6 +15,7 @@ import {
   logoSmallHeight,
 } from '~ui/whitelabels'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
+import LanguageSwitcher from '~ui/blocks/LanguageSwitcher'
 
 interface Props {
   children: React.ReactNode
@@ -28,24 +29,27 @@ export const MobileApp: React.FC<Props> = ({
   secondaryLogo = null,
 }) => {
   return (
-    <Limit>
-      <Head>
-        <title key="title">{pageTitle}</title>
-      </Head>
-      <SharedMeta />
-      <LogoContainer variant={logoVariant}>
-        <LogoBox variant={logoVariant} layoutId="appLogo">
-          <Logo />
-        </LogoBox>
-        {secondaryLogo ? (
-          <SecondaryLogoBox>
-            <SecondaryLogo src={secondaryLogo} />
-          </SecondaryLogoBox>
-        ) : null}
-      </LogoContainer>
-      <Box height={logoVariant === 'sticky' ? 10 : 4} />
-      {children}
-    </Limit>
+    <>
+      <LanguageSwitcher />
+      <Limit>
+        <Head>
+          <title key="title">{pageTitle}</title>
+        </Head>
+        <SharedMeta />
+        <LogoContainer variant={logoVariant}>
+          <LogoBox variant={logoVariant} layoutId="appLogo">
+            <Logo />
+          </LogoBox>
+          {secondaryLogo ? (
+            <SecondaryLogoBox>
+              <SecondaryLogo src={secondaryLogo} />
+            </SecondaryLogoBox>
+          ) : null}
+        </LogoContainer>
+        <Box height={logoVariant === 'sticky' ? 10 : 4} />
+        {children}
+      </Limit>
+    </>
   )
 }
 

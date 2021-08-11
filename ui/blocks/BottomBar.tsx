@@ -11,7 +11,7 @@ import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Lock, Ticket, Virus } from '~ui/svg'
 
-export const BottomBar: React.FC<Record<string, never>> = () => {
+export const BottomBar: React.FC = () => {
   const { route } = useRouter()
 
   return (
@@ -60,11 +60,13 @@ export const BottomBar: React.FC<Record<string, never>> = () => {
   )
 }
 
-interface Props {
+export type FixedBottomBarProps = {
   transparent?: boolean
 }
 
-export const FixedBottomBar: React.FC<Props> = ({ transparent }) => {
+export const FixedBottomBar: React.FC<FixedBottomBarProps> = ({
+  transparent,
+}) => {
   return (
     <>
       <Box height={16} />
