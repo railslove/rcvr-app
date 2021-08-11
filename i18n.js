@@ -8,7 +8,6 @@ exports = module.exports = {
   loadLocaleFrom(lang, ns) {
     return import(`pages/${ns}.${lang}.ts`).then((m) => {
       const result = m.default
-      console.log('locale', ns, lang, result)
       return result
     })
   },
