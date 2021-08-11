@@ -18,10 +18,8 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
 import Avv from './avv'
 
-import locales from './signup.locales'
-
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
-  const t = useLocale(locales)
+  const { t } = useLocale('business/setup/signup')
 
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)

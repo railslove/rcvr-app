@@ -8,10 +8,8 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
 import useLocale from '~locales/useLocale'
 
-import locales from './logout.locales'
-
 export default function BusinessIndexPage() {
-  const t = useLocale(locales)
+  const { t } = useLocale('business/logout')
 
   const router = useRouter()
   const queryClient = useQueryClient()

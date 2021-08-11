@@ -12,11 +12,9 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import locales from './login.locales'
-
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
-  const t = useLocale(locales)
+  const { t } = useLocale('business/login')
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required(t('emailRequired')),

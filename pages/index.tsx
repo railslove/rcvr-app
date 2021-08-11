@@ -6,11 +6,10 @@ import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 
 import { isRcvrEnv } from '~lib/config'
 
-import locales from './index.locales'
 import useLocale from '~locales/useLocale'
 
 export default function IndexPage() {
-  const t = useLocale(locales)
+  const { t } = useLocale('index')
 
   return (
     <MobileApp logoVariant="big">

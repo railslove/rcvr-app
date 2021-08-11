@@ -21,10 +21,8 @@ import { readTextFile } from '~lib/file'
 import { commitSetupPublicKey } from '~lib/actions'
 import useLocale from '~locales/useLocale'
 
-import locales from './verify-key.locales'
-
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale(locales)
+  const { t } = useLocale('business/setup/verify-key')
   const router = useRouter()
   const queryClient = useQueryClient()
 

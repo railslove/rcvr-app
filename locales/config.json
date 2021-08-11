@@ -1,0 +1,120 @@
+{
+  "pages": {
+    "/_error": [
+      "_error"
+    ],
+    "/404": [
+      "404"
+    ],
+    "/business/company/[companyId]/area/[areaId]": [
+      "business/company/[companyId]/area/[areaId]"
+    ],
+    "/business/company/[companyId]/area": [
+      "business/company/[companyId]/area/index"
+    ],
+    "/business/company/[companyId]/checkins": [
+      "business/company/[companyId]/checkins"
+    ],
+    "/business/company/[companyId]/data-request/[dataRequestId]": [
+      "business/company/[companyId]/data-request/[dataRequestId]"
+    ],
+    "/business/company/[companyId]": [
+      "business/company/[companyId]/index"
+    ],
+    "/business/dashboard": [
+      "business/dashboard"
+    ],
+    "/business": [
+      "business/index"
+    ],
+    "/business/login": [
+      "business/login"
+    ],
+    "/business/logout": [
+      "business/logout"
+    ],
+    "/business/password-reset/new": [
+      "business/password-reset/new"
+    ],
+    "/business/password-reset/request": [
+      "business/password-reset/request"
+    ],
+    "/business/profile": [
+      "business/profile"
+    ],
+    "/business/setup/avv": [
+      "business/setup/avv"
+    ],
+    "/business/setup/finished": [
+      "business/setup/finished"
+    ],
+    "/business/setup/intro": [
+      "business/setup/intro"
+    ],
+    "/business/setup/keys": [
+      "business/setup/keys"
+    ],
+    "/business/setup/signup": [
+      "business/setup/signup"
+    ],
+    "/business/setup/success": [
+      "business/setup/success"
+    ],
+    "/business/setup/verify-key-manually": [
+      "business/setup/verify-key-manually"
+    ],
+    "/business/setup/verify-key": [
+      "business/setup/verify-key"
+    ],
+    "/checkin": [
+      "checkin"
+    ],
+    "/corona": [
+      "corona"
+    ],
+    "/": [
+      "index"
+    ],
+    "/my-checkins": [
+      "my-checkins"
+    ],
+    "/qr": [
+      "qr"
+    ]
+  },
+  "namespaces": [
+    "_error",
+    "404",
+    "business/company/[companyId]/area/[areaId]",
+    "business/company/[companyId]/area/index",
+    "business/company/[companyId]/checkins",
+    "business/company/[companyId]/data-request/[dataRequestId]",
+    "business/company/[companyId]/index",
+    "business/dashboard",
+    "business/index",
+    "business/login",
+    "business/logout",
+    "business/password-reset/new",
+    "business/password-reset/request",
+    "business/profile",
+    "business/setup/avv",
+    "business/setup/finished",
+    "business/setup/intro",
+    "business/setup/keys",
+    "business/setup/signup",
+    "business/setup/success",
+    "business/setup/verify-key-manually",
+    "business/setup/verify-key",
+    "checkin",
+    "corona",
+    "index",
+    "my-checkins",
+    "qr"
+  ],
+  "locales": [
+    "en",
+    "de",
+    "pl"
+  ],
+  "defaultLocale": "en"
+}

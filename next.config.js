@@ -1,18 +1,26 @@
-module.exports = {
+const nextTranslate = require('next-translate')
+const localesDefaults = require('./locales/config.defaults.json')
+const { generateLocalesConfig } = require('./locales/build')
+
+module.exports = nextTranslate({
   typescript: {
     ignoreDevErrors: true,
   },
   i18n: {
-    locales: ['en', 'de'],
-    defaultLocale: 'de',
+    ...localesDefaults,
     localeDetection: true,
   },
   pageExtensions: ['tsx'],
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     })
+
+    if (isServer) {
+      generateLocalesConfig()
+    }
+
     return config
   },
-}
+})

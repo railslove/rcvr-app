@@ -13,10 +13,10 @@ import { commitSetupPublicKey } from '~lib/actions'
 import { useQueryClient } from 'react-query'
 import useLocale from '~locales/useLocale'
 
-import locales from './verify-key-manually.locales'
+import locales from './verify-key-manually.en'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale(locales)
+  const { t } = useLocale('business/setup/verify-key-manually')
   const router = useRouter()
   const queryClient = useQueryClient()
 

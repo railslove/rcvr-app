@@ -4,12 +4,11 @@ import { Text, Box, Row } from '~ui/core'
 import { Circle, Question } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
+
 import useLocale from '~locales/useLocale'
 
-import locales from './404.locales'
-
 export default function Custom404() {
-  const t = useLocale(locales)
+  const { t } = useLocale('404')
 
   return (
     <MobileApp logoVariant="big">

@@ -9,15 +9,13 @@ import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 
-import locales from './_error.locales'
-
 export type ErrorProps = {
   statusCode: number
   error?: Error
 }
 
 function DefaultError() {
-  const t = useLocale(locales)
+  const { t } = useLocale('_error')
 
   return (
     <Text>
@@ -27,7 +25,7 @@ function DefaultError() {
 }
 
 function InvalidPubkeyEncoding() {
-  const t = useLocale(locales)
+  const { t } = useLocale('_error')
 
   return (
     <>
@@ -56,7 +54,7 @@ const errorMappings = {
 }
 
 const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
-  const t = useLocale(locales)
+  const { t } = useLocale('_error')
 
   const [browser, setBrowser] = React.useState<BrowserInfo>()
 

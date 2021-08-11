@@ -1,23 +1,25 @@
-import { useRouter } from 'next/router'
+import { TranslationQuery } from 'next-translate'
+import useTranslation from 'next-translate/useTranslation'
+import LocalesResources from './LocalesResources'
 
-// const BUILD_ENV = isCareEnv ? 'care' : isHealthEnv ? 'health' : 'recover'
-// const FORMAL_SUFFIX = 'formal'
-// const BUILD_ENV_FORMAL = `${BUILD_ENV}_${FORMAL_SUFFIX}`
+export type TranslationOptions = Parameters<
+  ReturnType<typeof useTranslation>['t']
+>[2]
 
-export type Language = 'de' | 'en'
+const useLocale = <NS extends keyof LocalesResources>(ns: NS) => {
+  type Result = LocalesResources[NS]
 
-const useLocale = <NSValue>(data: { [key in Language]: NSValue }) => {
-  const router = useRouter()
-  const { locale } = router
-  const lang = (locale || 'de').replace(/-[A-Z]+$/, '') as Language
+  const { t, lang } = useTranslation(ns)
 
-  function translate<TKey extends keyof NSValue>(key: TKey) {
-    const result = data[lang] != null ? data[lang][key] : data.de[key]
-
-    return result
+  function translate<NSK extends keyof Result>(
+    key: NSK,
+    options?: TranslationOptions,
+    query?: TranslationQuery
+  ) {
+    return t(key as string, query, options)
   }
 
-  return translate
+  return { t: translate, lang }
 }
 
 export default useLocale

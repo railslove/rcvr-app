@@ -18,8 +18,6 @@ import { GuestHealthDocumentEnum } from '~lib/db'
 import { CompanyRes } from '~lib/api'
 import useLocale from '~locales/useLocale'
 
-import locales from './[dataRequestId].locales'
-
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
     (c1: DecryptedTicket, c2: DecryptedTicket) =>
@@ -110,7 +108,9 @@ const ticketsToExcel = (
 }
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale(locales)
+  const { t } = useLocale(
+    'business/company/[companyId]/data-request/[dataRequestId]'
+  )
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()

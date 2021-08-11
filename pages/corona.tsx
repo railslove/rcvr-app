@@ -1,17 +1,16 @@
 import * as React from 'react'
 import Head from 'next/head'
+import useTranslation from 'next-translate/useTranslation'
 
 import { Box, Text, Row } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Phone } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
-
-import locales from './corona.locales'
 import useLocale from '~locales/useLocale'
 
 export default function CoronaPage() {
-  const t = useLocale(locales)
+  const { t } = useLocale('corona')
 
   return (
     <MobileApp>

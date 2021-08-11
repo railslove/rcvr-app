@@ -21,10 +21,8 @@ import { SubscribedModal } from '~ui/modals/SubscribedModal'
 import { Right } from '~ui/svg'
 import { pricingInfoDuringTest } from '~ui/whitelabels'
 
-import locales from './profile.locales'
-
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale(locales)
+  const { t } = useLocale('business/profile')
 
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()

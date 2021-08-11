@@ -4,11 +4,10 @@ import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import locales from './qr.locales'
 import useLocale from '~locales/useLocale'
 
 export default function QRCodePage() {
-  const t = useLocale(locales)
+  const { t } = useLocale('qr')
   const videoEl = React.useRef<HTMLVideoElement>()
 
   function appendUrlParams(url: URL): any {

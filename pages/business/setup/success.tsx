@@ -12,10 +12,8 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { KeyPaper } from '~ui/svg'
 import { contactInformation, privateKeyExplanation } from '~ui/whitelabels'
 
-import locales from './success.locales'
-
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const t = useLocale(locales)
+  const { t } = useLocale('business/setup/success')
   const router = useRouter()
   const queryClient = useQueryClient()
 

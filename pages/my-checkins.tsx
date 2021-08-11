@@ -13,11 +13,10 @@ import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-import locales from './my-checkins.locales'
 import useLocale from '~locales/useLocale'
 
 export default function MyCheckinsPage() {
-  const t = useLocale(locales)
+  const { t } = useLocale('my-checkins')
   const checkinsInfo = useCheckins()
 
   const [isLoading, setIsLoading] = useDelayedLoading(false)
