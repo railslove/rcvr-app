@@ -1,7 +1,7 @@
 import requestDe from '~pages/business/password-reset/request.de'
 
 const en: typeof requestDe = {
-  pageTitle: 'Forgot Password | recover',
+  pageTitle: 'Forgot Password',
   pageHeadline: 'Forgot Password',
   pageExplanation: `Please enter your email address.
   We will then send a link to reset the password to the

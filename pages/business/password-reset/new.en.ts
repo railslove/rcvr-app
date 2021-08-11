@@ -2,7 +2,7 @@ import { isFormal } from '~lib/config'
 import newDe from '~pages/business/password-reset/new.de'
 
 const en: typeof newDe = {
-  pageTitle: 'Password Reset | recover',
+  pageTitle: 'Password Reset',
   pageHeadline: 'Password Reset',
   pageExplanation: isFormal
     ? 'Please enter a new password with which you can log in from now on'

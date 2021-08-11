@@ -2,7 +2,7 @@ import { isFormal } from '~lib/config'
 import keysDe from '~pages/business/setup/keys.de'
 
 const en: typeof keysDe = {
-  pageTitle: `Your key | recover`,
+  pageTitle: `Your key`,
   title: `Your secret key`,
   message1: 'It is very important that you write down this key.',
   message2: isFormal

@@ -1,7 +1,7 @@
 import { isFormal } from '~lib/config'
 
 export default {
-  pageTitle: 'Passwort Vergessen | recover',
+  pageTitle: 'Passwort Vergessen',
   pageHeadline: 'Passwort Vergessen',
   pageExplanation: `Bitte ${
     isFormal ? 'geben Sie Ihre' : 'gib Deine'

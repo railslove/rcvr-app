@@ -1,7 +1,7 @@
 import { isFormal } from '~lib/config'
 
 export default {
-  pageTitle: `${isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover`,
+  pageTitle: `${isFormal ? 'Ihr' : 'Dein'} Schlüssel`,
   title: `${isFormal ? 'Ihr' : 'Dein'} geheimer Schlüssel`,
   message1: isFormal
     ? 'Es ist sehr wichtig, dass Sie diesen Schlüssel notieren.'

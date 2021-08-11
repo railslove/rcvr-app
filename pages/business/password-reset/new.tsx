@@ -45,7 +45,7 @@ export default function PasswordResetNewPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('pageTitle')}</title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
         {t('pageHeadline')}

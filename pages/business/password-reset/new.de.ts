@@ -1,7 +1,7 @@
 import { isFormal } from '~lib/config'
 
 export default {
-  pageTitle: 'Passwort Zurücksetzen | recover',
+  pageTitle: 'Passwort Zurücksetzen',
   pageHeadline: 'Passwort Zurücksetzen',
   pageExplanation: isFormal
     ? 'Bitte gib ein neues Passwort an mit dem du Dich von jetzt an anmelden kannst.'

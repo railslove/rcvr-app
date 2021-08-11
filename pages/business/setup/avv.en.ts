@@ -1,32 +1,10 @@
 import { privacyUrl } from '~ui/whitelabels'
 import { isFormal, isFreseniusEnv, isCareEnv, isHealthEnv } from '~lib/config'
+import avvDe from '~pages/business/setup/avv.de'
 
-const de = {
-  message1: `Mit dem Betätigen des Buttons ${
-    isFormal ? 'erklären Sie sich' : 'erkläre ich mich'
-  } mit den`,
-
-  privacyPolicyLink: isFreseniusEnv
-    ? privacyUrl
-    : 'https://railslove.com/privacy/',
-
-  privacyPolicyText: 'Datenschutzbestimmungen',
-
-  message2: 'sowie der',
-  message3: 'einverstanden',
-
-  avvLink: isCareEnv
-    ? '/avv/2021_AVV_recover.care.pdf'
-    : isHealthEnv
-    ? '/avv/AVV_recover.health.pdf'
-    : '/avv/AVV_recover.pdf',
-
-  avvLinkText: 'Auftragsverarbeitungsvereinbarung',
-}
-
-const en: typeof de = {
+const en: typeof avvDe = {
   message1: `By pressing the button ${
-    isFormal ? 'declare' : 'declare myself'
+    isFormal ? 'you aggree' : 'I agree'
   } with the`,
 
   privacyPolicyLink: isFreseniusEnv
@@ -47,4 +25,4 @@ const en: typeof de = {
   avvLinkText: 'order processing agreement',
 }
 
-export default { de, en }
+export default en
