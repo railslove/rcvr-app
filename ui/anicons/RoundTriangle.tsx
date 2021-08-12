@@ -15,9 +15,9 @@ export const RoundTriangle: React.FC<SVGIconProps> = ({
       {...rest}
       viewBox="0 0 14 13"
       transform={
-        (variant === 'up' && 'rotateZ(180deg)') ||
-        (variant === 'left' && 'rotateZ(45deg)') ||
-        (variant === 'right' && 'rotateZ(-45deg)') ||
+        (variant === 'up' && 'rotate(180)') ||
+        (variant === 'left' && 'rotate(90)') ||
+        (variant === 'right' && 'rotate(-90)') ||
         undefined
       }
       xmlns="http://www.w3.org/2000/svg"

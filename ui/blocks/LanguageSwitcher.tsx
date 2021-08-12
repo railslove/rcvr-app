@@ -44,7 +44,7 @@ const LanguageSwitcher: React.FC = () => {
         </Box>
 
         <Box>
-          <RoundTriangle />
+          <RoundTriangle variant={isOpen ? 'up' : 'down'} />
         </Box>
 
         <Box
