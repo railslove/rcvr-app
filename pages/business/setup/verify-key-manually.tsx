@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
 
-import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Text, Box, Button, ButtonLink, Row, Input } from '~ui/core'
@@ -12,8 +11,10 @@ import { KeyPaper } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { commitSetupPublicKey } from '~lib/actions'
 import { useQueryClient } from 'react-query'
+import useLocale from '~locales/useLocale'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = useLocale('business/setup/verify-key-manually')
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -21,10 +22,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
     async ({ privateKey }, bag) => {
       const normalizedKey = privateKey.toUpperCase().replace(/\s/g, '')
       if (normalizedKey !== base64ToHex(owner.privateKey)) {
-        bag.setFieldError(
-          'privateKey',
-          'Der Schlüssel stimmt nicht. Bitte nochmal überprüfen. Leerzeichen und Groß- und Kleinschreibung spielen keine Rolle.'
-        )
+        bag.setFieldError('privateKey', t('privateKeyFieldError'))
       } else {
         await commitSetupPublicKey(queryClient, owner)
         router
@@ -32,36 +30,33 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
           .then(() => window.scrollTo(0, 0))
       }
     },
-    [router, owner, queryClient]
+    [router, owner, queryClient, t]
   )
 
   return (
     <MobileApp>
       <Head>
-        <title key="title">
-          {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
-        </title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Schlüssel bestätigen
+        {t('headline')}
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
         <KeyPaper />
       </Row>
       <Box height={6} />
-      <Text>
-        {isFormal
-          ? 'Geben Sie den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
-          : 'Gib den Schlüssel nun erneut ein. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
-      </Text>
+      <Text>{t('giveKeyMessage')}</Text>
       <Box height={4} />
       <Text>
-        Zur Erinnerung: {isFormal ? 'Ihr' : 'Dein'} Schlüssel ist{' '}
-        <strong>{base64ToHex(owner.setupPublicKey).length} Zeichen</strong>{' '}
-        lang. Er beinhaltet nur Zahlen von <strong>0 bis 9</strong> und
-        Buchstaben von
-        <strong> A bis F</strong>.
+        {t('reminderMessage1')}{' '}
+        <strong>
+          {base64ToHex(owner.setupPublicKey).length}{' '}
+          {t('reminderMessage2Characters')}
+        </strong>{' '}
+        {t('reminderMessage3')} <strong>{t('reminderMessage4Numbers')}</strong>{' '}
+        {t('reminderMessage5')}{' '}
+        <strong>{t('reminderMessage6Characters')}</strong>.
       </Text>
       <Box height={6} />
 
@@ -74,21 +69,18 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
             type="submit"
             css={{ width: '100%' }}
           >
-            Schlüssel prüfen
+            {t('testKeyButtonText')}
           </Button>
         </Form>
       </Formik>
       <Box height={8} />
-      <Text>
-        {isFormal ? 'Sie können' : 'Du kannst'} auch nochmal zurück gehen und
-        den Schlüssel erneut sehen.
-      </Text>
+      <Text>{t('reviewKeyReminder')}</Text>
       <Box height={4} />
       <ButtonLink
         href="/business/setup/keys"
         left={<ArrowsLeft color="bluegrey.300" />}
       >
-        zurück
+        {t('backLinkText')}
       </ButtonLink>
     </MobileApp>
   )
