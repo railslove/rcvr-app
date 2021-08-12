@@ -1,26 +1,42 @@
-const nextTranslate = require('next-translate')
+const withImages = require('next-images')
+const withTranslate = require('next-translate')
+
 const localesDefaults = require('./locales/config.defaults.json')
 const { generateLocalesConfig } = require('./scripts/locales')
 
-module.exports = nextTranslate({
-  typescript: {
-    ignoreDevErrors: true,
-  },
-  i18n: {
-    ...localesDefaults,
-    localeDetection: true,
-  },
-  pageExtensions: ['tsx'],
-  webpack: (config, { isServer }) => {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    })
+module.exports = withTranslate(
+  withImages({
+    /**
+     * next-images
+     */
+    fileExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+    /**
+     * next-translate
+     */
+    i18n: {
+      ...localesDefaults,
+      localeDetection: true,
+    },
+    // needed to place locales under pages/ next to the page to be translated
+    pageExtensions: ['tsx'],
 
-    if (isServer) {
-      generateLocalesConfig()
-    }
+    /**
+     * rest
+     */
+    typescript: {
+      ignoreDevErrors: true,
+    },
+    webpack: (config, { isServer }) => {
+      config.module.rules.push({
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      })
 
-    return config
-  },
-})
+      if (isServer) {
+        generateLocalesConfig()
+      }
+
+      return config
+    },
+  })
+)
