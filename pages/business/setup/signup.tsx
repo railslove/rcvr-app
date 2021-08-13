@@ -1,21 +1,31 @@
-import { css } from '@emotion/react'
-import styled from '@emotion/styled'
-import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
-import * as React from 'react'
-import { useQueryClient } from 'react-query'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 import * as Yup from 'yup'
-import { signup } from '~lib/actions'
-import { isCareEnv, isHealthEnv } from '~lib/config'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { createPasswordValidator } from '~lib/validators/passwordValidator'
-import { phoneValidator } from '~lib/validators/phoneValidator'
+import * as React from 'react'
+import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
+import { useQueryClient } from 'react-query'
+
 import useLocale from '~locales/useLocale'
+
+import { signup } from '~lib/actions'
+import { phoneValidator } from '~lib/validators/phoneValidator'
+import { isCareEnv, isHealthEnv } from '~lib/config'
+import { createPasswordValidator } from '~lib/validators/passwordValidator'
+
 import { Loading } from '~ui/blocks/Loading'
-import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
+
+export const InlineLink = styled('a')(
+  css({
+    color: '#226EEC',
+    textDecoration: 'underline',
+  })
+)
 
 const Avv: React.FC = () => {
   const { t } = useLocale('business/setup/signup')
@@ -243,12 +253,5 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
     </MobileApp>
   )
 }
-
-export const InlineLink = styled('a')(
-  css({
-    color: '#226EEC',
-    textDecoration: 'underline',
-  })
-)
 
 export default withOwner({ redirect: 'authorized' })(SetupSignupPage)
