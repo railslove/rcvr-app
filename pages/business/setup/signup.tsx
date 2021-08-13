@@ -7,39 +7,42 @@ import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { signup } from '~lib/actions'
-import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { isCareEnv, isHealthEnv } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { passwordValidator } from '~lib/validators/passwordValidator'
+import { createPasswordValidator } from '~lib/validators/passwordValidator'
 import { phoneValidator } from '~lib/validators/phoneValidator'
+import useLocale from '~locales/useLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
-import { signupText } from '~ui/whitelabels'
 import Avv from './avv'
 
-const LoginSchema = Yup.object().shape({
-  name: Yup.string().required('Name muss angegeben werden.'),
-  email: Yup.string().required('Email muss angegeben werden.'),
-  phone: phoneValidator,
-  street: Yup.string().required('Strasse muss angegeben werden.'),
-  zip: Yup.string().required('Postleitzahl muss angegeben werden.'),
-  city: Yup.string().required('Ort muss angegeben werden.'),
-  companyName: Yup.string().required('Unternehmensname muss angegeben werden.'),
-  password: passwordValidator,
-  confirmPassword: Yup.string()
-    .required('Passwordwiederholung muss angegeben werden.')
-    .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
-  confirmContract: Yup.bool().oneOf(
-    [true],
-    'Sie müssen dem Vertrag zustimmen.'
-  ),
-})
-
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
+  const { t } = useLocale('business/setup/signup')
+
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
   const queryClient = useQueryClient()
+
+  const LoginSchema = Yup.object().shape({
+    name: Yup.string().required(t('nameRequired')),
+    email: Yup.string().required(t('emailRequired')),
+    phone: phoneValidator,
+    street: Yup.string().required(t('streetRequired')),
+    zip: Yup.string().required(t('zipRequired')),
+    city: Yup.string().required(t('cityRequired')),
+    companyName: Yup.string().required(t('companyNameRequired')),
+    password: createPasswordValidator({
+      requiredText: t('passwordRequired'),
+      maxLengthText: t('passwordMaxLength'),
+      shouldMatchText: t('passwordShouldMatch'),
+    }),
+    confirmPassword: Yup.string()
+      .required(t('confirmPasswordRequired'))
+      .oneOf([Yup.ref('password'), null], t('passwordsDoNotMatch')),
+    confirmContract: Yup.bool().oneOf([true], t('confirmContractRequired')),
+  })
 
   const handleSubmit = async (
     { name, email, phone, street, zip, city, companyName, password },
@@ -64,7 +67,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
       router.replace('/business/setup/success')
     } catch (error) {
       if (error.response?.status === 422) {
-        bag.setFieldError('email', 'Diese Email ist bereits registriert.')
+        bag.setFieldError('email', t('emailRegisteredError'))
       } else {
         throw error
       }
@@ -76,17 +79,17 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">Account erstellen | recover</title>
+        <title key="title">{t('title')} | recover</title>
       </Head>
       <Text as="h3" variant="h3">
-        Account erstellen (1/3)
+        {t('title')} (1/3)
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
         <PersonalData />
       </Row>
       <Box height={6} />
-      <Text>{signupText}</Text>
+      <Text>{t('signupText')}</Text>
       <Box height={6} />
       <Formik
         initialValues={{
@@ -108,60 +111,57 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
           <Card variant="form" mx={-4}>
             <Loading show={loading} />
             <Text as="h2" variant="h2">
-              1. Persönliche Angaben
+              1. {t('headline')}
             </Text>
             <Box height={4} />
             <Form>
-              <Input name="name" label={isFormal ? 'Ihr Name' : 'Dein Name'} />
+              <Input name="name" label={t('nameLabel')} />
               <Box height={4} />
-              <Input
-                name="companyName"
-                label={
-                  isFormal
-                    ? 'Name Ihres Unternehmens'
-                    : 'Name deines Unternehmens'
-                }
-              />
+              <Input name="companyName" label={t('companyNameLabel')} />
               <Box height={4} />
               <Input
                 name="phone"
-                label={isFormal ? 'Ihre Telefonnummer' : 'Deine Telefonnummer'}
+                label={t('phoneLabel')}
                 type="tel"
                 autoComplete="tel"
               />
               <Box height={4} />
               <Input
                 name="street"
-                label={'Strasse und Hausnummer'}
+                label={t('streetLabel')}
                 autoComplete="street-address"
               />
               <Box height={4} />
               <Input
                 name="zip"
-                label={'Postleitzahl'}
+                label={t('zipLabel')}
                 autoComplete="postal-code"
               />
               <Box height={4} />
-              <Input name="city" label={'Ort'} autoComplete="address-level2" />
-              <Box height={8} />
-              <Input name="email" label="Email" autoComplete="email" />
-              <Box height={4} />
               <Input
-                name="password"
-                label="Passwort"
-                type="password"
-                autoComplete="new-password"
-                hint={
-                  values.password !== ''
-                    ? undefined
-                    : 'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
-                }
+                name="city"
+                label={t('cityLabel')}
+                autoComplete="address-level2"
+              />
+              <Box height={8} />
+              <Input
+                name="email"
+                label={t('emailLabel')}
+                autoComplete="email"
               />
               <Box height={4} />
               <Input
-                name="confirmPassword"
-                label="Passwort wiederholen"
+                hint={values.password !== '' ? undefined : t('passwordHint')}
                 type="password"
+                name="password"
+                label={t('passwordLabel')}
+                autoComplete="new-password"
+              />
+              <Box height={4} />
+              <Input
+                type="password"
+                name="confirmPassword"
+                label={t('passwordConfirmLabel')}
                 autoComplete="new-password"
               />
               {isCareEnv && (
@@ -171,16 +171,17 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                     name="confirmContract"
                     label={
                       <span>
-                        Ich akzeptiere den{' '}
-                        <InlineLink href="/VertragBFSCare.pdf" target="_blank">
-                          Nutzungsvertrag
-                        </InlineLink>{' '}
-                        und die{'  '}
+                        {t('termsOfUse1')}{' '}
                         <InlineLink
-                          href="https://www.recover-health.de/unser-pricing"
+                          href={t('termsOfUseContractLink')}
                           target="_blank"
                         >
-                          Preise
+                          {t('termsOfUseContractLinkText')}
+                        </InlineLink>{' '}
+                        {t('termsOfUse2')}
+                        {'  '}
+                        <InlineLink href={t('pricingLink')} target="_blank">
+                          {t('pricingLinkText')}
                         </InlineLink>
                       </span>
                     }
@@ -194,19 +195,16 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                     name="confirmContract"
                     label={
                       <span>
-                        Ich akzeptiere den{' '}
+                        {t('confirmContract1')}{' '}
                         <InlineLink
-                          href="/Nutzungsvertrag_recover-health.pdf"
+                          href={t('confirmContractLink')}
                           target="_blank"
                         >
-                          Nutzungsvertrag
+                          {t('confirmContractLinkText')}
                         </InlineLink>{' '}
                         und die{'  '}
-                        <InlineLink
-                          href="https://www.recover-health.de/unser-pricing"
-                          target="_blank"
-                        >
-                          Preise
+                        <InlineLink href={t('pricingLink')} target="_blank">
+                          {t('pricingLinkText')}
                         </InlineLink>
                       </span>
                     }
@@ -218,7 +216,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
               <Avv />
               <Box height={5} />
               <Button type="submit" css={{ width: '100%' }}>
-                Registrieren
+                {t('submitButtonText')}
               </Button>
             </Form>
           </Card>
