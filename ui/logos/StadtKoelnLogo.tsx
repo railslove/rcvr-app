@@ -9,7 +9,7 @@ const StadtKoelnLogo: React.FC<StadtKoelnLogoProps> = ({ scale = 1 }) => {
     <img
       alt="stadt-koeln-logo"
       src={require('./img/stadt-koeln-logo.png')}
-      height={`${25 * scale}px`}
+      height={`${20 * scale}px`}
     />
   )
 }
