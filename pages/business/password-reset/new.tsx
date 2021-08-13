@@ -5,23 +5,28 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import * as Yup from 'yup'
 import { postResetPassword } from '~lib/api'
-import { isFormal } from '~lib/config'
-import { passwordValidator } from '~lib/validators/passwordValidator'
+import { createPasswordValidator } from '~lib/validators/passwordValidator'
+import useLocale from '~locales/useLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-const PasswordSchema = Yup.object().shape({
-  password: passwordValidator,
-  passwordConfirmation: Yup.string()
-    .required('Passwortbestätigung muss angegeben werden.')
-    .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
-})
-
 export default function PasswordResetNewPage() {
+  const { t } = useLocale('business/password-reset/new')
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
+
+  const PasswordSchema = Yup.object().shape({
+    password: createPasswordValidator({
+      requiredText: t('passwordRequired'),
+      maxLengthText: t('passwordMaxLength'),
+      shouldMatchText: t('passwordShouldMatch'),
+    }),
+    passwordConfirmation: Yup.string()
+      .required(t('passwordConfirmationRequired'))
+      .oneOf([Yup.ref('password'), null], t('passwordsAreNotEqual')),
+  })
 
   const handleSubmit = async ({ password }) => {
     setLoading(true)
@@ -31,9 +36,7 @@ export default function PasswordResetNewPage() {
       .then(() => router.replace('/business/login'))
       .catch((e) => {
         setError(
-          e.response.status === 404
-            ? 'Leider ist der Link abgelaufen. Bitte fordere einen neuen Link an.'
-            : 'Etwas ist schiefgegangen. Bitte versuch es erneut.'
+          e.response.status === 404 ? t('loginError404') : t('loginError')
         )
         setLoading(false)
       })
@@ -42,18 +45,14 @@ export default function PasswordResetNewPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">Passwort Zurücksetzen | recover</title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Passwort Zurücksetzen
+        {t('pageHeadline')}
       </Text>
       <Box height={4} />
       <Text>
-        <p>
-          {isFormal
-            ? 'Bitte gib ein neues Passwort an mit dem du Dich von jetzt an anmelden kannst.'
-            : 'Bitte geben Sie ein neues Passwort an mit dem Sie sich von jetzt an anmelden können'}
-        </p>
+        <p>{t('pageExplanation')}</p>
       </Text>
       <Box height={4} />
 
@@ -76,26 +75,24 @@ export default function PasswordResetNewPage() {
             <Loading show={loading} />
             <Form>
               <Input
-                name="password"
-                label="Passwort"
                 type="password"
-                autoComplete="new-password"
+                name="password"
                 hint={
-                  values.password !== ''
-                    ? undefined
-                    : 'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
+                  values.password !== '' ? undefined : t('passwordInputHint')
                 }
+                label={t('passwordInputLabel')}
+                autoComplete="new-password"
               />
               <Box height={4} />
               <Input
                 name="passwordConfirmation"
-                label="Passwort Wiederholen"
                 type="password"
+                label={t('passwordConfirmationInputLabel')}
                 autoComplete="new-password"
               />
               <Box height={5} />
               <Button type="submit" css={{ width: '100%' }}>
-                Passwort Zurücksetzen
+                {t('passwordResetButtonText')}
               </Button>
             </Form>
           </Card>
@@ -104,7 +101,7 @@ export default function PasswordResetNewPage() {
 
       <Row justifyContent="center" my={6}>
         <Link href="/business/login" as="a" passHref>
-          <Text variant="link">Zum login</Text>
+          <Text variant="link">{t('loginLinkText')}</Text>
         </Link>
       </Row>
     </MobileApp>
