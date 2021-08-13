@@ -18,8 +18,11 @@ import { QrInfoModal } from '~ui/modals/QrInfoModal'
 import { AreaRes, CompanyRes } from '~lib/api'
 import { decrypt } from '~lib/crypto'
 import { sortAreas } from '~lib/interactors'
+import useLocale from '~locales/useLocale'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = useLocale('business/company/[companyId]/area/index')
+
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)
@@ -70,7 +73,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
   }
 
   return (
-    <OwnerApp title={`${company?.name ?? ''} – Bereiche`}>
+    <OwnerApp title={`${company?.name ?? ''} – ${t('areas')}`}>
       <BackLink
         href="/business/company/[companyId]"
         as={`/business/company/${companyId}`}
@@ -80,7 +83,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
       {modals}
       <ActionList>
         <AddCard
-          title="Bereich hinzufügen..."
+          title={t('addArea')}
           onClick={() => openModal('data', { companyId: companyId })}
         />
         {sortAreas(company?.areas).map((area) => (
@@ -94,12 +97,13 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <IconButton
                 icon={Download}
                 color="bluegrey.700"
+                title={t('downloadAreaIconTitle')}
                 onClick={handleDownload(area)}
-                title="QR-Code"
               />
               <IconButton
                 icon={Edit}
                 color="yellow.500"
+                title={t('editAreaIconTitle')}
                 onClick={() =>
                   openModal('data', {
                     type: 'edit',
@@ -108,11 +112,11 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
                     testExemption: area.testExemption,
                   })
                 }
-                title="Ändern"
               />
               <IconButton
                 icon={Trash}
                 color="red.500"
+                title={t('deleteAreaIconTitle')}
                 onClick={() => openModal('delete')}
               />
             </ActionCard.Actions>
