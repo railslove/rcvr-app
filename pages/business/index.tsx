@@ -37,7 +37,7 @@ export default function BusinessIndexPage() {
           left={<ArrowsRight color="green" />}
           right={<ArrowsLeft color="green" />}
         >
-          Registrieren
+          {t('register')}
         </ButtonLink>
       </Card>
       <Box height={4} />

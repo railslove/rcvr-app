@@ -16,7 +16,24 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
-import Avv from './avv'
+
+const Avv: React.FC = () => {
+  const { t } = useLocale('business/setup/signup')
+
+  return (
+    <Text variant="fineprint">
+      <p>
+        {t('avvMessage1')}{' '}
+        <a href={t('avvPrivacyPolicyLink')}>{t('avvPrivacyPolicyText')}</a>{' '}
+        {t('avvMessage2')}{' '}
+        <a href={t('avvLink')} target="_blank" rel="noopener noreferrer">
+          {t('avvLinkText')}
+        </a>{' '}
+        {t('avvMessage3')}.
+      </p>
+    </Text>
+  )
+}
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const { t } = useLocale('business/setup/signup')
@@ -202,7 +219,8 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
                         >
                           {t('confirmContractLinkText')}
                         </InlineLink>{' '}
-                        und die{'  '}
+                        {t('confirmContract2')}
+                        {'  '}
                         <InlineLink href={t('pricingLink')} target="_blank">
                           {t('pricingLinkText')}
                         </InlineLink>

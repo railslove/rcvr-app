@@ -21,6 +21,7 @@ const en: typeof indexDe = {
     'Manage your establishments, print QR codes and see current checkins here',
 
   login: 'Login',
+  register: 'Register',
 }
 
 export default en

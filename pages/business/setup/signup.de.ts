@@ -1,4 +1,11 @@
-import { isFormal, isRcvrEnv } from '~lib/config'
+import {
+  isCareEnv,
+  isFormal,
+  isFreseniusEnv,
+  isHealthEnv,
+  isRcvrEnv,
+} from '~lib/config'
+import { privacyUrl } from '~ui/whitelabels'
 
 export default {
   title: 'Account erstellen',
@@ -47,8 +54,30 @@ export default {
   pricingLinkText: 'Preise',
 
   confirmContract1: 'Ich akzeptiere den',
+  confirmContract2: 'und die',
   confirmContractLink: '/Nutzungsvertrag_recover-health.pdf',
   confirmContractLinkText: 'Nutzungsvertrag',
+
+  avvMessage1: `Mit dem Betätigen des Buttons ${
+    isFormal ? 'erklären Sie sich' : 'erkläre ich mich'
+  } mit den`,
+
+  avvPrivacyPolicyLink: isFreseniusEnv
+    ? privacyUrl
+    : 'https://railslove.com/privacy/',
+
+  avvPrivacyPolicyText: 'Datenschutzbestimmungen',
+
+  avvMessage2: 'sowie der',
+  avvMessage3: 'einverstanden',
+
+  avvLink: isCareEnv
+    ? '/avv/2021_AVV_recover.care.pdf'
+    : isHealthEnv
+    ? '/avv/AVV_recover.health.pdf'
+    : '/avv/AVV_recover.pdf',
+
+  avvLinkText: 'Auftragsverarbeitungsvereinbarung',
 
   submitButtonText: 'Registrieren',
 }

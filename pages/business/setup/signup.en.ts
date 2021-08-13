@@ -1,5 +1,12 @@
-import { isRcvrEnv, isFormal } from '~lib/config'
+import {
+  isRcvrEnv,
+  isFormal,
+  isCareEnv,
+  isFreseniusEnv,
+  isHealthEnv,
+} from '~lib/config'
 import signupDe from '~pages/business/setup/signup.de'
+import { privacyUrl } from '~ui/whitelabels'
 
 const en: typeof signupDe = {
   title: 'Create account',
@@ -46,8 +53,30 @@ const en: typeof signupDe = {
   pricingLinkText: 'prices',
 
   confirmContract1: 'I accept the',
+  confirmContract2: 'and the',
   confirmContractLink: '/user-contract_recover-health.pdf',
   confirmContractLinkText: 'User contract',
+
+  avvMessage1: `By pressing the button ${
+    isFormal ? 'you aggree' : 'I agree'
+  } with the`,
+
+  avvPrivacyPolicyLink: isFreseniusEnv
+    ? privacyUrl
+    : 'https://railslove.com/privacy/',
+
+  avvPrivacyPolicyText: 'privacy policy',
+
+  avvMessage2: 'and the',
+  avvMessage3: 'agree',
+
+  avvLink: isCareEnv
+    ? '/avv/2021_AVV_recover.care.pdf'
+    : isHealthEnv
+    ? '/avv/AVV_recover.health.pdf'
+    : '/avv/AVV_recover.pdf',
+
+  avvLinkText: 'order processing agreement',
 
   submitButtonText: 'Register',
 }

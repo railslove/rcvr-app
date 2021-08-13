@@ -20,4 +20,5 @@ export default {
     'Hier können Sie ihre Einrichtungen verwalten, QR Codes ausdrucken und aktuelle Checkins sehen.',
 
   login: 'Einloggen',
+  register: 'Registrieren',
 }
