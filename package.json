@@ -11,7 +11,8 @@
     "typecheck": "tsc --noemit",
     "test": "cypress run",
     "cypress": "cypress",
-    "start:ci": "NODE_ENV=test next dev -- -p 4040"
+    "start:ci": "NODE_ENV=test next dev -- -p 4040",
+    "supportedBrowsers": "echo \"module.exports = $(browserslist-useragent-regexp --allowHigherVersions);\" > lib/supportedBrowsers.js"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
@@ -21,6 +22,7 @@
     "@styled-system/css": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
     "@zxing/library": "^0.18.6",
+    "browserslist-useragent-regexp": "^3.0.0",
     "camelcase-keys": "^6.2.2",
     "date-fns": "^2.22.1",
     "detect-browser": "^5.2.0",

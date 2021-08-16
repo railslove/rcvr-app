@@ -1,3 +1,13 @@
+const { readFileSync } = require('fs')
+const { join } = require('path')
+
+const browsersList = readFileSync(
+  join(__dirname, '.browserslistrc'),
+  'utf8'
+).split('\n')
+
+console.log(browsersList)
+
 module.exports = function (api) {
   api.cache(true)
 
@@ -8,10 +18,13 @@ module.exports = function (api) {
       {
         autoLabel: 'dev-only',
         labelFormat: '[local]',
+        'preset-env': {
+          targets: browsersList,
+        },
       },
     ],
   ]
-  const plugins = []
+  const plugins = ['@babel/plugin-proposal-object-rest-spread']
 
   return { presets, plugins }
 }
