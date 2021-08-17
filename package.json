@@ -55,7 +55,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.15.0",
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/eslint-plugin": "^11.2.0",
     "@svgr/webpack": "^5.5.0",
