@@ -2,7 +2,7 @@ const withImages = require('next-images')
 const withTranslate = require('next-translate')
 
 const localesDefaults = require('./locales/config.defaults.json')
-const { generateLocalesConfigAndTypes } = require('./scripts/locales')
+const { generateLocalesConfigAndTypes } = require('./locales/generate')
 
 generateLocalesConfigAndTypes()
 
@@ -29,7 +29,7 @@ module.exports = withTranslate(
       ignoreDevErrors: true,
     },
 
-    webpack(config) {
+    webpack(config, { isServer }) {
       config.module.rules.push({
         test: /\.svg$/,
         use: ['@svgr/webpack'],

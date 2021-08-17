@@ -6,6 +6,7 @@ exports = module.exports = {
   ...config,
 
   loadLocaleFrom(lang, ns) {
+    console.log('loading', lang, ns)
     return import(`${ns}.${lang}.ts`).then((m) => {
       const result = m.default
       return result

@@ -58,7 +58,6 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/eslint-plugin": "^11.2.0",
     "@svgr/webpack": "^5.5.0",
@@ -70,7 +69,6 @@
     "@types/styled-system": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
-    "babel-loader": "^8.2.2",
     "cypress": "^8.3.0",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.3.0",

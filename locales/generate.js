@@ -55,7 +55,7 @@ function generateLocalesConfigAndTypes() {
     .reduce((acc, el) => {
       return {
         ...acc,
-        [el]: `typeof import('../../pages/${el}.de').default`,
+        [el]: `typeof import('../../${el}.de').default`,
       }
     }, {})
 
