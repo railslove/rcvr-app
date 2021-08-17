@@ -3,11 +3,11 @@ import { Card, Row, Text, Icon, Box } from '~ui/core'
 import { Add } from '~ui/svg'
 
 interface Props {
-  title?: string
+  title: string
 }
 type AC = React.FC<JSX.IntrinsicElements['button'] & Props>
 
-export const AddCard: AC = ({ title = 'Hinzufügen', ...rest }) => {
+export const AddCard: AC = ({ title, ...rest }) => {
   return (
     <button {...rest} css={{ textAlign: 'left' }}>
       <Card>
