@@ -1,7 +1,9 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { Card, SRText, Row, Text, Box, Icon } from '~ui/core'
-import useLocaleAsync from '~locales/useLocaleAsync'
+
+import useLocaleObject from '~locales/useLocaleObject'
+import ActionCardLocales from '~ui/blocks/ActionCard/ActionCard.locales'
 
 interface Props {
   href?: string
@@ -19,7 +21,7 @@ interface Composition {
 type AreaCardCmps = React.FC<Props> & Composition
 
 export const ActionCard: AreaCardCmps = ({ href, as, onClick, children }) => {
-  const { t } = useLocaleAsync('ui/blocks/ActionCard')
+  const { t } = useLocaleObject(ActionCardLocales)
 
   return (
     <Card

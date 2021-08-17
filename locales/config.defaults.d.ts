@@ -1,4 +1,4 @@
-export type SupportedLanguage = 'en' | 'de' | 'pl'
+export type SupportedLanguage = 'en' | 'de'
 
 type LocalesConfigDefaults = {
   locales: SupportedLanguage[]
