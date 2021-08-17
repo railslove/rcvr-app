@@ -52,6 +52,7 @@ blocks:
         commands:
           - checkout --use-cache
           - cache restore
+          - npm run update-supported-browsers
       jobs:
         - name: lint
           commands:
