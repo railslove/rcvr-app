@@ -63,7 +63,7 @@ export const AutoDataRequestModal: React.FC<MProps> = ({
           <Input
             name="reason"
             label="Grund für die Abfrage"
-            hint="z.B. Namen und Dienstausweisnummer vom Mitarbeiter"
+            hint="z.B. Name des/r Mitarbeiters:in"
             autoFocus
           />
           <Box height={4} />

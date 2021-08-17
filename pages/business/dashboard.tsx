@@ -36,7 +36,6 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
           <CompanyCard
             key={company.id}
             company={company}
-            menuAlias={owner.menuAlias}
             onEdit={() =>
               owner.privateKey
                 ? openModal('data', {
