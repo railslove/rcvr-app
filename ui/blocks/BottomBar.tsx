@@ -10,9 +10,11 @@ import { privacyUrl, secondaryHighlightColor } from '~ui/whitelabels'
 import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Lock, Ticket, Virus } from '~ui/svg'
+import useLocaleAsync from '~locales/useLocaleAsync'
 
-export const BottomBar: React.FC<Record<string, never>> = () => {
+export const BottomBar: React.FC = () => {
   const { route } = useRouter()
+  const { t } = useLocaleAsync('ui/blocks/BottomBar')
 
   return (
     <Row>
@@ -21,7 +23,7 @@ export const BottomBar: React.FC<Record<string, never>> = () => {
           <Lock css={{ marginTop: '-2px' }} />
         </Circle>
         <Text variant="fineprint" fontWeight="semibold">
-          Datenschutz
+          {t('dataPrivacyTabText')}
         </Text>
       </Tab>
       <Link href="/my-checkins" passHref>
@@ -52,7 +54,7 @@ export const BottomBar: React.FC<Record<string, never>> = () => {
             <Virus />
           </Circle>
           <Text variant="fineprint" fontWeight="semibold">
-            Corona
+            {t('coronaTabText')}
           </Text>
         </Tab>
       </Link>
@@ -60,11 +62,13 @@ export const BottomBar: React.FC<Record<string, never>> = () => {
   )
 }
 
-interface Props {
+export type FixedBottomBarProps = {
   transparent?: boolean
 }
 
-export const FixedBottomBar: React.FC<Props> = ({ transparent }) => {
+export const FixedBottomBar: React.FC<FixedBottomBarProps> = ({
+  transparent,
+}) => {
   return (
     <>
       <Box height={16} />

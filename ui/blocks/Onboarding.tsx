@@ -2,9 +2,10 @@ import { Form, Formik } from 'formik'
 import * as React from 'react'
 import * as Yup from 'yup'
 import { AreaRes } from '~lib/api'
-import { isCareEnv, isFormal } from '~lib/config'
+import { isCareEnv } from '~lib/config'
 import { Guest, GuestHealthDocumentEnum } from '~lib/db'
 import { phoneValidator } from '~lib/validators/phoneValidator'
+import useLocaleAsync from '~locales/useLocaleAsync'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Button, Checkbox, Radio, Input, Text } from '~ui/core'
 
@@ -23,8 +24,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   prefilledGuest,
   hideRememberMe,
   onAbort,
-  submitButtonValue = 'Check in',
+  submitButtonValue,
 }) => {
+  const { t } = useLocaleAsync('ui/blocks/Onboarding')
+
   const initialValues = {
     name: prefilledGuest?.name || '',
     phone: prefilledGuest?.phone || '',
@@ -37,31 +40,26 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   if (isCareEnv) initialValues['resident'] = ''
 
   const yupShape = {
-    name: Yup.string().required('Name muss angegeben werden.'),
+    name: Yup.string().required(t('nameRequired')),
     phone: phoneValidator,
-    address: Yup.string().required('Adresse muss angegeben werden.'),
-    postalCode: Yup.string().required('Postleitzahl muss angegeben werden.'),
-    city: Yup.string().required('Ort muss angegeben werden.'),
+    address: Yup.string().required(t('addressRequired')),
+    postalCode: Yup.string().required(t('zipRequired')),
+    city: Yup.string().required(t('cityRequired')),
     rememberMe: Yup.boolean(),
   }
 
   if (area.companyNeedToShowCoronaTest && !area.testExemption)
     yupShape['providedHealthDocument'] = Yup.string().required(
-      isFormal
-        ? 'Sie müssen entweder getestet, genesen oder geimpft sein.'
-        : 'Du musst entweder getestet, genesen oder geimpft sein.'
+      t('healthDocRequired')
     )
 
   if (isCareEnv)
-    yupShape['resident'] = Yup.string().required(
-      'Bewohnername muss angegeben werden.'
-    )
+    yupShape['resident'] = Yup.string().required(t('residentRequired'))
 
   const OnboardingSchema = Yup.object().shape(yupShape)
-  const provide_test_label =
-    'Getestet: Ich bestätige ein negatives, nicht länger als ' +
-    area.companyNeedToShowCoronaTest +
-    ' Stunden zurückliegendes, Testergebnis vorliegen zu haben und dieses im Prüffall vorweisen zu können.'
+  const provide_test_label = `${t('provideTestLabel1')} ${
+    area.companyNeedToShowCoronaTest
+  } ${t('provideTestLabel2')}.`
 
   return (
     <div>
@@ -79,21 +77,25 @@ export const Onboarding: React.FC<OnboardingProps> = ({
           <Box height={4} />
           <Input
             name="address"
-            label="Anschrift (Straße und Hausnummer)"
+            label={t('addressInputLabel')}
             autoComplete="street-address"
           />
           <Box height={4} />
           <Input
             name="postalCode"
-            label="Postleitzahl"
+            label={t('zipInputLabel')}
             autoComplete="postal-code"
           />
           <Box height={4} />
-          <Input name="city" label="Ort" autoComplete="address-level2" />
+          <Input
+            name="city"
+            label={t('cityInputLabel')}
+            autoComplete="address-level2"
+          />
           {isCareEnv && (
             <>
               <Box height={4} />
-              <Input name="resident" label="Bewohnername" />
+              <Input name="resident" label={t('residentInputLabel')} />
             </>
           )}
           {area.companyNeedToShowCoronaTest > 0 && !area.testExemption && (
@@ -107,13 +109,13 @@ export const Onboarding: React.FC<OnboardingProps> = ({
               />
               <Radio
                 name="providedHealthDocument"
-                label="Genesen: Ich bestätige eine Dokumentation über meine Genesung von einer Corona-Erkrankung vorweisen zu können und diese im Prüffall vorweisen zu können."
+                label={`${t('hadCoronaInputLabel')}.`}
                 value={GuestHealthDocumentEnum.hadCorona}
                 hideError={true}
               />
               <Radio
                 name="providedHealthDocument"
-                label="Geimpft: Ich bestätige eine Dokumentation (Impfpass) über meine Impfung gegen eine Infektion mit dem Coronavirus vorweisen zu können und diese im Prüffall vorweisen zu können."
+                label={`${t('vaccinatedInputLabel')}.`}
                 value={GuestHealthDocumentEnum.vaccinated}
               />
             </>
@@ -121,10 +123,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
           {hideRememberMe || (
             <>
               <Box height={3} />
-              <Checkbox
-                name="rememberMe"
-                label="Daten auf meinem Handy speichern"
-              />
+              <Checkbox name="rememberMe" label={t('rememberMeInputLabel')} />
             </>
           )}
           <Box height={5} />
@@ -135,22 +134,18 @@ export const Onboarding: React.FC<OnboardingProps> = ({
             right={<ArrowsLeft color="green" />}
             dataAttributes={{ 'wfd-action': 'check-in' }}
           >
-            {submitButtonValue}
+            {submitButtonValue || t('submitButtonFallbackText')}
           </Button>
           {onAbort && (
             <>
               <Box height={3} />
               <Button css={{ width: '100%' }} onClick={onAbort}>
-                Abbrechen
+                ({t('abortButtonText')})
               </Button>
             </>
           )}
           <Box height={6} />
-          <Text variant="fineprint">
-            Mit dem betätigen des Buttons erkläre ich mich einverstanden, dass
-            meine Daten zur Erfüllung der Verpflichtung der Hygiene- und
-            Infektionsschutzstandards für 4 Wochen gespeichert werden.
-          </Text>
+          <Text variant="fineprint">{t('aggreeFineprint')}</Text>
         </Form>
       </Formik>
     </div>
