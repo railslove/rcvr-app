@@ -2,9 +2,10 @@ import { Form, Formik } from 'formik'
 import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
-import { hexToBase64 } from '~lib/crypto'
+import { hexToBase64, validatePrivateKey } from '~lib/crypto'
 import { updateOwner } from '~lib/db'
 import { readTextFile } from '~lib/file'
+import { useOwner } from '~lib/hooks'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { Box, Button, FileInput, Input, Text } from '~ui/core'
 
@@ -57,6 +58,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
 }) => {
   const [loading, setLoading] = React.useState(false)
   const queryClient = useQueryClient()
+  const { data: owner } = useOwner()
 
   const handleSubmit = React.useCallback(
     async (values, bag) => {
@@ -69,12 +71,20 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         }
         setLoading(true)
         const privateKey = hexToBase64(hexPrivateKey)
-        await updateOwner({ id: ownerId, privateKey })
-        queryClient.invalidateQueries('owner')
-        baseProps.onClose()
+
+        if (validatePrivateKey(owner.publicKey, privateKey)) {
+          await updateOwner({ id: ownerId, privateKey })
+          queryClient.invalidateQueries('owner')
+          baseProps.onClose()
+        } else {
+          bag.setFieldError(
+            'textPrivateKey',
+            'Dein privater Schlüssel ist nicht korrekt.'
+          )
+        }
       } catch (error) {
         bag.setFieldError(
-          'hexPrivateKey',
+          'textPrivateKey',
           'Dein privater Schlüssel konnte nicht eingelesen werden. Bitte kontrolliere ihn nochmal. ' +
             error.toString()
         )
