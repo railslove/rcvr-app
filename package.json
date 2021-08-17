@@ -62,7 +62,7 @@
     "@types/file-saver": "^2.0.3",
     "@types/iban": "0.0.32",
     "@types/node": "^15.6.1",
-    "@types/qrcode": "^1.4.0",
+    "@types/qrcode": "^1.4.1",
     "@types/react": "17.0.18",
     "@types/styled-system": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
