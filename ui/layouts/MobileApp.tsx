@@ -15,6 +15,9 @@ import {
   logoSmallHeight,
 } from '~ui/whitelabels'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
+import LanguageSwitcher from '~ui/blocks/LanguageSwitcher'
+import StadtKoelnLogo from '~ui/logos/StadtKoelnLogo'
+import { useOwner } from '~lib/hooks'
 
 interface Props {
   children: React.ReactNode
@@ -27,25 +30,36 @@ export const MobileApp: React.FC<Props> = ({
   logoVariant = 'small',
   secondaryLogo = null,
 }) => {
+  const owner = useOwner()
+
   return (
-    <Limit>
-      <Head>
-        <title key="title">{pageTitle}</title>
-      </Head>
-      <SharedMeta />
-      <LogoContainer variant={logoVariant}>
-        <LogoBox variant={logoVariant} layoutId="appLogo">
-          <Logo />
-        </LogoBox>
-        {secondaryLogo ? (
-          <SecondaryLogoBox>
-            <SecondaryLogo src={secondaryLogo} />
-          </SecondaryLogoBox>
-        ) : null}
-      </LogoContainer>
-      <Box height={logoVariant === 'sticky' ? 10 : 4} />
-      {children}
-    </Limit>
+    <>
+      <Limit>
+        <Head>
+          <title key="title">{pageTitle}</title>
+        </Head>
+        <SharedMeta />
+        <Box display="flex" justifyContent="flex-end">
+          <LanguageSwitcher />
+        </Box>
+        <Box height={4} />
+        <Box display="flex" alignItems="center">
+          <LogoContainer variant={logoVariant}>
+            <LogoBox variant={logoVariant} layoutId="appLogo">
+              <Logo />
+            </LogoBox>
+            {secondaryLogo ? (
+              <SecondaryLogoBox>
+                <SecondaryLogo src={secondaryLogo} />
+              </SecondaryLogoBox>
+            ) : null}
+          </LogoContainer>
+          {owner.data.affiliate ? <StadtKoelnLogo /> : null}
+        </Box>
+        <Box height={logoVariant === 'sticky' ? 10 : 4} />
+        {children}
+      </Limit>
+    </>
   )
 }
 

@@ -3,7 +3,6 @@ import Head from 'next/head'
 import * as React from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { checkout } from '~lib/actions'
-import { isCareEnv } from '~lib/config'
 import { Checkin } from '~lib/db'
 import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
 import { FixedBottomBar } from '~ui/blocks/BottomBar'
@@ -14,8 +13,12 @@ import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
+import useLocale from '~locales/useLocale'
+
 export default function MyCheckinsPage() {
+  const { t } = useLocale('pages/my-checkins')
   const checkinsInfo = useCheckins()
+
   const [isLoading, setIsLoading] = useDelayedLoading(false)
   const mutation = useMutation(checkout)
   const queryClient = useQueryClient()
@@ -77,9 +80,7 @@ export default function MyCheckinsPage() {
       {checkinsInfo.status === 'success' && checkinsInfo.data.length === 0 && (
         <Box my={10}>
           <Text variant="h2" as="h2" color="bluegrey.500" textAlign="center">
-            {isCareEnv
-              ? 'Sie haben noch keine Checkins'
-              : 'Du hast noch keine Checkins.'}
+            {t('noCheckinsYet')}
           </Text>
         </Box>
       )}
@@ -112,17 +113,11 @@ export default function MyCheckinsPage() {
                     <Callout variant="danger">
                       <Text>
                         {mutation.error instanceof TypeError ? (
-                          <p>
-                            Wir konnten Dich nicht auschecken. Hast du
-                            vielleicht gerade kein Internet?
-                          </p>
+                          <p>{t('couldNotCheckinNoInternet')}</p>
                         ) : (
-                          <p>Wir konnten Dich nicht auschecken.</p>
+                          <p>{t('couldNotCheckin')}</p>
                         )}
-                        <p>
-                          Sollte das Problem weiterhin bestehen, keine Sorge:
-                          wir checken Dich später automatisch aus.
-                        </p>
+                        <p>{t('couldNotCheckinWellCheckYouOut')}</p>
                       </Text>
                     </Callout>
                   )}
