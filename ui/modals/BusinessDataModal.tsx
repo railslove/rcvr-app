@@ -139,7 +139,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [type, baseProps, company, queryClient]
+    [type, baseProps, company, queryClient, owner.publicKey]
   )
 
   const prefilledWithWhenNew = (value, prefilledValue) => {
