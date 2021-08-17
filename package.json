@@ -63,10 +63,10 @@
     "@types/iban": "0.0.32",
     "@types/node": "^15.6.1",
     "@types/qrcode": "^1.4.0",
-    "@types/react": "17.0.8",
+    "@types/react": "17.0.18",
     "@types/styled-system": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
-    "@typescript-eslint/parser": "^4.25.0",
+    "@typescript-eslint/parser": "^4.29.2",
     "babel-loader": "^8.2.2",
     "cypress": "^7.4.0",
     "eslint": "^7.27.0",
@@ -78,7 +78,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.3.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.5"
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
