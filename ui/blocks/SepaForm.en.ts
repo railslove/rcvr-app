@@ -1,6 +1,11 @@
 import de from '~ui/blocks/SepaForm.de'
 
 const en: typeof de = {
+  ibanInvalid: 'IBAN is invalid',
+  ibanRequired: 'IBAN must be specified',
+  nameRequired: 'Account holder must be specified',
+  emailRequired: 'Email must be specified.',
+
   ibanInputLabel: 'IBAN',
   nameInputLabel: 'Account holder',
   emailInputLabel: 'Email',

@@ -7,16 +7,16 @@ import * as Yup from 'yup'
 import IBAN from 'iban'
 import useLocaleAsync from '~locales/useLocaleAsync'
 
-const SepaSchema = Yup.object().shape({
-  name: Yup.string().required('Kontoinhaber muss angegeben werden.'),
-  email: Yup.string().required('Email muss angegeben werden.'),
-  iban: Yup.string()
-    .test('iban-valid', 'IBAN ist ungültig', (value) => IBAN.isValid(value))
-    .required('IBAN muss angegeben werden.'),
-})
-
 export default function SepaForm({ onSubmit, disabled }) {
   const { t } = useLocaleAsync('ui/blocks/SepaForm')
+
+  const SepaSchema = Yup.object().shape({
+    name: Yup.string().required(t('nameRequired')),
+    email: Yup.string().required(t('emailRequired')),
+    iban: Yup.string()
+      .test('iban-valid', t('ibanInvalid'), (value) => IBAN.isValid(value))
+      .required(t('ibanRequired')),
+  })
 
   return (
     <Formik

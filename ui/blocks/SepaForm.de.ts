@@ -1,4 +1,9 @@
 export default {
+  ibanInvalid: 'IBAN ist ungültig',
+  ibanRequired: 'IBAN muss angegeben werden.',
+  nameRequired: 'Kontoinhaber muss angegeben werden.',
+  emailRequired: 'Email muss angegeben werden.',
+
   ibanInputLabel: 'IBAN',
   nameInputLabel: 'Kontoinhaber',
   emailInputLabel: 'E-Mail',
