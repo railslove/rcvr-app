@@ -6,7 +6,7 @@ import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import useLocale from '~locales/useLocale'
 import { DataList, DataListItem } from '~ui/blocks/DataList'
 import { Box, Text } from '~ui/core'
-import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
+import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp/OwnerApp'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
   const { t } = useLocale('pages/business/company/[companyId]/area/[areaId]')

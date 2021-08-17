@@ -5,7 +5,7 @@ import useLocale from '~locales/useLocale'
 
 import { useModals, useCompanies } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { OwnerApp } from '~ui/layouts/OwnerApp'
+import { OwnerApp } from '~ui/layouts/OwnerApp/OwnerApp'
 import { Box, Text } from '~ui/core'
 import { ActionList } from '~ui/blocks/ActionList'
 import { AddCard } from '~ui/blocks/AddCard'

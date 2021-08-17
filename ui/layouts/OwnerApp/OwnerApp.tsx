@@ -9,6 +9,7 @@ import * as React from 'react'
 import { CompanyRes, DataRequestRes } from '~lib/api'
 import { useCompanies, useModals, useOwner } from '~lib/hooks'
 import { useUnacceptedDataRequests } from '~lib/hooks/useUnacceptedDataRequests'
+import useLocaleAsync from '~locales/useLocaleAsync'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
@@ -23,8 +24,9 @@ interface Props {
 }
 
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
-  const { data: companies } = useCompanies()
+  const { t } = useLocaleAsync('ui/layouts/OwnerApp')
   const { data: owner } = useOwner()
+  const { data: companies } = useCompanies()
   const { data: unacceptedDataRequests } = useUnacceptedDataRequests()
   const router = useRouter()
 
@@ -86,10 +88,10 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
         <FetchingIndicator />
         <MobileMenu>
           <li>
-            <NavLink href="/business/dashboard">Betriebe</NavLink>
+            <NavLink href="/business/dashboard">{t('businesses')}</NavLink>
           </li>
           <li>
-            <NavLink href="/business/profile">Profil</NavLink>
+            <NavLink href="/business/profile">{t('profile')}</NavLink>
           </li>
         </MobileMenu>
       </Top>
@@ -97,7 +99,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
         <Aside>
           <ul>
             <li>
-              <NavLink href="/business/dashboard">Meine Betriebe</NavLink>
+              <NavLink href="/business/dashboard">
+                {t('dashboardLinkText')}
+              </NavLink>
             </li>
             {companies?.map((company) => (
               <li key={company.id}>
@@ -114,7 +118,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                       as={`/business/company/${company.id}/area`}
                       sub
                     >
-                      Bereiche
+                      {t('areasLinkText')}
                     </NavLink>
                   </li>
                   <li>
@@ -123,14 +127,14 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                       as={`/business/company/${company.id}/checkins`}
                       sub
                     >
-                      Checkins
+                      {t('checkInsLinkText')}
                     </NavLink>
                   </li>
                 </ul>
               </li>
             ))}
             <li>
-              <NavLink href="/business/profile">Mein Profil</NavLink>
+              <NavLink href="/business/profile">{t('profileLinkText')}</NavLink>
             </li>
           </ul>
         </Aside>
@@ -138,9 +142,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           {Object.keys(unacceptedDataRequests || {}).length > 0 && (
             <>
               <Callout variant="danger">
-                <Text>
-                  Dringend: Datenfreigabe für das Gesundheitsamt erforderlich!
-                </Text>
+                <Text>{t('dataReleaseRequiredText')}</Text>
                 <RequestList>
                   {Object.keys(unacceptedDataRequests).map(
                     (companyId: string) => {
@@ -171,19 +173,12 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
             <>
               <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
                 <Text>
-                  recover steht Dir aktuell bis&nbsp;
-                  {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')} in vollem Umfang
-                  zur Verfügung, dann hast du noch zwei Tage um die Bezahldaten
-                  anzugeben. Wenn Du recover nach dem{' '}
-                  {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
-                  nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
-                  Zahlungsinformationen zu bearbeiten.
+                  {t('ownerBlockAt1')}&nbsp;
+                  {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')}{' '}
+                  {t('ownerBlockAt2')} {formatDate(owner.blockAt, 'DD.MM.YYYY')}{' '}
+                  {t('ownerBlockAt3')}
                 </Text>
-                <Text>
-                  Selbstverständlich wirst Du weiter Zugriff auf Dein Konto
-                  haben, sowie Informationen zu alten Checkins anfordern und ans
-                  Gesundheitsamt weiterleiten können.
-                </Text>
+                <Text>{t('ownerBlockAt4')}</Text>
               </Callout>
               <Box height={6} />
             </>
@@ -194,9 +189,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                 <CloseButton onClose={closeHint} />
                 <Box height={2} />
                 <ol>
-                  <li>1. Betrieb anlegen</li>
-                  <li>2. Bereich in einem Betrieb anlegen</li>
-                  <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
+                  <li>1. {t('hint1')}</li>
+                  <li>2. {t('hint2')}</li>
+                  <li>3. {t('hint3')}</li>
                 </ol>
               </Callout>
               <Box height={6} />
@@ -205,18 +200,12 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           {companiesWithoutAddress?.length > 0 && (
             <>
               <Callout variant="danger">
-                <Text>
-                  Wichtiger Hinweis: Um im Corona-Positivfall Kontakte und
-                  Ereignisse zuordnen zu können, benötigt das Gesundheitsamt
-                  Angaben zum Standort Deiner Betriebe. Bitte trage noch bei
-                  allen Betrieben die Adresse nach. Diese ist mittlerweile eine
-                  Pflichtangabe. Vielen Dank!
-                </Text>
+                <Text>{t('noAddressMessage')}</Text>
                 <Box height={2} />
                 {companiesWithoutAddress.length > 1 ? (
-                  <Text>Bitte die folgenden Betriebe vervollständigen:</Text>
+                  <Text>{t('noAddressBusiness_many')}:</Text>
                 ) : (
-                  <Text>Bitte den folgenden Betrieb vervollständigen:</Text>
+                  <Text>{t('noAddressBusiness_one')}:</Text>
                 )}
                 <Box height={2} />
                 <UnorderedList>
