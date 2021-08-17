@@ -1,4 +1,4 @@
-import confirmationDe from '~ui/blocks/Confirmation.de'
+import confirmationDe from '~ui/blocks/Confirmation/locales/de'
 
 const en: typeof confirmationDe = {
   headline: 'Checkin only without symptoms',

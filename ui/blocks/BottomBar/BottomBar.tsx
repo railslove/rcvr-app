@@ -10,11 +10,13 @@ import { privacyUrl, secondaryHighlightColor } from '~ui/whitelabels'
 import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Lock, Ticket, Virus } from '~ui/svg'
-import useLocaleAsync from '~locales/useLocaleAsync'
+
+import useLocaleObject from '~locales/useLocaleObject'
+import bottomBarLocales from '~ui/blocks/BottomBar/BottomBar.locales'
 
 export const BottomBar: React.FC = () => {
   const { route } = useRouter()
-  const { t } = useLocaleAsync('ui/blocks/BottomBar')
+  const { t } = useLocaleObject(bottomBarLocales)
 
   return (
     <Row>

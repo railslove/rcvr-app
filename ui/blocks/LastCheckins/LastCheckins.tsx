@@ -9,13 +9,15 @@ import { generateCwaLink } from '~lib/cwa/generateCwaLink'
 import { Checkin } from '~lib/db'
 import { Guest } from '~lib/db/guest'
 import { useArea } from '~lib/hooks'
-import useLocaleAsync from '~locales/useLocaleAsync'
 import { ArrowsLeft, ArrowsRight, Check, Circle, Thumb } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
-import { Onboarding } from '~ui/blocks/Onboarding'
+import { Onboarding } from '~ui/blocks/Onboarding/Onboarding'
 import { Box, Button, ButtonLink, Text } from '~ui/core'
 import CwaLogo from '~ui/svg/logo-cwa.svg'
+
+import useLocaleObject from '~locales/useLocaleObject'
+import LastCheckinsLocales from '~ui/blocks/LastCheckins/LastCheckins.locales'
 
 interface Props {
   checkins: Checkin[]
@@ -25,7 +27,7 @@ interface Props {
 export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const [checkin] = checkins
 
-  const { t } = useLocaleAsync('ui/blocks/LastCheckins')
+  const { t } = useLocaleObject(LastCheckinsLocales)
   const area = useArea(checkins[0].areaId).data
   const checkedOut = !!checkin.leftAt
   const idRef = React.useRef<string>(uuidv4())

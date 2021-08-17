@@ -5,9 +5,11 @@ import { AreaRes } from '~lib/api'
 import { isCareEnv } from '~lib/config'
 import { Guest, GuestHealthDocumentEnum } from '~lib/db'
 import { phoneValidator } from '~lib/validators/phoneValidator'
-import useLocaleAsync from '~locales/useLocaleAsync'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Button, Checkbox, Radio, Input, Text } from '~ui/core'
+
+import useLocaleObject from '~locales/useLocaleObject'
+import OnboardingLocales from '~ui/blocks/Onboarding/Onboarding.locales'
 
 type OnboardingProps = {
   onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
@@ -26,7 +28,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   onAbort,
   submitButtonValue,
 }) => {
-  const { t } = useLocaleAsync('ui/blocks/Onboarding')
+  const { t } = useLocaleObject(OnboardingLocales)
 
   const initialValues = {
     name: prefilledGuest?.name || '',

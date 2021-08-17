@@ -1,4 +1,4 @@
-import keyViewerDe from '~ui/blocks/KeyViewer.de'
+import keyViewerDe from '~ui/blocks/KeyViewer/locales/de'
 
 const en: typeof keyViewerDe = {
   yourKeyIs: `Your key is`,

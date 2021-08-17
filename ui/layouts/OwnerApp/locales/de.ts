@@ -1,4 +1,4 @@
-export const de = {
+export default {
   profile: 'Profil',
   businesses: 'Betriebe',
   areasLinkText: 'Bereiche',

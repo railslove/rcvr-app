@@ -9,7 +9,7 @@ import * as React from 'react'
 import { CompanyRes, DataRequestRes } from '~lib/api'
 import { useCompanies, useModals, useOwner } from '~lib/hooks'
 import { useUnacceptedDataRequests } from '~lib/hooks/useUnacceptedDataRequests'
-import useLocaleAsync from '~locales/useLocaleAsync'
+
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
@@ -18,13 +18,16 @@ import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { Back } from '~ui/svg'
 import { Logo, pageTitle } from '~ui/whitelabels'
 
+import ownerAppLocales from './locales'
+import useLocaleObject from '~locales/useLocaleObject'
+
 interface Props {
   children: React.ReactNode
   title: React.ReactNode
 }
 
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
-  const { t } = useLocaleAsync('ui/layouts/OwnerApp')
+  const { t } = useLocaleObject(ownerAppLocales)
   const { data: owner } = useOwner()
   const { data: companies } = useCompanies()
   const { data: unacceptedDataRequests } = useUnacceptedDataRequests()

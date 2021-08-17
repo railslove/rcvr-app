@@ -1,6 +1,12 @@
+const de = {
+  navigateToSite: 'Zur Seite navigieren',
+}
+
+const en = {
+  navigateToSite: 'Navigate to site',
+}
+
 export default {
-  navigateToSite: {
-    de: 'Zur Seite navigieren',
-    en: 'Navigate to site',
-  },
+  de,
+  en,
 }

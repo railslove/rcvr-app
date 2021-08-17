@@ -1,4 +1,4 @@
-import de from '~ui/blocks/LastCheckins.de'
+import de from '~ui/blocks/LastCheckins/locales/de'
 
 const en: typeof de = {
   header: 'Welcome',

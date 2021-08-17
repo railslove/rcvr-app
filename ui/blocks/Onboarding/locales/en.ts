@@ -1,4 +1,4 @@
-import de from '~ui/blocks/Onboarding.de'
+import de from '~ui/blocks/Onboarding/locales/de'
 
 const en: typeof de = {
   zipInputLabel: 'zip code',

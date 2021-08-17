@@ -5,10 +5,12 @@ import { ArrowsRight } from '~ui/anicons'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import IBAN from 'iban'
-import useLocaleAsync from '~locales/useLocaleAsync'
+
+import useLocaleObject from '~locales/useLocaleObject'
+import SepaFormLocales from '~ui/blocks/SepaForm/SepaForm.locales'
 
 export default function SepaForm({ onSubmit, disabled }) {
-  const { t } = useLocaleAsync('ui/blocks/SepaForm')
+  const { t } = useLocaleObject(SepaFormLocales)
 
   const SepaSchema = Yup.object().shape({
     name: Yup.string().required(t('nameRequired')),

@@ -2,14 +2,15 @@ import * as React from 'react'
 
 import { Button, Box, Text, Card, List, ListItem } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
-import useLocaleAsync from '~locales/useLocaleAsync'
+import useLocaleObject from '~locales/useLocaleObject'
+import ConfirmationLocales from '~ui/blocks/Confirmation/Confirmation.locales'
 
 type ConfirmationProps = {
   onSubmit: () => void
 }
 
 export const Confirmation: React.FC<ConfirmationProps> = ({ onSubmit }) => {
-  const { t } = useLocaleAsync('ui/blocks/Confirmation')
+  const { t } = useLocaleObject(ConfirmationLocales)
 
   return (
     <Card variant="form" mx={-4}>

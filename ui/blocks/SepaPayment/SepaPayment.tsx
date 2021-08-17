@@ -1,19 +1,21 @@
 import * as React from 'react'
 import { useStripe } from '@stripe/react-stripe-js'
 
-import SepaForm from './SepaForm'
-import { postSepaSubscription } from '~lib/api'
+import SepaForm from '../SepaForm/SepaForm'
+import { Loading } from '~ui/blocks/Loading'
 import { useRouter } from 'next/router'
 import { Card, Box, Text } from '~ui/core'
-import { Loading } from '~ui/blocks/Loading'
-import useLocaleAsync from '~locales/useLocaleAsync'
+import { postSepaSubscription } from '~lib/api'
+
+import useLocaleObject from '~locales/useLocaleObject'
+import SepaPaymentLocales from '~ui/blocks/SepaPayment/SepaPayment.locales'
 
 interface SepaPaymentProps {
   intent: string
 }
 
 const SepaPayment: React.FC<SepaPaymentProps> = ({ intent }) => {
-  const { t } = useLocaleAsync('ui/blocks/SepaPayment')
+  const { t } = useLocaleObject(SepaPaymentLocales)
   const stripe = useStripe()
 
   const router = useRouter()

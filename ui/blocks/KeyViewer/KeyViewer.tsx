@@ -4,7 +4,8 @@ import { css } from '@styled-system/css'
 
 import { base64ToHex } from '~lib/crypto'
 import { Text, Box } from '~ui/core'
-import useLocaleAsync from '~locales/useLocaleAsync'
+import useLocaleObject from '~locales/useLocaleObject'
+import KeyViewerLocales from '~ui/blocks/KeyViewer/KeyViewer.locales'
 
 interface Props {
   value: string
@@ -13,7 +14,7 @@ interface Props {
 export const KeyViewer: React.FC<Props> = ({ value }) => {
   const hex = React.useMemo(() => base64ToHex(value), [value])
   const groups = React.useMemo(() => hex.match(/.{1,2}/g), [hex])
-  const { t } = useLocaleAsync('ui/blocks/KeyViewer')
+  const { t } = useLocaleObject(KeyViewerLocales)
 
   return (
     <div>

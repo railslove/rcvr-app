@@ -1,4 +1,4 @@
-import de from '~ui/blocks/SepaForm.de'
+import de from '~ui/blocks/SepaForm/locales/de'
 
 const en: typeof de = {
   ibanInvalid: 'IBAN is invalid',

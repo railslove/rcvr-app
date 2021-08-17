@@ -1,6 +1,6 @@
-import { de } from './locale.de'
+import de from './de'
 
-export const en: typeof de = {
+const en: typeof de = {
   profile: 'profile',
   businesses: 'businesses',
   areasLinkText: 'areas',
@@ -35,3 +35,5 @@ export const en: typeof de = {
   noAddressBusiness_one: 'Please complete the following business',
   noAddressBusiness_many: 'Please complete the following businesses',
 }
+
+export default en

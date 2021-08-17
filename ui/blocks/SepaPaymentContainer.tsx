@@ -3,7 +3,7 @@ import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe, Stripe } from '@stripe/stripe-js'
 
 import { postOwnerStripeIntent } from '~lib/api'
-import SepaPayment from '~ui/blocks/SepaPayment'
+import SepaPayment from '~ui/blocks/SepaPayment/SepaPayment'
 import { Loading } from './Loading'
 
 interface StripeSetup {
