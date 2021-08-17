@@ -1,10 +1,11 @@
 import * as React from 'react'
 import Head from 'next/head'
-
 import { WithOwnerProps, withValidPrivateKey } from '~lib/pageWrappers'
-import { Text, Box, ButtonLink } from '~ui/core'
+
+import { Text, Box, ButtonLink, Button } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import styled from '@emotion/styled'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 
 import useLocale from '~locales/useLocale'
@@ -22,12 +23,12 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
       </Text>
       <Box height={6} />
       <>
-        <Text>
+        <TextNoPrint>
           <p>
             <strong>{t('message1')}</strong>
           </p>
           <p>{t('message2')}</p>
-        </Text>
+        </TextNoPrint>
         <Box height={4} />
 
         <Box mx={-6}>
@@ -35,20 +36,39 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
         </Box>
 
         <Box height={6} />
-        <Text>
+        <TextNoPrint>
           <p>{t('message3')}</p>
-        </Text>
+        </TextNoPrint>
         <Box height={6} />
 
-        <ButtonLink
+        <ButtonLinkNoPrint
           href="/business/setup/verify-key-manually"
           right={<ArrowsRight color="green" />}
         >
-          {t('submitButtonText')}
-        </ButtonLink>
+          {t('verifyKeyButtonText')}
+        </ButtonLinkNoPrint>
+        <Box height={4} />
+        <ButtonNoPrint onClick={window.print}>
+          {t('printKeyButtonText')}
+        </ButtonNoPrint>
       </>
     </MobileApp>
   )
 }
 
+const TextNoPrint = styled(Text)`
+  @media print {
+    display: none;
+  }
+`
+const ButtonLinkNoPrint = styled(ButtonLink)`
+  @media print {
+    display: none;
+  }
+`
+const ButtonNoPrint = styled(Button)`
+  @media print {
+    display: none;
+  }
+`
 export default withValidPrivateKey()(SetupKeysPage)

@@ -12,7 +12,8 @@ const en: typeof keysDe = {
     ? 'In the next step you need to enter the key. This will make sure that you have written it down correctly.'
     : 'In the next step you have to enter the key. With this we make sure that you have noted it correctly',
 
-  submitButtonText: 'Check key',
+  printKeyButtonText: 'Print key',
+  verifyKeyButtonText: 'Verify key',
 }
 
 export default en

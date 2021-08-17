@@ -13,5 +13,6 @@ export default {
     ? 'Im nächsten Schritt müssen Sie den Schlüssel eingeben. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
     : 'Im nächsten Schritt musst Du den Schlüssel eingeben. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.',
 
-  submitButtonText: 'Schlüssel prüfen',
+  printKeyButtonText: 'Schlüssel drucken',
+  verifyKeyButtonText: 'Schlüssel prüfen',
 }
