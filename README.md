@@ -118,11 +118,6 @@ _[recover care](https://care.rcvr.app/)_ is a version of recover for institution
 BUILD_VARIANT=care npm run dev
 ```
 
-### Updating supported browsers
-
-After you updated the `.browserslistrc` you need to run `npm run supportedBrowsers` to update the
-regular expression the app is using to figure out if a browser is supported.
-
 ## License
 
 **rcvr.app** is open-source and free software released under the [GNU AGPL](https://github.com/railslove/rcvr-app/blob/master/LICENSE) (GNU Affero General Public License v3.0). We, [Railslove GmbH](https://railslove.com/), are committed to ensuring that it will remain a free and open-source project.

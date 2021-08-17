@@ -18,6 +18,7 @@ module.exports = function (api) {
         labelFormat: '[local]',
         'preset-env': {
           targets: browsersList,
+          useBuiltIns: 'usage',
         },
       },
     ],
