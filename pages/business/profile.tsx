@@ -7,12 +7,14 @@ import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { RECOVER_TEAM_EMAIL } from '~locales/constants'
+import useLocale from '~locales/useLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { ActionCard } from '~ui/blocks/ActionCard'
 import { ActionList } from '~ui/blocks/ActionList'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Divider, Text } from '~ui/core'
-import { OwnerApp } from '~ui/layouts/OwnerApp'
+import { OwnerApp } from '~ui/layouts/OwnerApp/OwnerApp'
 import { CheckoutSelectionModal } from '~ui/modals/CheckoutSelectionModal'
 import { OwnerModal } from '~ui/modals/OwnerModal'
 import { SubscribedModal } from '~ui/modals/SubscribedModal'
@@ -20,6 +22,8 @@ import { Right } from '~ui/svg'
 import { pricingInfoDuringTest } from '~ui/whitelabels'
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = useLocale('pages/business/profile')
+
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()
   const { query } = useRouter()
@@ -83,7 +87,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   }, [owner])
 
   return (
-    <OwnerApp title="Mein Profil">
+    <OwnerApp title={t('pageTitle')}>
       {modals}
       <Loading show={redirecting} />
 
@@ -91,21 +95,19 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
         onClick={() => openEditOwner()}
         right={<ArrowsRight color="green" />}
       >
-        Profil bearbeiten
+        {t('editProfile')}
       </Button>
 
       <Divider />
       <Text as="h3" variant="h2">
-        Meine Mitgliedschaft
+        {t('myMembership')}
       </Text>
       <Box height={4} />
       {hasCompanies ? (
         <SubscriptionMessage owner={owner} />
       ) : (
         <Callout>
-          <Text>
-            {isFormal ? 'Sie müssen' : 'Du musst'} zuerst einen Betrieb anlegen.
-          </Text>
+          <Text>{t('hasNoCompaniesMessage')}</Text>
         </Callout>
       )}
       <Box height={4} />
@@ -117,14 +119,11 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 
           {isHealthEnv || isCareEnv ? (
             <Text>
+              <p>{t('writeEmailMessage')}</p>
               <p>
-                Wenn sie recover weiter nutzen möchten, schreiben sie uns eine
-                E-Mail.
-              </p>
-              <p>
-                <a href="mailto:team@recoverapp.de">
+                <a href={`mailto:${RECOVER_TEAM_EMAIL}`}>
                   <Button right={<ArrowsRight color="pink" />}>
-                    Email schreiben
+                    {t('writeEmailButtonText')}
                   </Button>
                 </a>
               </p>
@@ -134,7 +133,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               onClick={() => openCheckout()}
               right={<ArrowsRight color="pink" />}
             >
-              Jetzt upgraden
+              {t('upgradeNow')}
             </Button>
           )}
         </>
