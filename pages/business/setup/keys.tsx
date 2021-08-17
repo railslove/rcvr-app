@@ -59,6 +59,7 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
         >
           Schlüssel prüfen
         </ButtonLinkNoPrint>
+        <Box height={4} />
         <ButtonNoPrint onClick={window.print}>Schlüssel drucken</ButtonNoPrint>
       </>
     </MobileApp>
