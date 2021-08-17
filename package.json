@@ -43,7 +43,7 @@
     "react-dom": "17.0.2",
     "react-dropzone": "^11.3.2",
     "react-query": "^3.16.0",
-    "react-textarea-autosize": "^8.3.2",
+    "react-textarea-autosize": "^8.3.3",
     "react-use": "^17.2.4",
     "snakecase-keys": "^4.0.2",
     "styled-system": "^5.1.5",
@@ -55,7 +55,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.15.0",
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/eslint-plugin": "^11.2.0",
     "@svgr/webpack": "^5.5.0",
@@ -78,7 +78,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.3.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.5"
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
