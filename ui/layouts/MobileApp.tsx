@@ -17,6 +17,7 @@ import {
 import { SharedMeta } from '~ui/blocks/SharedMeta'
 import LanguageSwitcher from '~ui/blocks/LanguageSwitcher'
 import StadtKoelnLogo from '~ui/logos/StadtKoelnLogo'
+import { useOwner } from '~lib/hooks'
 
 interface Props {
   children: React.ReactNode
@@ -29,6 +30,8 @@ export const MobileApp: React.FC<Props> = ({
   logoVariant = 'small',
   secondaryLogo = null,
 }) => {
+  const owner = useOwner()
+
   return (
     <>
       <Limit>
@@ -51,7 +54,7 @@ export const MobileApp: React.FC<Props> = ({
               </SecondaryLogoBox>
             ) : null}
           </LogoContainer>
-          <StadtKoelnLogo />
+          {owner.data.affiliate ? <StadtKoelnLogo /> : null}
         </Box>
         <Box height={logoVariant === 'sticky' ? 10 : 4} />
         {children}

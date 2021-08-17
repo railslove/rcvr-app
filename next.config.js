@@ -4,6 +4,8 @@ const withTranslate = require('next-translate')
 const localesDefaults = require('./locales/config.defaults.json')
 const { generateLocalesConfigAndTypes } = require('./scripts/locales')
 
+generateLocalesConfigAndTypes()
+
 module.exports = withTranslate(
   withImages({
     /**
@@ -26,15 +28,12 @@ module.exports = withTranslate(
     typescript: {
       ignoreDevErrors: true,
     },
-    webpack: (config, { isServer }) => {
+
+    webpack(config) {
       config.module.rules.push({
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       })
-
-      if (isServer) {
-        generateLocalesConfigAndTypes()
-      }
 
       return config
     },

@@ -1,4 +1,16 @@
 /**
+ *
+ * @param {object} value
+ * @returns {string}
+ */
+function serializeLocale(value) {
+  return JSON.stringify(value, null, 2)
+    .replace(/"typeof/g, 'typeof')
+    .replace(/\.default",?/g, '.default')
+    .replace(/"(\S+)":/g, "'$1':")
+}
+
+/**
  * generates config and types of locales
  * NOTE: used after build in next.config.js => keep require inside this function
  */
@@ -8,7 +20,7 @@ function generateLocalesConfigAndTypes() {
 
   const config = glob
     .sync('pages/**/*.tsx')
-    .map((el) => el.replace(/^pages\/|\.tsx$/g, ''))
+    .map((el) => el.replace(/\.tsx$/g, ''))
     .filter((el) => el === '_error' || !/^_/.test(el))
     .reduce(
       (acc, el) => {
@@ -40,23 +52,26 @@ function generateLocalesConfigAndTypes() {
     .sort((a, b) => {
       return (a.length > b.length && 1) || (a.length < b.length && -1) || 0
     })
-    .map((el) => `pages/${el}`)
     .reduce((acc, el) => {
       return {
         ...acc,
-        [el]: `typeof import('../pages/${el}.de').default`,
+        [el]: `typeof import('../../pages/${el}.de').default`,
       }
     }, {})
 
-  const PageLocalesResourcesType = 'PageLocalesResources'
-  const PageLocalesResourcesString = JSON.stringify(
-    PageLocalesResources,
-    null,
-    2
-  )
-    .replace(/"typeof/g, 'typeof')
-    .replace(/\.default",?/g, '.default')
-    .replace(/"(\S+)":/g, "'$1':")
+  const AsyncLocalesResources = glob
+    .sync('ui/**/*.de.ts')
+    .slice()
+    .map((el) => el.replace(/\.de\.ts$/g, ''))
+    .sort((a, b) => {
+      return (a.length > b.length && 1) || (a.length < b.length && -1) || 0
+    })
+    .reduce((acc, el) => {
+      return {
+        ...acc,
+        [el]: `typeof import('../../${el}.de').default`,
+      }
+    }, {})
 
   fs.writeFileSync(
     'locales/generated/config.json',
@@ -66,7 +81,12 @@ function generateLocalesConfigAndTypes() {
   fs.writeFileSync(
     'locales/generated/types.d.ts',
     [
-      `export type ${PageLocalesResourcesType} = ${PageLocalesResourcesString}\n`,
+      `export type PageLocalesResources = ${serializeLocale(
+        PageLocalesResources
+      )}\n`,
+      `export type AsyncLocalesResources = ${serializeLocale(
+        AsyncLocalesResources
+      )}`,
       '',
     ].join('\n')
   )
