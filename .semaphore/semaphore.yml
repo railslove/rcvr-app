@@ -55,6 +55,7 @@ blocks:
       jobs:
         - name: lint
           commands:
+            - npm run update-supported-browsers
             - npm run lint
         - name: typecheck
           commands:
