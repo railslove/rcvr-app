@@ -2,9 +2,9 @@ import * as React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 
-import { isFormal } from '~lib/config'
 import { base64ToHex } from '~lib/crypto'
 import { Text, Box } from '~ui/core'
+import useLocaleAsync from '~locales/useLocaleAsync'
 
 interface Props {
   value: string
@@ -13,17 +13,20 @@ interface Props {
 export const KeyViewer: React.FC<Props> = ({ value }) => {
   const hex = React.useMemo(() => base64ToHex(value), [value])
   const groups = React.useMemo(() => hex.match(/.{1,2}/g), [hex])
+  const { t } = useLocaleAsync('ui/blocks/KeyViewer')
 
   return (
     <div>
       <Box px={6} mb={4}>
         <Text>
-          {isFormal ? 'Ihr' : 'Dein'} Schlüssel ist{' '}
-          <strong>{hex.length} Zeichen</strong> lang.
+          {t('yourKeyIs')}{' '}
+          <strong>
+            {hex.length} {t('characters')}
+          </strong>{' '}
+          {t('long')}.
           <br />
-          Er beinhaltet nur Zahlen von <strong>0 bis 9</strong> und Buchstaben
-          von
-          <strong> A bis F</strong>.
+          {t('itCointains')} <strong>{t('0to9')}</strong> {t('andLettersFrom')}{' '}
+          <strong>{t('AtoF')}</strong>.
         </Text>
       </Box>
       <RowGrid>

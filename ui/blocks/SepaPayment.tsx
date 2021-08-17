@@ -6,12 +6,14 @@ import { postSepaSubscription } from '~lib/api'
 import { useRouter } from 'next/router'
 import { Card, Box, Text } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
+import useLocaleAsync from '~locales/useLocaleAsync'
 
 interface SepaPaymentProps {
   intent: string
 }
 
 const SepaPayment: React.FC<SepaPaymentProps> = ({ intent }) => {
+  const { t } = useLocaleAsync('ui/blocks/SepaPayment')
   const stripe = useStripe()
 
   const router = useRouter()
@@ -54,7 +56,7 @@ const SepaPayment: React.FC<SepaPaymentProps> = ({ intent }) => {
       {error && (
         <Card mx={-4} p={6}>
           <Text variant="h3" as="h1" color="red.500">
-            Das hat leider nicht funktioniert...
+            {t('title')}
           </Text>
           <Text>{error.message}</Text>
           <Box height={4} />
