@@ -12,8 +12,18 @@ export type TranslationOptions = Parameters<
 const useLocaleAsync = <NS extends keyof AsyncLocalesResources>(ns: NS) => {
   type Result = AsyncLocalesResources[NS]
 
-  const { locale: lang } = useRouter()
-  const { isLoading, data: t } = useQuery(ns, () => getT(lang, ns))
+  // const { locale: lang } = useRouter()
+  // const { isLoading, data: t } = useQuery(ns, () => getT(lang, ns))
+
+  // function translate<NSK extends keyof Result>(
+  //   key: NSK,
+  //   options?: TranslationOptions,
+  //   query?: TranslationQuery
+  // ) {
+  //   return t(key as string, query, options)
+  // }
+
+  const { t, lang } = useTranslation(ns)
 
   function translate<NSK extends keyof Result>(
     key: NSK,
@@ -23,7 +33,7 @@ const useLocaleAsync = <NS extends keyof AsyncLocalesResources>(ns: NS) => {
     return t(key as string, query, options)
   }
 
-  return { lang, isLoading, t: translate }
+  return { lang, t: translate }
 }
 
 export default useLocaleAsync
