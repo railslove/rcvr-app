@@ -2,42 +2,35 @@ import * as React from 'react'
 
 import { Button, Box, Text, Card, List, ListItem } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
+import useLocaleAsync from '~locales/useLocaleAsync'
 
 type ConfirmationProps = {
   onSubmit: () => void
 }
 
 export const Confirmation: React.FC<ConfirmationProps> = ({ onSubmit }) => {
+  const { t } = useLocaleAsync('ui/blocks/Confirmation')
+
   return (
     <Card variant="form" mx={-4}>
       <Text variant="h3" as="h3">
-        Checkin nur ohne Symptome
+        {t('headline')}
       </Text>
       <Box height={5} />
       <Text>
-        <p>Mit dem Klicken auf weiter bestätige ich, dass:</p>
+        <p>{t('message1')}</p>
+        <p>{t('message2')}</p>
 
-        <p>
-          ich innerhalb der letzten 14 Tage keinen Kontakt zu einer SARS-CoV-2
-          positive getesteten Person hatte und in keinem Risikogebiet war.
-        </p>
-
-        <p>ich keines der folgenden Symptome aufweise:</p>
+        <p>{t('symptomsListHeader')}:</p>
 
         <List>
-          <ListItem>Fieber</ListItem>
-          <ListItem>Halsschmerzen und oder Schluckbeschwerden</ListItem>
-          <ListItem>Husten</ListItem>
-          <ListItem>Atemnot</ListItem>
-          <ListItem>Geschmacks- oder Geruchsverlust</ListItem>
-          <ListItem>
-            Allgemeine Abgeschlagenheit und/oder Leistungsverlust - soweit nicht
-            durch eine bestehende Vorerkrankung erklärbar
-          </ListItem>
-          <ListItem>
-            Starker Schnupfen, soweit nicht durch eine bestehende Vorerkrankung
-            (z. B. Allergien) erklärbar
-          </ListItem>
+          <ListItem>{t('symptom1')}</ListItem>
+          <ListItem>{t('symptom2')}</ListItem>
+          <ListItem>{t('symptom3')}</ListItem>
+          <ListItem>{t('symptom4')}</ListItem>
+          <ListItem>{t('symptom5')}</ListItem>
+          <ListItem>{t('symptom6')}</ListItem>
+          <ListItem>{t('symptom7')}</ListItem>
         </List>
       </Text>
       <Box height={5} />
@@ -47,7 +40,7 @@ export const Confirmation: React.FC<ConfirmationProps> = ({ onSubmit }) => {
         css={{ width: '100%' }}
         right={<ArrowsRight color="green" />}
       >
-        Weiter
+        {t('continueButtonText')}
       </Button>
     </Card>
   )
