@@ -17,7 +17,7 @@ import { Confirmation } from '~ui/blocks/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
 
 export default function CheckinPage() {
-  const { t } = useLocale('checkin')
+  const { t } = useLocale('pages/checkin')
 
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())

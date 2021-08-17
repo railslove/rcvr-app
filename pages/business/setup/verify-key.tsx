@@ -22,7 +22,7 @@ import { commitSetupPublicKey } from '~lib/actions'
 import useLocale from '~locales/useLocale'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale('business/setup/verify-key')
+  const { t } = useLocale('pages/business/setup/verify-key')
   const router = useRouter()
   const queryClient = useQueryClient()
 

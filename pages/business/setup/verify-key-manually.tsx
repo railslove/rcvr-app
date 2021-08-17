@@ -14,7 +14,7 @@ import { useQueryClient } from 'react-query'
 import useLocale from '~locales/useLocale'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale('business/setup/verify-key-manually')
+  const { t } = useLocale('pages/business/setup/verify-key-manually')
   const router = useRouter()
   const queryClient = useQueryClient()
 

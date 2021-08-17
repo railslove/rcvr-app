@@ -16,7 +16,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import useLocale from '~locales/useLocale'
 
 export default function MyCheckinsPage() {
-  const { t } = useLocale('my-checkins')
+  const { t } = useLocale('pages/my-checkins')
   const checkinsInfo = useCheckins()
 
   const [isLoading, setIsLoading] = useDelayedLoading(false)

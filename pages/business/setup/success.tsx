@@ -13,7 +13,7 @@ import { Warning, KeyPaper } from '~ui/svg'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 
 const ContactInformation = () => {
-  const { t } = useLocale('business/setup/success')
+  const { t } = useLocale('pages/business/setup/success')
 
   switch (BUILD_VARIANT) {
     case 'care': {
@@ -41,7 +41,7 @@ const ContactInformation = () => {
 }
 
 const PrivateKeyExplanation: React.FC = () => {
-  const { t } = useLocale('business/setup/success')
+  const { t } = useLocale('pages/business/setup/success')
 
   switch (BUILD_VARIANT) {
     case 'care':
@@ -122,7 +122,7 @@ const PrivateKeyExplanation: React.FC = () => {
 }
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale('business/setup/success')
+  const { t } = useLocale('pages/business/setup/success')
   const router = useRouter()
   const queryClient = useQueryClient()
 

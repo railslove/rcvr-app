@@ -1,13 +1,13 @@
 import { TranslationQuery } from 'next-translate'
 import useTranslation from 'next-translate/useTranslation'
-import LocalesResources from './LocalesResources'
+import { PageLocalesResources } from './generated/types'
 
 export type TranslationOptions = Parameters<
   ReturnType<typeof useTranslation>['t']
 >[2]
 
-const useLocale = <NS extends keyof LocalesResources>(ns: NS) => {
-  type Result = LocalesResources[NS]
+const useLocale = <NS extends keyof PageLocalesResources>(ns: NS) => {
+  type Result = PageLocalesResources[NS]
 
   const { t, lang } = useTranslation(ns)
 

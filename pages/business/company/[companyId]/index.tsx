@@ -17,7 +17,7 @@ import useLocale from '~locales/useLocale'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 
 const CompanyPage: React.FC<WithOwnerProps> = () => {
-  const { t } = useLocale('business/company/[companyId]/index')
+  const { t } = useLocale('pages/business/company/[companyId]/index')
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)

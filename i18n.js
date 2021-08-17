@@ -1,4 +1,4 @@
-const config = require('./locales/config.json')
+const config = require('./locales/generated/config.json')
 const configDefaults = require('./locales/config.defaults.json')
 
 exports = module.exports = {
@@ -6,7 +6,7 @@ exports = module.exports = {
   ...config,
 
   loadLocaleFrom(lang, ns) {
-    return import(`pages/${ns}.${lang}.ts`).then((m) => {
+    return import(`${ns}.${lang}.ts`).then((m) => {
       const result = m.default
       return result
     })

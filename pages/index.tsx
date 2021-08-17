@@ -9,7 +9,7 @@ import { isRcvrEnv } from '~lib/config'
 import useLocale from '~locales/useLocale'
 
 export default function IndexPage() {
-  const { t } = useLocale('index')
+  const { t } = useLocale('pages/index')
 
   return (
     <MobileApp logoVariant="big">

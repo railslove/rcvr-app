@@ -32,3 +32,6 @@ yarn-error.log*
 cypress/screenshots
 cypress/videos
 .eslintcache
+
+# generated files
+locales/generated

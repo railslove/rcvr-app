@@ -9,7 +9,7 @@ import { BUILD_VARIANT } from '~ui/whitelabels'
 import useLocale from '~locales/useLocale'
 
 const FinishedText: React.FC = () => {
-  const { t } = useLocale('business/setup/finished')
+  const { t } = useLocale('pages/business/setup/finished')
 
   switch (BUILD_VARIANT) {
     case 'care': {
@@ -50,7 +50,7 @@ const FinishedText: React.FC = () => {
 }
 
 function SetupSuccessPage() {
-  const { t } = useLocale('business/setup/finished')
+  const { t } = useLocale('pages/business/setup/finished')
 
   return (
     <MobileApp logoVariant="big">

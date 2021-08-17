@@ -9,7 +9,7 @@ import { Loading } from '~ui/blocks/Loading'
 import useLocale from '~locales/useLocale'
 
 export default function BusinessIndexPage() {
-  const { t } = useLocale('business/logout')
+  const { t } = useLocale('pages/business/logout')
 
   const router = useRouter()
   const queryClient = useQueryClient()

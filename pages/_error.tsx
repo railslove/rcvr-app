@@ -15,7 +15,7 @@ export type ErrorProps = {
 }
 
 function DefaultError() {
-  const { t } = useLocale('_error')
+  const { t } = useLocale('pages/_error')
 
   return (
     <Text>
@@ -25,7 +25,7 @@ function DefaultError() {
 }
 
 function InvalidPubkeyEncoding() {
-  const { t } = useLocale('_error')
+  const { t } = useLocale('pages/_error')
 
   return (
     <>
@@ -54,7 +54,7 @@ const errorMappings = {
 }
 
 const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
-  const { t } = useLocale('_error')
+  const { t } = useLocale('pages/_error')
 
   const [browser, setBrowser] = React.useState<BrowserInfo>()
 

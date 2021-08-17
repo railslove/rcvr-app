@@ -7,7 +7,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import useLocale from '~locales/useLocale'
 
 export default function QRCodePage() {
-  const { t } = useLocale('qr')
+  const { t } = useLocale('pages/qr')
   const videoEl = React.useRef<HTMLVideoElement>()
 
   function appendUrlParams(url: URL): any {

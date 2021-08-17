@@ -8,7 +8,7 @@ import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 import useLocale from '~locales/useLocale'
 
 export default function Custom404() {
-  const { t } = useLocale('404')
+  const { t } = useLocale('pages/404')
 
   return (
     <MobileApp logoVariant="big">

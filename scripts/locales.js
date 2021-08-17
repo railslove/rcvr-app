@@ -2,7 +2,7 @@
  * generates config and types of locales
  * NOTE: used after build in next.config.js => keep require inside this function
  */
-function generateLocalesConfig() {
+function generateLocalesConfigAndTypes() {
   const fs = require('fs')
   const glob = require('glob')
 
@@ -35,11 +35,12 @@ function generateLocalesConfig() {
       }
     )
 
-  const LocalesResources = config.namespaces
+  const PageLocalesResources = config.namespaces
     .slice()
     .sort((a, b) => {
       return (a.length > b.length && 1) || (a.length < b.length && -1) || 0
     })
+    .map((el) => `pages/${el}`)
     .reduce((acc, el) => {
       return {
         ...acc,
@@ -47,25 +48,30 @@ function generateLocalesConfig() {
       }
     }, {})
 
-  const LocalesResourcesType = 'LocalesResources'
-  const LocalesResourcesString = JSON.stringify(LocalesResources, null, 2)
+  const PageLocalesResourcesType = 'PageLocalesResources'
+  const PageLocalesResourcesString = JSON.stringify(
+    PageLocalesResources,
+    null,
+    2
+  )
     .replace(/"typeof/g, 'typeof')
     .replace(/\.default",?/g, '.default')
     .replace(/"(\S+)":/g, "'$1':")
-    .replace(/'([^0-9-/\s]+)':/g, '$1:')
-
-  fs.writeFileSync('locales/config.json', JSON.stringify(config, null, 2))
 
   fs.writeFileSync(
-    'locales/LocalesResources.d.ts',
+    'locales/generated/config.json',
+    JSON.stringify(config, null, 2)
+  )
+
+  fs.writeFileSync(
+    'locales/generated/types.d.ts',
     [
-      `type ${LocalesResourcesType} = ${LocalesResourcesString}\n`,
-      `export default ${LocalesResourcesType}`,
+      `export type ${PageLocalesResourcesType} = ${PageLocalesResourcesString}\n`,
       '',
     ].join('\n')
   )
 }
 
 exports = module.exports = {
-  generateLocalesConfig,
+  generateLocalesConfigAndTypes,
 }

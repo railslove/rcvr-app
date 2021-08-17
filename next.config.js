@@ -2,7 +2,7 @@ const withImages = require('next-images')
 const withTranslate = require('next-translate')
 
 const localesDefaults = require('./locales/config.defaults.json')
-const { generateLocalesConfig } = require('./scripts/locales')
+const { generateLocalesConfigAndTypes } = require('./scripts/locales')
 
 module.exports = withTranslate(
   withImages({
@@ -33,7 +33,7 @@ module.exports = withTranslate(
       })
 
       if (isServer) {
-        generateLocalesConfig()
+        generateLocalesConfigAndTypes()
       }
 
       return config
