@@ -62,7 +62,11 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
       <Formik initialValues={{ privateKey: '' }} onSubmit={handleCheck}>
         <Form>
-          <Input name="privateKey" label="Schlüssel" multiline />
+          <Input
+            name="privateKey"
+            label={t('privateKeyInputLabel')}
+            multiline
+          />
           <Box height={6} />
           <Button
             right={<ArrowsRight color="green" />}

@@ -22,6 +22,7 @@ const en: typeof verifyKeyManuallyDe = {
 
   backLinkText: 'back',
 
+  privateKeyInputLabel: 'Key',
   privateKeyFieldError:
     'The key is not correct. Please check again. Spaces and upper and lower case are not important.',
 }

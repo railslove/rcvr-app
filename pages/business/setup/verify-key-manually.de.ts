@@ -25,6 +25,7 @@ export default {
 
   backLinkText: 'zurück',
 
+  privateKeyInputLabel: 'Schlüssel',
   privateKeyFieldError:
     'Der Schlüssel stimmt nicht. Bitte nochmal überprüfen. Leerzeichen und Groß- und Kleinschreibung spielen keine Rolle.',
 }
