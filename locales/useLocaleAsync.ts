@@ -1,8 +1,5 @@
 import { TranslationQuery } from 'next-translate'
-import getT from 'next-translate/getT'
 import useTranslation from 'next-translate/useTranslation'
-import { useRouter } from 'next/router'
-import { useQuery } from 'react-query'
 import { AsyncLocalesResources } from './generated/types'
 
 export type TranslationOptions = Parameters<
