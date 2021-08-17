@@ -9,6 +9,7 @@ import { generateCwaLink } from '~lib/cwa/generateCwaLink'
 import { Checkin } from '~lib/db'
 import { Guest } from '~lib/db/guest'
 import { useArea } from '~lib/hooks'
+import useLocaleAsync from '~locales/useLocaleAsync'
 import { ArrowsLeft, ArrowsRight, Check, Circle, Thumb } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
@@ -22,7 +23,9 @@ interface Props {
 }
 
 export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
-  const checkin = checkins[0]
+  const [checkin] = checkins
+
+  const { t } = useLocaleAsync('ui/blocks/LastCheckins')
   const area = useArea(checkins[0].areaId).data
   const checkedOut = !!checkin.leftAt
   const idRef = React.useRef<string>(uuidv4())
@@ -82,7 +85,9 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
         )}
       </Circle>
       <Box height={4} />
-      <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
+      <Text variant="h2">
+        {checkedOut ? t('header_checkedOut') : t('header')}
+      </Text>
       <Box height={1} />
       <Text variant="h4" data-wfd-location={checkin.business}>
         {checkin.business}
@@ -90,7 +95,9 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       {checkins.length > 1 && (
         <>
           <Box height={1} />
-          <Text variant="h4">{checkins.length} Personen</Text>
+          <Text variant="h4">
+            {checkins.length} {t('people')}
+          </Text>
         </>
       )}
       <Box height={4} />
@@ -105,7 +112,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
           >
             <CwaLink>
               <CwaLogo width="24" height="24" />
-              Check-in Corona Warn App
+              {t('CWALinkText')}
             </CwaLink>
           </ButtonLink>
           <Box height={4} />
@@ -119,21 +126,21 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
           <GuestDetails key={index}>
             {index > 0 && <Box height={2} />}
             <Text variant="label" as="label">
-              Name{' '}
+              {t('name')}{' '}
               <Text variant="regular" as="span">
                 {guest.name}
               </Text>
             </Text>
             <Box height={1} />
             <Text variant="label" as="label">
-              Anschrift{' '}
+              {t('address')}{' '}
               <Text variant="regular" as="span">
                 {guest.address}, {guest.postalCode}&nbsp;{guest.city}
               </Text>
             </Text>
             <Box height={1} />
             <Text variant="label" as="label">
-              Telefon{' '}
+              {t('telephone')}{' '}
               <Text variant="regular" as="span">
                 {guest.phone}
               </Text>
@@ -157,23 +164,23 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
               onClick={() => onCheckout(checkins)}
               dataAttributes={{ 'wfd-action': 'check-out' }}
             >
-              Check out
+              {t('checkOutButtonText')}
             </Button>
             <Box height={4} />
             <Button
               css={{ width: '100%' }}
               onClick={() => setShowEditData(!showEditData)}
             >
-              Deine Daten ändern
+              {t('changeYourDataButtonText')}
             </Button>
             <Box height={4} />
             {showEditData && (
               <Onboarding
                 area={area}
-                prefilledGuest={checkin.guest}
                 onSubmit={handleEditGuest}
                 hideRememberMe={true}
-                submitButtonValue="Speichern"
+                prefilledGuest={checkin.guest}
+                submitButtonValue={t('onboardingButtonText')}
               />
             )}
             <Loading show={isLoading} />
@@ -181,7 +188,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             {showProxyCheckin ? (
               <>
                 <Box height={4} />
-                <Text variant="h3">Wen willst du mit dir einchecken?</Text>
+                <Text variant="h3">{t('checkInMorePeopleHeadline')}</Text>
                 <Box height={2} />
                 <Onboarding
                   area={area}
@@ -201,7 +208,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
                 css={{ width: '100%', marginTop: '10px' }}
                 onClick={() => setShowProxyCheckin(true)}
               >
-                Person hinzufügen
+                {t('addPersonButtonText')}
               </Button>
             )}
           </motion.div>
@@ -218,7 +225,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             <Box height={4} />
             <a href={area.menuLink} target="_blank" rel="noopener noreferrer">
               <Button as="div" css={{ width: '100%' }}>
-                {area.menuAlias || 'Zusatz-Informationen'}
+                {area.menuAlias || t('additionalInfoLinkText')}
               </Button>
             </a>
           </motion.div>
