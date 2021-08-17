@@ -2,6 +2,9 @@ import * as React from 'react'
 import Link from 'next/link'
 import { Card, SRText, Row, Text, Box, Icon } from '~ui/core'
 
+import useLocaleObject from '~locales/useLocaleObject'
+import ActionCardLocales from '~ui/blocks/ActionCard/ActionCard.locales'
+
 interface Props {
   href?: string
   as?: string
@@ -18,6 +21,8 @@ interface Composition {
 type AreaCardCmps = React.FC<Props> & Composition
 
 export const ActionCard: AreaCardCmps = ({ href, as, onClick, children }) => {
+  const { t } = useLocaleObject(ActionCardLocales)
+
   return (
     <Card
       css={{ position: 'relative', textAlign: 'left' }}
@@ -41,7 +46,7 @@ export const ActionCard: AreaCardCmps = ({ href, as, onClick, children }) => {
                 cursor: 'pointer',
               }}
             >
-              <SRText>Zur Seite navigieren</SRText>
+              <SRText>{t('navigateToSite')}</SRText>
             </a>
           </Link>
         )}

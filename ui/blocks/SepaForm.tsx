@@ -5,16 +5,19 @@ import { ArrowsRight } from '~ui/anicons'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import IBAN from 'iban'
-
-const SepaSchema = Yup.object().shape({
-  name: Yup.string().required('Kontoinhaber muss angegeben werden.'),
-  email: Yup.string().required('Email muss angegeben werden.'),
-  iban: Yup.string()
-    .test('iban-valid', 'IBAN ist ungültig', (value) => IBAN.isValid(value))
-    .required('IBAN muss angegeben werden.'),
-})
+import useLocaleAsync from '~locales/useLocaleAsync'
 
 export default function SepaForm({ onSubmit, disabled }) {
+  const { t } = useLocaleAsync('ui/blocks/SepaForm')
+
+  const SepaSchema = Yup.object().shape({
+    name: Yup.string().required(t('nameRequired')),
+    email: Yup.string().required(t('emailRequired')),
+    iban: Yup.string()
+      .test('iban-valid', t('ibanInvalid'), (value) => IBAN.isValid(value))
+      .required(t('ibanRequired')),
+  })
+
   return (
     <Formik
       initialValues={{ email: '', name: '', iban: '' }}
@@ -22,28 +25,26 @@ export default function SepaForm({ onSubmit, disabled }) {
       onSubmit={onSubmit}
     >
       <Form>
-        <Input name="email" label="Email" autoComplete="email" type="email" />
+        <Input
+          name="email"
+          label={t('emailInputLabel')}
+          autoComplete="email"
+          type="email"
+        />
         <Box height={4} />
 
-        <Input name="name" label="Kontoinhaber" autoComplete="name" />
+        <Input name="name" label={t('nameInputLabel')} autoComplete="name" />
         <Box height={4} />
-        <Input name="iban" label="IBAN" autoComplete="iban" />
+        <Input name="iban" label={t('ibanInputLabel')} autoComplete="iban" />
         <Box height={4} />
-        <Text>
-          Ich ermächtige/ Wir ermächtigen (A) Ping Pong Labs GbR und Stripe,
-          unserem Zahlungsdienstleister, Zahlungen von meinem/ unserem Konto
-          mittels Lastschrift einzuziehen. Zugleich (B) weise ich mein/ weisen
-          wir unser Kreditinstitut an, die von Ping Pong Labs GbR und Stripe,
-          unserem Zahlungsdienstleister, auf mein/ unser Konto gezogenen
-          Lastschriften einzulösen.
-        </Text>
+        <Text>{t('consentText')}</Text>
         <Box height={4} />
         <Button
           type="submit"
           disabled={disabled}
           right={<ArrowsRight color="pink" />}
         >
-          SEPA Lastschriftverfahren bestätigen
+          {t('submitButtonText')}
         </Button>
       </Form>
     </Formik>

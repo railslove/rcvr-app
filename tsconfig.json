@@ -26,11 +26,18 @@
       ],
       "~lib/*": [
         "lib/*"
+      ],
+      "~pages/*": [
+        "pages/*"
+      ],
+      "~locales/*": [
+        "locales/*"
       ]
     }
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "node_modules/@nodelib"
   ],
   "include": [
     "next-env.d.ts",
