@@ -85,7 +85,9 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
         )}
       </Circle>
       <Box height={4} />
-      <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
+      <Text variant="h2">
+        {checkedOut ? t('header_checkedOut') : t('header')}
+      </Text>
       <Box height={1} />
       <Text variant="h4" data-wfd-location={checkin.business}>
         {checkin.business}
@@ -175,10 +177,10 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             {showEditData && (
               <Onboarding
                 area={area}
-                prefilledGuest={checkin.guest}
                 onSubmit={handleEditGuest}
                 hideRememberMe={true}
-                submitButtonValue="Speichern"
+                prefilledGuest={checkin.guest}
+                submitButtonValue={t('onboardingButtonText')}
               />
             )}
             <Loading show={isLoading} />

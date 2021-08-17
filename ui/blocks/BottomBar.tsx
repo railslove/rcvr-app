@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 
-import { isCareEnv, isHealthEnv } from '~lib/config'
+import { isHealthEnv } from '~lib/config'
 import { privacyUrl, secondaryHighlightColor } from '~ui/whitelabels'
 import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
@@ -41,7 +41,7 @@ export const BottomBar: React.FC = () => {
             <Ticket />
           </Circle>
           <Text variant="fineprint" fontWeight="semibold">
-            {isCareEnv || isHealthEnv ? 'Checkins' : 'Tickets'}
+            {t('finePrintText')}
           </Text>
         </Tab>
       </Link>

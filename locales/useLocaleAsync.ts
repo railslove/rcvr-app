@@ -26,7 +26,7 @@ const useLocaleAsync = <NS extends keyof AsyncLocalesResources>(ns: NS) => {
     key: NSK,
     options?: TranslationOptions,
     query?: TranslationQuery
-  ) {
+  ): Result[NSK] {
     return t(key as string, query, options)
   }
 

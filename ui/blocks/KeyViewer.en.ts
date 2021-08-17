@@ -1,8 +1,7 @@
-import { isFormal } from '~lib/config'
 import keyViewerDe from '~ui/blocks/KeyViewer.de'
 
 const en: typeof keyViewerDe = {
-  yourKeyIs: `${isFormal ? 'your' : 'your'} key is`,
+  yourKeyIs: `Your key is`,
   characters: 'characters',
   long: 'long',
 
