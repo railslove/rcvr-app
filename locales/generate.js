@@ -36,7 +36,8 @@ function generateLocalesConfigAndTypes() {
             : pathname
         }`
 
-        const locales = acc.pages[url]?.locales || [defaultLocale]
+        const page = acc.pages[url] || {}
+        const locales = page.locales || [defaultLocale]
 
         return {
           ...acc,
