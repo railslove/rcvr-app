@@ -10,7 +10,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 
 const SetupIntro: React.FC = () => {
-  const { t } = usePageLocale('business/setup/intro')
+  const { t } = usePageLocale<'business/setup/intro'>()
 
   switch (BUILD_VARIANT) {
     case 'care':
@@ -35,7 +35,7 @@ const SetupIntro: React.FC = () => {
 }
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
-  const { t } = usePageLocale('business/setup/intro')
+  const { t } = usePageLocale<'business/setup/intro'>()
   const { query } = useRouter()
 
   React.useEffect(() => {

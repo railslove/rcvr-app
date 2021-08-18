@@ -7,7 +7,7 @@ import { Box, ButtonLink, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function BusinessIndexPage() {
-  const { t } = usePageLocale('business/index')
+  const { t } = usePageLocale<'business/index'>()
 
   return (
     <MobileApp logoVariant="big">

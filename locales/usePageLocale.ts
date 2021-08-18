@@ -12,13 +12,11 @@ export const LocalesContextProvider = LocalesContext.Provider
 export type PageLocaleResource =
   PageLocalesResources[keyof PageLocalesResources]
 
-const usePageLocale = <NS extends keyof PageLocalesResources>(ns: NS) => {
+const usePageLocale = <NS extends keyof PageLocalesResources>() => {
   type Result = PageLocalesResources[NS]
 
   const { locale: lang } = useRouter()
   const localeContext = useContext(LocalesContext) as Result
-
-  // const { t, lang } = useTranslation(ns)
 
   function translate<NSK extends keyof Result>(key: NSK) {
     return localeContext[key]

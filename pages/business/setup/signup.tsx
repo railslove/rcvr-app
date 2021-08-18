@@ -28,7 +28,7 @@ export const InlineLink = styled('a')(
 )
 
 const Avv: React.FC = () => {
-  const { t } = usePageLocale('business/setup/signup')
+  const { t } = usePageLocale<'business/setup/signup'>()
 
   return (
     <Text variant="fineprint">
@@ -46,7 +46,7 @@ const Avv: React.FC = () => {
 }
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
-  const { t } = usePageLocale('business/setup/signup')
+  const { t } = usePageLocale<'business/setup/signup'>()
 
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)

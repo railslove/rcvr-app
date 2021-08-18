@@ -14,7 +14,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
-  const { t } = usePageLocale('business/login')
+  const { t } = usePageLocale<'business/login'>()
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required(t('emailRequired')),

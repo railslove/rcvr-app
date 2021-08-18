@@ -11,7 +11,7 @@ import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function PasswordResetRequestPage() {
-  const { t } = usePageLocale('business/password-reset/request')
+  const { t } = usePageLocale<'business/password-reset/request'>()
   const [loading, setLoading] = React.useState(false)
   const [done, setDone] = React.useState(false)
 

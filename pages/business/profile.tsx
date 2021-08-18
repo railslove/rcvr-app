@@ -22,7 +22,7 @@ import { Right } from '~ui/svg'
 import { pricingInfoDuringTest } from '~ui/whitelabels'
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = usePageLocale('business/profile')
+  const { t } = usePageLocale<'business/profile'>()
 
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()
