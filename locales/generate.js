@@ -19,6 +19,9 @@ function serializeLocale(value) {
 function generateLocalesConfigAndTypes() {
   const fs = require('fs')
   const glob = require('glob')
+  const { execSync } = require('child_process')
+
+  execSync('mkdir -p locales/generated', { stdio: 'inherit' })
 
   const config = glob
     .sync('pages/**/*.{ts,tsx}')
