@@ -12,8 +12,8 @@ import { useCurrentGuest, useArea } from '~lib/hooks'
 import { Guest, updateGuest, addGuest, getLastCheckin } from '~lib/db'
 import { Row, Text, Box, Callout, Card } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { Onboarding } from '~ui/blocks/Onboarding'
-import { Confirmation } from '~ui/blocks/Confirmation'
+import { Onboarding } from '~ui/blocks/Onboarding/Onboarding'
+import { Confirmation } from '~ui/blocks/Confirmation/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
 
 export default function CheckinPage() {

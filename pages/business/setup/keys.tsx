@@ -6,7 +6,7 @@ import { Text, Box, ButtonLink, Button } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import styled from '@emotion/styled'
-import { KeyViewer } from '~ui/blocks/KeyViewer'
+import { KeyViewer } from '~ui/blocks/KeyViewer/KeyViewer'
 
 import usePageLocale from '~locales/usePageLocale'
 

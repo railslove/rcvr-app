@@ -16,7 +16,7 @@ import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Table, Text } from '~ui/core'
 import { FilledCircle } from '~ui/core/FilledCircle'
-import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
+import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp/OwnerApp'
 import { RedirectModal } from '~ui/modals/RedirectModal'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import usePageLocale from '~locales/usePageLocale'
@@ -117,8 +117,8 @@ const ticketsToExcel = (
 }
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale(
-    'pages/business/company/[companyId]/data-request/[dataRequestId]'
+  const { t } = usePageLocale(
+    'business/company/[companyId]/data-request/[dataRequestId]'
   )
   const { query } = useRouter()
   const companyId = query.companyId.toString()

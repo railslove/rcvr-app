@@ -29,6 +29,7 @@
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
+    "fsevents": "^2.3.2",
     "iban": "0.0.14",
     "intl-dateformat": "^0.1.4",
     "ky": "^0.25.0",

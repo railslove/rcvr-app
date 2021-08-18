@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany } from '~lib/hooks'
 import { Text, Box } from '~ui/core'
-import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
+import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp/OwnerApp'
 import { ActionList } from '~ui/blocks/ActionList'
 import {
   CheckinsActionCard,

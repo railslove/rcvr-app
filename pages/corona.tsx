@@ -5,7 +5,7 @@ import { Box, Text, Row } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Phone } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { FixedBottomBar } from '~ui/blocks/BottomBar'
+import { FixedBottomBar } from '~ui/blocks/BottomBar/BottomBar'
 import usePageLocale from '~locales/usePageLocale'
 
 export default function CoronaPage() {

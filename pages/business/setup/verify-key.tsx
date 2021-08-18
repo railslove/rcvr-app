@@ -14,7 +14,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import { KeyViewer } from '~ui/blocks/KeyViewer'
+import { KeyViewer } from '~ui/blocks/KeyViewer/KeyViewer'
 import { downloadKey } from '~lib/actions/downloadKey'
 import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'

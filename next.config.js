@@ -20,18 +20,15 @@ module.exports = withImages({
   // needed to place locales under pages/ next to the page to be translated
   pageExtensions: ['tsx'],
 
-  /**
-   * rest
-   */
-  typescript: {
-    ignoreDevErrors: true,
-  },
-
   webpack(config, { isServer }) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     })
+
+    if (isServer) {
+      generateLocalesConfigAndTypes()
+    }
 
     return config
   },
