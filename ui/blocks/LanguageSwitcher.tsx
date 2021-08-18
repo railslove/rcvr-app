@@ -1,16 +1,17 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
-import { SUPPORTED_LANGUAGES } from '~locales/constants'
+import useLocaleContext from '~locales/useLocaleContext'
 import { RoundTriangle } from '~ui/anicons'
 import { Box, Text } from '~ui/core'
 
 const LanguageSwitcher: React.FC = () => {
-  const router = useRouter()
-  const currentLocale = router.locale
   const [isOpen, setIsOpen] = useState(false)
 
-  const availableLocales = SUPPORTED_LANGUAGES.filter(
+  const router = useRouter()
+  const { lang: currentLocale, availableLanguages = [] } = useLocaleContext()
+
+  const availableLocales = availableLanguages.filter(
     (el) => el !== currentLocale
   )
 

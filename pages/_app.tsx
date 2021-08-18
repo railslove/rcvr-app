@@ -3,25 +3,26 @@ import 'typeface-nunito'
 import '~lib/appReset.css'
 
 import React, { ComponentType } from 'react'
-import App, { AppContext, AppProps } from 'next/app'
+import App, { AppContext } from 'next/app'
 import { Global, ThemeProvider } from '@emotion/react'
 
 import { AnimateSharedLayout } from 'framer-motion'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { useA11yFocusRing } from '~lib/hooks'
 import { theme, globalStyles } from '~ui/theme'
-import {
-  LocalesContextProvider,
-  PageLocaleResource,
-} from '~locales/usePageLocale'
+import { LocalesContextProvider } from '~locales/useLocaleContext'
 import loadLocale from '~locales/loadLocale'
 import { AppPropsType, AppType } from 'next/dist/next-server/lib/utils'
 import { NextRouter } from 'next/router'
+import { PageLocaleResource } from '~locales/types'
 
 const queryClient = new QueryClient()
 
 export type RecoverAppProps = {
-  localeContext: PageLocaleResource
+  localeContext: {
+    lang: string
+    values: PageLocaleResource
+  }
 }
 
 export type RecoverAppType = ComponentType<

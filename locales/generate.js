@@ -1,3 +1,5 @@
+const { defaultLocale } = require('./config.defaults.json')
+
 /**
  *
  * @param {object} value
@@ -19,26 +21,38 @@ function generateLocalesConfigAndTypes() {
   const glob = require('glob')
 
   const config = glob
-    .sync('pages/**/*.tsx')
-    .map((el) => el.replace(/^pages\/|\.tsx$/g, ''))
+    .sync('pages/**/*.{ts,tsx}')
+    .map((el) => el.replace(/^pages\/|\.tsx?$/g, ''))
     .filter((el) => el === '_error' || !/^_/.test(el))
     .reduce(
       (acc, el) => {
+        const [pathname, lang] = el.split('.')
+
         const url = `/${
-          el === 'index'
+          /^index/.test(pathname)
             ? ''
-            : /\/index$/.test(el)
-            ? el.replace(/\/index$/, '')
-            : el
+            : /\/index$/.test(pathname)
+            ? pathname.replace(/\/index$/, '')
+            : pathname
         }`
+
+        const locales = acc.pages[url]?.locales || [defaultLocale]
 
         return {
           ...acc,
           pages: {
             ...acc.pages,
-            [url]: [el],
+            [url]: {
+              locales:
+                lang == null || locales.includes(lang)
+                  ? locales
+                  : locales.concat(lang),
+              namespace: pathname,
+            },
           },
-          namespaces: acc.namespaces.concat(el),
+          namespaces: acc.namespaces.includes(pathname)
+            ? acc.namespaces
+            : acc.namespaces.concat(pathname),
         }
       },
       {

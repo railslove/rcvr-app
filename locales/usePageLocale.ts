@@ -1,25 +1,14 @@
-import { useRouter } from 'next/router'
-import { createContext, useContext } from 'react'
+import useLocaleContext from '~locales/useLocaleContext'
 import { PageLocalesResources } from './generated/types'
-
-import placeholderLocale from '~pages/index.de'
-
-export const LocalesContext =
-  createContext<PageLocaleResource>(placeholderLocale)
-
-export const LocalesContextProvider = LocalesContext.Provider
-
-export type PageLocaleResource =
-  PageLocalesResources[keyof PageLocalesResources]
 
 const usePageLocale = <NS extends keyof PageLocalesResources>() => {
   type Result = PageLocalesResources[NS]
 
-  const { locale: lang } = useRouter()
-  const localeContext = useContext(LocalesContext) as Result
+  const { values, lang } = useLocaleContext()
+  const localeValues = values as Result
 
   function translate<NSK extends keyof Result>(key: NSK) {
-    return localeContext[key]
+    return localeValues[key]
   }
 
   return { t: translate, lang }
