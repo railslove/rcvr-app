@@ -59,20 +59,6 @@ function generateLocalesConfigAndTypes() {
       }
     }, {})
 
-  const AsyncLocalesResources = glob
-    .sync('ui/**/*.de.ts')
-    .slice()
-    .map((el) => el.replace(/\.de\.ts$/g, ''))
-    .sort((a, b) => {
-      return (a.length > b.length && 1) || (a.length < b.length && -1) || 0
-    })
-    .reduce((acc, el) => {
-      return {
-        ...acc,
-        [el]: `typeof import('../../${el}.de').default`,
-      }
-    }, {})
-
   fs.writeFileSync(
     'locales/generated/config.json',
     JSON.stringify(config, null, 2)
@@ -83,9 +69,6 @@ function generateLocalesConfigAndTypes() {
     [
       `export type PageLocalesResources = ${serializeLocale(
         PageLocalesResources
-      )}\n`,
-      `export type AsyncLocalesResources = ${serializeLocale(
-        AsyncLocalesResources
       )}`,
       '',
     ].join('\n')
