@@ -3,7 +3,7 @@ import { NextPageContext, NextPage } from 'next'
 import { detect as detectBrowser, BrowserInfo } from 'detect-browser'
 import Link from 'next/link'
 
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 import { Text, Box, Card, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
@@ -15,7 +15,7 @@ export type ErrorProps = {
 }
 
 function DefaultError() {
-  const { t } = useLocale('pages/_error')
+  const { t } = usePageLocale('_error')
 
   return (
     <Text>
@@ -25,7 +25,7 @@ function DefaultError() {
 }
 
 function InvalidPubkeyEncoding() {
-  const { t } = useLocale('pages/_error')
+  const { t } = usePageLocale('_error')
 
   return (
     <>
@@ -54,7 +54,7 @@ const errorMappings = {
 }
 
 const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
-  const { t } = useLocale('pages/_error')
+  const { t } = usePageLocale('_error')
 
   const [browser, setBrowser] = React.useState<BrowserInfo>()
 

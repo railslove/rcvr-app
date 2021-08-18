@@ -6,10 +6,10 @@ import { Text, Box, Row, ButtonLink } from '~ui/core'
 import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 
 const FinishedText: React.FC = () => {
-  const { t } = useLocale('pages/business/setup/finished')
+  const { t } = usePageLocale('business/setup/finished')
 
   switch (BUILD_VARIANT) {
     case 'care': {
@@ -50,7 +50,7 @@ const FinishedText: React.FC = () => {
 }
 
 function SetupSuccessPage() {
-  const { t } = useLocale('pages/business/setup/finished')
+  const { t } = usePageLocale('business/setup/finished')
 
   return (
     <MobileApp logoVariant="big">

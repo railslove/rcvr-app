@@ -1,12 +1,11 @@
-// const withImages = require('next-images')
-const withTranslate = require('next-translate')
+const withImages = require('next-images')
 
 const localesDefaults = require('./locales/config.defaults.json')
-// const { generateLocalesConfigAndTypes } = require('./locales/generate')
+const { generateLocalesConfigAndTypes } = require('./locales/generate')
 
-// generateLocalesConfigAndTypes()
+generateLocalesConfigAndTypes()
 
-module.exports = withTranslate({
+module.exports = withImages({
   /**
    * next-images
    */

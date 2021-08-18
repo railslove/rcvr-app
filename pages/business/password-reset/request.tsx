@@ -5,13 +5,13 @@ import * as React from 'react'
 import * as Yup from 'yup'
 import { postRequestPasswordReset } from '~lib/api'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function PasswordResetRequestPage() {
-  const { t } = useLocale('pages/business/password-reset/request')
+  const { t } = usePageLocale('business/password-reset/request')
   const [loading, setLoading] = React.useState(false)
   const [done, setDone] = React.useState(false)
 

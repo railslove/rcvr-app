@@ -1,13 +1,13 @@
 import React from 'react'
 import Head from 'next/head'
 
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function BusinessIndexPage() {
-  const { t } = useLocale('pages/business/index')
+  const { t } = usePageLocale('business/index')
 
   return (
     <MobileApp logoVariant="big">

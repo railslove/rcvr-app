@@ -8,10 +8,10 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import styled from '@emotion/styled'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 
 const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale('pages/business/setup/keys')
+  const { t } = usePageLocale('business/setup/keys')
   const { privateKey } = owner
   return (
     <MobileApp>

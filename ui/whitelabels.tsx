@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Box } from '~ui/core'
-import { Warning } from './svg'
 import LogoCare from './svg/logo-care.svg'
 import LogoFresenius from './svg/logo-fresenius.svg'
 import LogoHealth from './svg/logo-health.svg'

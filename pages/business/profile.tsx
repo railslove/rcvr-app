@@ -8,7 +8,7 @@ import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { RECOVER_TEAM_EMAIL } from '~locales/constants'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { ActionCard } from '~ui/blocks/ActionCard'
 import { ActionList } from '~ui/blocks/ActionList'
@@ -22,7 +22,7 @@ import { Right } from '~ui/svg'
 import { pricingInfoDuringTest } from '~ui/whitelabels'
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale('pages/business/profile')
+  const { t } = usePageLocale('business/profile')
 
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()

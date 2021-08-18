@@ -6,10 +6,10 @@ import { useQueryClient } from 'react-query'
 import { Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 
 export default function BusinessIndexPage() {
-  const { t } = useLocale('pages/business/logout')
+  const { t } = usePageLocale('business/logout')
 
   const router = useRouter()
   const queryClient = useQueryClient()

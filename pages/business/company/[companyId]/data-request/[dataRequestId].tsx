@@ -19,7 +19,7 @@ import { FilledCircle } from '~ui/core/FilledCircle'
 import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
 import { RedirectModal } from '~ui/modals/RedirectModal'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(

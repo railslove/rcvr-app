@@ -5,7 +5,6 @@ import { ArrowsRight } from '~ui/anicons'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import IBAN from 'iban'
-import useLocaleAsync from '~locales/useLocaleAsync'
 
 const SepaSchema = Yup.object().shape({
   name: Yup.string().required('Kontoinhaber muss angegeben werden.'),

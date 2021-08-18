@@ -3,13 +3,13 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useArea, useLastAreaTickets } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 import { DataList, DataListItem } from '~ui/blocks/DataList'
 import { Box, Text } from '~ui/core'
 import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
-  const { t } = useLocale('pages/business/company/[companyId]/area/[areaId]')
+  const { t } = usePageLocale('business/company/[companyId]/area/[areaId]')
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const areaId = query.areaId.toString()

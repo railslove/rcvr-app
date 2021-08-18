@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { AffiliateCard } from '~ui/blocks/AffiliateCard'
 import { Box, ButtonLink, Text } from '~ui/core'
@@ -10,7 +10,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 
 const SetupIntro: React.FC = () => {
-  const { t } = useLocale('pages/business/setup/intro')
+  const { t } = usePageLocale('business/setup/intro')
 
   switch (BUILD_VARIANT) {
     case 'care':
@@ -35,7 +35,7 @@ const SetupIntro: React.FC = () => {
 }
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
-  const { t } = useLocale('pages/business/setup/intro')
+  const { t } = usePageLocale('business/setup/intro')
   const { query } = useRouter()
 
   React.useEffect(() => {

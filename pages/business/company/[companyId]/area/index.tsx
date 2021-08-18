@@ -18,10 +18,10 @@ import { QrInfoModal } from '~ui/modals/QrInfoModal'
 import { AreaRes, CompanyRes } from '~lib/api'
 import { decrypt } from '~lib/crypto'
 import { sortAreas } from '~lib/interactors'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale('pages/business/company/[companyId]/area/index')
+  const { t } = usePageLocale('business/company/[companyId]/area/index')
 
   const { query } = useRouter()
   const companyId = query.companyId.toString()

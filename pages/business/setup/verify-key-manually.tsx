@@ -11,10 +11,10 @@ import { KeyPaper } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { commitSetupPublicKey } from '~lib/actions'
 import { useQueryClient } from 'react-query'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale('pages/business/setup/verify-key-manually')
+  const { t } = usePageLocale('business/setup/verify-key-manually')
   const router = useRouter()
   const queryClient = useQueryClient()
 

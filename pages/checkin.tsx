@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useMutation, useQueryClient } from 'react-query'
 
 import { isFormal, isRcvrEnv } from '~lib/config'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
@@ -17,7 +17,7 @@ import { Confirmation } from '~ui/blocks/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
 
 export default function CheckinPage() {
-  const { t } = useLocale('pages/checkin')
+  const { t } = usePageLocale('checkin')
 
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())

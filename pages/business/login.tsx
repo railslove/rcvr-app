@@ -7,14 +7,14 @@ import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { login } from '~lib/actions/login'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
-  const { t } = useLocale('pages/business/login')
+  const { t } = usePageLocale('business/login')
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required(t('emailRequired')),

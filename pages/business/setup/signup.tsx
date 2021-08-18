@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 
 import { signup } from '~lib/actions'
 import { phoneValidator } from '~lib/validators/phoneValidator'
@@ -28,7 +28,7 @@ export const InlineLink = styled('a')(
 )
 
 const Avv: React.FC = () => {
-  const { t } = useLocale('pages/business/setup/signup')
+  const { t } = usePageLocale('business/setup/signup')
 
   return (
     <Text variant="fineprint">
@@ -46,7 +46,7 @@ const Avv: React.FC = () => {
 }
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
-  const { t } = useLocale('pages/business/setup/signup')
+  const { t } = usePageLocale('business/setup/signup')
 
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)

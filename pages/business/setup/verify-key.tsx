@@ -19,10 +19,10 @@ import { downloadKey } from '~lib/actions/downloadKey'
 import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
 import { commitSetupPublicKey } from '~lib/actions'
-import useLocale from '~locales/useLocale'
+import usePageLocale from '~locales/usePageLocale'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = useLocale('pages/business/setup/verify-key')
+  const { t } = usePageLocale('business/setup/verify-key')
   const router = useRouter()
   const queryClient = useQueryClient()
 
