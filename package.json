@@ -23,7 +23,7 @@
     "@styled-system/should-forward-prop": "^5.1.5",
     "@zxing/library": "^0.18.6",
     "browserslist-useragent-regexp": "^3.0.0",
-    "camelcase-keys": "^6.2.2",
+    "camelcase-keys": "^7.0.0",
     "date-fns": "^2.22.1",
     "detect-browser": "^5.2.0",
     "dexie": "^3.0.1",
