@@ -45,7 +45,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     rememberMe: Yup.boolean(),
   }
 
-  if (area.companyNeedToShowCoronaTest && !area.testExemption)
+  if (area.companyNeedToShowCoronaTest > 0 && !area.testExemption)
     yupShape['providedHealthDocument'] = Yup.string().required(
       isFormal
         ? 'Sie müssen entweder getestet, genesen oder geimpft sein.'

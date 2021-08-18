@@ -31,6 +31,15 @@ export function decrypt(
   return new TextDecoder().decode(decrypted)
 }
 
+export function validatePrivateKey(
+  publicKey: string,
+  privateKey: string
+): boolean {
+  const text = 'My voice is my passport'
+  const encrypted = encrypt(publicKey, text)
+  return text == decrypt(encrypted, publicKey, privateKey)
+}
+
 type Keypair = {
   privateKey: string
   publicKey: string
