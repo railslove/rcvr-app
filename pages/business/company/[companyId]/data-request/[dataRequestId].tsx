@@ -328,7 +328,9 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               <th>Name</th>
               <th>Adresse</th>
               <th>Telefon</th>
-              {company?.needToShowCoronaTest && <th>Vorgelegtes Dokument</th>}
+              {company?.needToShowCoronaTest > 0 && (
+                <th>Vorgelegtes Dokument</th>
+              )}
               {isCareEnv && <th>Bewohner</th>}
             </tr>
           </thead>
@@ -359,7 +361,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
                     <td>{ticket.guest.name}</td>
                     <td>{ticket.guest.address}</td>
                     <td>{ticket.guest.phone}</td>
-                    {company?.needToShowCoronaTest && (
+                    {company?.needToShowCoronaTest > 0 && (
                       <td>
                         {providedHealthDocumentToString(
                           ticket.guest.providedHealthDocument
