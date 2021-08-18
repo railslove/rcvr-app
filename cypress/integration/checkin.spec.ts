@@ -19,7 +19,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: false,
+      companyNeedToShowCoronaTest: 0,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -77,7 +77,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: false,
+      companyNeedToShowCoronaTest: 0,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -127,7 +127,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: true,
+      companyNeedToShowCoronaTest: 24,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -184,7 +184,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: false,
+      companyNeedToShowCoronaTest: 0,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -235,7 +235,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: false,
+      companyNeedToShowCoronaTest: 0,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -263,7 +263,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: false,
+      companyNeedToShowCoronaTest: 0,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
