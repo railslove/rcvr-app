@@ -13,6 +13,7 @@
     "cypress": "cypress",
     "start:ci": "NODE_ENV=test next dev -- -p 4040",
     "prepare": "husky install",
+    "locales": "node scripts/locales.js",
     "update-supported-browsers": "echo \"module.exports = $(browserslist-useragent-regexp --allowHigherVersions);\" > lib/supportedBrowsers.js"
   },
   "dependencies": {
