@@ -49,6 +49,7 @@ const LanguageSwitcher: React.FC = () => {
 
         <Box
           display={isOpen ? 'flex' : 'none'}
+          flexDirection="column"
           position="absolute"
           top="100%"
           left="-1px"
