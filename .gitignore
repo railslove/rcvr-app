@@ -31,3 +31,6 @@ yarn-error.log*
 
 cypress/screenshots
 cypress/videos
+
+# This file is genrated automatically by the next.config.js script.
+lib/supportedBrowsers.js
