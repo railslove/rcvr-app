@@ -1,6 +1,7 @@
 import 'modern-normalize'
 import 'typeface-nunito'
 import '~lib/appReset.css'
+import '~lib/polyfills'
 
 import React, { ComponentType } from 'react'
 import App, { AppContext } from 'next/app'
@@ -12,9 +13,10 @@ import { useA11yFocusRing } from '~lib/hooks'
 import { theme, globalStyles } from '~ui/theme'
 import { LocalesContextProvider } from '~locales/useLocaleContext'
 import loadLocale from '~locales/loadLocale'
-import { AppPropsType, AppType } from 'next/dist/next-server/lib/utils'
+import { AppPropsType } from 'next/dist/next-server/lib/utils'
 import { NextRouter } from 'next/router'
 import { PageLocaleResource } from '~locales/types'
+import supportedBrowsers from '~lib/supportedBrowsers'
 
 const queryClient = new QueryClient()
 
@@ -33,6 +35,16 @@ export type RecoverAppType = ComponentType<
 
 const RecoverApp: RecoverAppType = ({ Component, pageProps }) => {
   useA11yFocusRing()
+
+  if (
+    typeof navigator != 'undefined' &&
+    !supportedBrowsers.test(navigator.userAgent)
+  ) {
+    alert(
+      'Sorry, dein Browser unterstützt recover nicht. Wenn ein Update nicht hilft, probiere einen anderen Browser.\n\n' +
+        'Sorry, your browser does not support recover. If updating doesn’t help, please try another browser.'
+    )
+  }
 
   return (
     <ThemeProvider theme={theme}>

@@ -1,9 +1,8 @@
-const withImages = require('next-images')
-
-const localesDefaults = require('./locales/config.defaults.json')
+const execSync = require('child_process').execSync
 const { generateLocalesConfigAndTypes } = require('./locales/generate')
 
-generateLocalesConfigAndTypes()
+const withImages = require('next-images')
+const localesDefaults = require('./locales/config.defaults.json')
 
 module.exports = withImages({
   /**
@@ -27,6 +26,7 @@ module.exports = withImages({
     })
 
     if (isServer) {
+      execSync('npm run update-supported-browsers')
       generateLocalesConfigAndTypes()
     }
 

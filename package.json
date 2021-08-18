@@ -12,7 +12,8 @@
     "test": "cypress run",
     "cypress": "cypress",
     "start:ci": "NODE_ENV=test next dev -- -p 4040",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "update-supported-browsers": "echo \"module.exports = $(browserslist-useragent-regexp --allowHigherVersions);\" > lib/supportedBrowsers.js"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
@@ -22,7 +23,8 @@
     "@styled-system/css": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
     "@zxing/library": "^0.18.6",
-    "camelcase-keys": "^6.2.2",
+    "browserslist-useragent-regexp": "^3.0.0",
+    "camelcase-keys": "^7.0.0",
     "date-fns": "^2.22.1",
     "detect-browser": "^5.2.0",
     "dexie": "^3.0.1",
@@ -34,7 +36,7 @@
     "intl-dateformat": "^0.1.4",
     "ky": "^0.25.0",
     "ky-universal": "^0.8.0",
-    "libphonenumber-js": "^1.9.19",
+    "libphonenumber-js": "^1.9.23",
     "long": "^4.0.0",
     "modern-normalize": "^1.1.0",
     "next": "10.2.3",
@@ -44,7 +46,7 @@
     "qrcode": "^1.4.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-dropzone": "^11.3.2",
+    "react-dropzone": "^11.3.4",
     "react-query": "^3.16.0",
     "react-textarea-autosize": "^8.3.3",
     "react-use": "^17.2.4",
@@ -58,7 +60,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.15.0",
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/eslint-plugin": "^11.2.0",
     "@svgr/webpack": "^5.5.0",
