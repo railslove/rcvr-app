@@ -97,7 +97,10 @@ const Center = styled('div')(
   })
 )
 
-type ButtonLinkProps = ButtonProps & { href: string; target?: string }
+type ButtonLinkProps = ButtonProps & {
+  href: string
+  target?: string
+}
 
 export const ButtonLink: React.FC<ButtonLinkProps> = ({
   href,

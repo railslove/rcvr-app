@@ -2,15 +2,26 @@ import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import { AreaRes, patchTicket } from '~lib/api'
 import { useLastTicketsGrouped } from '~lib/hooks'
-import { ActionCard } from '~ui/blocks/ActionCard'
+import { ActionCard } from '~ui/blocks/ActionCard/ActionCard'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Icon, IconButton, Row } from '~ui/core'
 import { Arrows, TinyCheck } from '~ui/svg'
 
-export const CheckinsActionCard: React.FC<{
+export type CheckinsActionCardProps = {
   area: AreaRes
+  texts: {
+    checkedIn: string
+    checkedOut: string
+    checkoutAll: string
+  }
   companyId: string
-}> = ({ area, companyId }) => {
+}
+
+export const CheckinsActionCard: React.FC<CheckinsActionCardProps> = ({
+  area,
+  texts,
+  companyId,
+}) => {
   const { data: ticketsByArea } = useLastTicketsGrouped(companyId)
   const queryClient = useQueryClient()
 
@@ -42,10 +53,12 @@ export const CheckinsActionCard: React.FC<{
         title={area.name}
         subtitle={
           <>
-            <span css={{ whiteSpace: 'nowrap' }}>eingecheckt: {openCount}</span>
+            <span css={{ whiteSpace: 'nowrap' }}>
+              {texts.checkedIn}: {openCount}
+            </span>
             {' – '}
             <span css={{ whiteSpace: 'nowrap' }}>
-              ausgecheckt: {closedCount}
+              {texts.checkedOut}: {closedCount}
             </span>
           </>
         }
@@ -55,7 +68,7 @@ export const CheckinsActionCard: React.FC<{
           <IconButton
             icon={Arrows}
             onClick={checkoutAll}
-            title="Alle Auschecken"
+            title={texts.checkoutAll}
           />
         </ActionCard.Actions>
       )}
