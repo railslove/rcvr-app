@@ -1,34 +1,35 @@
+import de from './index.de'
 import { isFormal, isCareEnv, isHealthEnv } from '~lib/config'
 
-const de = {
-  title1: 'Checkins per QR-Code.',
-  title2: 'Ohne App, einfach für alle.',
+const pl: typeof de = {
+  title1: 'Zameldowanie za pomocą kodu QR.',
+  title2: 'Bez aplikacji, łatwo dla każdego.',
 
   intro: isCareEnv
-    ? 'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.'
+    ? 'Ze względu na obowiązujące przepisy Corona, musisz zdeponować swoje dane kontaktowe, jeśli jesteś w przedsiębiorstwie, które jest zobowiązane do podjęcia środków ochronnych, takich jak zakłady opieki. Aplikacja może być również używana dobrowolnie, aby pomóc w śledzeniu.'
     : isHealthEnv
-    ? 'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Krankenhäuser. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.'
-    : 'ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.',
+    ? 'Ze względu na obowiązujące przepisy Corona, jeśli jesteś w zakładzie, który jest zobowiązany do podjęcia środków ochronnych, takich jak szpitale, musisz przechowywać swoje dane kontaktowe. Aplikacja może być również używana dobrowolnie, aby pomóc w śledzeniu.'
+    : 'to cyfrowa lista kontaktów dla firm i ich gości. Prosta, bezpieczna, szybka.',
 
-  forVisitorsAndGuests: isFormal ? 'Für Besucher und Gäste' : 'Für Gäste',
+  forVisitorsAndGuests: isFormal ? 'Dla odwiedzających i gości' : 'Dla gości',
 
   rcvrProtectsData: isFormal
-    ? 'recover schützt Ihre Daten besser als Papier'
-    : 'recover schützt Deine Daten besser als jedes Papier',
+    ? 'Odzyskiwanie danych chroni je lepiej niż papier'
+    : 'recover protects your data better than any paper',
 
-  scanCode: 'QR-Code scannen',
+  scanCode: 'Zeskanuj kod QR',
 
-  forYourCompany: isFormal ? 'Für Ihre Einrichtung' : 'Für Deinen Betrieb',
+  forYourCompany: isFormal ? 'Dla Twojej instytucji' : 'Dla Twojej firmy',
 
-  yourTickets: isFormal ? 'Ihre Tickets' : 'Deine Tickets',
+  yourTickets: isFormal ? 'Twoje bilety' : 'Twoje bilety',
 
   goodbyePaperwork: isFormal
-    ? 'Tschüss, Zettelwirtschaft! recover ist die digitale Kontaktdatenliste Ihrer Besucher und Gäste. Einfach, sicher, schnell.'
-    : 'Tschüss, Zettelwirtschaft! recover ist die digitale Kontaktdatenliste deiner Gäste. Einfach, sicher, schnell.',
+    ? 'Goodbye, paperwork! recover to cyfrowa lista kontaktów Twoich gości i odwiedzających. Prosta, bezpieczna, szybka.'
+    : 'Bye, paperwork! recover to cyfrowa lista danych kontaktowych Twoich gości. Prosto, bezpiecznie, szybko.',
 
   recoverForCompanies: isFormal
-    ? 'Recover für Einrichtungen'
-    : 'Recover für Betriebe',
+    ? 'Odzyskaj dla zakładów pracy'
+    : 'Odzyskaj dla zakładów pracy',
 
   whatIsRecoverLink: isCareEnv
     ? 'https://recovercare.de/'
@@ -36,7 +37,7 @@ const de = {
     ? 'https://www.recover-health.de'
     : 'https://www.recoverapp.de/',
 
-  whatIsRecoverLinkText: 'Was ist recover?',
+  whatIsRecoverLinkText: 'Co to jest odzyskanie?',
 }
 
-export default de
+export default pl

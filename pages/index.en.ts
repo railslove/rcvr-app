@@ -1,7 +1,7 @@
 import { isFormal, isCareEnv, isHealthEnv } from '~lib/config'
-import indexDe from '~pages/index.de'
+import de from '~pages/index.de'
 
-const en: typeof indexDe = {
+const en: typeof de = {
   title1: 'Checkins via QR code.',
   title2: 'Without app, easy for everyone.',
 
