@@ -23,7 +23,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     !supportedBrowsers.test(navigator.userAgent)
   ) {
     alert(
-      'Ihr Browser wird nicht unterstützt. Die Seite wird eventuell nicht funktionieren.'
+      'Sorry, dein Browser unterstützt recover nicht. Wenn ein Update nicht hilft, probiere einen anderen Browser.\n\n' +
+        'Sorry, your browser does not support recover. If updating doesn’t help, please try another browser.'
     )
   }
 
