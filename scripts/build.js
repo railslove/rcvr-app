@@ -20,4 +20,5 @@ if (isCareFeatureBranch || isCareEnvBranch) {
   console.log('No automatic BUILD_VARIANT detected. Using default from .env')
 }
 
+execSync('npm run update-supported-browsers', { stdio: 'inherit' })
 execSync('npm run next-build', { stdio: 'inherit' })
