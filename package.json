@@ -18,7 +18,7 @@
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@stripe/react-stripe-js": "^1.4.1",
-    "@stripe/stripe-js": "^1.15.0",
+    "@stripe/stripe-js": "^1.17.0",
     "@styled-system/css": "^5.1.5",
     "@styled-system/should-forward-prop": "^5.1.5",
     "@zxing/library": "^0.18.6",
