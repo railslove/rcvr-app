@@ -120,6 +120,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { t } =
     usePageLocale<'business/company/[companyId]/data-request/[dataRequestId]'>()
   const { query } = useRouter()
+  const { data: companies } = useCompanies()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()
   const { data: company } = useCompany(companyId)

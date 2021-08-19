@@ -13,10 +13,10 @@ import { useA11yFocusRing } from '~lib/hooks'
 import { theme, globalStyles } from '~ui/theme'
 import { LocalesContextProvider } from '~locales/useLocaleContext'
 import loadLocale from '~locales/loadLocale'
-import { AppPropsType } from 'next/dist/next-server/lib/utils'
 import { NextRouter } from 'next/router'
 import { PageLocaleResource } from '~locales/types'
 import supportedBrowsers from '~lib/supportedBrowsers'
+import { AppPropsType } from 'next/dist/shared/lib/utils'
 
 const queryClient = new QueryClient()
 
