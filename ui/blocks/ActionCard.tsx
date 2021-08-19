@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Card, SRText, Row, Text, Box, Icon } from '~ui/core'
 
 interface Props {
@@ -18,32 +19,54 @@ interface Composition {
 type AreaCardCmps = React.FC<Props> & Composition
 
 export const ActionCard: AreaCardCmps = ({ href, as, onClick, children }) => {
+  const router = useRouter()
+
+  const isTargetOrNonInteractiveElement = (event: React.MouseEvent) => {
+    if (event.target == event.currentTarget) {
+      return true
+    }
+
+    let parentNode = event.target as HTMLElement
+    let isInteractive = false
+
+    while (!isInteractive && parentNode && parentNode != event.currentTarget) {
+      if (
+        ['A', 'INPUT', 'BUTTON'].includes(parentNode.nodeName) ||
+        parentNode.hasAttribute('href') ||
+        parentNode.hasAttribute('onClick') ||
+        parentNode.hasAttribute('for')
+      ) {
+        isInteractive = true
+      }
+      parentNode = parentNode.parentNode as HTMLElement
+    }
+
+    return !isInteractive
+  }
+
+  const navigateToHref = (event) => {
+    if (as && isTargetOrNonInteractiveElement(event)) {
+      event.preventDefault()
+      router.push(as)
+    }
+  }
+
   return (
     <Card
-      css={{ position: 'relative', textAlign: 'left' }}
+      css={{ position: 'relative', textAlign: 'left', cursor: 'pointer' }}
       as={onClick ? 'button' : 'div'}
-      onClick={onClick}
+      onClick={onClick ? onClick : navigateToHref}
     >
       <>
         <Row flexWrap="wrap" alignItems="center" px={4} py={2}>
           {children}
         </Row>
         {href && (
-          <Link href={href} as={as}>
-            <a
-              css={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                zIndex: 1,
-                cursor: 'pointer',
-              }}
-            >
-              <SRText>Zur Seite navigieren</SRText>
-            </a>
-          </Link>
+          <SRText>
+            <Link href={href} as={as}>
+              Zur Seite navigieren
+            </Link>
+          </SRText>
         )}
       </>
     </Card>
