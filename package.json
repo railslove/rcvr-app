@@ -15,7 +15,7 @@
     "update-supported-browsers": "echo \"module.exports = $(browserslist-useragent-regexp --allowHigherVersions);\" > lib/supportedBrowsers.js"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.0",
+    "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.15.0",
@@ -63,7 +63,7 @@
     "@svgr/webpack": "^5.5.0",
     "@types/file-saver": "^2.0.3",
     "@types/iban": "0.0.32",
-    "@types/node": "^15.6.1",
+    "@types/node": "^16.6.2",
     "@types/qrcode": "^1.4.1",
     "@types/react": "17.0.18",
     "@types/styled-system": "^5.1.9",
