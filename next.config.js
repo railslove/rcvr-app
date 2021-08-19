@@ -10,7 +10,7 @@ module.exports = withImages({
    */
   fileExtensions: ['jpg', 'jpeg', 'png', 'gif'],
   /**
-   * next-translate
+   * i18n support
    */
   i18n: {
     ...localesDefaults,
