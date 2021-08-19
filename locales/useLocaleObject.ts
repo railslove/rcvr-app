@@ -17,7 +17,7 @@ const useLocaleObject = <K extends string, V extends unknown>(
   type L = typeof currentLocale
 
   function t<K extends keyof L>(key: K): L[K] {
-    return currentLocale[key]
+    return currentLocale ? currentLocale[key] : (key as L[K])
   }
 
   return { t, lang: language }
