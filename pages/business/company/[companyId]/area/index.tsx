@@ -5,8 +5,8 @@ import { saveAs } from 'file-saver'
 
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { CurrentOwner, useCompany, useModals } from '~lib/hooks'
-import { IconButton } from '~ui/core'
-import { Edit, Trash, Download } from '~ui/svg'
+import { Box, Button, Checkbox, Icon, IconButton } from '~ui/core'
+import { Edit, Trash, Download, EyeOpen } from '~ui/svg'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
 import { ActionList } from '~ui/blocks/ActionList'
 import { ActionCard } from '~ui/blocks/ActionCard'
@@ -18,10 +18,13 @@ import { QrInfoModal } from '~ui/modals/QrInfoModal'
 import { AreaRes, CompanyRes } from '~lib/api'
 import { decrypt } from '~lib/crypto'
 import { sortAreas } from '~lib/interactors'
+import { Form, Formik } from 'formik'
+import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { query } = useRouter()
-  const companyId = query.companyId.toString()
+  const router = useRouter()
+  const companyId = router.query.companyId.toString()
   const { data: company } = useCompany(companyId)
   const { modals, openModal } = useModals({
     delete: AreaDeleteModal,
@@ -69,6 +72,16 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
     }
   }
 
+  const navigateTo = (href) => () => {
+    router.push(href)
+  }
+
+  const areas = sortAreas(company?.areas)
+
+  const handleSubmit = async (values, _bag) => {
+    console.log(values)
+  }
+
   return (
     <OwnerApp title={`${company?.name ?? ''} – Bereiche`}>
       <BackLink
@@ -83,44 +96,89 @@ const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
           title="Bereich hinzufügen..."
           onClick={() => openModal('data', { companyId: companyId })}
         />
-        {sortAreas(company?.areas).map((area) => (
-          <ActionCard
-            key={area.id}
-            href="/business/company/[companyId]/area/[areaId]"
-            as={`/business/company/${companyId}/area/${area.id}`}
-          >
-            <ActionCard.Main title={area.name} />
-            <ActionCard.Actions>
-              <IconButton
-                icon={Download}
-                color="bluegrey.700"
-                onClick={handleDownload(area)}
-                title="QR-Code"
-              />
-              <IconButton
-                icon={Edit}
-                color="yellow.500"
-                onClick={() =>
-                  openModal('data', {
-                    type: 'edit',
-                    areaId: area.id,
-                    name: area.name,
-                    testExemption: area.testExemption,
-                  })
-                }
-                title="Ändern"
-              />
-              <IconButton
-                icon={Trash}
-                color="red.500"
-                onClick={() => openModal('delete')}
-              />
-            </ActionCard.Actions>
-          </ActionCard>
-        ))}
+
+        <Formik
+          initialValues={Object.assign(
+            {},
+            ...areas.map((area) => ({ [`selected-${area.id}`]: false }))
+          )}
+          onSubmit={handleSubmit}
+        >
+          <Form>
+            {areas.map((area) => (
+              <ActionCard
+                key={area.id}
+                href="/business/company/[companyId]/area/[areaId]"
+                as={`/business/company/${companyId}/area/${area.id}`}
+              >
+                <Checkbox name={`selected-${area.id}`} label={area.name} />
+                <ExpandArea></ExpandArea>
+                <ActionCard.Actions>
+                  <IconButton
+                    icon={Download}
+                    color="bluegrey.700"
+                    onClick={handleDownload(area)}
+                    title="QR-Code"
+                  />
+                  <IconButton
+                    icon={EyeOpen}
+                    color="bluegrey.700"
+                    onClick={navigateTo(
+                      `/business/company/${companyId}/area/${area.id}`
+                    )}
+                    title="Details"
+                  />
+                  <IconButton
+                    icon={Edit}
+                    color="yellow.500"
+                    onClick={() =>
+                      openModal('data', {
+                        type: 'edit',
+                        areaId: area.id,
+                        name: area.name,
+                        testExemption: area.testExemption,
+                      })
+                    }
+                    title="Ändern"
+                  />
+                  <IconButton
+                    icon={Trash}
+                    color="red.500"
+                    onClick={() => openModal('delete')}
+                  />
+                </ActionCard.Actions>
+              </ActionCard>
+            ))}
+            <Box height={4} />
+            <Button type="submit">
+              <DeleteAllContent>
+                <Icon size={4} color="red.500" icon={Trash} />
+                <ButtonText>Ausgewählte Bereiche löschen</ButtonText>
+              </DeleteAllContent>
+            </Button>
+          </Form>
+        </Formik>
       </ActionList>
     </OwnerApp>
   )
 }
+
+const ExpandArea = styled('div')(
+  css({
+    flexGrow: 1,
+  })
+)
+
+const DeleteAllContent = styled('div')(
+  css({
+    display: 'flex',
+  })
+)
+
+const ButtonText = styled('div')(
+  css({
+    marginLeft: '0.5rem',
+  })
+)
 
 export default withOwner()(AreasIndexPage)
