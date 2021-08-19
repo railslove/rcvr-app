@@ -1,0 +1,22 @@
+{
+  "title": "Cyfrowy checkin poprzez kod QR.",
+  "subtitle": "Bez aplikacji, po prostu dla każdego.",
+  "forVisitorsAndGuests": "Dla gości.",
+  "forVisitorsAndGuests_f": "Dla zwiedzających i gości.",
+  "rcvrProtectsData": "recover chroni Twoje dane lepiej niż jakakolwiek lista papierowa.",
+  "rcvrProtectsData_f": "recover chroni Twoje dane lepiej niż jakakolwiek lista papierowa.",
+  "scanCode": "Skanowanie kodu QR.",
+  "yourTickets": "Twoje checkiny.",
+  "yourTickets_f": "Twoje bilety.",
+  "forYourCompany": "Dla Twojej firmy.",
+  "forYourCompany_f": "Dla Twojej firmy.",
+  "goodbyePaperwork": "Żegnaj, papierowy chaosie! to cyfrowa lista kontaktów Twoich gości. Prosto, bezpiecznie, szybko.",
+  "goodbyePaperwork_f": "Żegnaj, papierowy chaosie! to cyfrowa lista kontaktów Twoich gości. Prosto, bezpiecznie, szybko.",
+  "recoverForCompanies": "Recover dla firm.",
+  "recoverForCompanies_f": "Recover dla instytucji.",
+  "whatIsRecover": "Co to jest Recover?",
+  "invalidQRCode": "Ostrzeżenie. Ten kod QR nie jest częścią RecoverApp. Możesz otworzyć tę stronę, ale wszystkie dane, które tam wpiszesz, zostaną wysłane do {{hostname}}.",
+  "invalidQRCode": "Ostrzeżenie. Ten kod QR nie jest częścią RecoverApp. Możesz otworzyć tę stronę, ale wszystkie dane, które tam wpiszesz, zostaną wysłane do {{hostname}}.",
+  "scanCodeArea": "Zeskanuj kod QR, który znajdziesz na tablicach firm uczestniczących w programie.",
+  "scanCodeArea_f": "Zeskanuj kod QR w strefie wejściowej."
+}
