@@ -1,29 +1,42 @@
-import * as React from 'react'
-import { isCareEnv, isFormal, formalPostfix, isHealthEnv } from '~lib/config'
+import React from 'react'
+
+import { MobileApp } from '~ui/layouts/MobileApp'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
-import { MobileApp } from '~ui/layouts/MobileApp'
-import { translate } from '~lib/translate'
+
+import { isRcvrEnv } from '~lib/config'
+
+import usePageLocale from '~locales/usePageLocale'
 
 export default function IndexPage() {
+  const { t } = usePageLocale<'index'>()
+
   return (
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
-        {translate('title')}<br />{translate('subtitle')}
+        {t('title1')}
+        <br />
+        {t('title2')}
       </Text>
       <Box height={4} />
       <Text>
-        <p>{translate('indexIntro')}</p>
+        {isRcvrEnv ? (
+          <>
+            <b>recover</b> <p>{t('intro')}</p>
+          </>
+        ) : (
+          <p>{t('intro')}</p>
+        )}
       </Text>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {translate(`forVisitorsAndGuests`)}
+          {t('forVisitorsAndGuests')}
         </Text>
         <Box height={4} />
         <Text>
-          <p>{translate(`rcvrProtectsData`)}</p>
+          <p>{t('rcvrProtectsData')}</p>
         </Text>
         <Box height={8} />
 
@@ -32,40 +45,30 @@ export default function IndexPage() {
           left={<ArrowsRight color="green" />}
           right={<ArrowsLeft color="green" />}
         >
-          {translate('scanCode')}
+          {t('scanCode')}
         </ButtonLink>
         <Box height={4} />
-        <ButtonLink href="/my-checkins">
-        {translate(`yourTickets`)}
-        </ButtonLink>
+        <ButtonLink href="/my-checkins">{t('yourTickets')}</ButtonLink>
       </Card>
       <Box height={4} />
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-        {translate(`forYourCompany`)}
+          {t(`forYourCompany`)}
         </Text>
         <Box height={4} />
         <Text>
-          <p>{translate(`goodbyePaperwork`)}</p>
+          <p>{t('goodbyePaperwork')}</p>
         </Text>
         <Box height={8} />
-        <ButtonLink href="/business">
-        {translate(`recoverForCompanies`)}
-        </ButtonLink>
+        <ButtonLink href="/business">{t('recoverForCompanies')}</ButtonLink>
       </Card>
       <Row justifyContent="center" my={6}>
         <a
-          href={
-            isCareEnv
-              ? 'https://recovercare.de/'
-              : isHealthEnv
-              ? 'https://www.recover-health.de'
-              : 'https://www.recoverapp.de/'
-          }
+          href={t('whatIsRecoverLink')}
           target="_blank"
           rel="noreferrer noopener"
         >
-          <Text variant="link">{translate('whatIsRecover')}</Text>
+          <Text variant="link">{t('whatIsRecoverLinkText')}</Text>
         </a>
       </Row>
     </MobileApp>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { ActionCard } from '~ui/blocks/ActionCard'
+import { ActionCard } from '~ui/blocks/ActionCard/ActionCard'
 import { IconButton } from '~ui/core'
 import { Edit, Trash } from '~ui/svg'
 import { pdfType } from '~ui/whitelabels'

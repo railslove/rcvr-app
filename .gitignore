@@ -31,3 +31,10 @@ yarn-error.log*
 
 cypress/screenshots
 cypress/videos
+.eslintcache
+
+# generated files
+locales/generated
+
+# This file is genrated automatically by the next.config.js script.
+lib/supportedBrowsers.js

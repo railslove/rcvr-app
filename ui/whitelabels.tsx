@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Box } from '~ui/core'
-import { Warning } from './svg'
 import LogoCare from './svg/logo-care.svg'
 import LogoFresenius from './svg/logo-fresenius.svg'
 import LogoHealth from './svg/logo-health.svg'
@@ -18,63 +17,12 @@ const envs = {
     logoBigHeight: '40px',
     privacyUrl: 'https://railslove.com/privacy/',
     formalAddress: false,
+    introText:
+      'Durch die aktuellen Corona-Verordnungen musst du Deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B. Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
-    instruction: 'Account erstellen',
-    
-    setupIntro: (
-      <>
-        <p>
-          Seit Corona sind viele Betriebe und Einrichtungen verpflichtet,
-          Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! Mit recover
-          führst Du diese Liste digital. Um die Daten deiner Gäste zu schützen,
-          werden sie von der App verschlüsselt. Während des Onboardings
-          erstellst Du daher in wenigen Schritten ein digitales Schlüsselpaar.
-        </p>
-        <p>
-          Nach dem Onboarding kannst Du Dich bei uns melden um zusammen mit
-          unserem Team die Echtheit deiner Daten zu prüfen
-        </p>
-        <p>
-          Die Einrichtung von recover dauert ca. 10 Min. Bist Du bereit? Dann
-          lass uns starten.
-        </p>
-      </>
-    ),
-    signupText:
-      'Mit deinem Account kannst du QR Codes erstellen und Checkins deiner Gäste verwalten.',
-    privateKeyExplanation: (
-      <>
-        <p>
-          Wir freuen uns, dass du recover nutzt!
-          <span role="img" aria-label="Hurra!">
-            🎉
-          </span>
-        </p>
-        <p>
-          Um die Echtheit deiner Daten zu überprüfen, werden wir uns bald per
-          E-Mail bei dir melden.
-        </p>
-        <p>
-          <strong>Nächster Schritt: </strong>
-          <br />
-          Ein Schlüssel wird erzeugt mit dem die Daten deiner Kunden
-          verschlüsselt werden.
-          <br />
-          Bitte wähle hier aus, wie du den Schlüssel verwahren möchtest.
-        </p>
-        <Box height={4} />
-        <div>
-          <Warning />
-        </div>
-        <Box height={4} />
-        <p>
-          <strong>
-            Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.
-          </strong>
-        </p>
-      </>
-    ),
+    indexIntro:
+      'recover ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.',
     verifyPrivateKeyExplanation: (
       <>
         <p>
@@ -87,19 +35,6 @@ const envs = {
           Zur Bestätigung, dass du den Schlüssel erhalten hast, lade den
           Schlüssel hier nochmal hoch.
         </p>
-      </>
-    ),
-    finishedText: (
-      <>
-        <p>
-          Wir freuen uns, dass Du dabei bist! Dein Account ist jetzt vollständig
-          eingerichtet.
-        </p>
-        <p>
-          Du kannst Dich gern bei uns melden, um gemeinsam Deine Daten zu
-          prüfen.
-        </p>
-        <p>Jetzt kannst Du Betriebe, Bereiche und QR-Codes erstellen.</p>
       </>
     ),
     pdfType: 'Zusatz-Informationen',
@@ -137,51 +72,12 @@ const envs = {
     logoBigHeight: '40px',
     privacyUrl: 'https://www.recovercare.de/datenschutzerklarung',
     formalAddress: true,
+    indexIntro:
+      'recover ist die digitale Kontaktdatenliste für Pflegeeinrichtungen, deren Besucher und Gäste. Einfach, sicher, schnell.',
+    introText:
+      'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Pflegeeinrichtungen. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Pflegeeinrichtungen | recover',
     pageTitle: 'recover care',
-    instruction: 'Account erstellen',
-    setupIntro: (
-      <>
-        <p>
-          Mit recover führen Sie die Kontaktdatenliste Ihrer Besucher digital.
-          Um die Daten zu schützen, werden diese von der App verschlüsselt.
-        </p>
-        <p>Die Einrichtung von recover dauert ca. 10 Min.</p>
-      </>
-    ),
-    signupText: '',
-    privateKeyExplanation: (
-      <>
-        <p>
-          <strong>Nächster Schritt: </strong>
-          <br />
-          Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.
-          <br />
-          Bitte wählen Sie hier aus, wie Sie den Schlüssel verwahren möchten.
-        </p>
-        <Box height={4} />
-        <div>
-          <Warning />
-        </div>
-        <Box height={4} />
-        <p>
-          <strong>
-            Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
-          </strong>
-        </p>
-      </>
-    ),
-    contactInformation: (
-      <>
-        <p>
-          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
-          Sie sich gern bei uns:{'  '}
-          <a href="tel:022197356159">
-            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
-          </a>
-        </p>
-      </>
-    ),
     verifyPrivateKeyExplanation: (
       <>
         <p>
@@ -191,25 +87,6 @@ const envs = {
           </strong>
         </p>
         <Box height={4} />
-      </>
-    ),
-    finishedText: (
-      <>
-        <p>
-          Wir freuen uns, dass Sie dabei sind! Ihr Account ist jetzt vollständig
-          eingerichtet.
-        </p>
-        <p>
-          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
-          Sie sich gern bei uns:{'  '}
-          <a href="tel:022197356159">
-            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
-          </a>
-        </p>
-        <p>
-          Jetzt können Sie Ihre Betriebe, Häuser und Bereiche anlegen, sowie
-          QR-Codes für die Besucher erstellen.
-        </p>
       </>
     ),
     pdfType: 'Hygienevorschriften',
@@ -233,51 +110,12 @@ const envs = {
     logoBigHeight: '40px',
     privacyUrl: 'https://www.recover-health.de/datenschutzerklarung',
     formalAddress: true,
+    indexIntro:
+      'recover ist die digitale Kontaktdatenliste für Krankenhäuser, deren Besucher und Gäste. Einfach, sicher, schnell.',
+    introText:
+      'Durch die aktuellen Corona-Verordnungen müssen Sie Ihre Kontaktdaten hinterlegen, wenn Sie in einem Betrieb sind der zu Schutzmaßnahmen verpflichtet ist, wie z.B Krankenhäuser. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
     title: 'Für Krankenhäuser | recover',
     pageTitle: 'recover health',
-    instruction: 'Account erstellen',
-    setupIntro: (
-      <>
-        <p>
-          Mit recover führen Sie die Kontaktdatenliste Ihrer Besucher digital.
-          Um die Daten zu schützen, werden diese von der App verschlüsselt.
-        </p>
-        <p>Die Einrichtung von recover dauert ca. 10 Min.</p>
-      </>
-    ),
-    signupText: '',
-    privateKeyExplanation: (
-      <>
-        <p>
-          <strong>Nächster Schritt: </strong>
-          <br />
-          Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.
-          <br />
-          Bitte wählen Sie hier aus, wie Sie den Schlüssel verwahren möchten.
-        </p>
-        <Box height={4} />
-        <div>
-          <Warning />
-        </div>
-        <Box height={4} />
-        <p>
-          <strong>
-            Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.
-          </strong>
-        </p>
-      </>
-    ),
-    contactInformation: (
-      <>
-        <p>
-          Falls Sie Fragen zu Ihrem Account und zur Schlüsseldatei haben, melden
-          Sie sich gern bei uns:{'  '}
-          <a href="tel:022197356159">
-            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
-          </a>
-        </p>
-      </>
-    ),
     verifyPrivateKeyExplanation: (
       <>
         <p>
@@ -287,22 +125,6 @@ const envs = {
           </strong>
         </p>
         <Box height={4} />
-      </>
-    ),
-    finishedText: (
-      <>
-        <p>Ihr Account ist jetzt vollständig eingerichtet.</p>
-        <p>
-          Falls Sie Fragen zu Ihrem Account und zum Entschlüsseln der Daten
-          haben, melden Sie sich gern bei uns:{'  '}
-          <a href="tel:022197356159">
-            BFS Service GmbH 0221/97356-159 oder 0221/97356-160
-          </a>
-        </p>
-        <p>
-          Jetzt können Sie Ihre Betriebe, Häuser und Bereiche anlegen, sowie
-          QR-Codes für die Besucher erstellen.
-        </p>
       </>
     ),
     pdfType: 'Hygienevorschriften',
@@ -335,57 +157,12 @@ const envs = {
     privacyUrl:
       'https://www.hs-fresenius.de/datenschutzerklaerung-recover-app/',
     formalAddress: true,
+    introText:
+      'Bitte geben Sie Ihre Kontaktdaten ein, wenn Sie sich in diesem Raum aufhalten. Dies ist Teil der verpflichtenden Hygiene- und Schutzmaßnahmen am Campus und dient der Nachverfolgung in einem Infektionsfall.',
     title: 'Für Betriebe | recover',
     pageTitle: 'recover',
     instruction: 'So nutzt Du recover für Deinen Betrieb',
-    setupIntro: (
-      <>
-        <p>
-          Seit Corona sind viele Betriebe und Einrichtungen verpflichtet,
-          Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! Mit recover
-          führst Du diese Liste digital. Um die Daten deiner Gäste zu schützen,
-          werden sie von der App verschlüsselt. Während des Onboardings
-          erstellst Du daher in wenigen Schritten ein digitales Schlüsselpaar.
-        </p>
-        <p>
-          Nach dem Onboarding kannst Du Dich bei uns melden um zusammen mit
-          unserem Team die Echtheit deiner Daten zu prüfen
-        </p>
-        <p>
-          Die Einrichtung von recover dauert ca. 10 Min. Bist Du bereit? Dann
-          lass uns starten.
-        </p>
-      </>
-    ),
     signupText: '',
-    privateKeyExplanation: (
-      <>
-        <p>
-          Wir freuen uns, dass du recover nutzt!
-          <span role="img" aria-label="Hurra!">
-            🎉
-          </span>
-        </p>
-        <p>
-          Um die Echtheit deiner Daten zu überprüfen, werden wir uns bald per
-          E-Mail bei dir melden.
-        </p>
-        <p>
-          <strong>Nächster Schritt: </strong>
-          <br />
-          Bitte klicke auf &quot;Schlüssel herunterladen&quot;. Das erzeugt eine
-          Schlüsseldatei und startet den Download.
-        </p>
-        <p>
-          <strong>Bitte speichere die Datei auf deinem Rechner ab.</strong>
-        </p>
-        <p>
-          <strong>
-            Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.
-          </strong>
-        </p>
-      </>
-    ),
     verifyPrivateKeyExplanation: (
       <>
         <p>
@@ -397,19 +174,6 @@ const envs = {
         <p>
           Lade die Schlüsseldatei deshalb hier zur Bestätigung noch einmal hoch.
         </p>
-      </>
-    ),
-    finishedText: (
-      <>
-        <p>
-          Wir freuen uns, dass Du dabei bist! Dein Account ist jetzt vollständig
-          eingerichtet.
-        </p>
-        <p>
-          Du kannst Dich gern bei uns melden, um gemeinsam Deine Daten zu
-          prüfen.
-        </p>
-        <p>Jetzt kannst Du Betriebe, Bereiche und QR-Codes erstellen.</p>
       </>
     ),
     pricingInfoDuringTest: (
@@ -428,20 +192,19 @@ const envs = {
   },
 }
 
+export type WhiteLabelBuildVariant = keyof typeof envs
 
+export const BUILD_VARIANT: WhiteLabelBuildVariant =
+  (process.env.NEXT_PUBLIC_BUILD_VARIANT as WhiteLabelBuildVariant) || 'rcvr'
 
 const {
   pdfType,
-  contactInformation,
   indexIntro,
   title,
   pageTitle,
   instruction,
-  setupIntro,
   signupText,
-  privateKeyExplanation,
   verifyPrivateKeyExplanation,
-  finishedText,
   introText,
   formalAddress,
   privacyUrl,
@@ -458,16 +221,12 @@ const {
 
 export {
   pdfType,
-  contactInformation,
   indexIntro,
   title,
   pageTitle,
   instruction,
-  setupIntro,
   signupText,
-  privateKeyExplanation,
   verifyPrivateKeyExplanation,
-  finishedText,
   introText,
   formalAddress,
   privacyUrl,
