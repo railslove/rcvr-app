@@ -1,25 +1,77 @@
 import { loadStripe } from '@stripe/stripe-js'
 import formatDate from 'intl-dateformat'
-import Link from 'next/link'
+import Link from '~ui/core/Link/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
-import { ActionCard } from '~ui/blocks/ActionCard'
+import { ActionCard } from '~ui/blocks/ActionCard/ActionCard'
 import { ActionList } from '~ui/blocks/ActionList'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Divider, Text } from '~ui/core'
-import { OwnerApp } from '~ui/layouts/OwnerApp'
+import { OwnerApp } from '~ui/layouts/OwnerApp/OwnerApp'
 import { CheckoutSelectionModal } from '~ui/modals/CheckoutSelectionModal'
 import { OwnerModal } from '~ui/modals/OwnerModal'
 import { SubscribedModal } from '~ui/modals/SubscribedModal'
 import { Right } from '~ui/svg'
-import { pricingInfoDuringTest } from '~ui/whitelabels'
+import { BUILD_VARIANT } from '~ui/whitelabels'
+import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
+
+const PricingInfoDuringTest: React.FC = () => {
+  const { t } = usePageLocale<'business/profile'>()
+
+  switch (BUILD_VARIANT) {
+    case 'care': {
+      return <p>{t('pricingInfo_care')}</p>
+    }
+    case 'health': {
+      return (
+        <>
+          <p>{t('pricingInfo_health1')}</p>
+          <p>{t('pricingInfo_health2')}</p>
+        </>
+      )
+    }
+    case 'fresenius': {
+      return (
+        <p>
+          {t('pricingInfo_fresenius1')}
+          <br />
+          {t('pricingInfo_fresenius2')}
+          <br />
+          {t('pricingInfo_fresenius3')}:{' '}
+          <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+        </p>
+      )
+    }
+    default: {
+      return (
+        <p>
+          {t('pricingInfo_rcvr1')}
+          <br />
+          <br />
+          {t('pricingInfo_rcvr2')}
+          <br />
+          <br />
+          {t('pricingInfo_rcvr3')}: <RecoverTeamEmailLink />
+          <RecoverTeamEmailLink />
+          <br />
+          <br />
+          {t('pricingInfo_rcvr4')}:{' '}
+          <RecoverTeamEmailLink subject={t('pricingInfoEmailSubject_rcvr')} />
+        </p>
+      )
+    }
+  }
+}
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = usePageLocale<'business/profile'>()
+
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()
   const { query } = useRouter()
@@ -83,7 +135,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   }, [owner])
 
   return (
-    <OwnerApp title="Mein Profil">
+    <OwnerApp title={t('pageTitle')}>
       {modals}
       <Loading show={redirecting} />
 
@@ -91,42 +143,39 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
         onClick={() => openEditOwner()}
         right={<ArrowsRight color="green" />}
       >
-        Profil bearbeiten
+        {t('editProfile')}
       </Button>
 
       <Divider />
       <Text as="h3" variant="h2">
-        Meine Mitgliedschaft
+        {t('myMembership')}
       </Text>
       <Box height={4} />
       {hasCompanies ? (
         <SubscriptionMessage owner={owner} />
       ) : (
         <Callout>
-          <Text>
-            {isFormal ? 'Sie müssen' : 'Du musst'} zuerst einen Betrieb anlegen.
-          </Text>
+          <Text>{t('hasNoCompaniesMessage')}</Text>
         </Callout>
       )}
       <Box height={4} />
 
       {!hasSubscription && hasCompanies && (
         <>
-          <Text>{pricingInfoDuringTest}</Text>
+          <Text>
+            <PricingInfoDuringTest />
+          </Text>
           <Box height={4} />
 
           {isHealthEnv || isCareEnv ? (
             <Text>
+              <p>{t('writeEmailMessage')}</p>
               <p>
-                Wenn sie recover weiter nutzen möchten, schreiben sie uns eine
-                E-Mail.
-              </p>
-              <p>
-                <a href="mailto:team@recoverapp.de">
+                <RecoverTeamEmailLink>
                   <Button right={<ArrowsRight color="pink" />}>
-                    Email schreiben
+                    {t('writeEmailButtonText')}
                   </Button>
-                </a>
+                </RecoverTeamEmailLink>
               </p>
             </Text>
           ) : (
@@ -134,7 +183,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
               onClick={() => openCheckout()}
               right={<ArrowsRight color="pink" />}
             >
-              Jetzt upgraden
+              {t('upgradeNow')}
             </Button>
           )}
         </>
