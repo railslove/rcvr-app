@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "npm run generated",
     "dev": "next dev",
+    "prebuild": "npm run generated",
     "build": "node ./scripts/build.js",
     "next-build": "next build",
     "start": "next start",
@@ -12,6 +14,9 @@
     "test": "cypress run",
     "cypress": "cypress",
     "start:ci": "NODE_ENV=test next dev -- -p 4040",
+    "prepare": "husky install",
+    "locales": "node scripts/locales.js",
+    "generated": "npm run locales && npm run update-supported-browsers",
     "update-supported-browsers": "echo \"module.exports = $(browserslist-useragent-regexp --allowHigherVersions);\" > lib/supportedBrowsers.js"
   },
   "dependencies": {
@@ -79,6 +84,8 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
     "typescript": "^4.3.5"
   },
@@ -88,5 +95,8 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js}": "eslint --cache --fix"
   }
 }
