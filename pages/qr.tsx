@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import * as React from 'react'
-import { isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
+import usePageLocale from '~locales/usePageLocale'
+
 export default function QRCodePage() {
+  const { t } = usePageLocale('qr')
   const videoEl = React.useRef<HTMLVideoElement>()
 
   function appendUrlParams(url: URL): any {
@@ -34,11 +36,7 @@ export default function QRCodePage() {
         if (qrUrl.hostname === window.location.hostname) {
           window.location.href = appendUrlParams(qrUrl)
         } else {
-          if (
-            confirm(
-              `Warnnung, dieser QR code ist nicht Teil der RecoverApp. Sie können diese Seite öffnen, aber alle Daten, die Sie dort eingeben, werden an ${qrUrl.hostname} geschickt.`
-            )
-          ) {
+          if (confirm(t('invalidQRCode'))) {
             window.location.href = appendUrlParams(qrUrl)
           }
         }
@@ -50,22 +48,18 @@ export default function QRCodePage() {
     mountAndWaitForScan()
 
     return () => qrCodeReader?.reset()
-  }, [])
+  })
 
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">QR-Code scannen | recover</title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        QR-Code scannen
+        {t('scanCode')}
       </Text>
       <Box height={4} />
-      <Text>
-        {isFormal
-          ? 'Scannen Sie den QR-Code im Eingangsbereich.'
-          : 'Scanne den QR-Code, den Du auf dem Tisch teilnehmender Betriebe findest.'}
-      </Text>
+      <Text>{t('scanCodeArea')}</Text>
       <Card my={8} css={{ position: 'relative' }}>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <video
