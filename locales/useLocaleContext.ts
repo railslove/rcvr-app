@@ -1,8 +1,7 @@
 import { createContext, useContext } from 'react'
-import localesConfig from './config.defaults.json'
+import localesConfig from './config.json'
 import placeholderLocale from '~pages/index.de'
-import { PageLocaleResource } from '~locales/types'
-import { SupportedLanguage } from '~locales/config.defaults'
+import { PageLocaleResource, SupportedLanguage } from '~locales/types'
 
 export const LocalesContext = createContext<{
   lang: string

@@ -14,10 +14,9 @@ import { theme, globalStyles } from '~ui/theme'
 import { LocalesContextProvider } from '~locales/useLocaleContext'
 import loadPageLocale from '~locales/loadPageLocale'
 import { NextRouter } from 'next/router'
-import { PageLocaleResource } from '~locales/types'
+import { PageLocaleResource, SupportedLanguage } from '~locales/types'
 import supportedBrowsers from '~lib/supportedBrowsers'
 import { AppPropsType } from 'next/dist/shared/lib/utils'
-import { SupportedLanguage } from '~locales/config.defaults'
 
 const queryClient = new QueryClient()
 

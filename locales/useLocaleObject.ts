@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { SupportedLanguage } from '~locales/config.defaults'
+import { SupportedLanguage } from '~locales/types'
 
 export type LocaleObject<K extends string, V extends unknown> = {
   [lang in SupportedLanguage]: {

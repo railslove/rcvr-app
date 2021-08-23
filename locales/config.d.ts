@@ -1,4 +1,4 @@
-export type SupportedLanguage = 'en' | 'de'
+import { SupportedLanguage } from '~locales/types'
 
 type LocalesConfigDefaults = {
   locales: SupportedLanguage[]

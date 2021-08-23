@@ -2,9 +2,8 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import NextLink, { LinkProps as NextLinkProps } from 'next/link'
 
-import useLocaleContext from '~locales/useLocaleContext'
 import pageLocalesConfig from '~locales/generated/pages.json'
-import { SupportedLanguage } from '~locales/config.defaults'
+import { SupportedLanguage } from '~locales/types'
 
 export type LinkHref = keyof typeof pageLocalesConfig
 

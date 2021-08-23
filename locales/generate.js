@@ -1,4 +1,4 @@
-const { defaultLocale } = require('./config.defaults.json')
+const { defaultLocale } = require('./config.json')
 
 /**
  *

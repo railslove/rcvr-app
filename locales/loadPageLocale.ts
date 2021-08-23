@@ -1,5 +1,5 @@
 import config from '~locales/generated/pages.json'
-import localesDefaults from '~locales/config.defaults.json'
+import localesDefaults from '~locales/config.json'
 
 export type LoadLocaleProps = {
   locale?: string
@@ -18,7 +18,11 @@ async function loadPageLocale({ locale, pathname }: LoadLocaleProps) {
       ? localesDefaults.defaultLocale
       : locales[0]
 
-    console.info('[info:locale] lang "%s" for path "%s"', lang, pathname)
+    console.info(
+      '[info:locale] loading lang "%s" for path "%s"',
+      lang,
+      pathname
+    )
 
     const values = await import(`../pages/${namespace}.${lang}.ts`).then(
       (m) => m.default

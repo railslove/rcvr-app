@@ -43,6 +43,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.svg"
+    "**/*.svg", 
+    "locales/config.js"  
   ]
 }
