@@ -1,5 +1,4 @@
 import config from '~locales/generated/pages.json'
-import localesDefaults from '~locales/config.json'
 
 export type LoadLocaleProps = {
   locale?: string
@@ -19,8 +18,8 @@ async function loadPageLocale(props: LoadLocaleProps) {
 
     const lang = locales.includes(locale)
       ? locale
-      : locales.includes(localesDefaults.defaultLocale)
-      ? localesDefaults.defaultLocale
+      : locales.includes('en')
+      ? 'en'
       : locales[0]
 
     console.info(
