@@ -9,7 +9,11 @@ const PageTitle: React.FC<PageTitleProps> = ({ children }) => {
   return (
     <title key="title">
       {[
-        children,
+        children
+          ? children
+          : (isCareEnv && 'Für Pflegeeinrichtungen') ||
+            (isHealthEnv && 'Für Krankenhäuser') ||
+            'Für Betriebe',
         (isCareEnv && 'recover care') ||
           (isHealthEnv && 'recover health') ||
           'recover',

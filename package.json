@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js",
     "typecheck": "tsc --noemit",
+    "pretest": "npm run generated",
     "test": "cypress run",
     "cypress": "cypress",
     "start:ci": "NODE_ENV=test next dev -- -p 4040",

@@ -4,10 +4,9 @@ const { generateLocalesConfigAndTypes } = require('./locales/generate')
 const localesDefaults = require('./locales/config.json')
 
 module.exports = {
-  /**
-   * next-images
-   */
-  fileExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+  publicRuntimeConfig: {
+    NODE_ENV: process.env.NODE_ENV,
+  },
   /**
    * i18n support
    */

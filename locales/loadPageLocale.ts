@@ -6,7 +6,12 @@ export type LoadLocaleProps = {
   pathname: string
 }
 
-async function loadPageLocale({ locale, pathname }: LoadLocaleProps) {
+async function loadPageLocale(props: LoadLocaleProps) {
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
+  const locale = process.env.NODE_ENV === 'test' ? 'de' : props.locale
+  const { pathname } = props
+
   if (config[pathname]) {
     const path = pathname as keyof typeof config
 

@@ -1,26 +1,18 @@
-import * as React from 'react'
-import { isCareEnv } from '~lib/config'
-import { Box } from '~ui/core'
-
 const envs = {
   rcvr: {
     backgroundColor: 'bluegrey.50',
     primaryHighlightColor: '#28EE5F',
     secondaryHighlightColor: '#EA28EE',
-    title: 'Für Betriebe | recover',
   },
   care: {
     backgroundColor: '#f2f2f2',
     primaryHighlightColor: '#F5B743',
     secondaryHighlightColor: '',
-
-    title: 'Für Pflegeeinrichtungen | recover',
   },
   health: {
     backgroundColor: '#f2f2f2',
     primaryHighlightColor: '#28EE5F',
     secondaryHighlightColor: '#10D4FF',
-    title: 'Für Krankenhäuser | recover',
   },
   fresenius: {
     backgroundColor: '#A6D7D7',

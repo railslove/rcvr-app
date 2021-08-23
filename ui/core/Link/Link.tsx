@@ -7,12 +7,19 @@ import { SupportedLanguage } from '~locales/types'
 
 export type LinkHref = keyof typeof pageLocalesConfig
 
-export type LinkProps = NextLinkProps & {
-  href: LinkHref
-  externalHref?: string
-}
+export type LinkProps = NextLinkProps &
+  (
+    | {
+        href: LinkHref
+        target?: never
+      }
+    | {
+        href: string
+        target: string
+      }
+  )
 
-const Link: React.FC<LinkProps> = ({ externalHref, ...props }) => {
+const Link: React.FC<LinkProps> = ({ target, ...props }) => {
   const router = useRouter()
   const currentLocale = (props.locale || router.locale) as SupportedLanguage
   const nextPageLocales = (pageLocalesConfig[props.href] || { locales: [] })
@@ -22,7 +29,7 @@ const Link: React.FC<LinkProps> = ({ externalHref, ...props }) => {
     ? currentLocale
     : nextPageLocales[0] || router.defaultLocale
 
-  return externalHref ? (
+  return target ? (
     <NextLink {...props} />
   ) : (
     <NextLink {...props} locale={locale} />

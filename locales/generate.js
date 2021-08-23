@@ -26,7 +26,7 @@ function generateLocalesConfigAndTypes() {
   const config = glob
     .sync('pages/**/*.{ts,tsx}')
     .map((el) => el.replace(/^pages\/|\.tsx?$/g, ''))
-    .filter((el) => el === '_error' || !/^_/.test(el))
+    .filter((el) => /^_error\./.test(el) || !/^_/.test(el))
     .reduce(
       (acc, el) => {
         const [pathname, lang] = el.split('.')
@@ -50,7 +50,7 @@ function generateLocalesConfigAndTypes() {
               locales:
                 lang == null || locales.includes(lang)
                   ? locales
-                  : locales.concat(lang),
+                  : locales.concat(lang).sort(),
               namespace: pathname,
             },
           },
