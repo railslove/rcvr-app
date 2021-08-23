@@ -38,9 +38,8 @@ export const LOGO_DIMENSIONS: LogoDimenisions = (isCareEnv && {
   }
 
 const Logo: React.FC = () =>
-  (isCareEnv && LogoCare) ||
-  (isHealthEnv && LogoHealth) ||
-  (isFreseniusEnv && LogoFresenius) ||
-  LogoRcvr
+  (isCareEnv && <LogoCare />) ||
+  (isHealthEnv && <LogoHealth />) ||
+  (isFreseniusEnv && <LogoFresenius />) || <LogoRcvr />
 
 export default Logo
