@@ -1,12 +1,12 @@
 import * as React from 'react'
-import Link from 'next/link'
+import Link from '~ui/core/Link/Link'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'
 import { variant } from 'styled-system'
 
 import { isCareEnv, isHealthEnv } from '~lib/config'
-import { privacyUrl, secondaryHighlightColor } from '~ui/whitelabels'
+import { PRIVACY_URL, secondaryHighlightColor } from '~ui/whitelabels'
 import { Box, Text } from '~ui/core'
 import { Circle } from '~ui/anicons'
 import { Lock, Ticket, Virus } from '~ui/svg'
@@ -16,7 +16,7 @@ export const BottomBar: React.FC<Record<string, never>> = () => {
 
   return (
     <Row>
-      <Tab href={privacyUrl} target="_blank" rel="noreferrer noopener">
+      <Tab href={PRIVACY_URL} target="_blank" rel="noreferrer noopener">
         <Circle color="transparent" size={38}>
           <Lock css={{ marginTop: '-2px' }} />
         </Circle>

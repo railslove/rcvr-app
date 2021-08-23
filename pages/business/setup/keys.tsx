@@ -1,41 +1,33 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { isFormal } from '~lib/config'
 import { WithOwnerProps, withValidPrivateKey } from '~lib/pageWrappers'
 
 import { Text, Box, ButtonLink, Button } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import styled from '@emotion/styled'
-import { KeyViewer } from '~ui/blocks/KeyViewer'
+import { KeyViewer } from '~ui/blocks/KeyViewer/KeyViewer'
+
+import usePageLocale from '~locales/usePageLocale'
 
 const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = usePageLocale<'business/setup/keys'>()
   const { privateKey } = owner
   return (
     <MobileApp>
       <Head>
-        <title key="title">
-          {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
-        </title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        {isFormal ? 'Ihr' : 'Dein'} geheimer Schlüssel
+        {t('title')}
       </Text>
       <Box height={6} />
       <>
         <TextNoPrint>
           <p>
-            <strong>
-              {isFormal
-                ? 'Es ist sehr wichtig, dass Sie diesen Schlüssel notieren.'
-                : 'Es ist sehr wichtig, dass Du diesen Schlüssel notierst.'}
-            </strong>
+            <strong>{t('message1')}</strong>
           </p>
-          <p>
-            {isFormal
-              ? 'Notieren Sie sich den Schlüssel zum Beispiel auf einem Zettel und verwahren Sie diesen sorgfältig. Sie können auch einen Screenshot machen und diesen abspeichern. Oder Sie speichern den Schlüssel in einem Passwortmanager.'
-              : 'Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre ihn sorgfältig. Oder mach einen Screenshot davon und speichere ihn sicher. Du kannst ihn auch in einem Passwortmanager speichern.'}
-          </p>
+          <p>{t('message2')}</p>
         </TextNoPrint>
         <Box height={4} />
 
@@ -45,11 +37,7 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
         <Box height={6} />
         <TextNoPrint>
-          <p>
-            {isFormal
-              ? 'Im nächsten Schritt müssen Sie den Schlüssel eingeben. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
-              : 'Im nächsten Schritt musst Du den Schlüssel eingeben. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
-          </p>
+          <p>{t('message3')}</p>
         </TextNoPrint>
         <Box height={6} />
 
@@ -57,10 +45,12 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
           href="/business/setup/verify-key-manually"
           right={<ArrowsRight color="green" />}
         >
-          Schlüssel prüfen
+          {t('verifyKeyButtonText')}
         </ButtonLinkNoPrint>
         <Box height={4} />
-        <ButtonNoPrint onClick={window.print}>Schlüssel drucken</ButtonNoPrint>
+        <ButtonNoPrint onClick={window.print}>
+          {t('printKeyButtonText')}
+        </ButtonNoPrint>
       </>
     </MobileApp>
   )
