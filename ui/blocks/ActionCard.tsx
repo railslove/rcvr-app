@@ -1,9 +1,9 @@
 import * as React from 'react'
-import Link from 'next/link'
+import Link, { LinkHref } from '~ui/core/Link'
 import { Card, SRText, Row, Text, Box, Icon } from '~ui/core'
 
 interface Props {
-  href?: string
+  href?: LinkHref
   as?: string
   onClick?: () => void
   children: React.ReactNode

@@ -3,7 +3,7 @@ import { css } from '@styled-system/css'
 import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
 import Head from 'next/head'
-import Link from 'next/link'
+import Link, { LinkHref } from '~ui/core/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { CompanyRes, DataRequestRes } from '~lib/api'
@@ -149,7 +149,8 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
                           return (
                             <li key={`${companyId}-${dataRequest.id}`}>
                               <Link
-                                href={`/business/company/${companyId}/data-request/${dataRequest.id}`}
+                                href="/business/company/[companyId]/data-request/[dataRequestId]"
+                                as={`/business/company/${companyId}/data-request/${dataRequest.id}`}
                               >
                                 <a>
                                   {getCompanyName(companyId)} -{' '}
@@ -255,7 +256,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
 }
 
 interface BackProps {
-  href: string
+  href: LinkHref
   as?: string
   children?: React.ReactNode
 }
@@ -281,7 +282,7 @@ export const BackLink: React.FC<BackProps> = ({ href, as, children }) => {
 }
 
 interface NavLinkProps {
-  href: string
+  href: LinkHref
   as?: string
   sub?: boolean
   children: React.ReactNode
