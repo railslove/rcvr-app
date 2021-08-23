@@ -4,19 +4,20 @@ import '~lib/appReset.css'
 import '~lib/polyfills'
 
 import React from 'react'
-import App, { AppContext } from 'next/app'
-import { Global, ThemeProvider } from '@emotion/react'
-
-import { AnimateSharedLayout } from 'framer-motion'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { useA11yFocusRing } from '~lib/hooks'
-import { theme, globalStyles } from '~ui/theme'
-import { LocalesContextProvider } from '~locales/useLocaleContext'
-import loadPageLocale from '~locales/loadPageLocale'
 import { NextRouter } from 'next/router'
-import { PageLocaleResource, SupportedLanguage } from '~locales/types'
-import supportedBrowsers from '~lib/supportedBrowsers'
 import { AppPropsType } from 'next/dist/shared/lib/utils'
+import App, { AppContext } from 'next/app'
+import { AnimateSharedLayout } from 'framer-motion'
+import { Global, ThemeProvider } from '@emotion/react'
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+import loadPageLocale from '~locales/loadPageLocale'
+import { useA11yFocusRing } from '~lib/hooks'
+import { LocalesContextProvider } from '~locales/useLocaleContext'
+import { PageLocaleResource, SupportedLanguage } from '~locales/types'
+
+import SupportedBrowsersAlert from '~ui/SupportedBrowsersAlert/SupportedBrowsersAlert'
+import { theme, globalStyles } from '~ui/theme'
 
 const queryClient = new QueryClient()
 
@@ -42,35 +43,28 @@ const RecoverApp: RecoverAppFC = ({
 }) => {
   useA11yFocusRing()
 
-  if (
-    typeof navigator != 'undefined' &&
-    !supportedBrowsers.test(navigator.userAgent)
-  ) {
-    alert(
-      'Sorry, dein Browser unterstützt recover nicht. Wenn ein Update nicht hilft, probiere einen anderen Browser.\n\n' +
-        'Sorry, your browser does not support recover. If updating doesn’t help, please try another browser.'
-    )
-  }
-
   return (
-    <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <LocalesContextProvider value={localeContext}>
-          <Global styles={globalStyles} />
-          <AnimateSharedLayout>
-            <Component {...pageProps} />
-          </AnimateSharedLayout>
-        </LocalesContextProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <>
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <LocalesContextProvider value={localeContext}>
+            <Global styles={globalStyles} />
+            <AnimateSharedLayout>
+              <SupportedBrowsersAlert />
+              <Component {...pageProps} />
+            </AnimateSharedLayout>
+          </LocalesContextProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </>
   )
 }
 
-RecoverApp.getInitialProps = async (appCtxt: AppContext) => {
-  const { pageProps = {}, ...rest } = await App.getInitialProps(appCtxt)
+RecoverApp.getInitialProps = async (value: AppContext) => {
+  const { pageProps = {}, ...rest } = await App.getInitialProps(value)
 
   const localeContext =
-    pageProps.localeContext || (await loadPageLocale(appCtxt.ctx))
+    pageProps.localeContext || (await loadPageLocale(value.ctx))
 
   return {
     ...rest,
