@@ -5,7 +5,7 @@ const en: typeof de = {
   title1: 'Checkins via QR code.',
   title2: 'Without app, easy for everyone.',
 
-  intro: isCareEnv
+  indexIntro: isCareEnv
     ? 'Due to the current Corona regulations, you have to deposit your contact details if you are in a business that is obliged to take protective measures, such as care facilities. The app can also be used voluntarily to assist with tracking.'
     : isHealthEnv
     ? 'Due to the current Corona regulations, if you are in an establishment that is required to take protective measures, such as hospitals, you must store your contact information. The app can also be used voluntarily to assist with tracking.'

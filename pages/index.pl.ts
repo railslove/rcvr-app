@@ -5,7 +5,7 @@ const pl: typeof de = {
   title1: 'Zameldowanie za pomocą kodu QR.',
   title2: 'Bez aplikacji, łatwo dla każdego.',
 
-  intro: isCareEnv
+  indexIntro: isCareEnv
     ? 'Ze względu na obowiązujące przepisy Corona, musisz zdeponować swoje dane kontaktowe, jeśli jesteś w przedsiębiorstwie, które jest zobowiązane do podjęcia środków ochronnych, takich jak zakłady opieki. Aplikacja może być również używana dobrowolnie, aby pomóc w śledzeniu.'
     : isHealthEnv
     ? 'Ze względu na obowiązujące przepisy Corona, jeśli jesteś w zakładzie, który jest zobowiązany do podjęcia środków ochronnych, takich jak szpitale, musisz przechowywać swoje dane kontaktowe. Aplikacja może być również używana dobrowolnie, aby pomóc w śledzeniu.'

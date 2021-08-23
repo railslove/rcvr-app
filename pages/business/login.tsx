@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import Link from '~ui/core/Link'
+import Link from '~ui/core/Link/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useQueryClient } from 'react-query'

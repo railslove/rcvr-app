@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Link, { LinkHref } from '~ui/core/Link'
+import Link, { LinkHref } from '~ui/core/Link/Link'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { As } from './'

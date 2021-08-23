@@ -1,14 +1,14 @@
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import Link from '~ui/core/Link'
+import Link from '~ui/core/Link/Link'
 import * as React from 'react'
 import * as Yup from 'yup'
 import { postRequestPasswordReset } from '~lib/api'
-import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 import usePageLocale from '~locales/usePageLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
 
 export default function PasswordResetRequestPage() {
   const { t } = usePageLocale<'business/password-reset/request'>()
@@ -64,7 +64,7 @@ export default function PasswordResetRequestPage() {
         <Callout>
           <Text>
             {t('doneMessage')}
-            <a href={`mailto:${RECOVER_TEAM_EMAIL}`}>support</a>.
+            <RecoverTeamEmailLink>support</RecoverTeamEmailLink>.
           </Text>
         </Callout>
       )}

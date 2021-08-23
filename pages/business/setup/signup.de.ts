@@ -5,7 +5,7 @@ import {
   isHealthEnv,
   isRcvrEnv,
 } from '~lib/config'
-import { privacyUrl } from '~ui/whitelabels'
+import { PRIVACY_URL } from '~ui/whitelabels'
 
 export default {
   title: 'Account erstellen',
@@ -63,7 +63,7 @@ export default {
   } mit den`,
 
   avvPrivacyPolicyLink: isFreseniusEnv
-    ? privacyUrl
+    ? PRIVACY_URL
     : 'https://railslove.com/privacy/',
 
   avvPrivacyPolicyText: 'Datenschutzbestimmungen',

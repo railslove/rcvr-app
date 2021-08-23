@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { NextPageContext, NextPage } from 'next'
 import { detect as detectBrowser, BrowserInfo } from 'detect-browser'
-import Link from '~ui/core/Link'
+import Link from '~ui/core/Link/Link'
 
 import usePageLocale from '~locales/usePageLocale'
 import { Text, Box, Card, Button } from '~ui/core'
 import { ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { RECOVER_TEAM_EMAIL } from '~locales/constants'
+import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
 
 export type ErrorProps = {
   statusCode: number
@@ -79,8 +79,7 @@ const Error: NextPage<ErrorProps> = ({ statusCode, error }) => {
         <Text>
           <p>{t('message1')}</p>
           <p>
-            {t('message2')}{' '}
-            <a href={RECOVER_TEAM_EMAIL}>{RECOVER_TEAM_EMAIL}</a>.
+            {t('message2')} <RecoverTeamEmailLink />.
           </p>
           <p>{t('message3')}</p>
         </Text>

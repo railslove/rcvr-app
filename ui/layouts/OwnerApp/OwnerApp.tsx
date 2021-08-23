@@ -3,7 +3,7 @@ import { css } from '@styled-system/css'
 import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
 import Head from 'next/head'
-import Link, { LinkHref, LinkProps } from '~ui/core/Link'
+import Link, { LinkHref } from '~ui/core/Link/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { CompanyRes, DataRequestRes } from '~lib/api'
@@ -16,10 +16,11 @@ import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
 import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { Back } from '~ui/svg'
-import { Logo, pageTitle } from '~ui/whitelabels'
 
 import ownerAppLocales from './locales'
 import useLocaleObject from '~locales/useLocaleObject'
+import PageTitle from '~ui/blocks/Title/PageTitle'
+import Logo from '~ui/blocks/Logo/Logo'
 
 interface Props {
   children: React.ReactNode
@@ -80,9 +81,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
       {modals}
       <SharedMeta />
       <Head>
-        <title key="title">
-          {title ?? '____'} | {pageTitle}
-        </title>
+        <PageTitle key="title" />
       </Head>
       <Top>
         <LogoBox layoutId="appLogo">

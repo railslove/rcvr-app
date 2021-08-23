@@ -1,7 +1,10 @@
+import { isFreseniusEnv } from '~lib/config'
+
 export default {
   pageTitle: 'Für Betriebe',
-  instruction: 'Account Erstellen',
-  instruction_fresenius: 'So nutzt Du recover für Deinen Betrieb',
+  instruction: isFreseniusEnv
+    ? 'So nutzt Du recover für Deinen Betrieb'
+    : 'Account Erstellen',
   letsGo: "Los geht's",
 
   setupIntro1: `Seit Corona sind viele Betriebe und Einrichtungen verpflichtet,

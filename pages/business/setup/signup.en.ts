@@ -6,7 +6,7 @@ import {
   isHealthEnv,
 } from '~lib/config'
 import signupDe from '~pages/business/setup/signup.de'
-import { privacyUrl } from '~ui/whitelabels'
+import { PRIVACY_URL } from '~ui/whitelabels'
 
 const en: typeof signupDe = {
   title: 'Create account',
@@ -62,7 +62,7 @@ const en: typeof signupDe = {
   } with the`,
 
   avvPrivacyPolicyLink: isFreseniusEnv
-    ? privacyUrl
+    ? PRIVACY_URL
     : 'https://railslove.com/privacy/',
 
   avvPrivacyPolicyText: 'privacy policy',

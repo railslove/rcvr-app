@@ -14,7 +14,7 @@ import { AutoDataRequestModal } from '~ui/modals/AutoDataRequestModal'
 import { DataRequestRes } from '~lib/api'
 import usePageLocale from '~locales/usePageLocale'
 
-import { RECOVER_TEAM_EMAIL } from '~locales/constants'
+import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
 
 const CompanyPage: React.FC<WithOwnerProps> = () => {
   const { t } = usePageLocale<'business/company/[companyId]/index'>()
@@ -133,8 +133,7 @@ const CompanyPage: React.FC<WithOwnerProps> = () => {
         <Box height={2} />
         <Text>
           <p>
-            {t('askHealthOfficeText1')}{' '}
-            <a href={`mailto:${RECOVER_TEAM_EMAIL}`}>{RECOVER_TEAM_EMAIL}</a>{' '}
+            {t('askHealthOfficeText1')} <RecoverTeamEmailLink />{' '}
             {t('askHealthOfficeText2')}{' '}
           </p>
         </Text>

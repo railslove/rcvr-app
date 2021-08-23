@@ -1,4 +1,4 @@
-import Link, { LinkHref } from '~ui/core/Link'
+import Link, { LinkHref } from '~ui/core/Link/Link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
 import useLocaleContext from '~locales/useLocaleContext'

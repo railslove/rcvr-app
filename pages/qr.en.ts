@@ -1,7 +1,7 @@
 import { isFormal } from '~lib/config'
-import qrDe from '~pages/qr.de'
+import de from '~pages/qr.de'
 
-const en: typeof qrDe = {
+const en: typeof de = {
   pageTitle: 'Scan QR code',
   scanCode: 'Scan QR code',
   invalidQRCode:

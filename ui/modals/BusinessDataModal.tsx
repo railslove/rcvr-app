@@ -13,9 +13,9 @@ import {
 } from '~lib/api'
 import { Box, Input, FileInput, Button, Text, Checkbox, Select } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
-import { pdfType } from '~ui/whitelabels'
 import { encrypt } from '~lib/crypto'
 import { CurrentOwner } from '~lib/hooks/useOwner'
+import { PDF_TYPE } from '~ui/whitelabels'
 
 interface Props {
   type: 'new' | 'edit'
@@ -209,7 +209,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
             label={'Name der Zustatzinformationen-Sektion'}
           />
           <Box height={4} />
-          <Input name="menuLink" label={`${pdfType} als Link`} />
+          <Input name="menuLink" label={`${PDF_TYPE} als Link`} />
           <Box height={4} />
           <Text variant="shy" textAlign="center">
             – oder –
@@ -218,7 +218,7 @@ export const BusinessDataModal: React.FC<MProps> = ({
           <FileInput
             name="menuPdf"
             type="file"
-            label={`${pdfType} als PDF`}
+            label={`${PDF_TYPE} als PDF`}
             hint="Es können nur pdf-Dateien hochgeladen werden."
             accept="application/pdf"
           />

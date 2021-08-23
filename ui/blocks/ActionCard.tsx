@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Link, { LinkHref } from '~ui/core/Link'
+import Link, { LinkHref } from '~ui/core/Link/Link'
 import { Card, SRText, Row, Text, Box, Icon } from '~ui/core'
 
 interface Props {

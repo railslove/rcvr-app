@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { isCareEnv, isFormal, isFreseniusEnv, isHealthEnv } from '~lib/config'
 import { Text } from '~ui/core'
-import { privacyUrl } from '~ui/whitelabels'
+import { PRIVACY_URL } from '~ui/whitelabels'
 
 const Avv: React.FC = () => {
   const getAvvLink = () => {
@@ -20,7 +20,7 @@ const Avv: React.FC = () => {
         Mit dem Betätigen des Buttons{' '}
         {isFormal ? 'erklären Sie sich' : 'erkläre ich mich'} mit den{' '}
         <a
-          href={isFreseniusEnv ? privacyUrl : 'https://railslove.com/privacy/'}
+          href={isFreseniusEnv ? PRIVACY_URL : 'https://railslove.com/privacy/'}
         >
           Datenschutzbestimmungen
         </a>{' '}

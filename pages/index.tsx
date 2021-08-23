@@ -20,13 +20,7 @@ export default function IndexPage() {
       </Text>
       <Box height={4} />
       <Text>
-        {isRcvrEnv ? (
-          <>
-            <b>recover</b> <p>{t('intro')}</p>
-          </>
-        ) : (
-          <p>{t('intro')}</p>
-        )}
+        <b>recover</b> <p>{t('indexIntro')}</p>
       </Text>
       <Box height={4} />
 

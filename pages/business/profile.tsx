@@ -1,13 +1,12 @@
 import { loadStripe } from '@stripe/stripe-js'
 import formatDate from 'intl-dateformat'
-import Link from '~ui/core/Link'
+import Link from '~ui/core/Link/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
 import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { ActionCard } from '~ui/blocks/ActionCard/ActionCard'
@@ -19,7 +18,56 @@ import { CheckoutSelectionModal } from '~ui/modals/CheckoutSelectionModal'
 import { OwnerModal } from '~ui/modals/OwnerModal'
 import { SubscribedModal } from '~ui/modals/SubscribedModal'
 import { Right } from '~ui/svg'
-import { pricingInfoDuringTest } from '~ui/whitelabels'
+import { BUILD_VARIANT } from '~ui/whitelabels'
+import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
+
+const PricingInfoDuringTest: React.FC = () => {
+  const { t } = usePageLocale<'business/profile'>()
+
+  switch (BUILD_VARIANT) {
+    case 'care': {
+      return <p>{t('pricingInfo_care')}</p>
+    }
+    case 'health': {
+      return (
+        <>
+          <p>{t('pricingInfo_health1')}</p>
+          <p>{t('pricingInfo_health2')}</p>
+        </>
+      )
+    }
+    case 'fresenius': {
+      return (
+        <p>
+          {t('pricingInfo_fresenius1')}
+          <br />
+          {t('pricingInfo_fresenius2')}
+          <br />
+          {t('pricingInfo_fresenius3')}:{' '}
+          <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+        </p>
+      )
+    }
+    default: {
+      return (
+        <p>
+          {t('pricingInfo_rcvr1')}
+          <br />
+          <br />
+          {t('pricingInfo_rcvr2')}
+          <br />
+          <br />
+          {t('pricingInfo_rcvr3')}: <RecoverTeamEmailLink />
+          <RecoverTeamEmailLink />
+          <br />
+          <br />
+          {t('pricingInfo_rcvr4')}:{' '}
+          <RecoverTeamEmailLink subject={t('pricingInfoEmailSubject_rcvr')} />
+        </p>
+      )
+    }
+  }
+}
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { t } = usePageLocale<'business/profile'>()
@@ -114,18 +162,20 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 
       {!hasSubscription && hasCompanies && (
         <>
-          <Text>{pricingInfoDuringTest}</Text>
+          <Text>
+            <PricingInfoDuringTest />
+          </Text>
           <Box height={4} />
 
           {isHealthEnv || isCareEnv ? (
             <Text>
               <p>{t('writeEmailMessage')}</p>
               <p>
-                <a href={`mailto:${RECOVER_TEAM_EMAIL}`}>
+                <RecoverTeamEmailLink>
                   <Button right={<ArrowsRight color="pink" />}>
                     {t('writeEmailButtonText')}
                   </Button>
-                </a>
+                </RecoverTeamEmailLink>
               </p>
             </Text>
           ) : (

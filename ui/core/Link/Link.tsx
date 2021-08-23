@@ -14,8 +14,6 @@ export type LinkProps = NextLinkProps & {
 }
 
 const Link: React.FC<LinkProps> = ({ externalHref, ...props }) => {
-  const { pageLocales, lang } = useLocaleContext()
-
   const router = useRouter()
   const currentLocale = (props.locale || router.locale) as SupportedLanguage
   const nextPageLocales = (pageLocalesConfig[props.href] || { locales: [] })

@@ -3,9 +3,9 @@ import React from 'react'
 import { Text, Box, Row } from '~ui/core'
 import { Circle, Question } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { RECOVER_TEAM_EMAIL } from '~locales/constants'
 
 import usePageLocale from '~locales/usePageLocale'
+import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
 
 export default function Custom404() {
   const { t } = usePageLocale<'404'>()
@@ -25,8 +25,7 @@ export default function Custom404() {
       <Box height={8} />
       <Text textAlign="center">
         <p>
-          {t('message')}{' '}
-          <a href={`mailto:${RECOVER_TEAM_EMAIL}`}>{RECOVER_TEAM_EMAIL}</a>.
+          {t('message')} <RecoverTeamEmailLink />.
         </p>
       </Text>
     </MobileApp>
