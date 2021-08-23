@@ -7,7 +7,7 @@ import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import usePageLocale from '~locales/usePageLocale'
 
 export default function IndexPage() {
-  const { t } = usePageLocale<'index'>()
+  const { t } = usePageLocale('index')
 
   return (
     <MobileApp logoVariant="big">

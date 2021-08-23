@@ -117,8 +117,9 @@ const ticketsToExcel = (
 }
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } =
-    usePageLocale<'business/company/[companyId]/data-request/[dataRequestId]'>()
+  const { t } = usePageLocale(
+    'business/company/[companyId]/data-request/[dataRequestId]'
+  )
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()

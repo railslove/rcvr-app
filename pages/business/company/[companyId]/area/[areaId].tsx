@@ -9,7 +9,7 @@ import { Box, Text } from '~ui/core'
 import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp/OwnerApp'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = () => {
-  const { t } = usePageLocale<'business/company/[companyId]/area/[areaId]'>()
+  const { t } = usePageLocale('business/company/[companyId]/area/[areaId]')
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const areaId = query.areaId.toString()

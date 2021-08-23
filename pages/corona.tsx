@@ -9,7 +9,7 @@ import { FixedBottomBar } from '~ui/blocks/BottomBar/BottomBar'
 import usePageLocale from '~locales/usePageLocale'
 
 export default function CoronaPage() {
-  const { t } = usePageLocale<'corona'>()
+  const { t } = usePageLocale('corona')
 
   return (
     <MobileApp>

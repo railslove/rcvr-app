@@ -11,7 +11,7 @@ import { KeyViewer } from '~ui/blocks/KeyViewer/KeyViewer'
 import usePageLocale from '~locales/usePageLocale'
 
 const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = usePageLocale<'business/setup/keys'>()
+  const { t } = usePageLocale('business/setup/keys')
   const { privateKey } = owner
   return (
     <MobileApp>

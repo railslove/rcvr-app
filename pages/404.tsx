@@ -8,7 +8,7 @@ import usePageLocale from '~locales/usePageLocale'
 import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
 
 export default function Custom404() {
-  const { t } = usePageLocale<'404'>()
+  const { t } = usePageLocale('404')
 
   return (
     <MobileApp logoVariant="big">

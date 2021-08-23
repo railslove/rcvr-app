@@ -22,7 +22,7 @@ import { BUILD_VARIANT } from '~ui/whitelabels'
 import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
 
 const PricingInfoDuringTest: React.FC = () => {
-  const { t } = usePageLocale<'business/profile'>()
+  const { t } = usePageLocale('business/profile')
 
   switch (BUILD_VARIANT) {
     case 'care': {
@@ -69,7 +69,7 @@ const PricingInfoDuringTest: React.FC = () => {
 }
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = usePageLocale<'business/profile'>()
+  const { t } = usePageLocale('business/profile')
 
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()
@@ -228,7 +228,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 }
 
 const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = usePageLocale<'business/profile'>()
+  const { t } = usePageLocale('business/profile')
 
   const status = React.useMemo(() => {
     if (owner.canUseForFree) return 'free'

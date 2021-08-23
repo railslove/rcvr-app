@@ -15,7 +15,7 @@ import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { CompanyCard } from '~ui/blocks/CompanyCard'
 
 const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = usePageLocale<'business/dashboard'>()
+  const { t } = usePageLocale('business/dashboard')
 
   const { data: companies } = useCompanies()
   const { modals, openModal } = useModals({

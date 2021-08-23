@@ -22,7 +22,7 @@ import { commitSetupPublicKey } from '~lib/actions'
 import usePageLocale from '~locales/usePageLocale'
 
 const VerifyPrivateKeyExplanation: React.FC = () => {
-  const { t } = usePageLocale<'business/setup/verify-key'>()
+  const { t } = usePageLocale('business/setup/verify-key')
 
   switch (BUILD_VARIANT) {
     case 'care':
@@ -60,7 +60,7 @@ const VerifyPrivateKeyExplanation: React.FC = () => {
 }
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = usePageLocale<'business/setup/verify-key'>()
+  const { t } = usePageLocale('business/setup/verify-key')
   const router = useRouter()
   const queryClient = useQueryClient()
 

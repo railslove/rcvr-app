@@ -21,7 +21,7 @@ import { sortAreas } from '~lib/interactors'
 import usePageLocale from '~locales/usePageLocale'
 
 const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = usePageLocale<'business/company/[companyId]/area/index'>()
+  const { t } = usePageLocale('business/company/[companyId]/area/index')
 
   const { query } = useRouter()
   const companyId = query.companyId.toString()
