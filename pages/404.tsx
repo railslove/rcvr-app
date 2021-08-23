@@ -1,10 +1,15 @@
-import * as React from 'react'
+import React from 'react'
 
 import { Text, Box, Row } from '~ui/core'
 import { Circle, Question } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
+import usePageLocale from '~locales/usePageLocale'
+import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
+
 export default function Custom404() {
+  const { t } = usePageLocale<'404'>()
+
   return (
     <MobileApp logoVariant="big">
       <Box height={10} />
@@ -15,14 +20,12 @@ export default function Custom404() {
       </Row>
       <Box height={10} />
       <Text textAlign="center" as="h2" variant="h2">
-        Seite nicht gefunden
+        {t('title')}
       </Text>
       <Box height={8} />
       <Text textAlign="center">
         <p>
-          Die Seite, die du aufgerufen hast, existiert nicht. Hätte das nicht
-          passieren sollen? Dann schreib uns eine Mail an{' '}
-          <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>.
+          {t('message')} <RecoverTeamEmailLink />.
         </p>
       </Text>
     </MobileApp>

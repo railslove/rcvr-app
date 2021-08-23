@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import { ActionCard } from '~ui/blocks/ActionCard'
+import { ActionCard } from '~ui/blocks/ActionCard/ActionCard'
 import { IconButton } from '~ui/core'
 import { Edit, Trash } from '~ui/svg'
-import { pdfType } from '~ui/whitelabels'
+import { PDF_TYPE } from '~ui/whitelabels'
 
 export const CompanyCard = ({ company, onEdit, onDelete }) => {
   const menuText = React.useMemo(() => {
@@ -19,7 +19,7 @@ export const CompanyCard = ({ company, onEdit, onDelete }) => {
     >
       <ActionCard.Main
         title={company.name}
-        subtitle={`${company.menuAlias || pdfType}: ${menuText}`}
+        subtitle={`${company.menuAlias || PDF_TYPE}: ${menuText}`}
       />
       <ActionCard.Actions>
         <IconButton
