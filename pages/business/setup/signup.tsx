@@ -19,6 +19,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export const InlineLink = styled('a')(
   css({
@@ -106,7 +107,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">{t('title')} | recover</title>
+        <PageTitle>{t('title')}</PageTitle>
       </Head>
       <Text as="h3" variant="h3">
         {t('title')} (1/3)

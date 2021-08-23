@@ -9,6 +9,7 @@ import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function PasswordResetRequestPage() {
   const { t } = usePageLocale('business/password-reset/request')
@@ -31,7 +32,7 @@ export default function PasswordResetRequestPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('pageTitle')} | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('pageHeadline')}
@@ -64,7 +65,7 @@ export default function PasswordResetRequestPage() {
         <Callout>
           <Text>
             {t('doneMessage')}
-            <RecoverTeamEmailLink>support</RecoverTeamEmailLink>.
+            <RecoverTeamEmailLink>{t('support')}</RecoverTeamEmailLink>.
           </Text>
         </Callout>
       )}

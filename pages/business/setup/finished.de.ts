@@ -1,6 +1,6 @@
 export default {
-  tabTitle: 'Fertig',
-  pageTitle: 'Schön, dass Sie dabei sind!',
+  pageTitle: 'Fertig',
+  header: 'Schön, dass Sie dabei sind!',
   startButtonText: 'Starten',
 
   finishedText1:

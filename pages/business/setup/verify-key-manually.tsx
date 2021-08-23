@@ -12,6 +12,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { commitSetupPublicKey } from '~lib/actions'
 import { useQueryClient } from 'react-query'
 import usePageLocale from '~locales/usePageLocale'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { t } = usePageLocale('business/setup/verify-key-manually')
@@ -36,7 +37,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">{t('pageTitle')} | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('headline')}

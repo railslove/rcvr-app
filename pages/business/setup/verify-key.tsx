@@ -20,6 +20,7 @@ import { BUILD_VARIANT } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
 import { commitSetupPublicKey } from '~lib/actions'
 import usePageLocale from '~locales/usePageLocale'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 const VerifyPrivateKeyExplanation: React.FC = () => {
   const { t } = usePageLocale('business/setup/verify-key')
@@ -94,7 +95,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <>
         <ScreenView>
           <Head>
-            <title key="title">{t('pageTitle')} | recover</title>
+            <PageTitle>{t('pageTitle')}</PageTitle>
           </Head>
           <Text as="h3" variant="h3">
             {t('createAccountStep')} (3/3)

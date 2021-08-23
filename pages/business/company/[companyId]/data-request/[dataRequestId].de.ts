@@ -3,9 +3,14 @@ import { isFormal } from '~lib/config'
 export default {
   loading: 'Lade...',
 
-  acceptedAt: `Die Daten für diesen Zeitraum wurden noch nicht für ${
-    isFormal ? 'Sie' : 'Dich'
-  } freigegeben.`,
+  acceptedAt1: `${isFormal ? 'Sie' : 'Du'} hast diese Daten noch nicht für das
+  Gesundheitsamt freigegeben. Sobald${' '}
+  ${isFormal ? 'sie diese Daten freigeben' : 'du diese Daten freigibst'}
+  , werden diese verschlüsselt an das Gesundheitsamt gesendet.`,
+
+  acceptedAt2: 'Anfragende Behörde:',
+  acceptedAt3: 'Grund der Anfrage:',
+  acceptedAt4: 'Daten freigeben',
 
   enterKeyMessage: isFormal
     ? 'Ihr privater Schlüssel ist nicht mehr auf Ihrem Gerät gespeichert. Um die Daten zu entschlüsseln, müssen Sie ihn neu eingeben.'
@@ -48,4 +53,7 @@ export default {
   tested: 'Getested',
   vaccinated: 'Geimpft',
   recovering: 'Genesen',
+
+  approveRequestModalText: 'Die Kontaktdaten wurden erfolgreich übermittelt',
+  approveRequestModalTitle: 'Anfrage vom Gesundheitsamt',
 }

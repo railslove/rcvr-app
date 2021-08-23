@@ -9,6 +9,7 @@ import styled from '@emotion/styled'
 import { KeyViewer } from '~ui/blocks/KeyViewer/KeyViewer'
 
 import usePageLocale from '~locales/usePageLocale'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { t } = usePageLocale('business/setup/keys')
@@ -16,7 +17,7 @@ const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">{t('pageTitle')} | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('title')}

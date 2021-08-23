@@ -81,7 +81,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
       {modals}
       <SharedMeta />
       <Head>
-        <PageTitle key="title" />
+        <PageTitle />
       </Head>
       <Top>
         <LogoBox layoutId="appLogo">

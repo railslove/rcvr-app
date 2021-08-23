@@ -1,12 +1,19 @@
 import { isFormal } from '~lib/config'
-import dataRequestIdDe from '~pages/business/company/[companyId]/data-request/[dataRequestId].de'
+import de from '~pages/business/company/[companyId]/data-request/[dataRequestId].de'
 
-const en: typeof dataRequestIdDe = {
-  ...dataRequestIdDe,
-
+const en: typeof de = {
   loading: 'Loading...',
 
-  acceptedAt: 'The data for this period has not yet been released for you.',
+  acceptedAt1: `${
+    isFormal ? 'you' : 'you'
+  } have not yet released this data for the
+  Health Department. Once${' '}
+  ${isFormal ? 'they release this data' : 'you release this data'}
+  '}, it will be sent in encrypted form to the health department'}`,
+
+  acceptedAt2: 'requesting authority:',
+  acceptedAt3: 'Reason for request:',
+  acceptedAt4: 'release data',
 
   enterKeyMessage: isFormal
     ? 'Your private key is no longer stored on your device. To decrypt the data, you need to re-enter it.'
@@ -32,6 +39,7 @@ const en: typeof dataRequestIdDe = {
   customerContactData: 'Customer contact data',
   customerContactDataFrom: 'Customer contact data from',
 
+  headerName: 'Name',
   headerFrom: 'From',
   headerUntil: 'Until',
   headerPhone: 'Phone',
@@ -48,6 +56,10 @@ const en: typeof dataRequestIdDe = {
   tested: 'Tested',
   vaccinated: 'Vaccinated',
   recovering: 'Recovering',
+
+  approveRequestModalText:
+    'The contact details have been successfully submitted',
+  approveRequestModalTitle: 'Request from health department',
 }
 
 export default en

@@ -7,6 +7,7 @@ import { generateKeys } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 import { Box, Button, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Warning, KeyPaper } from '~ui/svg'
@@ -153,7 +154,7 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('title')} | recover</title>
+        <PageTitle>{t('title')}</PageTitle>
       </Head>
       <Text as="h3" variant="h3">
         {t('title')} (2/3)

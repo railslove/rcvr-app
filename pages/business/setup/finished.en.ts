@@ -1,8 +1,8 @@
 import finishedDe from '~pages/business/setup/finished.de'
 
 const en: typeof finishedDe = {
-  tabTitle: 'Done',
-  pageTitle: "Glad you're here!",
+  pageTitle: 'Done',
+  header: "Glad you're here!",
   startButtonText: 'Start',
 
   finishedText1: "We're glad you're in! Your account is now fully set up.",

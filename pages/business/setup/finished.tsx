@@ -7,6 +7,7 @@ import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 import usePageLocale from '~locales/usePageLocale'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 const FinishedText: React.FC = () => {
   const { t } = usePageLocale('business/setup/finished')
@@ -55,10 +56,10 @@ function SetupSuccessPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('tabTitle')} | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
-        {t('pageTitle')}
+        {t('header')}
       </Text>
       <Box height={10} />
       <Row justifyContent="center">

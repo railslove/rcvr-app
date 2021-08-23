@@ -10,6 +10,7 @@ import usePageLocale from '~locales/usePageLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function PasswordResetNewPage() {
   const { t } = usePageLocale('business/password-reset/new')
@@ -45,7 +46,7 @@ export default function PasswordResetNewPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('pageTitle')} | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('pageHeadline')}

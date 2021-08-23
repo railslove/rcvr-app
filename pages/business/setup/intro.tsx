@@ -5,6 +5,7 @@ import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { AffiliateCard } from '~ui/blocks/AffiliateCard'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 import { Box, ButtonLink, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
@@ -47,7 +48,7 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title"> {t('pageTitle')} </title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('instruction')}

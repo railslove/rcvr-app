@@ -9,7 +9,7 @@ import { useEffectOnce } from 'react-use'
 import { v4 as uuidv4 } from 'uuid'
 import { DecryptedTicket, decryptTickets } from '~lib/actions'
 import { CompanyRes, postAcceptDataRequest } from '~lib/api'
-import { isCareEnv, isFormal } from '~lib/config'
+import { isCareEnv } from '~lib/config'
 import { GuestHealthDocumentEnum } from '~lib/db'
 import { useCompany, useDataRequest, useModals } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
@@ -37,7 +37,7 @@ const quoteValue = (value: string): string => {
     .replace(/^@/g, "'@")
 }
 
-type DownloadFileMessages = {
+type DownloadFileLocales = {
   tested: string
   recovering: string
   vaccinated: string
@@ -56,17 +56,17 @@ type DownloadFileMessages = {
 
 const providedHealthDocumentToString = (
   value: string,
-  messages: DownloadFileMessages
+  locales: DownloadFileLocales
 ) => {
   switch (value) {
     case GuestHealthDocumentEnum.hadCorona:
-      return messages.recovering
+      return locales.recovering
 
     case GuestHealthDocumentEnum.vaccinated:
-      return messages.vaccinated
+      return locales.vaccinated
 
     case GuestHealthDocumentEnum.tested:
-      return messages.tested
+      return locales.tested
 
     default:
       return ''
@@ -82,7 +82,7 @@ const queryCache = new QueryCache({
 const ticketsToExcel = (
   company: CompanyRes,
   tickets: DecryptedTicket[],
-  messages: DownloadFileMessages
+  locales: DownloadFileLocales
 ) => {
   const downloadableTickets = sortTickets(tickets).map((ticket) => ({
     enteredAt: formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm'),
@@ -95,7 +95,7 @@ const ticketsToExcel = (
     providedHealthDocument: company.needToShowCoronaTest
       ? providedHealthDocumentToString(
           ticket.guest?.providedHealthDocument,
-          messages
+          locales
         )
       : undefined,
   }))
@@ -147,7 +147,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     [t]
   )
 
-  const downloadFileMessages: DownloadFileMessages = React.useMemo(
+  const downloadFileLocales: DownloadFileLocales = React.useMemo(
     () => ({
       tested: t('tested'),
       vaccinated: t('vaccinated'),
@@ -190,7 +190,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const handleDownload = React.useCallback(async () => {
     setLoading(true)
-    const rows = ticketsToExcel(company, tickets, downloadFileMessages)
+    const rows = ticketsToExcel(company, tickets, downloadFileLocales)
 
     // generate xlsx
     const { writeFile, utils: xlsx } = await import('xlsx')
@@ -205,10 +205,10 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
     writeFile(
       book,
-      `${downloadFileMessages.contactData} ${company?.name} ${date}.xlsx`
+      `${downloadFileLocales.contactData} ${company?.name} ${date}.xlsx`
     )
     setLoading(false)
-  }, [tickets, company, dataRequest, downloadFileMessages])
+  }, [tickets, company, dataRequest, downloadFileLocales])
 
   const dateRange =
     dataRequest?.from && dataRequest?.to
@@ -218,8 +218,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
       : ''
 
   const title = dateRange
-    ? `${downloadFileMessages.customerContactDataFrom} ${dateRange}`
-    : downloadFileMessages.customerContactData
+    ? `${downloadFileLocales.customerContactDataFrom} ${dateRange}`
+    : downloadFileLocales.customerContactData
 
   const didDecrypt = dataRequest?.tickets && pendingCount === 0
 
@@ -280,8 +280,8 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
               queryCache.find(['unacceptedDataRequests'])
               openModal('success', {
                 returnUrl: `/business/company/${companyId}`,
-                text: 'Die Kontaktdaten wurden erfolgreich übermittelt',
-                title: 'Anfrage vom Gesundheitsamt',
+                text: t('approveRequestModalText'),
+                title: t('approveRequestModalTitle'),
               })
             })
           } else {
@@ -290,6 +290,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
         })
     }
   }, [
+    t,
     didDecrypt,
     tickets,
     company,
@@ -318,26 +319,19 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
         errorCount === 0 && (
           <>
             <Callout variant="danger">
-              <Text>
-                {isFormal ? 'Sie' : 'Du'} hast diese Daten noch nicht für das
-                Gesundheitsamt freigegeben. Sobald{' '}
-                {isFormal
-                  ? 'sie diese Daten freigeben'
-                  : 'du diese Daten freigibst'}
-                , werden diese verschlüsselt an das Gesundheitsamt gesendet.
-              </Text>
+              <Text>{t('acceptedAt1')}</Text>
               <Box height={4} />
-              <Text as="h2">Anfragende Behörde:</Text>
+              <Text as="h2">{t('acceptedAt2')}</Text>
               <Text>{dataRequest.irisClientName}</Text>
               <Box height={4} />
               {dataRequest.reason && (
                 <>
-                  <Text as="h2">Grund der Anfrage:</Text>
+                  <Text as="h2">{t('acceptedAt3')}</Text>
                   <Text>{dataRequest.reason}</Text>
                   <Box height={4} />
                 </>
               )}
-              <Button onClick={approveRequest}>Daten freigeben</Button>
+              <Button onClick={approveRequest}>{t('acceptedAt3')}</Button>
             </Callout>
             <Box height={4} />
           </>
@@ -440,7 +434,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
                       <td>
                         {providedHealthDocumentToString(
                           ticket.guest.providedHealthDocument,
-                          downloadFileMessages
+                          downloadFileLocales
                         )}
                       </td>
                     )}
