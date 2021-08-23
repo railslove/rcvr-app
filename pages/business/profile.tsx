@@ -43,8 +43,7 @@ const PricingInfoDuringTest: React.FC = () => {
           <br />
           {t('pricingInfo_fresenius2')}
           <br />
-          {t('pricingInfo_fresenius3')}:{' '}
-          <a href="mailto:team@recoverapp.de">team@recoverapp.de</a>
+          {t('pricingInfo_fresenius3')}: <RecoverTeamEmailLink />
         </p>
       )
     }
@@ -193,7 +192,10 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
         <>
           <ActionList grid>
             <ActionCard onClick={() => openCheckout()}>
-              <ActionCard.Main title="Zahlungsmethode ändern" icon={Right} />
+              <ActionCard.Main
+                title={t('hasSubscriptionNotForFreeCardTitle1')}
+                icon={Right}
+              />
             </ActionCard>
           </ActionList>
 
@@ -201,15 +203,15 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 
           <ActionList grid>
             <ActionCard onClick={openSelfService}>
-              <ActionCard.Main title="Mitgliedschaft verwalten" icon={Right} />
+              <ActionCard.Main
+                title={t('hasSubscriptionNotForFreeCardTitle2')}
+                icon={Right}
+              />
             </ActionCard>
             <div />
           </ActionList>
           <Box height={4} />
-          <Text variant="shy">
-            {isFormal ? 'Sie können ihre' : 'Du kannst Deine'} Mitgliedschaft
-            jederzeit zum Monatsende kündigen.
-          </Text>
+          <Text variant="shy">{t('hasSubscriptionNotForFreeMessage')}</Text>
         </>
       )}
 
@@ -217,7 +219,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Text textAlign={['center', 'center', 'left']}>
         <Link href="/business/logout" passHref>
           <Text variant="h5" as="a" color="bluegrey.400">
-            Logout
+            {t('logout')}
           </Text>
         </Link>
       </Text>
@@ -226,6 +228,8 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 }
 
 const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = usePageLocale<'business/profile'>()
+
   const status = React.useMemo(() => {
     if (owner.canUseForFree) return 'free'
     if (
@@ -256,9 +260,10 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout>
         <Text>
-          {isFormal ? 'Sie können' : 'Du kannst'} recover noch bis zum{' '}
+          {t('trialing_internal1')}{' '}
           <strong>
-            {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')} kostenlos testen
+            {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')}{' '}
+            {t('trialing_internal2')}
           </strong>
           .
         </Text>
@@ -270,11 +275,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout>
         <Text>
-          <strong>
-            {isFormal ? 'Sie sind' : 'Du bist'} im Probezeitraum deiner
-            Mitgliedschaft.
-          </strong>{' '}
-          Danach wird die Mitgliedschaft automatisch verlängert.
+          <strong>{t('trialing1')}.</strong> {t('trialing2')}.
         </Text>
       </Callout>
     )
@@ -283,7 +284,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
   if (status === 'incomplete') {
     return (
       <Callout>
-        <Text>{isFormal ? 'Ihre' : 'Deine'} Zahlung wird verarbeitet...</Text>
+        <Text>{t('incomplete')}</Text>
       </Callout>
     )
   }
@@ -292,9 +293,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout variant="danger">
         <Text>
-          {isFormal ? 'Ihre' : 'Deine'} Zahlung konnte nicht verarbeitet werden.
-          Es wurden keine Zahlungen veranlasst.{' '}
-          <strong>Bitte erneut versuchen.</strong>
+          {t('incomplete_expired1')} <strong>{t('incomplete_expired2')}</strong>
         </Text>
       </Callout>
     )
@@ -303,10 +302,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
   if (status === 'unpaid') {
     return (
       <Callout variant="danger">
-        <Text>
-          {isFormal ? 'Ihre' : 'Deine'} letzte Rechnung wurde noch nicht
-          bezahlt.
-        </Text>
+        <Text>{t('unpaid')}</Text>
       </Callout>
     )
   }
@@ -314,10 +310,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
   if (status === 'canceled') {
     return (
       <Callout variant="danger">
-        <Text>
-          {isFormal ? 'Sie haben ihre' : 'Du hast Deine'} Mitgliedschaft
-          gekündigt.
-        </Text>
+        <Text>{t('cancelled')}</Text>
       </Callout>
     )
   }

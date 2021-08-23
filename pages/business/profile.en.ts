@@ -1,6 +1,6 @@
-import profileDe from '~pages/business/profile.de'
+import de from '~pages/business/profile.de'
 
-const en: typeof profileDe = {
+const en: typeof de = {
   pageTitle: 'My Profile',
   editProfile: 'Edit Profile',
   myMembership: 'My membership',
@@ -41,6 +41,33 @@ const en: typeof profileDe = {
   our support and we will organize it for you`,
 
   pricingInfoEmailSubject_rcvr: `I would like to pay for Recover on account`,
+
+  hasSubscriptionNotForFreeCardTitle1: 'Change payment method',
+  hasSubscriptionNotForFreeCardTitle2: 'Manage membership',
+
+  hasSubscriptionNotForFreeMessage: `You can change your Membership at any time at the end of the month. `,
+
+  logout: 'Logout',
+
+  trialing1: `You are in the trial period of your
+  membership`,
+
+  trialing2: `after that your membership will be automatically renewed`,
+
+  trialing_internal1: `You can recover until`,
+
+  trialing_internal2: `try for free`,
+
+  incomplete: `Your payment is being processed...`,
+
+  incomplete_expired1: `Your Payment could not be processed.
+  No payments were initiated.`,
+
+  incomplete_expired2: `Please try again.`,
+
+  unpaid: `Your last invoice has not been paid yet.`,
+
+  cancelled: `Your membership is cancelled.`,
 }
 
 export default en

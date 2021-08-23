@@ -44,4 +44,40 @@ export default {
   unserem Support und wir organiseren das für Dich`,
 
   pricingInfoEmailSubject_rcvr: `Ich würde gerne für Recover auf Rechnung bezahlen`,
+
+  hasSubscriptionNotForFreeCardTitle1: 'Zahlungsmethode ändern',
+  hasSubscriptionNotForFreeCardTitle2: 'Mitgliedschaft verwalten',
+
+  hasSubscriptionNotForFreeMessage: `${
+    isFormal ? 'Sie können ihre' : 'Du kannst Deine'
+  } Mitgliedschaft jederzeit zum Monatsende kündigen.`,
+
+  logout: 'Logout',
+
+  trialing1: `${isFormal ? 'Sie sind' : 'Du bist'} im Probezeitraum deiner
+  Mitgliedschaft`,
+
+  trialing2: `Danach wird die Mitgliedschaft automatisch verlängert`,
+
+  trialing_internal1: `${
+    isFormal ? 'Sie können' : 'Du kannst'
+  } recover noch bis zum`,
+
+  trialing_internal2: `kostenlos testen`,
+
+  incomplete: `${isFormal ? 'Ihre' : 'Deine'} Zahlung wird verarbeitet...`,
+
+  incomplete_expired1: `${
+    isFormal ? 'Ihre' : 'Deine'
+  } Zahlung konnte nicht verarbeitet werden.
+  Es wurden keine Zahlungen veranlasst.`,
+
+  incomplete_expired2: `Bitte erneut versuchen.`,
+
+  unpaid: `${
+    isFormal ? 'Ihre' : 'Deine'
+  } letzte Rechnung wurde noch nicht bezahlt.`,
+
+  cancelled: `${isFormal ? 'Sie haben ihre' : 'Du hast Deine'} Mitgliedschaft
+  gekündigt.`,
 }
