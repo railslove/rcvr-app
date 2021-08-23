@@ -28,4 +28,18 @@ export default {
     'Bitte bewahren sie diesen Schlüssel an einem sicheren, aber für sie gut zugänglichen Ort auf.',
 
   verifyPrivateKeyError: 'Schlüsseldatei stimmt nicht überein.',
+
+  verifyKeyExp1:
+    'Du wirst die Datei rcvr_geheimer_schluessel.txt wieder brauchen, wenn das Gesundheitsamt anruft.',
+  verifyKeyExp2:
+    'Zur Bestätigung, dass du den Schlüssel erhalten hast, lade den Schlüssel hier nochmal hoch.',
+
+  verifyKeyExp1_fresenius:
+    'Du wirst die Datei rcvr_geheimer_schluessel.txt wieder brauchen, wenn das Gesundheitsamt anruft.',
+
+  verifyKeyExp2_fresenius:
+    'Lade die Schlüsseldatei deshalb hier zur Bestätigung noch einmal hoch.',
+
+  verifyKeyExpCareHealth:
+    'Zur Bestätigung laden Sie die Schlüsseldatei rcvr_geheimer_schluessel.txt bitte hier hoch.',
 }

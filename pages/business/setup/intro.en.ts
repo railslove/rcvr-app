@@ -1,9 +1,11 @@
-import introDe from '~pages/business/setup/intro.de'
+import { isFreseniusEnv } from '~lib/config'
+import de from '~pages/business/setup/intro.de'
 
-const en: typeof introDe = {
+const en: typeof de = {
   pageTitle: 'For companies',
-  instruction: 'Create an account',
-  instruction_fresenius: 'How to use recover for your business',
+  instruction: isFreseniusEnv
+    ? 'How to use recover for your business'
+    : 'Create an account',
   letsGo: "Let's go",
 
   setupIntro1: `Since Corona, many companies and institutions are required,

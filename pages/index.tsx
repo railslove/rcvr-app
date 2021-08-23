@@ -4,8 +4,6 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 
-import { isRcvrEnv } from '~lib/config'
-
 import usePageLocale from '~locales/usePageLocale'
 
 export default function IndexPage() {

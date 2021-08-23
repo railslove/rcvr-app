@@ -3,7 +3,7 @@ import 'typeface-nunito'
 import '~lib/appReset.css'
 import '~lib/polyfills'
 
-import React, { ComponentType } from 'react'
+import React from 'react'
 import App, { AppContext } from 'next/app'
 import { Global, ThemeProvider } from '@emotion/react'
 

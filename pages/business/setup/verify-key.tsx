@@ -16,10 +16,48 @@ import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { KeyViewer } from '~ui/blocks/KeyViewer/KeyViewer'
 import { downloadKey } from '~lib/actions/downloadKey'
-import { verifyPrivateKeyExplanation } from '~ui/whitelabels'
+import { BUILD_VARIANT } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
 import { commitSetupPublicKey } from '~lib/actions'
 import usePageLocale from '~locales/usePageLocale'
+
+const VerifyPrivateKeyExplanation: React.FC = () => {
+  const { t } = usePageLocale<'business/setup/verify-key'>()
+
+  switch (BUILD_VARIANT) {
+    case 'care':
+    case 'health': {
+      return (
+        <>
+          <p>
+            <strong>{t('verifyKeyExpCareHealth')}</strong>
+          </p>
+          <Box height={4} />
+        </>
+      )
+    }
+    case 'fresenius': {
+      return (
+        <>
+          <p>
+            <strong>{t('verifyKeyExp1_fresenius')}</strong>
+          </p>
+          <p>{t('verifyKeyExp2_fresenius')}</p>
+        </>
+      )
+    }
+    default: {
+      return (
+        <>
+          <p>
+            <strong>{t('verifyKeyExp1')}</strong>
+          </p>
+          <p>{t('verifyKeyExp2')}</p>
+        </>
+      )
+    }
+  }
+}
 
 const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { t } = usePageLocale<'business/setup/verify-key'>()
@@ -75,7 +113,7 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
               {t('downloadKeyButtonText')}
             </SubActionButton>
             <Box height={6} />
-            {verifyPrivateKeyExplanation}
+            <VerifyPrivateKeyExplanation />
             <Formik
               initialValues={{ privateKey: undefined }}
               onSubmit={handleSubmit}

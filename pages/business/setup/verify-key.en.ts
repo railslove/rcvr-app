@@ -1,7 +1,7 @@
 import { isFormal } from '~lib/config'
-import verifyKeyDe from '~pages/business/setup/verify-key.de'
+import de from '~pages/business/setup/verify-key.de'
 
-const en: typeof verifyKeyDe = {
+const en: typeof de = {
   pageTitle: `Your key`,
   headline: 'Download key',
   createAccountStep: 'create account',
@@ -28,6 +28,20 @@ const en: typeof verifyKeyDe = {
     'Please keep this key in a safe, but easily accessible place for them.',
 
   verifyPrivateKeyError: 'Key file does not match.',
+
+  verifyKeyExp1:
+    'You will need the rcvr_secret_key.txt file again when the health department calls',
+  verifyKeyExp2:
+    'To confirm that you have received the key, upload the key again here.',
+
+  verifyKeyExp1_fresenius:
+    'You will need the rcvr_secret_key.txt file again when the health department calls.',
+
+  verifyKeyExp2_fresenius:
+    'Therefore, upload the key file here again for confirmation.',
+
+  verifyKeyExpCareHealth:
+    'Please upload the key file rcvr_secret_key.txt here for confirmation.',
 }
 
 export default en
