@@ -1,24 +1,26 @@
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import Link from 'next/link'
+import Link from '~ui/core/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { login } from '~lib/actions/login'
-import { isFormal } from '~lib/config'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import usePageLocale from '~locales/usePageLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
-const LoginSchema = Yup.object().shape({
-  email: Yup.string().required('Email muss angegeben werden.'),
-  password: Yup.string().required('Password muss angegeben werden.'),
-})
-
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
+  const { t } = usePageLocale<'business/login'>()
+
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().required(t('emailRequired')),
+    password: Yup.string().required(t('passwordRequired')),
+  })
+
   const [loading, setLoading] = React.useState(false)
   const queryClient = useQueryClient()
 
@@ -38,7 +40,7 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
       }
     } catch (error) {
       if (error.response?.status === 401) {
-        bag.setFieldError('password', 'Email oder Passwort falsch.')
+        bag.setFieldError('password', t('wrongEmailOrPassword'))
       } else {
         throw error
       }
@@ -50,18 +52,14 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">Login | recover</title>
+        <title key="title">{t('pageTitle')} | recover</title>
       </Head>
       <Text as="h2" variant="h2">
-        Login für Betriebe
+        {t('title')}
       </Text>
       <Box height={4} />
       <Text>
-        <p>
-          {isFormal
-            ? 'Seit Corona sind Einrichtungen verpflichtet die Kontaktdaten von Gästen zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie - und die sicherste für Ihre Besucher.'
-            : 'Seit Corona sind viele Betriebe und Einrichtungen verpflichtet, Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für Deine Besucher oder Gäste.'}
-        </p>
+        <p>{t('message')}</p>
       </Text>
       <Box height={4} />
 
@@ -73,20 +71,20 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
         <Card variant="form" mx={-4}>
           <Loading show={loading} />
           <Form>
-            <Input name="email" label="Email" autoComplete="email" />
+            <Input
+              name="email"
+              label={t('inputEmailLabel')}
+              autoComplete="email"
+            />
             <Box height={4} />
             <Input
               name="password"
-              label="Passwort"
+              label={t('inputPasswordLabel')}
               hint={
                 <>
-                  {isFormal
-                    ? 'Ihr Passwort haben Sie während der Registrierung selbst gewählt. Das ist '
-                    : 'Dein Password hast du während der Registrierung selbst gewählt. Das ist '}
-                  <strong>nicht</strong>
-                  {isFormal
-                    ? ' Ihr privater Schlüssel.'
-                    : ' dein privater Schlüssel.'}
+                  {t('inputPasswordHint1')}
+                  <strong>{t('inputPasswordHint2')}</strong>
+                  {t('inputPasswordHint3')}
                 </>
               }
               type="password"
@@ -94,7 +92,7 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
             />
             <Box height={5} />
             <Button type="submit" css={{ width: '100%' }}>
-              Login
+              {t('loginButtonText')}
             </Button>
           </Form>
         </Card>
@@ -102,7 +100,7 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
 
       <Row justifyContent="center" my={6}>
         <Link href="/business/password-reset/request" as="a" passHref>
-          <Text variant="link">Passwort vergessen?</Text>
+          <Text variant="link">{t('forgottenPasswordText')}</Text>
         </Link>
       </Row>
     </MobileApp>
