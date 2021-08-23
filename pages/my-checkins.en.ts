@@ -1,7 +1,8 @@
 import { isCareEnv } from '~lib/config'
-import myCheckinsDe from './my-checkins.de'
+import de from './my-checkins.de'
 
-const en: typeof myCheckinsDe = {
+const en: typeof de = {
+  pageTitle: 'Meine Checkins',
   noCheckinsYet: isCareEnv
     ? "You don't have any checkins yet"
     : "You don't have checkins yet",

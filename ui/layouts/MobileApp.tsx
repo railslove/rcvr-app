@@ -27,7 +27,7 @@ export const MobileApp: React.FC<Props> = ({
     <>
       <Limit>
         <Head>
-          <PageTitle key="title" />
+          <PageTitle />
         </Head>
         <SharedMeta />
         <Box display="flex" justifyContent="flex-end">

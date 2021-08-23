@@ -4,7 +4,7 @@ import Link from '~ui/core/Link/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'
-import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { isCareEnv, isHealthEnv } from '~lib/config'
 import { useCompanies, useModals } from '~lib/hooks'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import usePageLocale from '~locales/usePageLocale'
@@ -246,8 +246,7 @@ const SubscriptionMessage: React.FC<WithOwnerProps> = ({ owner }) => {
     return (
       <Callout>
         <Text>
-          {isFormal ? 'Sie können' : 'Du kannst'}{' '}
-          <strong>recover kostenlos</strong> nutzen.{' '}
+          {t('freeSub1')} <strong>{t('freeSub2')}</strong> {t('freeSub3')}.{' '}
           <span role="img" aria-label="Hurra!">
             🎉
           </span>

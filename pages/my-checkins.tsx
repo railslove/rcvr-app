@@ -14,6 +14,7 @@ import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 import usePageLocale from '~locales/usePageLocale'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function MyCheckinsPage() {
   const { t } = usePageLocale('my-checkins')
@@ -75,7 +76,7 @@ export default function MyCheckinsPage() {
   return (
     <MobileApp logoVariant="sticky" secondaryLogo={area?.data?.affiliateLogo}>
       <Head>
-        <title key="title">Meine Checkins | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       {checkinsInfo.status === 'success' && checkinsInfo.data.length === 0 && (
         <Box my={10}>

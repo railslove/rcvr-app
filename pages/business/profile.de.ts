@@ -57,6 +57,13 @@ export default {
   trialing1: `${isFormal ? 'Sie sind' : 'Du bist'} im Probezeitraum deiner
   Mitgliedschaft`,
 
+  /**
+   * subscriptions start
+   */
+  freeSub1: `${isFormal ? 'Sie können' : 'Du kannst'}`,
+  freeSub2: 'recover kostenlos',
+  freeSub3: 'nutzen',
+
   trialing2: `Danach wird die Mitgliedschaft automatisch verlängert`,
 
   trialing_internal1: `${
@@ -80,4 +87,8 @@ export default {
 
   cancelled: `${isFormal ? 'Sie haben ihre' : 'Du hast Deine'} Mitgliedschaft
   gekündigt.`,
+
+  /**
+   * subscriptions end
+   */
 }

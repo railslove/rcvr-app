@@ -7,6 +7,7 @@ import { Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { Loading } from '~ui/blocks/Loading'
 import usePageLocale from '~locales/usePageLocale'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function BusinessIndexPage() {
   const { t } = usePageLocale('business/logout')
@@ -22,7 +23,7 @@ export default function BusinessIndexPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('title')} | recover</title>
+        <PageTitle>{t('title')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('title')}

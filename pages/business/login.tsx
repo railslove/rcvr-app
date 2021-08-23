@@ -11,6 +11,7 @@ import usePageLocale from '~locales/usePageLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 const LoginPage: React.FC<WithOwnerProps> = () => {
   const router = useRouter()
@@ -52,7 +53,7 @@ const LoginPage: React.FC<WithOwnerProps> = () => {
   return (
     <MobileApp>
       <Head>
-        <title key="title">{t('pageTitle')} | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('title')}

@@ -5,6 +5,7 @@ import usePageLocale from '~locales/usePageLocale'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function BusinessIndexPage() {
   const { t } = usePageLocale('business/index')
@@ -12,7 +13,7 @@ export default function BusinessIndexPage() {
   return (
     <MobileApp logoVariant="big">
       <Head>
-        <title key="title">{t('title')} | recover</title>
+        <PageTitle>{t('title')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('title')}

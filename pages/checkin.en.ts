@@ -1,7 +1,8 @@
 import { isFormal, isRcvrEnv, isCareEnv, isHealthEnv } from '~lib/config'
-import checkinDe from './checkin.de'
+import de from './checkin.de'
 
-const en: typeof checkinDe = {
+const en: typeof de = {
+  pageTitle: 'Checkin...',
   whatIsRecover: 'What is Recover?',
 
   welcome: 'Welcome!',

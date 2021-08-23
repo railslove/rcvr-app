@@ -1,3 +1,3 @@
-import logoutDe from '~pages/business/logout.de'
+import de from '~pages/business/logout.de'
 
-export default logoutDe
+export default de

@@ -15,6 +15,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { Onboarding } from '~ui/blocks/Onboarding/Onboarding'
 import { Confirmation } from '~ui/blocks/Confirmation/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function CheckinPage() {
   const { t } = usePageLocale('checkin')
@@ -175,7 +176,7 @@ export default function CheckinPage() {
   return (
     <MobileApp logoVariant="big" secondaryLogo={areaInfo.data?.affiliateLogo}>
       <Head>
-        <title key="title">Checkin... | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Loading show={showLoading} />
       {areaInfo.data?.ownerIsBlocked && (

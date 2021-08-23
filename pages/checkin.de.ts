@@ -1,6 +1,7 @@
 import { isFormal, isRcvrEnv, isCareEnv, isHealthEnv } from '~lib/config'
 
 const de = {
+  pageTitle: 'Checkin...',
   whatIsRecover: 'Was ist Recover?',
 
   welcome: 'Willkommen!',

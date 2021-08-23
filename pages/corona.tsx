@@ -7,6 +7,7 @@ import { Phone } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { FixedBottomBar } from '~ui/blocks/BottomBar/BottomBar'
 import usePageLocale from '~locales/usePageLocale'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function CoronaPage() {
   const { t } = usePageLocale('corona')
@@ -14,7 +15,7 @@ export default function CoronaPage() {
   return (
     <MobileApp>
       <Head>
-        <title key="title">{t('pageTitle')} | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Text as="h2" variant="h2">
         {t('title')}
