@@ -73,9 +73,14 @@ export const Onboarding: React.FC<OnboardingProps> = ({
         }}
       >
         <Form>
-          <Input name="name" label="Name" autoComplete="name" />
+          <Input name="name" label={t('nameInputLabel')} autoComplete="name" />
           <Box height={4} />
-          <Input name="phone" label="Telefon" type="tel" autoComplete="tel" />
+          <Input
+            name="phone"
+            label={t('phoneInputLabel')}
+            type="tel"
+            autoComplete="tel"
+          />
           <Box height={4} />
           <Input
             name="address"

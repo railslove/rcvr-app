@@ -5,7 +5,7 @@ export default {
   characters: 'Zeichen',
   long: 'lang',
 
-  itCointains: 'Er beinhaltet nur Zahlen von',
+  itContains: 'Er beinhaltet nur Zahlen von',
   '0to9': '0 bis 9',
   andLettersFrom: 'und Buchstaben von',
   AtoF: 'A bis F',

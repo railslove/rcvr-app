@@ -6,14 +6,14 @@ import LogoCare from '~ui/svg/logo-care.svg'
 import LogoHealth from '~ui/svg/logo-health.svg'
 import LogoFresenius from '~ui/svg/logo-fresenius.svg'
 
-export type LogoDimenisions = {
+export type LogoDimensions = {
   logoSmallWidth: string
   logoBigWidth: string
   logoBigHeight: string
   logoSmallHeight: string
 }
 
-export const LOGO_DIMENSIONS: LogoDimenisions = (isCareEnv && {
+export const LOGO_DIMENSIONS: LogoDimensions = (isCareEnv && {
   logoSmallWidth: '184px',
   logoSmallHeight: '35px',
   logoBigWidth: '240px',

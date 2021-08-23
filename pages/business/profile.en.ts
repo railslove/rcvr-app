@@ -48,26 +48,36 @@ const en: typeof de = {
   hasSubscriptionNotForFreeMessage: `You can change your Membership at any time at the end of the month. `,
 
   logout: 'Logout',
+  /**
+   * subscriptions start
+   */
+  freeSub1: 'you can',
+  freeSub2: 'recover for free',
+  freeSub3: 'use',
 
-  trialing1: `You are in the trial period of your
-  membership`,
+  trialing1: 'You are in the in the trial period of you membership',
+  trialing2: 'after that the membership will be renewed automatically',
 
-  trialing2: `after that your membership will be automatically renewed`,
-
-  trialing_internal1: `You can recover until`,
+  trialing_internal1: `you can recover until`,
 
   trialing_internal2: `try for free`,
 
   incomplete: `Your payment is being processed...`,
 
-  incomplete_expired1: `Your Payment could not be processed.
-  No payments were initiated.`,
+  incomplete_expired1: `Your Payment could not be processed. No payments were initiated.`,
 
   incomplete_expired2: `Please try again.`,
 
   unpaid: `Your last invoice has not been paid yet.`,
 
   cancelled: `Your membership is cancelled.`,
+  /**
+   * subscriptions end
+   */
+
+  checkoutSelectionModalTitle: 'Payment method',
+  checkoutSelectionModalSepaButtonText: 'SEPA Direct Debit',
+  checkoutSelectionModalStripeButtonText: 'Credit Card',
 }
 
 export default en

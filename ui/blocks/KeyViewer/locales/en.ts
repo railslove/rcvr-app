@@ -5,7 +5,7 @@ const en: typeof keyViewerDe = {
   characters: 'characters',
   long: 'long',
 
-  itCointains: 'It only contains numbers from',
+  itContains: 'It only contains numbers from',
   '0to9': '0 to 9',
   andLettersFrom: 'and letters from',
   AtoF: 'A to F',

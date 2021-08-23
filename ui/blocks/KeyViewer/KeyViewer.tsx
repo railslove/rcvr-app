@@ -26,7 +26,7 @@ export const KeyViewer: React.FC<Props> = ({ value }) => {
           </strong>{' '}
           {t('long')}.
           <br />
-          {t('itCointains')} <strong>{t('0to9')}</strong> {t('andLettersFrom')}{' '}
+          {t('itContains')} <strong>{t('0to9')}</strong> {t('andLettersFrom')}{' '}
           <strong>{t('AtoF')}</strong>.
         </Text>
       </Box>

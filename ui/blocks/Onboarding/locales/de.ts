@@ -3,6 +3,8 @@ import { isFormal } from '~lib/config'
 export default {
   zipInputLabel: 'Postleitzahl',
   cityInputLabel: 'Ort',
+  nameInputLabel: 'Name',
+  phoneInputLabel: 'Telefon',
   addressInputLabel: 'Anschrift (Straße und Hausnummer)',
   residentInputLabel: 'Bewohnername',
   hadCoronaInputLabel:

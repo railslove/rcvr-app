@@ -12,17 +12,23 @@ import { AddCard } from '~ui/blocks/AddCard'
 import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
 import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
 import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
-import { CompanyCard } from '~ui/blocks/CompanyCard'
+import { CompanyCard, CompanyCardProps } from '~ui/blocks/CompanyCard'
 
 const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { t } = usePageLocale('business/dashboard')
 
   const { data: companies } = useCompanies()
+
   const { modals, openModal } = useModals({
     data: BusinessDataModal,
     delete: BusinessDeleteModal,
     privateKey: PrivateKeyModal,
   })
+
+  const companyCardLocales: CompanyCardProps['locales'] = {
+    editButtonText: t('editButtonText'),
+    menuPdfLinkText: t('menuPdfLinkText'),
+  }
 
   return (
     <OwnerApp title={t('title')}>
@@ -39,6 +45,7 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
         {companies?.map((company) => (
           <CompanyCard
             key={company.id}
+            locales={companyCardLocales}
             company={company}
             onEdit={() =>
               owner.privateKey

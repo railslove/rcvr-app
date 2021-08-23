@@ -11,4 +11,9 @@ const en: typeof de = {
   dataPrivacyTabText: 'Data privacy',
 }
 
-export default { en, de }
+const pl: typeof de = {
+  ...de,
+  dataPrivacyTabText: 'Ochrona danych',
+}
+
+export default { pl, en, de }

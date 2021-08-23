@@ -14,7 +14,10 @@ import { ActionList } from '~ui/blocks/ActionList'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Divider, Text } from '~ui/core'
 import { OwnerApp } from '~ui/layouts/OwnerApp/OwnerApp'
-import { CheckoutSelectionModal } from '~ui/modals/CheckoutSelectionModal'
+import {
+  CheckoutSelectionModal,
+  CheckoutSelectionModalProps,
+} from '~ui/modals/CheckoutSelectionModal'
 import { OwnerModal } from '~ui/modals/OwnerModal'
 import { SubscribedModal } from '~ui/modals/SubscribedModal'
 import { Right } from '~ui/svg'
@@ -108,7 +111,16 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   }, [])
 
   const openCheckout = () => {
-    openModal('checkoutSelection', { openStripeCheckout })
+    const props: CheckoutSelectionModalProps = {
+      locales: {
+        title: t('checkoutSelectionModalTitle'),
+        stripeButtonText: t('checkoutSelectionModalStripeButtonText'),
+        sepaDebitButtonText: t('checkoutSelectionModalSepaButtonText'),
+      },
+      openStripeCheckout,
+    }
+
+    openModal('checkoutSelection', props as any)
   }
 
   const openEditOwner = () => {

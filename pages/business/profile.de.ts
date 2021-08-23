@@ -54,9 +54,6 @@ export default {
 
   logout: 'Logout',
 
-  trialing1: `${isFormal ? 'Sie sind' : 'Du bist'} im Probezeitraum deiner
-  Mitgliedschaft`,
-
   /**
    * subscriptions start
    */
@@ -64,6 +61,8 @@ export default {
   freeSub2: 'recover kostenlos',
   freeSub3: 'nutzen',
 
+  trialing1: `${isFormal ? 'Sie sind' : 'Du bist'} im Probezeitraum deiner
+  Mitgliedschaft`,
   trialing2: `Danach wird die Mitgliedschaft automatisch verlängert`,
 
   trialing_internal1: `${
@@ -91,4 +90,8 @@ export default {
   /**
    * subscriptions end
    */
+
+  checkoutSelectionModalTitle: 'Zahlungsmethode',
+  checkoutSelectionModalSepaButtonText: 'SEPA Lastschrift',
+  checkoutSelectionModalStripeButtonText: 'Kreditkarte',
 }

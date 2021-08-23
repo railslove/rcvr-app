@@ -10,10 +10,12 @@ const PageTitle: React.FC<PageTitleProps> = ({ children }) => {
     <title key="title">
       {[
         children,
-        isCareEnv ? 'recover care' : isHealthEnv ? 'recover health' : 'recover',
+        (isCareEnv && 'recover care') ||
+          (isHealthEnv && 'recover health') ||
+          'recover',
       ]
         .filter((v) => v)
-        .join('-')}
+        .join(' | ')}
     </title>
   )
 }

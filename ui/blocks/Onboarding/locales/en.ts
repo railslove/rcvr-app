@@ -3,6 +3,8 @@ import de from '~ui/blocks/Onboarding/locales/de'
 const en: typeof de = {
   zipInputLabel: 'zip code',
   cityInputLabel: 'City',
+  nameInputLabel: 'Name',
+  phoneInputLabel: 'Phone',
   addressInputLabel: 'address (street and house number)',
   residentInputLabel: 'resident name',
   hadCoronaInputLabel:
