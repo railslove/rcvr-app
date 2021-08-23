@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Link from 'next/link'
+import Link, { LinkHref } from '~ui/core/Link'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { As } from './'
@@ -98,17 +98,19 @@ const Center = styled('div')(
 )
 
 type ButtonLinkProps = ButtonProps & {
-  href: string
   target?: string
+  href?: LinkHref
+  externalHref?: string
 }
 
 export const ButtonLink: React.FC<ButtonLinkProps> = ({
   href,
   target,
+  externalHref,
   ...rest
 }) => {
   return (
-    <Link href={href}>
+    <Link href={href} externalHref={externalHref}>
       <a target={target}>
         <Button as="div" {...rest} />
       </a>

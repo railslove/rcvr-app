@@ -78,8 +78,8 @@ function generateLocalesConfigAndTypes() {
     }, {})
 
   fs.writeFileSync(
-    'locales/generated/config.json',
-    JSON.stringify(config, null, 2)
+    'locales/generated/pages.json',
+    JSON.stringify(config.pages, null, 2)
   )
 
   fs.writeFileSync(

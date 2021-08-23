@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { NextPageContext, NextPage } from 'next'
 import { detect as detectBrowser, BrowserInfo } from 'detect-browser'
-import Link from 'next/link'
+import Link from '~ui/core/Link'
 
 import usePageLocale from '~locales/usePageLocale'
 import { Text, Box, Card, Button } from '~ui/core'

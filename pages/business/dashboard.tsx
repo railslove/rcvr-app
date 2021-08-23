@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Link from 'next/link'
+import Link from '~ui/core/Link'
 
 import usePageLocale from '~locales/usePageLocale'
 

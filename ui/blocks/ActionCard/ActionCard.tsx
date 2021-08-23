@@ -1,12 +1,12 @@
 import * as React from 'react'
-import Link from 'next/link'
+import Link, { LinkHref } from '~ui/core/Link'
 import { Card, SRText, Row, Text, Box, Icon } from '~ui/core'
 
 import useLocaleObject from '~locales/useLocaleObject'
 import ActionCardLocales from '~ui/blocks/ActionCard/ActionCard.locales'
 
 interface Props {
-  href?: string
+  href?: LinkHref
   as?: string
   onClick?: () => void
   children: React.ReactNode

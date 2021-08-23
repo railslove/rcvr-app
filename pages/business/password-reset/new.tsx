@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import Link from 'next/link'
+import Link from '~ui/core/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import * as Yup from 'yup'

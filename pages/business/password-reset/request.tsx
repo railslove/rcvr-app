@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import Link from 'next/link'
+import Link from '~ui/core/Link'
 import * as React from 'react'
 import * as Yup from 'yup'
 import { postRequestPasswordReset } from '~lib/api'

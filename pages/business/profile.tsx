@@ -1,6 +1,6 @@
 import { loadStripe } from '@stripe/stripe-js'
 import formatDate from 'intl-dateformat'
-import Link from 'next/link'
+import Link from '~ui/core/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { postOwnerCheckout, postOwnerSubscription } from '~lib/api'

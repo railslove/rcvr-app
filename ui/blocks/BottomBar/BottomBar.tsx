@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Link from 'next/link'
+import Link from '~ui/core/Link'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { css } from '@styled-system/css'

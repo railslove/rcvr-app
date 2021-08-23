@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link, { LinkHref } from '~ui/core/Link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
 import useLocaleContext from '~locales/useLocaleContext'
@@ -9,11 +9,9 @@ const LanguageSwitcher: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const router = useRouter()
-  const { lang: currentLocale, availableLanguages = [] } = useLocaleContext()
+  const { lang: currentLocale, pageLocales = [] } = useLocaleContext()
 
-  const availableLocales = availableLanguages.filter(
-    (el) => el !== currentLocale
-  )
+  const availableLocales = pageLocales.filter((el) => el !== currentLocale)
 
   const handleToggle = useCallback(() => {
     setIsOpen(!isOpen)
@@ -63,7 +61,12 @@ const LanguageSwitcher: React.FC = () => {
         >
           {availableLocales.map((el) => {
             return (
-              <Link href={router.pathname} key={el} locale={el} passHref={true}>
+              <Link
+                href={router.pathname as LinkHref}
+                key={el}
+                locale={el}
+                passHref={true}
+              >
                 <a
                   style={{
                     width: '100%',

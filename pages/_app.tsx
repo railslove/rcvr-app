@@ -12,28 +12,35 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { useA11yFocusRing } from '~lib/hooks'
 import { theme, globalStyles } from '~ui/theme'
 import { LocalesContextProvider } from '~locales/useLocaleContext'
-import loadLocale from '~locales/loadLocale'
+import loadPageLocale from '~locales/loadPageLocale'
 import { NextRouter } from 'next/router'
 import { PageLocaleResource } from '~locales/types'
 import supportedBrowsers from '~lib/supportedBrowsers'
 import { AppPropsType } from 'next/dist/shared/lib/utils'
+import { SupportedLanguage } from '~locales/config.defaults'
 
 const queryClient = new QueryClient()
 
-export type RecoverAppProps = {
-  localeContext: {
-    lang: string
-    values: PageLocaleResource
+export type RecoverAppProps = Omit<AppPropsType<NextRouter>, 'pageProps'> & {
+  pageProps: {
+    localeContext: {
+      lang: string
+      values: PageLocaleResource
+      pageLocales: SupportedLanguage[]
+    }
   }
 }
 
-export type RecoverAppType = ComponentType<
-  AppPropsType<NextRouter, RecoverAppProps>
-> & {
-  getInitialProps?: (appCtxt: AppContext) => Promise<any>
+export type RecoverAppFC = React.FC<RecoverAppProps> & {
+  getInitialProps?: (
+    appCtxt: AppContext
+  ) => Promise<Pick<RecoverAppProps, 'pageProps'>>
 }
 
-const RecoverApp: RecoverAppType = ({ Component, pageProps }) => {
+const RecoverApp: RecoverAppFC = ({
+  Component,
+  pageProps: { localeContext, ...pageProps },
+}) => {
   useA11yFocusRing()
 
   if (
@@ -49,7 +56,7 @@ const RecoverApp: RecoverAppType = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <LocalesContextProvider value={pageProps.localeContext}>
+        <LocalesContextProvider value={localeContext}>
           <Global styles={globalStyles} />
           <AnimateSharedLayout>
             <Component {...pageProps} />
@@ -61,15 +68,16 @@ const RecoverApp: RecoverAppType = ({ Component, pageProps }) => {
 }
 
 RecoverApp.getInitialProps = async (appCtxt: AppContext) => {
-  const { pageProps, ...rest } = await App.getInitialProps(appCtxt)
+  const { pageProps = {}, ...rest } = await App.getInitialProps(appCtxt)
 
-  const localeContext = await loadLocale(appCtxt.ctx)
+  const localeContext =
+    pageProps.localeContext || (await loadPageLocale(appCtxt.ctx))
 
   return {
     ...rest,
     pageProps: {
-      localeContext,
       ...pageProps,
+      localeContext,
     },
   }
 }

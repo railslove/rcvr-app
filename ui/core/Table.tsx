@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Link from 'next/link'
+import Link, { LinkHref } from '~ui/core/Link'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 
@@ -60,7 +60,7 @@ StyledTable.defaultProps = {
 interface TableLinkProps {
   children: React.ReactNode
   as?: string
-  href: string
+  href: LinkHref
 }
 const TableLink: React.FC<TableLinkProps> = ({ children, ...rest }) => {
   return (

@@ -1,10 +1,9 @@
 const execSync = require('child_process').execSync
 const { generateLocalesConfigAndTypes } = require('./locales/generate')
 
-const withImages = require('next-images')
 const localesDefaults = require('./locales/config.defaults.json')
 
-module.exports = withImages({
+module.exports = {
   /**
    * next-images
    */
@@ -32,4 +31,4 @@ module.exports = withImages({
 
     return config
   },
-})
+}
