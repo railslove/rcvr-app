@@ -9,17 +9,17 @@ import { Arrows, TinyCheck } from '~ui/svg'
 
 export type CheckinsActionCardProps = {
   area: AreaRes
-  texts: {
+  companyId: string
+  locales: {
     checkedIn: string
     checkedOut: string
     checkoutAll: string
   }
-  companyId: string
 }
 
 export const CheckinsActionCard: React.FC<CheckinsActionCardProps> = ({
   area,
-  texts,
+  locales,
   companyId,
 }) => {
   const { data: ticketsByArea } = useLastTicketsGrouped(companyId)
@@ -54,11 +54,11 @@ export const CheckinsActionCard: React.FC<CheckinsActionCardProps> = ({
         subtitle={
           <>
             <span css={{ whiteSpace: 'nowrap' }}>
-              {texts.checkedIn}: {openCount}
+              {locales.checkedIn}: {openCount}
             </span>
             {' – '}
             <span css={{ whiteSpace: 'nowrap' }}>
-              {texts.checkedOut}: {closedCount}
+              {locales.checkedOut}: {closedCount}
             </span>
           </>
         }
@@ -68,7 +68,7 @@ export const CheckinsActionCard: React.FC<CheckinsActionCardProps> = ({
           <IconButton
             icon={Arrows}
             onClick={checkoutAll}
-            title={texts.checkoutAll}
+            title={locales.checkoutAll}
           />
         </ActionCard.Actions>
       )}

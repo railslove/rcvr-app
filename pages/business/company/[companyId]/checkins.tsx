@@ -18,7 +18,8 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)
-  const actionCardTexts: CheckinsActionCardProps['texts'] = {
+
+  const actionCardLocales: CheckinsActionCardProps['locales'] = {
     checkedIn: t('checkedIn'),
     checkedOut: t('checkedOut'),
     checkoutAll: t('checkoutAll'),
@@ -40,7 +41,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
             <CheckinsActionCard
               key={area.id}
               area={area}
-              texts={actionCardTexts}
+              locales={actionCardLocales}
               companyId={companyId}
             />
           )

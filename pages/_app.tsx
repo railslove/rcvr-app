@@ -44,19 +44,17 @@ const RecoverApp: RecoverAppFC = ({
   useA11yFocusRing()
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <LocalesContextProvider value={localeContext}>
-            <Global styles={globalStyles} />
-            <AnimateSharedLayout>
-              <SupportedBrowsersAlert />
-              <Component {...pageProps} />
-            </AnimateSharedLayout>
-          </LocalesContextProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <LocalesContextProvider value={localeContext}>
+          <Global styles={globalStyles} />
+          <AnimateSharedLayout>
+            <SupportedBrowsersAlert />
+            <Component {...pageProps} />
+          </AnimateSharedLayout>
+        </LocalesContextProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   )
 }
 
