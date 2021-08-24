@@ -96,8 +96,5 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js}": "eslint --cache --fix"
   }
 }
