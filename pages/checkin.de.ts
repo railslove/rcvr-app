@@ -33,7 +33,7 @@ const de = {
     ? 'Wir konnten keine Verbindung herstellen. Haben Sie vielleicht gerade kein Internet?'
     : 'Wir konnten keine Verbindung herstellen. Hast du vielleicht gerade kein Internet?',
 
-  privacyPolicyLink: 'Datenschutzerklärung von {{companyName}}',
+  privacyPolicyLink: 'Datenschutzerklärung von',
 
   howDoesItWorkText: 'Wie funktioniert recover?',
 

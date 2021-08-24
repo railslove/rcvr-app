@@ -7,8 +7,11 @@ const pl: typeof de = {
   scanCodeArea: isFormal
     ? 'Zeskanuj kod QR w strefie wejściowej.'
     : 'Zeskanuj kod QR, który znajdziesz na tablicach firm uczestniczących w programie.',
-  invalidQRCode:
-    'Ostrzeżenie. Ten kod QR nie jest częścią RecoverApp. Możesz otworzyć tę stronę, ale wszystkie dane, które tam wpiszesz, zostaną wysłane do {{hostname}}.',
+
+  invalidQRCode1:
+    'Ostrzeżenie. Ten kod QR nie jest częścią RecoverApp. Możesz otworzyć tę stronę, ale wszystkie dane, które tam wpiszesz, zostaną wysłane do ',
+
+  invalidQRCode2: '.',
 }
 
 export default pl

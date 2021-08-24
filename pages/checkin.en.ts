@@ -31,7 +31,8 @@ const en: typeof de = {
   checkinError: isFormal
     ? 'We could not establish a connection. Do you perhaps not have internet right now?'
     : 'We could not connect. Do you perhaps not have internet right now?',
-  privacyPolicyLink: 'Privacy policy of {{companyName}}',
+
+  privacyPolicyLink: 'Privacy policy of',
 
   howDoesItWorkText: 'How does recover work?',
 

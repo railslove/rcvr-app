@@ -37,7 +37,13 @@ export default function QRCodePage() {
         if (qrUrl.hostname === window.location.hostname) {
           window.location.href = appendUrlParams(qrUrl)
         } else {
-          if (confirm(t('invalidQRCode'))) {
+          const message = [
+            t('invalidQRCode1'),
+            qrUrl.hostname,
+            t('invalidQRCode2'),
+          ].join('')
+
+          if (confirm(message)) {
             window.location.href = appendUrlParams(qrUrl)
           }
         }
