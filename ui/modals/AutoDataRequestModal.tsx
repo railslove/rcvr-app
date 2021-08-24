@@ -4,8 +4,8 @@ import * as Yup from 'yup'
 import { useQueryClient } from 'react-query'
 
 import { isFormal } from '~lib/config'
+import { Box, Button, Input } from '~ui/core'
 import { postAutoDataRequest } from '~lib/api'
-import { Text, Box, Button, Input, Callout } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 
 interface Props {
