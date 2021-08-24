@@ -58,11 +58,10 @@ const RecoverApp: RecoverAppFC = ({
   )
 }
 
-RecoverApp.getInitialProps = async (value: AppContext) => {
-  const { pageProps = {}, ...rest } = await App.getInitialProps(value)
+RecoverApp.getInitialProps = async (ctx: AppContext) => {
+  const { pageProps = {}, ...rest } = await App.getInitialProps(ctx)
 
-  const localeContext =
-    pageProps.localeContext || (await loadPageLocale(value.ctx))
+  const localeContext = await loadPageLocale(ctx)
 
   return {
     ...rest,

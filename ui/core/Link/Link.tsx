@@ -25,7 +25,7 @@ const Link: React.FC<LinkProps> = ({ target, ...props }) => {
 
   const locale = nextPageLocales.includes(currentLocale)
     ? currentLocale
-    : nextPageLocales[0] || router.defaultLocale
+    : router.defaultLocale
 
   return target ? (
     <NextLink {...props} />

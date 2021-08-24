@@ -4,14 +4,13 @@ const { generateLocalesConfigAndTypes } = require('./locales/generate')
 const localesDefaults = require('./locales/defaults.json')
 
 module.exports = {
-  publicRuntimeConfig: {
-    NODE_ENV: process.env.NODE_ENV,
-  },
   /**
    * i18n support
    */
   i18n: {
     ...localesDefaults,
+    defaultLocale:
+      process.env.NODE_ENV === 'test' ? 'de' : localesDefaults.defaultLocale,
     localeDetection: true,
   },
   // needed to place locales under pages/ next to the page to be translated

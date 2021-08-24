@@ -1,15 +1,9 @@
+import { AppContext } from 'next/app'
 import config from '~locales/generated/config.json'
 
-export type LoadLocaleProps = {
-  locale?: string
-  pathname: string
-}
-
-async function loadPageLocale(props: LoadLocaleProps) {
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-
-  const locale = process.env.NODE_ENV === 'test' ? 'de' : props.locale
-  const { pathname } = props
+async function loadPageLocale(props: AppContext) {
+  const locale = props.ctx.locale
+  const { pathname } = props.ctx
 
   if (config[pathname]) {
     const path = pathname as keyof typeof config
@@ -18,8 +12,8 @@ async function loadPageLocale(props: LoadLocaleProps) {
 
     const lang = locales.includes(locale)
       ? locale
-      : locales.includes('en')
-      ? 'en'
+      : locales.includes(props.router.defaultLocale)
+      ? props.router.defaultLocale
       : locales[0]
 
     console.info(
@@ -33,7 +27,11 @@ async function loadPageLocale(props: LoadLocaleProps) {
     )
     return { values, lang, pageLocales: locales }
   } else {
-    console.info('[info:locale] locale not found for', pathname)
+    console.info(
+      '[info:locale] locale "%s" not found for "%s"',
+      locale,
+      pathname
+    )
     return {}
   }
 }
