@@ -6,15 +6,11 @@ import { variant } from 'styled-system'
 import { motion } from 'framer-motion'
 
 import { Box } from '~ui/core'
-import {
-  pageTitle,
-  Logo,
-  logoBigWidth,
-  logoBigHeight,
-  logoSmallWidth,
-  logoSmallHeight,
-} from '~ui/whitelabels'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
+import LanguageSwitcher from '~ui/blocks/LanguageSwitcher'
+import StadtKoelnLogo from '~ui/logos/StadtKoelnLogo'
+import PageTitle from '~ui/blocks/Title/PageTitle'
+import Logo, { LOGO_DIMENSIONS } from '~ui/blocks/Logo/Logo'
 
 interface Props {
   children: React.ReactNode
@@ -30,19 +26,26 @@ export const MobileApp: React.FC<Props> = ({
   return (
     <Limit>
       <Head>
-        <title key="title">{pageTitle}</title>
+        <PageTitle />
       </Head>
       <SharedMeta />
-      <LogoContainer variant={logoVariant}>
-        <LogoBox variant={logoVariant} layoutId="appLogo">
-          <Logo />
-        </LogoBox>
-        {secondaryLogo ? (
-          <SecondaryLogoBox>
-            <SecondaryLogo src={secondaryLogo} />
-          </SecondaryLogoBox>
-        ) : null}
-      </LogoContainer>
+      <Box display="flex" justifyContent="flex-end">
+        <LanguageSwitcher />
+      </Box>
+      <Box height={4} />
+      <Box display="flex" alignItems="center">
+        <LogoContainer variant={logoVariant}>
+          <LogoBox variant={logoVariant} layoutId="appLogo">
+            <Logo />
+          </LogoBox>
+          {secondaryLogo ? (
+            <SecondaryLogoBox>
+              <SecondaryLogo src={secondaryLogo} />
+            </SecondaryLogoBox>
+          ) : null}
+        </LogoContainer>
+        <StadtKoelnLogo />
+      </Box>
       <Box height={logoVariant === 'sticky' ? 10 : 4} />
       {children}
     </Limit>
@@ -61,6 +64,9 @@ const Limit = styled('div')(
     overflow: 'hidden',
   })
 )
+
+const { logoBigHeight, logoBigWidth, logoSmallHeight, logoSmallWidth } =
+  LOGO_DIMENSIONS
 
 const LogoBox = styled(motion.div)(
   {
