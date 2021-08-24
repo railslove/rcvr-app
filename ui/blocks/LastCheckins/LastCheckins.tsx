@@ -108,9 +108,9 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
         <>
           <Box height={4} />
           <ButtonLink
+            href={generateCwaLink(checkin)}
             name="cwaCheckinUrl"
             target="_blank"
-            externalHref={generateCwaLink(checkin)}
           >
             <CwaLink>
               <CwaLogo width="24" height="24" />

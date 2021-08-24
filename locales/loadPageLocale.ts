@@ -1,12 +1,16 @@
-import config from '~locales/generated/pages.json'
-import localesDefaults from '~locales/config.json'
+import config from '~locales/generated/config.json'
 
 export type LoadLocaleProps = {
   locale?: string
   pathname: string
 }
 
-async function loadPageLocale({ locale, pathname }: LoadLocaleProps) {
+async function loadPageLocale(props: LoadLocaleProps) {
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
+  const locale = process.env.NODE_ENV === 'test' ? 'de' : props.locale
+  const { pathname } = props
+
   if (config[pathname]) {
     const path = pathname as keyof typeof config
 
@@ -14,8 +18,8 @@ async function loadPageLocale({ locale, pathname }: LoadLocaleProps) {
 
     const lang = locales.includes(locale)
       ? locale
-      : locales.includes(localesDefaults.defaultLocale)
-      ? localesDefaults.defaultLocale
+      : locales.includes('en')
+      ? 'en'
       : locales[0]
 
     console.info(
