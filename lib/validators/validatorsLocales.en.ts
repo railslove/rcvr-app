@@ -31,7 +31,7 @@ const validatorsLocalesEN: typeof de = {
   streetLabel: 'Street and house number',
   streetRequired: 'Street must be specified',
 
-  addressLabel: 'Address',
+  addressLabel: 'Address (street and house number)',
   addressRequired: 'Address must be specified.',
 
   companyNameLabel: 'name of your company',

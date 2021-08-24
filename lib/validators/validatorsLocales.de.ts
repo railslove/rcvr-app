@@ -31,7 +31,7 @@ const validatorsLocalesDE = {
   streetLabel: 'Strasse und Hausnummer',
   streetRequired: 'Strasse muss angegeben werden.',
 
-  addressLabel: 'Adresse',
+  addressLabel: 'Anschrift (Straße und Hausnummer)',
   addressRequired: 'Adresse muss angegeben werden.',
 
   companyNameLabel: isFormal
