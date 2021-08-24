@@ -18,8 +18,8 @@ const SetupIntro: React.FC = () => {
     case 'health': {
       return (
         <>
-          <p>{t('setupIntro1_care')}</p>
-          <p>{t('setupIntro2_care')}</p>
+          <p>{t('setupIntroCareHealth1')}</p>
+          <p>{t('setupIntroCareHealth2')}</p>
         </>
       )
     }

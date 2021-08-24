@@ -7,19 +7,19 @@ import { Form, Formik } from 'formik'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 
-import usePageLocale from '~locales/usePageLocale'
-
 import { signup } from '~lib/actions'
-import { phoneValidator } from '~lib/validators/phoneValidator'
+import usePageLocale from '~locales/usePageLocale'
+import { PostSignup } from '~lib/api'
+import { createPhoneValidator } from '~lib/validators/phoneValidator'
 import { isCareEnv, isHealthEnv } from '~lib/config'
 import { createPasswordValidator } from '~lib/validators/passwordValidator'
 
+import PageTitle from '~ui/blocks/Title/PageTitle'
 import { Loading } from '~ui/blocks/Loading'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export const InlineLink = styled('a')(
   css({
@@ -46,6 +46,27 @@ const Avv: React.FC = () => {
   )
 }
 
+export type SignUpFormValues = PostSignup & {
+  confirmPassword: string
+  confirmContract: boolean
+}
+
+const getInitialSignUpFormValues = (
+  values: Partial<SignUpFormValues> = {}
+): SignUpFormValues => ({
+  name: '',
+  companyName: '',
+  phone: '',
+  street: '',
+  zip: '',
+  city: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  ...values,
+  confirmContract: !isCareEnv && !isHealthEnv,
+})
+
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const { t } = usePageLocale('business/setup/signup')
 
@@ -53,10 +74,14 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const [loading, setLoading] = React.useState(false)
   const queryClient = useQueryClient()
 
-  const LoginSchema = Yup.object().shape({
+  const SignUpSchema = Yup.object().shape({
     name: Yup.string().required(t('nameRequired')),
     email: Yup.string().required(t('emailRequired')),
-    phone: phoneValidator,
+    phone: createPhoneValidator({
+      name: 'phone',
+      invalid: t('phoneInvalid'),
+      required: t('phoneRequired'),
+    }),
     street: Yup.string().required(t('streetRequired')),
     zip: Yup.string().required(t('zipRequired')),
     city: Yup.string().required(t('cityRequired')),
@@ -117,22 +142,11 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         <PersonalData />
       </Row>
       <Box height={6} />
-      <Text>{t('signupText')}</Text>
+      <Text>{t('signUpText')}</Text>
       <Box height={6} />
-      <Formik
-        initialValues={{
-          name: '',
-          companyName: '',
-          phone: '',
-          street: '',
-          zip: '',
-          city: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-          confirmContract: !isCareEnv && !isHealthEnv,
-        }}
-        validationSchema={LoginSchema}
+      <Formik<SignUpFormValues>
+        initialValues={getInitialSignUpFormValues()}
+        validationSchema={SignUpSchema}
         onSubmit={handleSubmit}
       >
         {({ values }) => (

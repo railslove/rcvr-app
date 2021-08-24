@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { AreaRes } from '~lib/api'
 import { isCareEnv } from '~lib/config'
 import { Guest, GuestHealthDocumentEnum } from '~lib/db'
-import { phoneValidator } from '~lib/validators/phoneValidator'
+import { createPhoneValidator } from '~lib/validators/phoneValidator'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Button, Checkbox, Radio, Input, Text } from '~ui/core'
 
@@ -12,21 +12,21 @@ import useLocaleObject from '~locales/useLocaleObject'
 import OnboardingLocales from '~ui/blocks/Onboarding/Onboarding.locales'
 
 type OnboardingProps = {
-  onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
-  prefilledGuest?: Guest
   area: AreaRes
+  prefilledGuest?: Guest
   hideRememberMe?: boolean
-  onAbort?: () => void
   submitButtonValue?: string
+  onAbort?: () => void
+  onSubmit: (guest: Guest, options: { rememberMe: boolean }) => void
 }
 
 export const Onboarding: React.FC<OnboardingProps> = ({
   area,
-  onSubmit,
-  prefilledGuest,
   hideRememberMe,
-  onAbort,
+  prefilledGuest,
   submitButtonValue,
+  onAbort,
+  onSubmit,
 }) => {
   const { t } = useLocaleObject(OnboardingLocales)
 
@@ -43,7 +43,11 @@ export const Onboarding: React.FC<OnboardingProps> = ({
 
   const yupShape = {
     name: Yup.string().required(t('nameRequired')),
-    phone: phoneValidator,
+    phone: createPhoneValidator({
+      name: 'phone',
+      invalid: t('phoneInvalid'),
+      required: t('phoneRequired'),
+    }),
     address: Yup.string().required(t('addressRequired')),
     postalCode: Yup.string().required(t('zipRequired')),
     city: Yup.string().required(t('cityRequired')),
@@ -73,36 +77,36 @@ export const Onboarding: React.FC<OnboardingProps> = ({
         }}
       >
         <Form>
-          <Input name="name" label={t('nameInputLabel')} autoComplete="name" />
+          <Input name="name" label={t('nameLabel')} autoComplete="name" />
           <Box height={4} />
           <Input
             name="phone"
-            label={t('phoneInputLabel')}
+            label={t('phoneLabel')}
             type="tel"
             autoComplete="tel"
           />
           <Box height={4} />
           <Input
             name="address"
-            label={t('addressInputLabel')}
+            label={t('addressLabel')}
             autoComplete="street-address"
           />
           <Box height={4} />
           <Input
             name="postalCode"
-            label={t('zipInputLabel')}
+            label={t('zipLabel')}
             autoComplete="postal-code"
           />
           <Box height={4} />
           <Input
             name="city"
-            label={t('cityInputLabel')}
+            label={t('cityLabel')}
             autoComplete="address-level2"
           />
           {isCareEnv && (
             <>
               <Box height={4} />
-              <Input name="resident" label={t('residentInputLabel')} />
+              <Input name="resident" label={t('residentLabel')} />
             </>
           )}
           {area.companyNeedToShowCoronaTest > 0 && !area.testExemption && (
@@ -116,13 +120,13 @@ export const Onboarding: React.FC<OnboardingProps> = ({
               />
               <Radio
                 name="providedHealthDocument"
-                label={`${t('hadCoronaInputLabel')}.`}
+                label={`${t('hadCoronaLabel')}.`}
                 value={GuestHealthDocumentEnum.hadCorona}
                 hideError={true}
               />
               <Radio
                 name="providedHealthDocument"
-                label={`${t('vaccinatedInputLabel')}.`}
+                label={`${t('vaccinatedLabel')}.`}
                 value={GuestHealthDocumentEnum.vaccinated}
               />
             </>
@@ -130,7 +134,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
           {hideRememberMe || (
             <>
               <Box height={3} />
-              <Checkbox name="rememberMe" label={t('rememberMeInputLabel')} />
+              <Checkbox name="rememberMe" label={t('rememberMeLabel')} />
             </>
           )}
           <Box height={5} />

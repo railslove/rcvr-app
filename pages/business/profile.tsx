@@ -18,7 +18,7 @@ import {
   CheckoutSelectionModal,
   CheckoutSelectionModalProps,
 } from '~ui/modals/CheckoutSelectionModal'
-import { OwnerModal } from '~ui/modals/OwnerModal'
+import { OwnerFormProps, OwnerModal } from '~ui/modals/OwnerModal'
 import { SubscribedModal } from '~ui/modals/SubscribedModal'
 import { Right } from '~ui/svg'
 import { BUILD_VARIANT } from '~ui/whitelabels'
@@ -124,7 +124,29 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
   }
 
   const openEditOwner = () => {
-    openModal('editOwner', { owner })
+    const props: OwnerFormProps = {
+      owner,
+      locales: {
+        nameLabel: t('nameLabel'),
+        nameRequired: t('nameRequired'),
+        phoneLabel: t('phoneLabel'),
+        phoneInvalid: t('phoneInvalid'),
+        phoneRequired: t('phoneRequired'),
+        cityLabel: t('cityLabel'),
+        cityRequired: t('cityRequired'),
+        streetLabel: t('streetLabel'),
+        streetRequired: t('streetRequired'),
+        zipLabel: t('zipLabel'),
+        zipRequired: t('zipRequired'),
+        companyNameLabel: t('companyNameLabel'),
+        companyNameRequired: t('companyNameRequired'),
+        /**/
+        editProfile: t('editProfile'),
+        submitButton: t('ownerModalSubmitButton'),
+      },
+    }
+
+    openModal('editOwner', props as any)
   }
 
   const openSelfService = React.useCallback(async () => {

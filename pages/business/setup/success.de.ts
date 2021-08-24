@@ -14,20 +14,20 @@ export default {
   privateKey5:
     'Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.',
 
-  privateKey_careHealth1:
+  privateKeyCareHealth1:
     'Ein Schlüssel wird erzeugt mit dem die Daten verschlüsselt werden.',
-  privateKey_careHealth2:
+  privateKeyCareHealth2:
     'Bitte wählen Sie hier aus, wie Sie den Schlüssel verwahren möchten.',
-  privateKey_careHealth3:
+  privateKeyCareHealth3:
     'Ohne Schlüssel können Sie keine Daten an das Gesundheitsamt senden.',
 
-  privateKey_freesenius1: 'Wir freuen uns, dass du recover nutzt!',
-  privateKey_freesenius2:
+  privateKeyFresenius1: 'Wir freuen uns, dass du recover nutzt!',
+  privateKeyFresenius2:
     'Um die Echtheit deiner Daten zu überprüfen, werden wir uns bald per E-Mail bei dir melden.',
-  privateKey_freesenius3:
+  privateKeyFresenius3:
     "Bitte klicke auf 'Schlüssel herunterladen'. Das erzeugt eine Schlüsseldatei und startet den Download.",
-  privateKey_freesenius4: 'Bitte speichere die Datei auf deinem Rechner ab.',
-  privateKey_freesenius5:
+  privateKeyFresenius4: 'Bitte speichere die Datei auf deinem Rechner ab.',
+  privateKeyFresenius5:
     'Ohne Schlüssel kannst du keine Daten an das Gesundheitsamt senden.',
 
   contactInformation_care1:

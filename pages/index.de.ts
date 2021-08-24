@@ -4,11 +4,13 @@ const de = {
   title1: 'Checkins per QR-Code.',
   title2: 'Ohne App, einfach für alle.',
 
-  indexIntro: isCareEnv
-    ? 'ist die digitale Kontaktdatenliste für Pflegeeinrichtungen, deren Besucher und Gäste. Einfach, sicher, schnell.'
-    : isHealthEnv
-    ? 'ist die digitale Kontaktdatenliste für Krankenhäuser, deren Besucher und Gäste. Einfach, sicher, schnell.'
-    : 'ist die digitale Kontaktdatenliste für Betriebe und deren Gäste. Einfach, sicher, schnell.',
+  indexIntro: `ist die digitale Kontaktdatenliste für ${
+    isCareEnv
+      ? 'Pflegeeinrichtungen'
+      : isHealthEnv
+      ? 'Krankenhäuser'
+      : 'Betriebe'
+  }, deren Besucher und Gäste. Einfach, sicher, schnell.`,
 
   forVisitorsAndGuests: isFormal ? 'Für Besucher und Gäste' : 'Für Gäste',
 

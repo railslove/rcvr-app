@@ -1,6 +1,9 @@
 import { isFormal } from '~lib/config'
+import validatorsLocalesDE from '~lib/validators/validatorsLocales.de'
 
 export default {
+  ...validatorsLocalesDE,
+
   pageTitle: 'Mein Profil',
   editProfile: 'Profil bearbeiten',
   myMembership: 'Meine Mitgliedschaft',
@@ -94,4 +97,6 @@ export default {
   checkoutSelectionModalTitle: 'Zahlungsmethode',
   checkoutSelectionModalSepaButtonText: 'SEPA Lastschrift',
   checkoutSelectionModalStripeButtonText: 'Kreditkarte',
+
+  ownerModalSubmitButton: 'Speichern',
 }

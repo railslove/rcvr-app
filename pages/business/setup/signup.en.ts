@@ -5,42 +5,18 @@ import {
   isFreseniusEnv,
   isHealthEnv,
 } from '~lib/config'
-import signupDe from '~pages/business/setup/signup.de'
+import validatorsLocalesEN from '~lib/validators/validatorsLocales.en'
+import de from '~pages/business/setup/signup.de'
 import { PRIVACY_URL } from '~ui/whitelabels'
 
-const en: typeof signupDe = {
+const en: typeof de = {
+  ...validatorsLocalesEN,
+
   title: 'Create account',
   headline: 'Personal data',
-  signupText: isRcvrEnv
+  signUpText: isRcvrEnv
     ? 'With your account you can create QR codes and manage checkins of your guests.'
     : '',
-
-  zipLabel: 'Zip code',
-  cityLabel: 'City',
-  nameLabel: 'Your name',
-  emailLabel: 'Email',
-  phoneLabel: isFormal ? 'Your phone number' : 'Your phone number',
-  passwordHint:
-    'Password must be at least 8 characters long. At least one upper case letter, one lower case letter, one number and one special character.',
-  streetLabel: 'Street and house number',
-  passwordLabel: 'Password',
-  passwordConfirmLabel: 'Repeat password',
-  companyNameLabel: isFormal ? 'Name of your company' : 'Name of your company',
-
-  zipRequired: 'Postal code must be specified',
-  cityRequired: 'City must be specified',
-  nameRequired: 'Name must be specified',
-  emailRequired: 'Email must be specified.',
-  streetRequired: 'Street must be specified.',
-  companyNameRequired: 'Company name must be specified.',
-  passwordsDoNotMatch: 'Passwords do not match.',
-  confirmContractRequired: 'You must agree to the contract.',
-  confirmPasswordRequired: 'Password repetition must be specified.',
-
-  passwordRequired: 'Password must be specified.',
-  passwordMaxLength: 'Password must not be longer than 128 characters.',
-  passwordShouldMatch:
-    'Password must be at least 8 characters long. At least one uppercase letter, one lowercase letter, one number and one special character.',
 
   emailRegisteredError: 'This email is already registered.',
 

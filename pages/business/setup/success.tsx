@@ -52,9 +52,9 @@ const PrivateKeyExplanation: React.FC = () => {
           <p>
             <strong>{t('privateKeyNextStep')}: </strong>
             <br />
-            {t('privateKey_careHealth1')}
+            {t('privateKeyCareHealth1')}
             <br />
-            {t('privateKey_careHealth2')}
+            {t('privateKeyCareHealth2')}
           </p>
           <Box height={4} />
           <div>
@@ -62,7 +62,7 @@ const PrivateKeyExplanation: React.FC = () => {
           </div>
           <Box height={4} />
           <p>
-            <strong>{t('privateKey_careHealth3')}</strong>
+            <strong>{t('privateKeyCareHealth3')}</strong>
           </p>
         </>
       )
@@ -71,22 +71,22 @@ const PrivateKeyExplanation: React.FC = () => {
       return (
         <>
           <p>
-            {t('privateKey_freesenius1')}
+            {t('privateKeyFresenius1')}
             <span role="img" aria-label="Hurra!">
               🎉
             </span>
           </p>
-          <p>{t('privateKey_freesenius2')}</p>
+          <p>{t('privateKeyFresenius2')}</p>
           <p>
             <strong>{t('privateKeyNextStep')}: </strong>
             <br />
-            {t('privateKey_freesenius3')}
+            {t('privateKeyFresenius3')}
           </p>
           <p>
-            <strong>{t('privateKey_freesenius4')}</strong>
+            <strong>{t('privateKeyFresenius4')}</strong>
           </p>
           <p>
-            <strong>{t('privateKey_freesenius5')}</strong>
+            <strong>{t('privateKeyFresenius5')}</strong>
           </p>
         </>
       )

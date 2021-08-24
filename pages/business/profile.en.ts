@@ -1,6 +1,9 @@
+import validatorsLocalesEN from '~lib/validators/validatorsLocales.en'
 import de from '~pages/business/profile.de'
 
 const en: typeof de = {
+  ...validatorsLocalesEN,
+
   pageTitle: 'My Profile',
   editProfile: 'Edit Profile',
   myMembership: 'My membership',
@@ -78,6 +81,8 @@ const en: typeof de = {
   checkoutSelectionModalTitle: 'Payment method',
   checkoutSelectionModalSepaButtonText: 'SEPA Direct Debit',
   checkoutSelectionModalStripeButtonText: 'Credit Card',
+
+  ownerModalSubmitButton: 'Save',
 }
 
 export default en

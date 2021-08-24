@@ -16,18 +16,18 @@ const en: typeof successDe = {
   privateKey5:
     "Without the key you can't send any data to the health department",
 
-  privateKey_careHealth1: 'A key is generated with which the data is encrypted',
-  privateKey_careHealth2: 'Please select here how you want to store the key',
-  privateKey_careHealth3:
+  privateKeyCareHealth1: 'A key is generated with which the data is encrypted',
+  privateKeyCareHealth2: 'Please select here how you want to store the key',
+  privateKeyCareHealth3:
     'Without a key, you cannot send data to the health department',
 
-  privateKey_freesenius1: "We're glad you're using recover!",
-  privateKey_freesenius2:
+  privateKeyFresenius1: "We're glad you're using recover!",
+  privateKeyFresenius2:
     'To verify the authenticity of your data, we will contact you via email soon.',
-  privateKey_freesenius3:
+  privateKeyFresenius3:
     "Please click on 'Download key'. This will generate a key file and start the download.",
-  privateKey_freesenius4: 'Please save the file to your computer.',
-  privateKey_freesenius5:
+  privateKeyFresenius4: 'Please save the file to your computer.',
+  privateKeyFresenius5:
     "Without a key, you can't send data to the health department",
 
   contactInformation_care1:

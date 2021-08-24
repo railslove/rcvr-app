@@ -2,9 +2,11 @@ import { isFreseniusEnv } from '~lib/config'
 
 export default {
   pageTitle: 'Für Betriebe',
+
   instruction: isFreseniusEnv
     ? 'So nutzt Du recover für Deinen Betrieb'
     : 'Account Erstellen',
+
   letsGo: "Los geht's",
 
   setupIntro1: `Seit Corona sind viele Betriebe und Einrichtungen verpflichtet,
@@ -19,8 +21,8 @@ export default {
   setupIntro3: `Die Einrichtung von recover dauert ca. 10 Min. Bist Du bereit? Dann
   lass uns starten.`,
 
-  setupIntro1_care: `Mit recover führen Sie die Kontaktdatenliste Ihrer Besucher digital.
+  setupIntroCareHealth1: `Mit recover führen Sie die Kontaktdatenliste Ihrer Besucher digital.
   Um die Daten zu schützen, werden diese von der App verschlüsselt.`,
 
-  setupIntro2_care: `Die Einrichtung von recover dauert ca. 10 Min.`,
+  setupIntroCareHealth2: `Die Einrichtung von recover dauert ca. 10 Min.`,
 }

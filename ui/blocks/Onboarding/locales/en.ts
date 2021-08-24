@@ -1,24 +1,18 @@
+import validatorsLocalesEN from '~lib/validators/validatorsLocales.en'
 import de from '~ui/blocks/Onboarding/locales/de'
 
 const en: typeof de = {
-  zipInputLabel: 'zip code',
-  cityInputLabel: 'City',
-  nameInputLabel: 'Name',
-  phoneInputLabel: 'Phone',
-  addressInputLabel: 'address (street and house number)',
-  residentInputLabel: 'resident name',
-  hadCoronaInputLabel:
-    'Convalescent: I certify that I have documentation of my recovery from a Corona illness and that I will be able to show this documentation in the test case',
-  vaccinatedInputLabel:
-    'Vaccinated: I confirm to have documentation (vaccination certificate) of my vaccination against corona virus infection and to be able to show this in the test case',
-  rememberMeInputLabel: 'Save data on my cell phone',
+  ...validatorsLocalesEN,
 
-  zipRequired: 'Zip code must be provided',
-  nameRequired: 'Name must be specified',
-  cityRequired: 'City must be specified.',
-  addressRequired: 'Address must be specified.',
-  residentRequired: 'Resident name must be specified.',
-  healthDocRequired: 'You must be either tested, recovered, or vaccinated.',
+  residentLabel: 'residentName',
+  hadCoronaLabel:
+    'recovered: I certify to have documentation of my recovery from a Corona illness and to be able to show it in the test case',
+  vaccinatedLabel:
+    'Vaccinated: I confirm to have documentation (vaccination certificate) of my vaccination against corona virus infection and to be able to show this in the test case',
+  rememberMeLabel: 'Save data on my cell phone',
+
+  residentRequired: 'resident name must be provided',
+  healthDocRequired: 'You must be either tested, recovered or vaccinated.',
 
   provideTestLabel1: 'Tested: I confirm a negative, no longer than',
   provideTestLabel2:
