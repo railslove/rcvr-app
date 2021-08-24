@@ -26,6 +26,12 @@
       ],
       "~lib/*": [
         "lib/*"
+      ],
+      "~pages/*": [
+        "pages/*"
+      ],
+      "~locales/*": [
+        "locales/*"
       ]
     }
   },
