@@ -205,11 +205,12 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
               <Callout variant="danger">
                 <Text>{t('noAddressMessage')}</Text>
                 <Box height={2} />
-                {companiesWithoutAddress.length > 1 ? (
-                  <Text>{t('noAddressBusiness_many')}:</Text>
-                ) : (
-                  <Text>{t('noAddressBusiness_one')}:</Text>
-                )}
+                <Text>
+                  {companiesWithoutAddress.length > 1
+                    ? t('noAddressBusiness_many')
+                    : t('noAddressBusiness_one')}
+                  :
+                </Text>
                 <Box height={2} />
                 <UnorderedList>
                   {companiesWithoutAddress.map((company: CompanyRes) => (
