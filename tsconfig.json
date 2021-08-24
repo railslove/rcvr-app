@@ -36,8 +36,7 @@
     }
   },
   "exclude": [
-    "node_modules",
-    "node_modules/@nodelib"
+    "node_modules"
   ],
   "include": [
     "next-env.d.ts",
