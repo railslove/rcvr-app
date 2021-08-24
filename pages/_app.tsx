@@ -13,8 +13,10 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 
 import loadPageLocale from '~locales/loadPageLocale'
 import { useA11yFocusRing } from '~lib/hooks'
-import { LocalesContextProvider } from '~locales/useLocaleContext'
-import { PageLocaleResource, SupportedLanguage } from '~locales/types'
+import {
+  LocaleContextProps,
+  LocalesContextProvider,
+} from '~locales/useLocaleContext'
 
 import SupportedBrowsersAlert from '~ui/SupportedBrowsersAlert/SupportedBrowsersAlert'
 import { theme, globalStyles } from '~ui/theme'
@@ -23,11 +25,7 @@ const queryClient = new QueryClient()
 
 export type RecoverAppProps = Omit<AppPropsType<NextRouter>, 'pageProps'> & {
   pageProps: {
-    localeContext: {
-      lang: string
-      values: PageLocaleResource
-      pageLocales: SupportedLanguage[]
-    }
+    localeContext: LocaleContextProps
   }
 }
 

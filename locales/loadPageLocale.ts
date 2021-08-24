@@ -1,7 +1,10 @@
 import { AppContext } from 'next/app'
 import config from '~locales/generated/config.json'
+import { LocaleContextProps } from '~locales/useLocaleContext'
 
-async function loadPageLocale(props: AppContext) {
+async function loadPageLocale(
+  props: AppContext
+): Promise<Partial<LocaleContextProps>> {
   const locale = props.ctx.locale
   const { pathname } = props.ctx
 
