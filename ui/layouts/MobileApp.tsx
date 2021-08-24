@@ -24,33 +24,31 @@ export const MobileApp: React.FC<Props> = ({
   secondaryLogo = null,
 }) => {
   return (
-    <>
-      <Limit>
-        <Head>
-          <PageTitle />
-        </Head>
-        <SharedMeta />
-        <Box display="flex" justifyContent="flex-end">
-          <LanguageSwitcher />
-        </Box>
-        <Box height={4} />
-        <Box display="flex" alignItems="center">
-          <LogoContainer variant={logoVariant}>
-            <LogoBox variant={logoVariant} layoutId="appLogo">
-              <Logo />
-            </LogoBox>
-            {secondaryLogo ? (
-              <SecondaryLogoBox>
-                <SecondaryLogo src={secondaryLogo} />
-              </SecondaryLogoBox>
-            ) : null}
-          </LogoContainer>
-          <StadtKoelnLogo />
-        </Box>
-        <Box height={logoVariant === 'sticky' ? 10 : 4} />
-        {children}
-      </Limit>
-    </>
+    <Limit>
+      <Head>
+        <PageTitle />
+      </Head>
+      <SharedMeta />
+      <Box display="flex" justifyContent="flex-end">
+        <LanguageSwitcher />
+      </Box>
+      <Box height={4} />
+      <Box display="flex" alignItems="center">
+        <LogoContainer variant={logoVariant}>
+          <LogoBox variant={logoVariant} layoutId="appLogo">
+            <Logo />
+          </LogoBox>
+          {secondaryLogo ? (
+            <SecondaryLogoBox>
+              <SecondaryLogo src={secondaryLogo} />
+            </SecondaryLogoBox>
+          ) : null}
+        </LogoContainer>
+        <StadtKoelnLogo />
+      </Box>
+      <Box height={logoVariant === 'sticky' ? 10 : 4} />
+      {children}
+    </Limit>
   )
 }
 

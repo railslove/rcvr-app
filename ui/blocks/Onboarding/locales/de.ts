@@ -6,9 +6,9 @@ export default {
 
   residentLabel: 'Bewohnername',
   hadCoronaLabel:
-    'Genesen: Ich bestätige eine Dokumentation über meine Genesung von einer Corona-Erkrankung vorweisen zu können und diese im Prüffall vorweisen zu können',
+    'Genesen: Ich bestätige eine Dokumentation über meine Genesung von einer Corona-Erkrankung vorweisen zu können und diese im Prüffall vorweisen zu können.',
   vaccinatedLabel:
-    'Geimpft: Ich bestätige eine Dokumentation (Impfpass) über meine Impfung gegen eine Infektion mit dem Coronavirus vorweisen zu können und diese im Prüffall vorweisen zu können',
+    'Geimpft: Ich bestätige eine Dokumentation (Impfpass) über meine Impfung gegen eine Infektion mit dem Coronavirus vorweisen zu können und diese im Prüffall vorweisen zu können.',
   rememberMeLabel: 'Daten auf meinem Handy speichern',
 
   residentRequired: 'Bewohnername muss angegeben werden.',

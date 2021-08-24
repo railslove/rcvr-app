@@ -120,13 +120,13 @@ export const Onboarding: React.FC<OnboardingProps> = ({
               />
               <Radio
                 name="providedHealthDocument"
-                label={`${t('hadCoronaLabel')}.`}
+                label={t('hadCoronaLabel')}
                 value={GuestHealthDocumentEnum.hadCorona}
                 hideError={true}
               />
               <Radio
                 name="providedHealthDocument"
-                label={`${t('vaccinatedLabel')}.`}
+                label={t('vaccinatedLabel')}
                 value={GuestHealthDocumentEnum.vaccinated}
               />
             </>
