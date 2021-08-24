@@ -3,13 +3,13 @@ import * as Yup from 'yup'
 import { isValidPhoneNumber } from 'libphonenumber-js/max'
 
 export type PhoneValidatorProps = {
-  name?: string
+  name: string
   invalid: string
   required: string
 }
 
 export const createPhoneValidator = ({
-  name = 'phoneNumber',
+  name,
   invalid,
   required,
 }: PhoneValidatorProps) =>

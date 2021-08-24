@@ -1,11 +1,11 @@
-import indexDe from '~pages/business/company/[companyId]/area/index.de'
+import de from '~pages/business/company/[companyId]/area/index.de'
 
-const en: typeof indexDe = {
-  ...indexDe,
+const en: typeof de = {
   areas: 'Areas',
   addArea: 'Add Area...',
   editAreaIconTitle: 'Edit',
   deleteAreaIconTitle: 'Delete',
+  downloadAreaIconTitle: 'QR-Code',
 }
 
 export default en
