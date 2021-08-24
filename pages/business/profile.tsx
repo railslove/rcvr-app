@@ -72,7 +72,7 @@ const PricingInfoDuringTest: React.FC = () => {
 }
 
 const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const { t } = usePageLocale('business/profile')
+  const { t, lang } = usePageLocale('business/profile')
 
   const [redirecting, setRedirecting] = React.useState(false)
   const { data: companies } = useCompanies()
@@ -125,6 +125,7 @@ const ProfilePage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const openEditOwner = () => {
     const props: OwnerFormProps = {
+      lang,
       owner,
       locales: {
         nameLabel: t('nameLabel'),

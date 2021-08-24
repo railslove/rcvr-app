@@ -1,5 +1,6 @@
 import { AppContext } from 'next/app'
 import config from '~locales/generated/config.json'
+import { SupportedLanguage } from '~locales/types'
 import { LocaleContextProps } from '~locales/useLocaleContext'
 
 async function loadPageLocale(
@@ -13,11 +14,13 @@ async function loadPageLocale(
 
     const { locales, namespace } = config[path]
 
-    const lang = locales.includes(locale)
-      ? locale
-      : locales.includes(props.router.defaultLocale)
-      ? props.router.defaultLocale
-      : locales[0]
+    const lang = (
+      locales.includes(locale)
+        ? locale
+        : locales.includes(props.router.defaultLocale)
+        ? props.router.defaultLocale
+        : locales[0]
+    ) as SupportedLanguage
 
     console.info(
       '[info:locale] loading lang "%s" for path "%s"',
