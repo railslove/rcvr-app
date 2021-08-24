@@ -1,7 +1,7 @@
 const execSync = require('child_process').execSync
 const { generateLocalesConfigAndTypes } = require('./locales/generate')
 
-const localesDefaults = require('./locales/config.json')
+const localesDefaults = require('./locales/defaults.json')
 
 module.exports = {
   publicRuntimeConfig: {

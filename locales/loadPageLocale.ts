@@ -1,4 +1,4 @@
-import config from '~locales/generated/pages.json'
+import config from '~locales/generated/config.json'
 
 export type LoadLocaleProps = {
   locale?: string

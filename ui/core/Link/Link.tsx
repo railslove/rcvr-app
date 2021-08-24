@@ -2,10 +2,9 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import NextLink, { LinkProps as NextLinkProps } from 'next/link'
 
-import pageLocalesConfig from '~locales/generated/pages.json'
-import { SupportedLanguage } from '~locales/types'
+import localesConfig from '~locales/generated/config.json'
 
-export type LinkHref = keyof typeof pageLocalesConfig
+export type LinkHref = keyof typeof localesConfig
 
 export type LinkProps = NextLinkProps &
   (
@@ -21,9 +20,8 @@ export type LinkProps = NextLinkProps &
 
 const Link: React.FC<LinkProps> = ({ target, ...props }) => {
   const router = useRouter()
-  const currentLocale = (props.locale || router.locale) as SupportedLanguage
-  const nextPageLocales = (pageLocalesConfig[props.href] || { locales: [] })
-    .locales
+  const currentLocale = props.locale || router.locale
+  const nextPageLocales = (localesConfig[props.href] || { locales: [] }).locales
 
   const locale = nextPageLocales.includes(currentLocale)
     ? currentLocale

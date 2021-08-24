@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
-import localesConfig from './config.json'
+
+import localesConfig from '~locales/defaults.json'
 import placeholderLocale from '~pages/index.de'
 import { PageLocaleResource, SupportedLanguage } from '~locales/types'
 

@@ -1,4 +1,4 @@
-const { defaultLocale } = require('./config.json')
+const { defaultLocale } = require('./defaults.json')
 
 /**
  *
@@ -78,7 +78,7 @@ function generateLocalesConfigAndTypes() {
     }, {})
 
   fs.writeFileSync(
-    'locales/generated/pages.json',
+    'locales/generated/config.json',
     JSON.stringify(config.pages, null, 2)
   )
 
