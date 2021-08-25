@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { motion } from 'framer-motion'
 import { variant } from 'styled-system'
-import { useRouter } from 'next/router'
+import { useAffiliate } from '~lib/hooks/useAffiliate'
 
 import { Box } from '~ui/core'
 import PageTitle from '~ui/blocks/Title/PageTitle'
@@ -24,8 +24,7 @@ export const MobileApp: React.FC<MobileAppProps> = ({
   logoVariant = 'small',
   secondaryLogo = null,
 }) => {
-  const { query } = useRouter()
-  const shouldShowStadtKoelnLogo = query.affiliate != null
+  const { isAffiliate } = useAffiliate()
 
   return (
     <Limit>
@@ -33,9 +32,13 @@ export const MobileApp: React.FC<MobileAppProps> = ({
         <PageTitle />
       </Head>
       <SharedMeta />
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        {shouldShowStadtKoelnLogo ? <StadtKoelnLogo /> : <Box />}
+      <Box display="flex" flexDirection="column" alignItems="flex-end">
         <LanguageSwitcher />
+        {isAffiliate ? (
+          <Box marginTop={2} marginBottom={2}>
+            <StadtKoelnLogo />
+          </Box>
+        ) : null}
       </Box>
       <Box height={4} />
       <Box display="flex" alignItems="center">

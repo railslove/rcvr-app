@@ -20,6 +20,7 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
+import { LOCAL_STORAGE_AFFILIATE_KEY } from '~lib/hooks/useAffiliate'
 
 export const InlineLink = styled('a')(
   css({
@@ -104,7 +105,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   ) => {
     try {
       setLoading(true)
-      const affiliate = localStorage.getItem('rcvr_affiliate')
+      const affiliate = localStorage.getItem(LOCAL_STORAGE_AFFILIATE_KEY)
 
       await signup({
         name,

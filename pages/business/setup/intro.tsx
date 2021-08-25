@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import * as React from 'react'
+import { useAffiliate } from '~lib/hooks/useAffiliate'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
@@ -37,13 +37,7 @@ const SetupIntro: React.FC = () => {
 
 const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   const { t } = usePageLocale('business/setup/intro')
-  const { query } = useRouter()
-
-  React.useEffect(() => {
-    if (query.affiliate) {
-      localStorage.setItem('rcvr_affiliate', query.affiliate.toString())
-    }
-  }, [query.affiliate])
+  const { affiliateName, isAffiliate } = useAffiliate()
 
   return (
     <MobileApp logoVariant="big">
@@ -65,10 +59,10 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
       >
         {t('letsGo')}
       </ButtonLink>
-      {query.affiliate && (
+      {isAffiliate && (
         <>
           <Box height={6} />
-          <AffiliateCard code={query.affiliate.toString()} />
+          <AffiliateCard code={affiliateName} />
         </>
       )}
     </MobileApp>
