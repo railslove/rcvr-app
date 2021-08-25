@@ -4,19 +4,22 @@ import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation, useQueryClient } from 'react-query'
 
-import { isCareEnv, isFormal, isHealthEnv, isRcvrEnv } from '~lib/config'
-import { introText, formalAddress } from '~ui/whitelabels'
+import { isFormal, isRcvrEnv } from '~lib/config'
+import usePageLocale from '~locales/usePageLocale'
 import { binKey } from '~lib/crypto'
 import { checkin, checkout } from '~lib/actions'
 import { useCurrentGuest, useArea } from '~lib/hooks'
 import { Guest, updateGuest, addGuest, getLastCheckin } from '~lib/db'
 import { Row, Text, Box, Callout, Card } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { Onboarding } from '~ui/blocks/Onboarding'
-import { Confirmation } from '~ui/blocks/Confirmation'
+import { Onboarding } from '~ui/blocks/Onboarding/Onboarding'
+import { Confirmation } from '~ui/blocks/Confirmation/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function CheckinPage() {
+  const { t } = usePageLocale('checkin')
+
   const idRef = React.useRef<string>(uuidv4())
   const enteredAtRef = React.useRef<Date>(new Date())
   const mutationCheckin = useMutation(checkin)
@@ -173,7 +176,7 @@ export default function CheckinPage() {
   return (
     <MobileApp logoVariant="big" secondaryLogo={areaInfo.data?.affiliateLogo}>
       <Head>
-        <title key="title">Checkin... | recover</title>
+        <PageTitle>{t('pageTitle')}</PageTitle>
       </Head>
       <Loading show={showLoading} />
       {areaInfo.data?.ownerIsBlocked && (
@@ -183,12 +186,7 @@ export default function CheckinPage() {
           </Text>
           <Box height={5} />
           <Callout variant="danger">
-            <Text>
-              Die Kontaktdatenerfassung mit recover ist für diesen Betrieb
-              leider nicht mehr aktiv. Bitte{' '}
-              {formalAddress ? 'fragen Sie' : 'frag'} vor Ort nach einer anderen
-              Art der Kontaktdatenerfassung.
-            </Text>
+            <Text>{t('ownerIsBlockedMessage')}</Text>
           </Callout>
         </div>
       )}
@@ -199,26 +197,16 @@ export default function CheckinPage() {
           </Text>
           <Box height={5} />
           <Text as="h3" variant="h5">
-            Willkommen!
+            {t('welcome')}
           </Text>
           <Box height={1} />
           <Text>
-            <p>{introText}</p>
+            <p>{t('introText')}</p>
+            <p>{t('address')}</p>
             <p>
-              {formalAddress
-                ? 'So kann das Gesundheitsamt Sie anrufen, wenn es notwendig ist.'
-                : 'So kann das Gesundheitsamt Dich anrufen, wenn es notwendig ist.'}
-            </p>
-            <p>
-              Datenschutz ist uns dabei sehr wichtig!{' '}
-              {isRcvrEnv ? (
-                <>
-                  <strong>recover</strong> speichert Deine Daten verschlüsselt
-                  und sicher.
-                </>
-              ) : (
-                'Ihre Daten werden verschlüsselt und sicher gespeichert.'
-              )}
+              {isRcvrEnv ? <b>recover</b> : null}
+              {isRcvrEnv ? ' ' : null}
+              {t('dataProtection')}
             </p>
           </Text>
           <Box height={6} />
@@ -226,11 +214,7 @@ export default function CheckinPage() {
           {mutationCheckin.error && (
             <Box mb={6} mx={-4}>
               <Callout variant="danger">
-                <Text>
-                  {isFormal
-                    ? 'Wir konnten keine Verbindung herstellen. Haben Sie vielleicht gerade kein Internet?'
-                    : 'Wir konnten keine Verbindung herstellen. Hast du vielleicht gerade kein Internet?'}
-                </Text>
+                <Text>{t('checkinError')}</Text>
               </Callout>
             </Box>
           )}
@@ -250,7 +234,7 @@ export default function CheckinPage() {
                     href={areaInfo.data.privacyPolicyLink}
                   >
                     <Text variant="link">
-                      Datenschutzerklärung von {areaInfo.data.companyName}
+                      {t('privacyPolicyLink')} {areaInfo.data.companyName}
                     </Text>
                   </a>
                 </>
@@ -261,17 +245,11 @@ export default function CheckinPage() {
           {showConfirmation && <Confirmation onSubmit={confirmedScreen} />}
           <Row justifyContent="center" my={6}>
             <a
-              href={
-                isCareEnv
-                  ? 'https://www.recovercare.de/fur-besucher'
-                  : isHealthEnv
-                  ? 'https://www.recover-health.de/fur-besucher'
-                  : 'https://www.recoverapp.de/fuer-gaeste'
-              }
+              href={t('howDoesItWorkLink')}
               target="_blank"
               rel="noreferrer noopener"
             >
-              <Text variant="link">Wie funktioniert recover?</Text>
+              <Text variant="link">{t('howDoesItWorkText')}</Text>
             </a>
           </Row>
         </div>
