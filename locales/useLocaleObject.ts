@@ -11,7 +11,7 @@ export type LocaleObject<K extends string, V extends unknown> = {
 export type translateOptions = Partial<{
   /**
    * use isCareEnv, isHealthEnv, isFreseniusEnv, etc.
-   * to pick keys like for_care, for_health, for (without _ is for recover)
+   * to pick keys like for_care, for_health, for (without _ is the default)
    * @default undefined
    */
   useEnv: boolean
@@ -33,7 +33,7 @@ const useLocaleObject = <K extends string, V extends unknown>(
 
     const envLocale = currentLocale[`${key}_${BUILD_VARIANT}`]
 
-    return envLocale || (key as L[K])
+    return envLocale || currentLocale[key] || (key as L[K])
   }
 
   return { t, lang: language }
