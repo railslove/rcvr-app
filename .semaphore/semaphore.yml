@@ -37,6 +37,7 @@ blocks:
       jobs:
         - name: cypress
           commands:
+            - npm run generated
             - npm test
 
       epilogue:
@@ -52,7 +53,7 @@ blocks:
         commands:
           - checkout --use-cache
           - cache restore
-          - npm run update-supported-browsers
+          - npm run generated
       jobs:
         - name: lint
           commands:
