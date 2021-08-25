@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import Head from 'next/head'
 import * as React from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { checkout } from '~lib/actions'
@@ -14,7 +13,6 @@ import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 import usePageLocale from '~locales/usePageLocale'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function MyCheckinsPage() {
   const { t } = usePageLocale('my-checkins')
@@ -74,10 +72,11 @@ export default function MyCheckinsPage() {
   const area = useArea(lastCheckin?.areaId)
 
   return (
-    <MobileApp logoVariant="sticky" secondaryLogo={area?.data?.affiliateLogo}>
-      <Head>
-        <PageTitle>{t('pageTitle')}</PageTitle>
-      </Head>
+    <MobileApp
+      pageTitle={t('pageTitle')}
+      logoVariant="sticky"
+      secondaryLogo={area?.data?.affiliateLogo}
+    >
       {checkinsInfo.status === 'success' && checkinsInfo.data.length === 0 && (
         <Box my={10}>
           <Text variant="h2" as="h2" color="bluegrey.500" textAlign="center">

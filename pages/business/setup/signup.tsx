@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import * as Yup from 'yup'
@@ -14,7 +13,6 @@ import { createPhoneValidator } from '~lib/validators/phoneValidator'
 import { isCareEnv, isHealthEnv } from '~lib/config'
 import { createPasswordValidator } from '~lib/validators/passwordValidator'
 
-import PageTitle from '~ui/blocks/Title/PageTitle'
 import { Loading } from '~ui/blocks/Loading'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
@@ -132,10 +130,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   }
 
   return (
-    <MobileApp>
-      <Head>
-        <PageTitle>{t('title')}</PageTitle>
-      </Head>
+    <MobileApp pageTitle={t('title')}>
       <Text as="h3" variant="h3">
         {t('title')} (1/3)
       </Text>

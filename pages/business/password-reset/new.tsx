@@ -1,5 +1,4 @@
 import { Form, Formik } from 'formik'
-import Head from 'next/head'
 import Link from '~ui/core/Link/Link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
@@ -10,7 +9,6 @@ import usePageLocale from '~locales/usePageLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function PasswordResetNewPage() {
   const { t } = usePageLocale('business/password-reset/new')
@@ -44,10 +42,7 @@ export default function PasswordResetNewPage() {
   }
 
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <PageTitle>{t('pageTitle')}</PageTitle>
-      </Head>
+    <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
       <Text as="h2" variant="h2">
         {t('pageHeadline')}
       </Text>

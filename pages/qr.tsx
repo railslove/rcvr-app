@@ -1,11 +1,9 @@
-import Head from 'next/head'
 import * as React from 'react'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 import usePageLocale from '~locales/usePageLocale'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function QRCodePage() {
   const { t } = usePageLocale('qr')
@@ -58,10 +56,7 @@ export default function QRCodePage() {
   })
 
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <PageTitle>{t('pageTitle')}</PageTitle>
-      </Head>
+    <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
       <Text as="h2" variant="h2">
         {t('scanCode')}
       </Text>

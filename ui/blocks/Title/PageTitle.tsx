@@ -1,26 +1,26 @@
+import Head from 'next/head'
 import React from 'react'
-import { isCareEnv, isHealthEnv } from '~lib/config'
+import useLocaleObject from '~locales/useLocaleObject'
+import pageTitleLocales from '~ui/blocks/Title/pageTitleLocales'
 
 type PageTitleProps = {
+  content?: string
   children?: string
 }
 
-const PageTitle: React.FC<PageTitleProps> = ({ children }) => {
+const PageTitle: React.FC<PageTitleProps> = (props) => {
+  const { children } = props
+  const { t } = useLocaleObject(pageTitleLocales)
+
+  const content = [
+    children ? children : t('for', { useEnv: true }),
+    t('recover', { useEnv: children != null }),
+  ].join(' | ')
+
   return (
-    <title key="title">
-      {[
-        children
-          ? children
-          : (isCareEnv && 'Für Pflegeeinrichtungen') ||
-            (isHealthEnv && 'Für Krankenhäuser') ||
-            'Für Betriebe',
-        (isCareEnv && 'recover care') ||
-          (isHealthEnv && 'recover health') ||
-          'recover',
-      ]
-        .filter((v) => v)
-        .join(' | ')}
-    </title>
+    <Head>
+      <title>{content}</title>
+    </Head>
   )
 }
 

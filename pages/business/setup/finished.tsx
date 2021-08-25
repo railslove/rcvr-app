@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Head from 'next/head'
 
 import { withOwner } from '~lib/pageWrappers'
 import { Text, Box, Row, ButtonLink } from '~ui/core'
@@ -7,7 +6,6 @@ import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
 import usePageLocale from '~locales/usePageLocale'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 const FinishedText: React.FC = () => {
   const { t } = usePageLocale('business/setup/finished')
@@ -54,10 +52,7 @@ function SetupSuccessPage() {
   const { t } = usePageLocale('business/setup/finished')
 
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <PageTitle>{t('pageTitle')}</PageTitle>
-      </Head>
+    <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
       <Text as="h2" variant="h2">
         {t('header')}
       </Text>

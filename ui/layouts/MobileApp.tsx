@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
 import { motion } from 'framer-motion'
@@ -15,12 +14,14 @@ import Logo, { LOGO_DIMENSIONS } from '~ui/blocks/Logo/Logo'
 
 export type MobileAppProps = {
   children: React.ReactNode
+  pageTitle?: string
   logoVariant?: 'big' | 'small' | 'sticky'
   secondaryLogo?: string
 }
 
 export const MobileApp: React.FC<MobileAppProps> = ({
   children,
+  pageTitle,
   logoVariant = 'small',
   secondaryLogo = null,
 }) => {
@@ -28,10 +29,8 @@ export const MobileApp: React.FC<MobileAppProps> = ({
 
   return (
     <Limit>
-      <Head>
-        <PageTitle />
-      </Head>
       <SharedMeta />
+      <PageTitle>{pageTitle}</PageTitle>
       <Box display="flex" flexDirection="column" alignItems="flex-end">
         <LanguageSwitcher />
         {isAffiliate ? (

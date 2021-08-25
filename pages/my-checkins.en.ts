@@ -3,7 +3,7 @@ import de from './my-checkins.de'
 
 const en: typeof de = {
   people: 'People',
-  pageTitle: 'Meine Checkins',
+  pageTitle: 'My Checkins',
   noCheckinsYet: isCareEnv
     ? "You don't have any checkins yet"
     : "You don't have checkins yet",

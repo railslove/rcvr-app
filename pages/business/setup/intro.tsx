@@ -1,11 +1,9 @@
-import Head from 'next/head'
 import * as React from 'react'
 import { useAffiliate } from '~lib/hooks/useAffiliate'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { AffiliateCard } from '~ui/blocks/AffiliateCard'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 import { Box, ButtonLink, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { BUILD_VARIANT } from '~ui/whitelabels'
@@ -40,10 +38,7 @@ const SetupIntroPage: React.FC<WithOwnerProps> = () => {
   const { affiliateName, isAffiliate } = useAffiliate()
 
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <PageTitle>{t('pageTitle')}</PageTitle>
-      </Head>
+    <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
       <Text as="h2" variant="h2">
         {t('instruction')}
       </Text>

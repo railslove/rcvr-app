@@ -1,20 +1,15 @@
 import React from 'react'
-import Head from 'next/head'
 
 import usePageLocale from '~locales/usePageLocale'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function BusinessIndexPage() {
   const { t } = usePageLocale('business/index')
 
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <PageTitle>{t('title')}</PageTitle>
-      </Head>
+    <MobileApp pageTitle={t('title')} logoVariant="big">
       <Text as="h2" variant="h2">
         {t('title')}
       </Text>

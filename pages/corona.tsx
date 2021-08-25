@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Head from 'next/head'
 
 import { Box, Text, Row } from '~ui/core'
 import { Circle } from '~ui/anicons'
@@ -7,16 +6,12 @@ import { Phone } from '~ui/svg'
 import { MobileApp } from '~ui/layouts/MobileApp'
 import { FixedBottomBar } from '~ui/blocks/BottomBar/BottomBar'
 import usePageLocale from '~locales/usePageLocale'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function CoronaPage() {
   const { t } = usePageLocale('corona')
 
   return (
-    <MobileApp>
-      <Head>
-        <PageTitle>{t('pageTitle')}</PageTitle>
-      </Head>
+    <MobileApp pageTitle={t('pageTitle')}>
       <Text as="h2" variant="h2">
         {t('title')}
       </Text>

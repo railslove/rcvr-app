@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 import { useMutation, useQueryClient } from 'react-query'
@@ -15,7 +14,6 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { Onboarding } from '~ui/blocks/Onboarding/Onboarding'
 import { Confirmation } from '~ui/blocks/Confirmation/Confirmation'
 import { Loading } from '~ui/blocks/Loading'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 export default function CheckinPage() {
   const { t } = usePageLocale('checkin')
@@ -174,10 +172,11 @@ export default function CheckinPage() {
   }, [isReady, publicKey])
 
   return (
-    <MobileApp logoVariant="big" secondaryLogo={areaInfo.data?.affiliateLogo}>
-      <Head>
-        <PageTitle>{t('pageTitle')}</PageTitle>
-      </Head>
+    <MobileApp
+      pageTitle={t('pageTitle')}
+      logoVariant="big"
+      secondaryLogo={areaInfo.data?.affiliateLogo}
+    >
       <Loading show={showLoading} />
       {areaInfo.data?.ownerIsBlocked && (
         <div>

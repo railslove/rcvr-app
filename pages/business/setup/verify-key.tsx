@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Head from 'next/head'
 import { Formik, Form } from 'formik'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
@@ -20,7 +19,6 @@ import { BUILD_VARIANT } from '~ui/whitelabels'
 import { readTextFile } from '~lib/file'
 import { commitSetupPublicKey } from '~lib/actions'
 import usePageLocale from '~locales/usePageLocale'
-import PageTitle from '~ui/blocks/Title/PageTitle'
 
 const VerifyPrivateKeyExplanation: React.FC = () => {
   const { t } = usePageLocale('business/setup/verify-key')
@@ -91,12 +89,9 @@ const VerifyKeyPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { privateKey } = owner
 
   return (
-    <MobileApp>
+    <MobileApp pageTitle={t('pageTitle')}>
       <>
         <ScreenView>
-          <Head>
-            <PageTitle>{t('pageTitle')}</PageTitle>
-          </Head>
           <Text as="h3" variant="h3">
             {t('createAccountStep')} (3/3)
           </Text>
