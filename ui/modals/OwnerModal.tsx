@@ -8,10 +8,8 @@ import { Box, Button, Input } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { createPhoneValidator } from '~lib/validators/phoneValidator'
 import validatorsLocalesDE from '~lib/validators/validatorsLocales.de'
-import { SupportedLanguage } from '~locales/types'
 
 export type OwnerFormProps = {
-  lang: SupportedLanguage
   owner: OwnerRes
   locales: Pick<
     typeof validatorsLocalesDE,
@@ -36,7 +34,6 @@ export type OwnerFormProps = {
 type MProps = ModalBaseProps & OwnerFormProps
 
 export const OwnerModal: React.FC<MProps> = ({
-  lang,
   owner,
   locales,
   ...baseProps
@@ -55,7 +52,6 @@ export const OwnerModal: React.FC<MProps> = ({
   const yupShape = {
     name: Yup.string().required(locales.nameRequired),
     phone: createPhoneValidator({
-      lang,
       name: 'phone',
       invalid: locales.phoneInvalid,
       required: locales.phoneRequired,

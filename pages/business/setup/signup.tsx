@@ -67,7 +67,7 @@ const getInitialSignUpFormValues = (
 })
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
-  const { t, lang } = usePageLocale('business/setup/signup')
+  const { t } = usePageLocale('business/setup/signup')
 
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
@@ -77,7 +77,6 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
     name: Yup.string().required(t('nameRequired')),
     email: Yup.string().required(t('emailRequired')),
     phone: createPhoneValidator({
-      lang,
       name: 'phone',
       invalid: t('phoneInvalid'),
       required: t('phoneRequired'),

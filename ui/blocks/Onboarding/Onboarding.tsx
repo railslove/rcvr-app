@@ -28,7 +28,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   onAbort,
   onSubmit,
 }) => {
-  const { t, lang } = useLocaleObject(OnboardingLocales)
+  const { t } = useLocaleObject(OnboardingLocales)
 
   const initialValues = {
     name: prefilledGuest?.name || '',
@@ -44,7 +44,6 @@ export const Onboarding: React.FC<OnboardingProps> = ({
   const yupShape = {
     name: Yup.string().required(t('nameRequired')),
     phone: createPhoneValidator({
-      lang,
       name: 'phone',
       invalid: t('phoneInvalid'),
       required: t('phoneRequired'),
