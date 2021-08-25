@@ -3,22 +3,28 @@ import * as React from 'react'
 import { Box, Button } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { ArrowsRight } from '~ui/anicons'
-import SepaPaymentContainer from '~ui/blocks/SepaPaymentContainer'
+import SepaPaymentContainer from '~ui/blocks/SepaPayment/SepaPaymentContainer'
 
-interface Props {
-  children: Array<any>
+export interface CheckoutSelectionModalProps {
+  locales: {
+    title: string
+    stripeButtonText: string
+    sepaDebitButtonText: string
+  }
+  children?: Array<any>
   openStripeCheckout: () => void
 }
-type MProps = ModalBaseProps & Props
+type MProps = ModalBaseProps & CheckoutSelectionModalProps
 
 export const CheckoutSelectionModal: React.FC<MProps> = ({
+  locales,
   openStripeCheckout,
   ...modalProps
 }) => {
   const [sepa, setSepa] = React.useState(false)
 
   return (
-    <ModalBase {...modalProps} maxWidth={400} title="Zahlungsmethode">
+    <ModalBase {...modalProps} maxWidth={400} title={locales.title}>
       {sepa ? (
         <SepaPaymentContainer />
       ) : (
@@ -29,7 +35,7 @@ export const CheckoutSelectionModal: React.FC<MProps> = ({
             css={{ width: '100%' }}
             right={<ArrowsRight color="pink" />}
           >
-            Kreditkarte
+            {locales.stripeButtonText}
           </Button>
           <Box height={2} />
           <Button
@@ -37,7 +43,7 @@ export const CheckoutSelectionModal: React.FC<MProps> = ({
             css={{ width: '100%' }}
             right={<ArrowsRight color="pink" />}
           >
-            SEPA Lastschrift
+            {locales.sepaDebitButtonText}
           </Button>
         </>
       )}
