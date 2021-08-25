@@ -20,7 +20,7 @@ const LanguageSwitcher: React.FC = () => {
   return (
     <>
       <Box
-        display="inline-flex"
+        display="flex"
         overflow="visible"
         position="relative"
         alignItems="center"
