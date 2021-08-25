@@ -4,15 +4,26 @@ import { useRouter } from 'next/router'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { useCompany } from '~lib/hooks'
 import { Text, Box } from '~ui/core'
-import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
+import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp/OwnerApp'
 import { ActionList } from '~ui/blocks/ActionList'
-import { CheckinsActionCard } from '~ui/blocks/CheckinsActionCard'
+import {
+  CheckinsActionCard,
+  CheckinsActionCardProps,
+} from '~ui/blocks/CheckinsActionCard'
 import { sortAreas } from '~lib/interactors'
+import usePageLocale from '~locales/usePageLocale'
 
 const CheckinsPage: React.FC<WithOwnerProps> = () => {
+  const { t } = usePageLocale('business/company/[companyId]/checkins')
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)
+
+  const actionCardLocales: CheckinsActionCardProps['locales'] = {
+    checkedIn: t('checkedIn'),
+    checkedOut: t('checkedOut'),
+    checkoutAll: t('checkoutAll'),
+  }
 
   return (
     <OwnerApp title={`${company?.name ?? ''} – Checkins`}>
@@ -22,9 +33,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
       >
         {company?.name}
       </BackLink>
-      <Text variant="shy">
-        Checkins der letzten 24 Stunden. Aktualisiert sich automatisch.
-      </Text>
+      <Text variant="shy">{t('lastCheckinsText')}</Text>
       <Box height={2} />
       <ActionList grid>
         {sortAreas(company?.areas).map((area) => {
@@ -32,6 +41,7 @@ const CheckinsPage: React.FC<WithOwnerProps> = () => {
             <CheckinsActionCard
               key={area.id}
               area={area}
+              locales={actionCardLocales}
               companyId={companyId}
             />
           )
