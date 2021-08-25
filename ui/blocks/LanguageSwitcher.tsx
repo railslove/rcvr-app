@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react'
 import useLocaleContext from '~locales/useLocaleContext'
 import { RoundTriangle } from '~ui/anicons'
 import { Box, Text } from '~ui/core'
+import { zIndexLanguageSwitcher } from '~ui/constants'
 
 const LanguageSwitcher: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,6 +21,7 @@ const LanguageSwitcher: React.FC = () => {
   return (
     <>
       <Box
+        zIndex={zIndexLanguageSwitcher}
         display="flex"
         overflow="visible"
         position="relative"
