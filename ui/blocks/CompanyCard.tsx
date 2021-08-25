@@ -1,16 +1,32 @@
 import * as React from 'react'
+import { CompanyRes } from '~lib/api'
 
-import { ActionCard } from '~ui/blocks/ActionCard'
+import { ActionCard } from '~ui/blocks/ActionCard/ActionCard'
 import { IconButton } from '~ui/core'
 import { Edit, Trash } from '~ui/svg'
-import { pdfType } from '~ui/whitelabels'
+import { PDF_TYPE } from '~ui/whitelabels'
 
-export const CompanyCard = ({ company, onEdit, onDelete }) => {
+export type CompanyCardProps = {
+  locales: {
+    editButtonText: string
+    menuPdfLinkText: string
+  }
+  company: CompanyRes
+  onEdit: () => void
+  onDelete: () => void
+}
+
+export const CompanyCard: React.FC<CompanyCardProps> = ({
+  locales,
+  company,
+  onEdit,
+  onDelete,
+}) => {
   const menuText = React.useMemo(() => {
-    if (company.menuPdfLink) return 'PDF Anhang'
+    if (company.menuPdfLink) return locales.menuPdfLinkText
 
     return company.menuLink || '–'
-  }, [company])
+  }, [company, locales])
 
   return (
     <ActionCard
@@ -19,14 +35,14 @@ export const CompanyCard = ({ company, onEdit, onDelete }) => {
     >
       <ActionCard.Main
         title={company.name}
-        subtitle={`${company.menuAlias || pdfType}: ${menuText}`}
+        subtitle={`${company.menuAlias || PDF_TYPE}: ${menuText}`}
       />
       <ActionCard.Actions>
         <IconButton
           icon={Edit}
           color="yellow.500"
           onClick={onEdit}
-          title="Ändern"
+          title={locales.editButtonText}
         />
         <IconButton icon={Trash} color="red.500" onClick={onDelete} />
       </ActionCard.Actions>

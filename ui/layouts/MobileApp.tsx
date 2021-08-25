@@ -2,47 +2,54 @@ import * as React from 'react'
 import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import { variant } from 'styled-system'
 import { motion } from 'framer-motion'
+import { variant } from 'styled-system'
+import { useRouter } from 'next/router'
 
 import { Box } from '~ui/core'
-import {
-  pageTitle,
-  Logo,
-  logoBigWidth,
-  logoBigHeight,
-  logoSmallWidth,
-  logoSmallHeight,
-} from '~ui/whitelabels'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 import { SharedMeta } from '~ui/blocks/SharedMeta'
+import StadtKoelnLogo from '~ui/logos/StadtKoelnLogo'
+import LanguageSwitcher from '~ui/blocks/LanguageSwitcher'
+import Logo, { LOGO_DIMENSIONS } from '~ui/blocks/Logo/Logo'
 
-interface Props {
+export type MobileAppProps = {
   children: React.ReactNode
   logoVariant?: 'big' | 'small' | 'sticky'
   secondaryLogo?: string
 }
 
-export const MobileApp: React.FC<Props> = ({
+export const MobileApp: React.FC<MobileAppProps> = ({
   children,
   logoVariant = 'small',
   secondaryLogo = null,
 }) => {
+  const { query } = useRouter()
+  const shouldShowStadtKoelnLogo = query.affiliate != null
+
   return (
     <Limit>
       <Head>
-        <title key="title">{pageTitle}</title>
+        <PageTitle />
       </Head>
       <SharedMeta />
-      <LogoContainer variant={logoVariant}>
-        <LogoBox variant={logoVariant} layoutId="appLogo">
-          <Logo />
-        </LogoBox>
-        {secondaryLogo ? (
-          <SecondaryLogoBox>
-            <SecondaryLogo src={secondaryLogo} />
-          </SecondaryLogoBox>
-        ) : null}
-      </LogoContainer>
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        {shouldShowStadtKoelnLogo ? <StadtKoelnLogo /> : <Box />}
+        <LanguageSwitcher />
+      </Box>
+      <Box height={4} />
+      <Box display="flex" alignItems="center">
+        <LogoContainer variant={logoVariant}>
+          <LogoBox variant={logoVariant} layoutId="appLogo">
+            <Logo />
+          </LogoBox>
+          {secondaryLogo ? (
+            <SecondaryLogoBox>
+              <SecondaryLogo src={secondaryLogo} />
+            </SecondaryLogoBox>
+          ) : null}
+        </LogoContainer>
+      </Box>
       <Box height={logoVariant === 'sticky' ? 10 : 4} />
       {children}
     </Limit>
@@ -61,6 +68,9 @@ const Limit = styled('div')(
     overflow: 'hidden',
   })
 )
+
+const { logoBigHeight, logoBigWidth, logoSmallHeight, logoSmallWidth } =
+  LOGO_DIMENSIONS
 
 const LogoBox = styled(motion.div)(
   {
