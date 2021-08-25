@@ -3,17 +3,17 @@ import * as React from 'react'
 import { Checkin } from '~lib/db'
 import { Text, Box } from '~ui/core'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
+import { t } from '~locales/usePageLocale'
 
-import useLocaleObject from '~locales/useLocaleObject'
-import PastCheckinLocales from '~ui/blocks/PastCheckin/PastCheckin.locales'
-
-interface Props {
+export type PastCheckinProps = {
+  t: t<{
+    people: string
+  }>
   checkins: Checkin[]
 }
 
-export const PastCheckin: React.FC<Props> = ({ checkins }) => {
+export const PastCheckin: React.FC<PastCheckinProps> = ({ t, checkins }) => {
   const [checkin] = checkins
-  const { t } = useLocaleObject(PastCheckinLocales)
 
   return (
     <div>

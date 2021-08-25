@@ -2,6 +2,7 @@ import { isCareEnv } from '~lib/config'
 import de from './my-checkins.de'
 
 const en: typeof de = {
+  people: 'People',
   pageTitle: 'Meine Checkins',
   noCheckinsYet: isCareEnv
     ? "You don't have any checkins yet"

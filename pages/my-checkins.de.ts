@@ -1,6 +1,7 @@
 import { isCareEnv } from '~lib/config'
 
 const de = {
+  people: 'Personen',
   pageTitle: 'Meine Checkins',
   noCheckinsYet: isCareEnv
     ? 'Sie haben noch keine Checkins'

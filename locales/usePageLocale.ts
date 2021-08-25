@@ -1,6 +1,10 @@
 import useLocaleContext from '~locales/useLocaleContext'
 import { PageLocalesResources } from './generated/types'
 
+export type t<LO extends Record<string, unknown>> = (
+  key: keyof LO
+) => LO[typeof key]
+
 const usePageLocale = <NS extends keyof PageLocalesResources>(_ns: NS) => {
   type Result = PageLocalesResources[NS]
 

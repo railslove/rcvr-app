@@ -124,7 +124,7 @@ export default function MyCheckinsPage() {
                   )}
                 </>
               ) : (
-                <PastCheckin checkins={checkins} />
+                <PastCheckin t={t} checkins={checkins} />
               )}
             </CheckinCard>
           </motion.div>
