@@ -5,4 +5,5 @@ export const isFreseniusEnv =
 export const isHealthEnv = process.env.NEXT_PUBLIC_BUILD_VARIANT === 'health'
 export const isFormal = isCareEnv || isHealthEnv
 export const vercel_url = process.env.NEXT_PUBLIC_VERCEL_URL || ''
-export const overwrite_url = process.env.NEXT_PUBLIC_OVERWRITE_FRONTEND_URL || ''
+export const overwrite_url =
+  process.env.NEXT_PUBLIC_OVERWRITE_FRONTEND_URL || ''
