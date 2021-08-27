@@ -6,9 +6,8 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { indexIntro } from '~ui/whitelabels'
 
 export default function IndexPage() {
-  console.log('vercel_url('+ vercel_url+')')
+  console.log('vercel_url(' + vercel_url + ')')
   return (
-   
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
         Checkins per QR-Code.
