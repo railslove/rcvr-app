@@ -67,7 +67,6 @@ export async function postSignup(signup: PostSignup): Promise<OwnerRes> {
       process.env.NEXT_PUBLIC_OVERWRITE_FRONTEND_URL ||
       FRONTEND_URLS[process.env.NEXT_PUBLIC_BUILD_VARIANT],
   }
-  console.log('FE:' + frontend.url)
   const json = snakecaseKeys({ owner: signup, frontend }, { deep: true })
 
   return await api

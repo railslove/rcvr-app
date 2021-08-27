@@ -7,6 +7,7 @@ export * from './companies'
 export * from './dataRequests'
 export * from './passwords'
 
+console.log('API-URL:' + process.env.NEXT_PUBLIC_API_BASE)
 export const api = ky.create({
   prefixUrl: process.env.NEXT_PUBLIC_API_BASE,
   timeout: false,
