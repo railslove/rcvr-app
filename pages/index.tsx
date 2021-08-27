@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { overwrite_url,vercel_url, isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { overwrite_url, vercel_url, isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
