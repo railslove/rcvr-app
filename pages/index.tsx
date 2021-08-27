@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { vercel_url, isCareEnv, isFormal, isHealthEnv } from '~lib/config'
+import { overwrite_url,vercel_url, isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
 import { Box, ButtonLink, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
@@ -7,6 +7,7 @@ import { indexIntro } from '~ui/whitelabels'
 
 export default function IndexPage() {
   console.log('vercel_url(' + vercel_url + ')')
+  console.log('overwrite_url(' + overwrite_url + ')')
   return (
     <MobileApp logoVariant="big">
       <Text as="h2" variant="h2">
