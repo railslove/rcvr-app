@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react'
 import useLocaleContext from '~locales/useLocaleContext'
 import { RoundTriangle } from '~ui/anicons'
 import { Box, Text } from '~ui/core'
-import { zIndexLanguageSwitcher } from '~ui/constants'
+import { zIndexLanguageSwitcher } from '~ui/zIndexConstants'
 
 const LanguageSwitcher: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)

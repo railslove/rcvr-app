@@ -2,7 +2,7 @@ import * as React from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import { zIndexLoadingOverlay } from '~ui/constants'
+import { zIndexLoadingOverlay } from '~ui/zIndexConstants'
 
 interface Props {
   show?: boolean

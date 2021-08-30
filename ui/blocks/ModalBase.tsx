@@ -6,7 +6,7 @@ import { useClickAway } from 'react-use'
 
 import { Text, Box, CloseButton } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
-import { zIndexModal } from '~ui/constants'
+import { zIndexModal } from '~ui/zIndexConstants'
 
 interface Props {
   maxWidth?: string | number
