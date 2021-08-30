@@ -1,4 +1,7 @@
-const { defaultLocale } = require('./defaults.json')
+const {
+  defaultLocale,
+  locales: supportedLanguages,
+} = require('./defaults.json')
 
 /**
  *
@@ -24,7 +27,7 @@ function generateLocalesConfigAndTypes() {
   execSync('mkdir -p locales/generated', { stdio: 'inherit' })
 
   const config = glob
-    .sync('pages/**/*.{ts,tsx}')
+    .sync('pages/**/*.tsx')
     .map((el) => el.replace(/^pages\/|\.tsx?$/g, ''))
     .filter((el) => /^_error\./.test(el) || !/^_/.test(el))
     .reduce(
@@ -48,7 +51,9 @@ function generateLocalesConfigAndTypes() {
             ...acc.pages,
             [url]: {
               locales:
-                lang == null || locales.includes(lang)
+                lang == null ||
+                !supportedLanguages.includes(el) ||
+                locales.includes(lang)
                   ? locales
                   : locales.concat(lang).sort(),
               namespace: pathname,
