@@ -1,20 +1,18 @@
+import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import de from './index.de'
-import { isFormal, isCareEnv, isHealthEnv } from '~lib/config'
 
 const pl: typeof de = {
   title1: 'Zameldowanie za pomocą kodu QR.',
   title2: 'Bez aplikacji, łatwo dla każdego.',
 
-  indexIntro: isCareEnv
-    ? 'Ze względu na obowiązujące przepisy Corona, musisz zdeponować swoje dane kontaktowe, jeśli jesteś w przedsiębiorstwie, które jest zobowiązane do podjęcia środków ochronnych, takich jak zakłady opieki. Aplikacja może być również używana dobrowolnie, aby pomóc w śledzeniu.'
-    : isHealthEnv
-    ? 'Ze względu na obowiązujące przepisy Corona, jeśli jesteś w zakładzie, który jest zobowiązany do podjęcia środków ochronnych, takich jak szpitale, musisz przechowywać swoje dane kontaktowe. Aplikacja może być również używana dobrowolnie, aby pomóc w śledzeniu.'
-    : 'to cyfrowa lista kontaktów dla firm i ich gości. Prosta, bezpieczna, szybka.',
+  indexIntro: `jest to cyfrowa lista kontaktów dla ${
+    isCareEnv ? 'Care Facilities' : isHealthEnv ? 'Hospitals' : 'Establishments'
+  }, ich odwiedzających i gości. Prosta, bezpieczna, szybka.`,
 
-  forVisitorsAndGuests: isFormal ? 'Dla odwiedzających i gości' : 'Dla gości',
+  forVisitorsAndGuests: isFormal ? 'Dla gości i odwiedzających' : 'Dla gości',
 
   rcvrProtectsData: isFormal
-    ? 'Odzyskiwanie danych chroni je lepiej niż papier'
+    ? 'Recovery chroni dane lepiej niż papier'
     : 'recover protects your data better than any paper',
 
   scanCode: 'Zeskanuj kod QR',

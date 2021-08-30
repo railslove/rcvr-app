@@ -1,12 +1,10 @@
-import { isFormal } from '~lib/config'
-import newDe from '~pages/business/password-reset/new.de'
+import de from './new.de'
 
-const en: typeof newDe = {
+const en: typeof de = {
   pageTitle: 'Password Reset',
   pageHeadline: 'Password Reset',
-  pageExplanation: isFormal
-    ? 'Please enter a new password with which you can log in from now on'
-    : 'Please enter a new password with which you can log in from now on',
+  pageExplanation:
+    'Please enter a new password with which you can log in from now on',
 
   passwordInputHint:
     'The password must be at least 8 characters long. At least one uppercase letter, one lowercase letter, one number and one special character.',
