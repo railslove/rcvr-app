@@ -6,6 +6,7 @@ import { useClickAway } from 'react-use'
 
 import { Text, Box, CloseButton } from '~ui/core'
 import { Loading } from '~ui/blocks/Loading'
+import { zIndexModal } from '~ui/zIndexConstants'
 
 interface Props {
   maxWidth?: string | number
@@ -86,7 +87,7 @@ const Overlay = styled(motion.div)({
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'center',
-  zIndex: 500,
+  zIndex: zIndexModal,
   backdropFilter: 'blur(2px)',
   overflow: 'auto',
 })
