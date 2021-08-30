@@ -9,6 +9,7 @@ import { useQueryClient } from 'react-query'
 import { signup } from '~lib/actions'
 import usePageLocale from '~locales/usePageLocale'
 import { PostSignup } from '~lib/api'
+import { useAffiliate } from '~lib/hooks/useAffiliate'
 import { createPhoneValidator } from '~lib/validators/phoneValidator'
 import { isCareEnv, isHealthEnv } from '~lib/config'
 import { createPasswordValidator } from '~lib/validators/passwordValidator'
@@ -18,7 +19,6 @@ import { MobileApp } from '~ui/layouts/MobileApp'
 import { PersonalData } from '~ui/svg'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
 import { Box, Button, Card, Checkbox, Input, Row, Text } from '~ui/core'
-import { LOCAL_STORAGE_AFFILIATE_KEY } from '~lib/hooks/useAffiliate'
 
 export const InlineLink = styled('a')(
   css({
@@ -68,6 +68,7 @@ const getInitialSignUpFormValues = (
 
 const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   const { t } = usePageLocale('business/setup/signup')
+  const { affiliateName } = useAffiliate()
 
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
@@ -102,7 +103,6 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
   ) => {
     try {
       setLoading(true)
-      const affiliate = localStorage.getItem(LOCAL_STORAGE_AFFILIATE_KEY)
 
       await signup({
         name,
@@ -113,7 +113,7 @@ const SetupSignupPage: React.FC<WithOwnerProps> = () => {
         city,
         email,
         password,
-        affiliate,
+        affiliate: affiliateName,
       })
       queryClient.clear() // `owner` is cached and the next page would otherwise first think there's still no user
       router.replace('/business/setup/success')
