@@ -28,8 +28,8 @@ function generateLocalesConfigAndTypes() {
 
   const config = glob
     .sync('pages/**/*.tsx')
-    .map((el) => el.replace(/^pages\/|\.tsx?$/g, ''))
-    .filter((el) => /^_error\./.test(el) || !/^_/.test(el))
+    .map((el) => el.replace(/^pages\/|\.tsx$/g, ''))
+    .filter((el) => el === '_error' || !/^_/.test(el))
     .reduce(
       (acc, el) => {
         const [pathname, lang] = el.split('.')
