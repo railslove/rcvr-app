@@ -3,7 +3,7 @@ import de from './de'
 const en: typeof de = {
   profile: 'profile',
   businesses: 'businesses',
-  areasLinkText: 'areas',
+  areasLinkText: 'Areas',
   profileLinkText: 'My Profile',
   checkInsLinkText: 'Checkins',
 

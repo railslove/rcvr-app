@@ -10,17 +10,18 @@ import { CompanyRes, DataRequestRes } from '~lib/api'
 import { useCompanies, useModals, useOwner } from '~lib/hooks'
 import { useUnacceptedDataRequests } from '~lib/hooks/useUnacceptedDataRequests'
 
-import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
-import { SharedMeta } from '~ui/blocks/SharedMeta'
-import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
-import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
-import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
+import Logo from '~ui/blocks/Logo/Logo'
 import { Back } from '~ui/svg'
+import { SharedMeta } from '~ui/blocks/SharedMeta'
+import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
+import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
+import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
 
 import ownerAppLocales from './locales'
 import useLocaleObject from '~locales/useLocaleObject'
 import PageTitle from '~ui/blocks/Title/PageTitle'
-import Logo from '~ui/blocks/Logo/Logo'
+import LanguageSwitcher from '~ui/blocks/LanguageSwitcher'
 
 interface Props {
   children: React.ReactNode
@@ -29,6 +30,7 @@ interface Props {
 
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { t } = useLocaleObject(ownerAppLocales)
+
   const { data: owner } = useOwner()
   const { data: companies } = useCompanies()
   const { data: unacceptedDataRequests } = useUnacceptedDataRequests()
@@ -138,6 +140,14 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
             <li>
               <NavLink href="/business/profile">{t('profileLinkText')}</NavLink>
             </li>
+            <Box
+              as="li"
+              display="flex"
+              alignItems={['center', 'center', 'flex-start']}
+              flexDirection="column"
+            >
+              <LanguageSwitcher />
+            </Box>
           </ul>
         </Aside>
         <Main>
@@ -241,6 +251,15 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           </Text>
           <Box height={6} />
           {children}
+
+          <Box
+            display={['flex', 'flex', 'none']}
+            marginTop={4}
+            alignItems={['center', 'center', 'flex-start']}
+            flexDirection="column"
+          >
+            <LanguageSwitcher />
+          </Box>
         </Main>
       </Wrapper>
     </Limit>
