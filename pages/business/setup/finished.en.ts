@@ -6,7 +6,7 @@ const en: typeof finishedDe = {
   startButtonText: 'Start',
 
   finishedText1: "We're glad you're in! Your account is now fully set up.",
-  finishedText2: 'You are welcome to contact us to check your data together',
+  finishedText2: 'You are welcome to contact us to check your data together.',
 
   finishedText3: 'Now you can create establishments, areas, and QR codes.',
 

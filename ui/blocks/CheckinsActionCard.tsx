@@ -19,7 +19,7 @@ export type CheckinsActionCardProps = {
 
 export const CheckinsActionCard: React.FC<CheckinsActionCardProps> = ({
   area,
-  locales,
+  locales = {},
   companyId,
 }) => {
   const { data: ticketsByArea } = useLastTicketsGrouped(companyId)

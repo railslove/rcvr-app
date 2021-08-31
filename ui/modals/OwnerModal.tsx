@@ -35,7 +35,7 @@ type MProps = ModalBaseProps & OwnerFormProps
 
 export const OwnerModal: React.FC<MProps> = ({
   owner,
-  locales,
+  locales = {},
   ...baseProps
 }) => {
   const initialValues = {

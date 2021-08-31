@@ -1,7 +1,7 @@
 import de from './validatorsLocales.de'
 
 const validatorsLocalesEN: typeof de = {
-  zipLabel: 'zip code',
+  zipLabel: 'Zip code',
   zipRequired: 'Postal code must be specified',
 
   cityLabel: 'City',
@@ -34,7 +34,7 @@ const validatorsLocalesEN: typeof de = {
   addressLabel: 'Address (street and house number)',
   addressRequired: 'Address must be specified.',
 
-  companyNameLabel: 'name of your company',
+  companyNameLabel: 'Name of your company',
   companyNameRequired: 'Company name must be specified',
 
   confirmContractRequired: 'You must agree to the contract.',

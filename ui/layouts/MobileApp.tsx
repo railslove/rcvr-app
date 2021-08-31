@@ -34,7 +34,7 @@ export const MobileApp: React.FC<MobileAppProps> = ({
       <Box display="flex" flexDirection="column" alignItems="flex-end">
         <LanguageSwitcher />
         {isAffiliate ? (
-          <Box marginTop={2} marginBottom={2}>
+          <Box marginTop={2}>
             <StadtKoelnLogo />
           </Box>
         ) : null}

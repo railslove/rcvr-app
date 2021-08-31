@@ -17,7 +17,7 @@ export type CompanyCardProps = {
 }
 
 export const CompanyCard: React.FC<CompanyCardProps> = ({
-  locales,
+  locales = {},
   company,
   onEdit,
   onDelete,

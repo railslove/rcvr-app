@@ -8,9 +8,9 @@ const pl: typeof de = {
   finishedText1:
     'Cieszymy się, że jesteś w środku! Twoje konto jest teraz w pełni skonfigurowane.',
   finishedText2:
-    'Zapraszamy do kontaktu z nami w celu wspólnego sprawdzenia danych',
+    'Zapraszamy do kontaktu z nami w celu wspólnego sprawdzenia danych.',
 
-  finishedText3: 'Teraz możesz tworzyć placówki, obszary i kody QR',
+  finishedText3: 'Teraz możesz tworzyć placówki, obszary i kody QR.',
 
   finishedText1_care:
     'Cieszymy się, że cię mamy! Twoje konto jest teraz w pełni skonfigurowane',

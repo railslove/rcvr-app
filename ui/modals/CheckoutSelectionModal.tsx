@@ -17,7 +17,7 @@ export interface CheckoutSelectionModalProps {
 type MProps = ModalBaseProps & CheckoutSelectionModalProps
 
 export const CheckoutSelectionModal: React.FC<MProps> = ({
-  locales,
+  locales = {},
   openStripeCheckout,
   ...modalProps
 }) => {

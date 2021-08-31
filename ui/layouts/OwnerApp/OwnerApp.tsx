@@ -43,7 +43,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
     if (!owner.publicKey) {
       router.replace('/business/setup/success')
     }
-  }, [router, owner.publicKey])
+  }, [router, owner?.publicKey])
 
   const [hint, setHint] = React.useState(() => {
     return localStorage.getItem('hintclosed') !== '1'
