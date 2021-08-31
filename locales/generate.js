@@ -26,13 +26,18 @@ function generateLocalesConfigAndTypes() {
 
   execSync('mkdir -p locales/generated', { stdio: 'inherit' })
 
+  // get all translation files
   const config = glob
-    .sync('pages/**/*.tsx')
+    .sync('pages/**/*.ts')
     .map((el) => el.replace(/^pages\/|\.tsx$/g, ''))
-    .filter((el) => el === '_error' || !/^_/.test(el))
+    .filter((el) => /^_error\./.test(el) || !/^_/.test(el))
     .reduce(
       (acc, el) => {
         const [pathname, lang] = el.split('.')
+
+        if (lang == null) {
+          return acc
+        }
 
         const url = `/${
           /^index/.test(pathname)
@@ -52,7 +57,7 @@ function generateLocalesConfigAndTypes() {
             [url]: {
               locales:
                 lang == null ||
-                !supportedLanguages.includes(el) ||
+                !supportedLanguages.includes(lang) ||
                 locales.includes(lang)
                   ? locales
                   : locales.concat(lang).sort(),
