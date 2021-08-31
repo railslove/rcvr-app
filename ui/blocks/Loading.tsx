@@ -2,6 +2,7 @@ import * as React from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+import { zIndexLoadingOverlay } from '~ui/zIndexConstants'
 
 interface Props {
   show?: boolean
@@ -49,7 +50,7 @@ const Overlay = styled(motion.div)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  zIndex: 1000,
+  zIndex: zIndexLoadingOverlay,
 })
 
 const Dot = styled('div')(

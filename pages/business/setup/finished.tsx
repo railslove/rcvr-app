@@ -1,20 +1,60 @@
 import * as React from 'react'
-import Head from 'next/head'
 
 import { withOwner } from '~lib/pageWrappers'
 import { Text, Box, Row, ButtonLink } from '~ui/core'
 import { Circle, Check, ArrowsRight, ArrowsLeft } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { finishedText } from '~ui/whitelabels'
+import { BUILD_VARIANT } from '~ui/whitelabels'
+import usePageLocale from '~locales/usePageLocale'
+
+const FinishedText: React.FC = () => {
+  const { t } = usePageLocale('business/setup/finished')
+
+  switch (BUILD_VARIANT) {
+    case 'care': {
+      return (
+        <>
+          <p>{t('finishedText1_care')}</p>
+          <p>
+            {t('finishedText2_care')}:{'  '}
+            <a href={`tel:${t('bfsServiceValue')}`}>{t('bfsServiceText')}</a>
+          </p>
+          <p>{t('finishedText3_formal')}</p>
+        </>
+      )
+    }
+    case 'health': {
+      return (
+        <>
+          <p>{t('finishedText1_health')}</p>
+          <p>{t('finishedText2_health')}</p>
+          <p>
+            {t('finishedText2_health')}:{'  '}
+            <a href={`tel:${t('bfsServiceValue')}`}>{t('bfsServiceText')}</a>
+          </p>
+          <p>{t('finishedText3_formal')}</p>
+        </>
+      )
+    }
+    default: {
+      return (
+        <>
+          <p>{t('finishedText1')}</p>
+          <p>{t('finishedText2')}</p>
+          <p>{t('finishedText3')}</p>
+        </>
+      )
+    }
+  }
+}
 
 function SetupSuccessPage() {
+  const { t } = usePageLocale('business/setup/finished')
+
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <title key="title">Fertig | recover</title>
-      </Head>
+    <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
       <Text as="h2" variant="h2">
-        Schön, dass Sie dabei sind!
+        {t('header')}
       </Text>
       <Box height={10} />
       <Row justifyContent="center">
@@ -23,7 +63,9 @@ function SetupSuccessPage() {
         </Circle>
       </Row>
       <Box height={10} />
-      <Text>{finishedText}</Text>
+      <Text>
+        <FinishedText />
+      </Text>
       <Box height={6} />
 
       <ButtonLink
@@ -31,7 +73,7 @@ function SetupSuccessPage() {
         right={<ArrowsLeft color="green" />}
         left={<ArrowsRight color="green" />}
       >
-        Starten
+        {t('startButtonText')}
       </ButtonLink>
     </MobileApp>
   )
