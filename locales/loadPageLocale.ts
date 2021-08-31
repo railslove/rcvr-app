@@ -1,4 +1,5 @@
 import { AppContext } from 'next/app'
+
 import config from '~locales/generated/config.json'
 import { SupportedLanguage } from '~locales/types'
 import { LocaleContextProps } from '~locales/useLocaleContext'
@@ -22,22 +23,16 @@ async function loadPageLocale(
         : locales[0]
     ) as SupportedLanguage
 
-    console.info(
-      '[info:locale] loading lang "%s" for path "%s"',
-      lang,
-      pathname
-    )
+    if (process.env.NODE_ENV !== 'production') {
+      console.info('[locale] loading lang "%s" for "%s"', lang, pathname)
+    }
 
     const values = await import(`../pages/${namespace}.${lang}.ts`).then(
       (m) => m.default
     )
     return { values, lang, pageLocales: locales }
   } else {
-    console.info(
-      '[info:locale] locale "%s" not found for "%s"',
-      locale,
-      pathname
-    )
+    console.info('[locale] "%s" not found for "%s"', locale, pathname)
     return {}
   }
 }
