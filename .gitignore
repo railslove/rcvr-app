@@ -28,3 +28,9 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+cypress/screenshots
+cypress/videos
+
+# This file is genrated automatically by the next.config.js script.
+lib/supportedBrowsers.js

@@ -1,16 +1,17 @@
+import { Form, Formik } from 'formik'
+import area from 'pages/business/company/[companyId]/area'
 import * as React from 'react'
-import { Formik, Form } from 'formik'
+import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
-import { queryCache } from 'react-query'
-
-import { isCareEnv } from '~lib/config'
 import { patchArea, postArea } from '~lib/api'
-import { Box, Input, Button, Text } from '~ui/core'
+import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
+import { Box, Button, Input, Text, Checkbox } from '~ui/core'
 
 interface Props {
   type: 'new' | 'edit'
   name?: string
+  testExemption?: boolean
   areaId?: string
   companyId?: string
 }
@@ -18,7 +19,7 @@ type MProps = ModalBaseProps & Props
 
 const AreaSchema = Yup.object().shape({
   name: Yup.string().required(
-    isCareEnv
+    isFormal
       ? 'Sie müssen einen Namen angeben'
       : 'Du musst einen Namen angeben.'
   ),
@@ -27,26 +28,28 @@ const AreaSchema = Yup.object().shape({
 export const AreaDataModal: React.FC<MProps> = ({
   type = 'new',
   name,
+  testExemption,
   areaId,
   companyId,
   ...baseProps
 }) => {
+  const queryClient = useQueryClient()
   const title = { new: 'Neuer Bereich', edit: 'Bereich ändern' }[type]
   const button = { new: 'Hinzufügen', edit: 'Speichern' }[type]
   const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = React.useCallback(
-    async ({ name }, bag) => {
+    async ({ name, testExemption }, bag) => {
       try {
         setLoading(true)
         if (type === 'edit') {
-          await patchArea(areaId, { name })
+          await patchArea(areaId, { name, testExemption })
         }
         if (type === 'new') {
-          await postArea({ name, companyId })
+          await postArea({ name, companyId, testExemption })
         }
-        queryCache.refetchQueries('areas')
-        queryCache.refetchQueries('companies')
+        queryClient.invalidateQueries('areas')
+        queryClient.invalidateQueries('companies')
         baseProps.onClose()
       } catch (error) {
         bag.setFieldError(
@@ -64,24 +67,35 @@ export const AreaDataModal: React.FC<MProps> = ({
   return (
     <ModalBase {...baseProps} maxWidth={400} loading={loading} title={title}>
       <Formik
-        initialValues={{ name: name || '' }}
+        initialValues={{
+          name: name || '',
+          testExemption: testExemption,
+        }}
         validationSchema={AreaSchema}
         onSubmit={handleSubmit}
       >
         <Form>
           <Text>
             Der Name des Bereichs wird über dem QR Code angezeigt. Falls{' '}
-            {isCareEnv
+            {isFormal
               ? 'Sie bereits Lage-, Stationspläne oder ähnliches haben, können Sie'
-              : 'du bereits einen Saalplan hast, kannst du'}{' '}
-            die Nummerierung in gleicher Weise abbilden.
+              : 'du bereits einen Übersichtsplan hast, kannst du'}{' '}
+            die Benennung in gleicher Weise abbilden.
           </Text>
           <Box height={6} />
           <Input
             name="name"
             label="Name des Bereichs"
-            hint='z.B. "Tisch 1" oder "Theke"'
+            hint={
+              isCareEnv || isHealthEnv
+                ? 'z.B "Eingangsbereich" oder "Station 1"'
+                : 'z.B. "Tisch 1" oder "Theke"'
+            }
             autoFocus
+          />
+          <Checkbox
+            name="testExemption"
+            label="Dieser Bereich benötigt KEINE nachweise von impfung, test oder genesung (Betriebsunabhängig)"
           />
           <Box height={4} />
           <Button type="submit" css={{ width: '100%' }}>

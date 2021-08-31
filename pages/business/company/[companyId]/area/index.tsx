@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
+import { toDataURL } from 'qrcode'
+import { saveAs } from 'file-saver'
 
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { useCompany, useModals } from '~lib/hooks'
+import { CurrentOwner, useCompany, useModals } from '~lib/hooks'
 import { IconButton } from '~ui/core'
 import { Edit, Trash, Download } from '~ui/svg'
 import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
@@ -11,9 +13,13 @@ import { ActionCard } from '~ui/blocks/ActionCard'
 import { AddCard } from '~ui/blocks/AddCard'
 import { AreaDeleteModal } from '~ui/modals/AreaDeleteModal'
 import { AreaDataModal } from '~ui/modals/AreaDataModal'
+import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { QrInfoModal } from '~ui/modals/QrInfoModal'
+import { AreaRes, CompanyRes } from '~lib/api'
+import { decrypt } from '~lib/crypto'
+import { sortAreas } from '~lib/interactors'
 
-const AreasIndexPage: React.FC<WithOwnerProps> = () => {
+const AreasIndexPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const { data: company } = useCompany(companyId)
@@ -21,13 +27,46 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
     delete: AreaDeleteModal,
     data: AreaDataModal,
     qrCode: QrInfoModal,
+    privateKey: PrivateKeyModal,
   })
 
-  const handleDownload = (areaId: string) => () => {
-    window.location.href =
-      process.env.NEXT_PUBLIC_API_BASE + 'areas/' + areaId + '.png'
+  const decryptCwaSeed = (company: CompanyRes, owner: CurrentOwner) => {
+    if (owner.privateKey) {
+      try {
+        return decrypt(company.cwaCryptoSeed, owner.publicKey, owner.privateKey)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    return undefined
+  }
 
-    openModal('qrCode')
+  const generateQrCode = (area: AreaRes, url: string) => {
+    const element = document.createElement('canvas')
+    toDataURL(element, url, (_error, url) => {
+      saveAs(
+        url,
+        `qrcode-${area.name.replace(/[^a-z0-9]/gi, '-').toLowerCase()}.png`
+      )
+    })
+  }
+
+  const handleDownload = (area: AreaRes) => async () => {
+    if (!area.companyCwaLinkEnabled) {
+      openModal('qrCode')
+      generateQrCode(area, `${area.checkinLink}`)
+    } else {
+      const decrypted = decryptCwaSeed(company, owner)
+      if (decrypted == undefined || decrypted == null) {
+        openModal('privateKey', { ownerId: owner.id })
+      } else {
+        openModal('qrCode')
+        generateQrCode(
+          area,
+          `${area.checkinLink}&cwa=${encodeURIComponent(decrypted)}`
+        )
+      }
+    }
   }
 
   return (
@@ -44,7 +83,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
           title="Bereich hinzufügen..."
           onClick={() => openModal('data', { companyId: companyId })}
         />
-        {company?.areas.map((area) => (
+        {sortAreas(company?.areas).map((area) => (
           <ActionCard
             key={area.id}
             href="/business/company/[companyId]/area/[areaId]"
@@ -55,7 +94,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
               <IconButton
                 icon={Download}
                 color="bluegrey.700"
-                onClick={handleDownload(area.id)}
+                onClick={handleDownload(area)}
                 title="QR-Code"
               />
               <IconButton
@@ -66,6 +105,7 @@ const AreasIndexPage: React.FC<WithOwnerProps> = () => {
                     type: 'edit',
                     areaId: area.id,
                     name: area.name,
+                    testExemption: area.testExemption,
                   })
                 }
                 title="Ändern"

@@ -15,7 +15,6 @@ async function fetchOwner(): Promise<CurrentOwner> {
   // update publicKey in api if it exists locally but not in api
   if (owner.publicKey && !ownerRes.publicKey) {
     ownerRes = await api.patchOwner({
-      id: owner.id,
       publicKey: owner.publicKey,
     })
   }

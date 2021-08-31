@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query'
 import { getArea, AreaRes } from '../api'
 
-async function fetchArea(_key: unknown, areaId: string): Promise<AreaRes> {
+async function fetchArea({ queryKey }): Promise<AreaRes> {
+  const [_key, areaId] = queryKey
   return await getArea(areaId)
 }
 

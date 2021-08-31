@@ -1,9 +1,8 @@
-import * as React from 'react'
 import Head from 'next/head'
-
-import { isCareEnv } from '~lib/config'
-import { Text, Card, Box, ButtonLink } from '~ui/core'
+import * as React from 'react'
+import { isFormal } from '~lib/config'
 import { ArrowsLeft, ArrowsRight } from '~ui/anicons'
+import { Box, ButtonLink, Card, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function BusinessIndexPage() {
@@ -11,30 +10,30 @@ export default function BusinessIndexPage() {
     <MobileApp logoVariant="big">
       <Head>
         <title key="title">
-          Für {isCareEnv ? 'Pflegeeinrichtungen' : 'Betriebe'} | recover
+          Für {isFormal ? 'Einrichtungen' : 'Betriebe'} | recover
         </title>
       </Head>
       <Text as="h2" variant="h2">
-        Für {isCareEnv ? 'Pflegeeinrichtungen' : 'Betriebe'}
+        Für {isFormal ? 'Einrichtungen' : 'Betriebe'}
       </Text>
       <Box height={4} />
       <Text>
         <p>
-          {isCareEnv
-            ? 'Seit Corona sind Sie als Pflegeeinrichtung verpflichtet die Kontaktdaten Ihrer Besucher und Gäste zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie und die sicherste für Ihre Besucher und Gäste.'
-            : 'Seit Corona bist Du als Gastronom*In verpflichtet die Kontaktdaten deiner Gäste zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für deine Gäste.'}
+          {isFormal
+            ? 'Seit Ausbruch der Corona-Pandemie sind auch Krankenhausbetreiber und Betreiber von Gesundheitseinrichtungen verpflichtet die Kontaktdaten Ihrer Besucher zu erfassen. Ersparen Sie sich die Zettelwirtschaft! recover ist die einfachste Lösung für Sie und die sicherste für Ihre Besucher.'
+            : 'Seit Corona sind viele Betriebe und Einrichtungen verpflichtet, Kontaktdaten zu erfassen. Erspar Dir die Zettelwirtschaft! recover ist die einfachste Lösung für Dich und die sicherste für Deine Besucher oder Gäste.'}
         </p>
       </Text>
       <Box height={4} />
 
       <Card p={6} mx={-4}>
         <Text as="h2" variant="h2">
-          {isCareEnv ? 'Pflegeeinrichtung' : 'Betrieb'} registrieren
+          {isFormal ? 'Einrichtung' : 'Betrieb'} registrieren
         </Text>
         <Box height={4} />
         <Text>
           <p>
-            {isCareEnv
+            {isFormal
               ? 'Mit recover sind Sie startklar in 10 Minuten.'
               : 'Mit recover bist Du startklar in 10 Minuten.'}
           </p>
@@ -57,9 +56,9 @@ export default function BusinessIndexPage() {
         <Box height={4} />
         <Text>
           <p>
-            {isCareEnv
-              ? 'Hier können Sie ihre Pflegeeinrichtungen verwalten, QR Codes ausdrucken und aktuelle Checkins sehen.'
-              : 'Verwalte deine Betriebe, drucke QR Codes aus und sehe aktuelle Checkins.'}
+            {isFormal
+              ? 'Hier können Sie ihre Einrichtungen verwalten, QR Codes ausdrucken und aktuelle Checkins sehen.'
+              : 'Verwalte Deine Betriebe, drucke QR Codes aus und sehe aktuelle Checkins.'}
           </p>
         </Text>
         <Box height={4} />

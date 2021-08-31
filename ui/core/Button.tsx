@@ -8,13 +8,21 @@ interface Props {
   children: React.ReactNode
   left?: React.ReactNode
   right?: React.ReactNode
+  dataAttributes?: {
+    [id: string]: string
+  }
 }
 type ButtonProps = JSX.IntrinsicElements['button'] & Props & As
 
 export const Button: React.FC<ButtonProps> = React.forwardRef(
-  ({ children, left, right, ...rest }, ref) => {
+  ({ children, left, right, dataAttributes, ...rest }, ref) => {
+    const data = Object.entries(dataAttributes || {}).reduce(
+      (data, [key, value]) => ({ [`data-${key}`]: value, ...data }),
+      {}
+    )
+
     return (
-      <Base {...rest} ref={ref}>
+      <Base {...rest} ref={ref} {...data}>
         {(left || right) && <Left>{left}</Left>}
         <Center>{children}</Center>
         {(left || right) && <Right>{right}</Right>}
@@ -89,12 +97,16 @@ const Center = styled('div')(
   })
 )
 
-type ButtonLinkProps = ButtonProps & { href: string }
+type ButtonLinkProps = ButtonProps & { href: string; target?: string }
 
-export const ButtonLink: React.FC<ButtonLinkProps> = ({ href, ...rest }) => {
+export const ButtonLink: React.FC<ButtonLinkProps> = ({
+  href,
+  target,
+  ...rest
+}) => {
   return (
     <Link href={href}>
-      <a>
+      <a target={target}>
         <Button as="div" {...rest} />
       </a>
     </Link>

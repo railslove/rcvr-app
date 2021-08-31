@@ -1,18 +1,18 @@
 import * as React from 'react'
-
-import { patchTicket, AreaRes } from '~lib/api'
+import { useQueryClient } from 'react-query'
+import { AreaRes, patchTicket } from '~lib/api'
+import { useLastTicketsGrouped } from '~lib/hooks'
 import { ActionCard } from '~ui/blocks/ActionCard'
 import { Loading } from '~ui/blocks/Loading'
+import { Box, Icon, IconButton, Row } from '~ui/core'
 import { Arrows, TinyCheck } from '~ui/svg'
-import { Box, Row, Icon, IconButton } from '~ui/core'
-import { useLastTicketsGrouped } from '~lib/hooks'
-import { queryCache } from 'react-query'
 
 export const CheckinsActionCard: React.FC<{
   area: AreaRes
   companyId: string
 }> = ({ area, companyId }) => {
   const { data: ticketsByArea } = useLastTicketsGrouped(companyId)
+  const queryClient = useQueryClient()
 
   const tickets = ticketsByArea?.[area.id]
   const openCount = tickets?.open.length ?? 0
@@ -27,7 +27,7 @@ export const CheckinsActionCard: React.FC<{
     const openTickets = tickets?.open || []
     await Promise.all(openTickets.map(({ id }) => patchTicket({ id, leftAt })))
 
-    await queryCache.refetchQueries(['tickets', companyId])
+    await queryClient.invalidateQueries(['tickets', companyId])
 
     setLoading(false)
   }
@@ -42,7 +42,7 @@ export const CheckinsActionCard: React.FC<{
         title={area.name}
         subtitle={
           <>
-            <span css={{ whiteSpace: 'nowrap' }}>am Tisch: {openCount}</span>
+            <span css={{ whiteSpace: 'nowrap' }}>eingecheckt: {openCount}</span>
             {' – '}
             <span css={{ whiteSpace: 'nowrap' }}>
               ausgecheckt: {closedCount}
