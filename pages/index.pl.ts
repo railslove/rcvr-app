@@ -5,7 +5,7 @@ const pl: typeof de = {
   title1: 'Zameldowanie za pomocą kodu QR.',
   title2: 'Bez aplikacji, łatwo dla każdego.',
 
-  indexIntro: `jest to cyfrowa lista kontaktów dla ${
+  indexIntro: `recover jest to cyfrowa lista kontaktów dla ${
     isCareEnv ? 'Care Facilities' : isHealthEnv ? 'Hospitals' : 'Establishments'
   }, ich odwiedzających i gości. Prosta, bezpieczna, szybka.`,
 

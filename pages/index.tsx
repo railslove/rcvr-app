@@ -18,7 +18,7 @@ export default function IndexPage() {
       </Text>
       <Box height={4} />
       <Text>
-        <b>recover</b> <p>{t('indexIntro')}</p>
+        <p>{t('indexIntro')}</p>
       </Text>
       <Box height={4} />
 

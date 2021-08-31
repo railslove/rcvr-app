@@ -4,7 +4,7 @@ const de = {
   title1: 'Checkins per QR-Code.',
   title2: 'Ohne App, einfach für alle.',
 
-  indexIntro: `ist die digitale Kontaktdatenliste für ${
+  indexIntro: `recover ist die digitale Kontaktdatenliste für ${
     isCareEnv
       ? 'Pflegeeinrichtungen'
       : isHealthEnv

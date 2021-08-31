@@ -5,7 +5,7 @@ const en: typeof de = {
   title1: 'Checkins via QR code.',
   title2: 'Without app, easy for everyone.',
 
-  indexIntro: `is the digital contact list for ${
+  indexIntro: `recover is the digital contact list for ${
     isCareEnv ? 'Care Facilities' : isHealthEnv ? 'Hospitals' : 'Establishments'
   }, their visitors and guests. Simple, secure, fast.`,
 
