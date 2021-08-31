@@ -64,6 +64,7 @@ const LanguageSwitcher: React.FC = () => {
           {availableLocales.map((el) => {
             return (
               <Link
+                as={router.asPath}
                 href={router.pathname as LinkHref}
                 key={el}
                 locale={el}
