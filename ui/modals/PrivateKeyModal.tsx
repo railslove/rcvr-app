@@ -92,7 +92,7 @@ export const PrivateKeyModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [baseProps, ownerId, owner?.publicKey, queryClient]
+    [t, baseProps, ownerId, owner?.publicKey, queryClient]
   )
 
   return (

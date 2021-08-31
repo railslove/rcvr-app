@@ -23,7 +23,7 @@ const en: typeof finishedDe = {
     'If you have any questions about your account and how to decrypt the data, feel free to contact us',
 
   finishedText3_formal:
-    'Now you can create your farms, homes and areas, as well as create QR codes for visitors',
+    'Now you can create your businesses, homes and areas, as well as create QR codes for visitors',
 
   bfsServiceText: 'BFS Service GmbH 0221/97356-159 or 0221/97356-160',
   bfsServiceValue: '022197356159',

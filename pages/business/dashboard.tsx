@@ -26,6 +26,7 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
   })
 
   const companyCardLocales: CompanyCardProps['locales'] = {
+    pdfType: t('pdfType'),
     editButtonText: t('editButtonText'),
     menuPdfLinkText: t('menuPdfLinkText'),
   }

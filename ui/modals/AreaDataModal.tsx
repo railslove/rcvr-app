@@ -3,7 +3,6 @@ import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import { patchArea, postArea } from '~lib/api'
-import { isCareEnv, isFormal, isHealthEnv } from '~lib/config'
 import useLocaleObject from '~locales/useLocaleObject'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
 import { Box, Button, Input, Text, Checkbox } from '~ui/core'
@@ -57,7 +56,7 @@ export const AreaDataModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [type, areaId, baseProps, companyId, queryClient]
+    [t, type, areaId, baseProps, companyId, queryClient]
   )
 
   return (

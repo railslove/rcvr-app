@@ -1,9 +1,15 @@
+import { CompanyTypeOptions } from '~lib/api'
+import { isCareEnv } from '~lib/config'
 import validatorsLocalesDE from '~lib/validators/validatorsLocales.de'
 import validatorsLocalesEN from '~lib/validators/validatorsLocales.en'
-import { PDF_TYPE } from '~ui/whitelabels'
 
 export const de = {
   ...validatorsLocalesDE,
+  ...CompanyTypeOptions,
+
+  coronaTestSelectOptions0: 'kein Test notwendig',
+  coronaTestSelectOptions24: 'maximal 24 Stunden alter Test notwendig',
+  coronaTestSelectOptions48: 'maximal 48 Stunden alter Test notwendig',
 
   or: 'oder',
 
@@ -31,9 +37,14 @@ export const de = {
 
   menuAliasLabel: 'Name der Zustatzinformationen-Sektion',
 
-  menuLinkLabel: `${PDF_TYPE} als Link`,
+  menuLinkLabel: isCareEnv
+    ? `Hygienevorschriften als link`
+    : `Zusatz-Informationen als link`,
 
-  menuFileLabel: `${PDF_TYPE} als PDF`,
+  menuFileLabel: isCareEnv
+    ? `Hygienevorschriften als PDF`
+    : `Zusatz-Informationen als PDF`,
+
   menuFileHint: 'Es können nur pdf-Dateien hochgeladen werden.',
 }
 
@@ -42,8 +53,8 @@ export const en: typeof de = {
 
   or: 'or',
 
-  titleNew: 'New operation',
-  titleEdit: 'Change operation',
+  titleNew: 'New business',
+  titleEdit: 'Change business',
   buttonNew: 'Add',
   buttonEdit: 'Save',
 
@@ -64,12 +75,29 @@ export const en: typeof de = {
 
   privacyPolicyLabel: 'Privacy policy as a link',
 
-  menuAliasLabel: 'name of the state information section',
+  menuAliasLabel: 'Name of the state information section',
 
-  menuLinkLabel: `${PDF_TYPE} as link`,
+  menuLinkLabel: isCareEnv
+    ? `Hygiene regulations as link`
+    : `Additional information as link`,
 
-  menuFileLabel: `${PDF_TYPE} as PDF`,
+  menuFileLabel: isCareEnv
+    ? `Hygiene regulations as PDF`
+    : `Additional information as PDF`,
+
   menuFileHint: `Only pdf files can be uploaded`,
+
+  craft: 'craft enterprise',
+  other: 'other',
+  retail: 'retail trade',
+  workplace: 'place of work',
+  food_service: 'food service establishment',
+  public_building: 'public building',
+  educational_institution: 'educational institution',
+
+  coronaTestSelectOptions0: 'no test necessary',
+  coronaTestSelectOptions24: 'maximum 24 hours old test necessary',
+  coronaTestSelectOptions48: 'maximum 48 hours old test necessary',
 }
 
 export default { de, en }

@@ -8,7 +8,7 @@ const en: typeof indexDe = {
     ? 'Since the outbreak of the Corona pandemic, hospital and healthcare facility operators are also required to record the contact details of their visitors. Save yourself the paperwork! recover is the easiest solution for you and the safest for your visitors.'
     : 'Since Corona, many businesses and facilities are required to collect contact information. Save yourself the paperwork! recover is the easiest solution for you and the safest for your visitors or guests.',
 
-  registerTitle: isFormal ? 'Register facility' : 'Register operation',
+  registerTitle: isFormal ? 'Register facility' : 'Register business',
 
   registerMessage: isFormal
     ? 'With recover you are ready to go in 10 minutes'

@@ -16,8 +16,8 @@ const en: typeof de = {
 
   privateKeyPrintButton: 'Print key',
   privateKeySecureQuestion: isFormal
-    ? 'Key stored securely and accessible? Then they can now set up their operation.'
-    : 'Key kept secure and accessible? Then you can set up your operation now',
+    ? 'Key stored securely and accessible? Then they can now set up their business.'
+    : 'Key kept secure and accessible? Then you can set up your business now',
 
   continueButtonText: 'continue',
 

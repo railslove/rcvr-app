@@ -5,7 +5,6 @@ const envs = {
     secondaryHighlightColor: '#EA28EE',
 
     /* non-theme constants */
-    PDF_TYPE: 'Zusatz-Informationen',
     PRIVACY_URL: 'https://railslove.com/privacy/',
   },
   care: {
@@ -14,7 +13,6 @@ const envs = {
     secondaryHighlightColor: '',
 
     /* non-theme constants */
-    PDF_TYPE: 'Hygienevorschriften',
     PRIVACY_URL: 'https://www.recovercare.de/datenschutzerklarung',
   },
   health: {
@@ -23,15 +21,14 @@ const envs = {
     secondaryHighlightColor: '#10D4FF',
 
     /* non-theme constants */
-    PDF_TYPE: 'Hygienevorschriften',
     PRIVACY_URL: 'https://www.recover-health.de/datenschutzerklarung',
   },
   fresenius: {
     backgroundColor: '#A6D7D7',
     primaryHighlightColor: '#009EE0',
     secondaryHighlightColor: '',
+
     /* non-theme constants */
-    PDF_TYPE: 'Zusatz-Informationen',
     PRIVACY_URL:
       'https://www.hs-fresenius.de/datenschutzerklaerung-recover-app/',
   },
@@ -47,6 +44,5 @@ export const {
   primaryHighlightColor,
   secondaryHighlightColor,
   /* non-theme constants */
-  PDF_TYPE,
   PRIVACY_URL,
 } = envs[BUILD_VARIANT]

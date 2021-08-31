@@ -49,7 +49,7 @@ const en: typeof de = {
   nameRequired: 'You must specify a name',
 
   testExemptionLabel:
-    'This section does NOT require proof of vaccination, testing or recovery (operation independent)',
+    'This section does NOT require proof of vaccination, testing or recovery (business independent)',
 
   submitError: 'An error has occurred: ',
 }

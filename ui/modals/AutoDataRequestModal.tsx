@@ -40,7 +40,7 @@ export const AutoDataRequestModal: React.FC<MProps> = ({
         setLoading(false)
       }
     },
-    [baseProps, companyId, queryClient]
+    [t, baseProps, companyId, queryClient]
   )
   return (
     <ModalBase

@@ -8,8 +8,8 @@ import {
   CompanyRes,
   patchCompany,
   postCompany,
-  CompanyTypeOptions,
   CoronaTestOptions,
+  CompanyTypeOptions,
 } from '~lib/api'
 import { Box, Input, FileInput, Button, Text, Checkbox, Select } from '~ui/core'
 import { ModalBase, ModalBaseProps } from '~ui/blocks/ModalBase'
@@ -40,6 +40,22 @@ export const BusinessDataModal: React.FC<BusinessDataModalProps> = ({
   const title = { new: t('titleNew'), edit: t('titleEdit') }[type]
   const button = { new: t('buttonNew'), edit: t('buttonEdit') }[type]
   const [loading, setLoading] = React.useState(false)
+
+  const companyTypeSelectOptions: typeof CompanyTypeOptions = {
+    craft: t('craft'),
+    other: t('other'),
+    retail: t('retail'),
+    workplace: t('workplace'),
+    food_service: t('food_service'),
+    public_building: t('public_building'),
+    educational_institution: t('educational_institution'),
+  }
+
+  const coronaTestSelectOptions: typeof CoronaTestOptions = {
+    '0': t('coronaTestSelectOptions0'),
+    '24': t('coronaTestSelectOptions24'),
+    '48': t('coronaTestSelectOptions48'),
+  }
 
   const BusinessSchema = Yup.object().shape({
     zip: Yup.string().required(t('zipRequired')),
@@ -187,13 +203,13 @@ export const BusinessDataModal: React.FC<BusinessDataModalProps> = ({
           <Select
             name="locationType"
             label={t('companyTypeLabel')}
-            options={CompanyTypeOptions}
+            options={companyTypeSelectOptions}
           />
           <Box height={4} />
           <Select
             name="needToShowCoronaTest"
             label={t('needShowCoronaTestLabel')}
-            options={CoronaTestOptions}
+            options={coronaTestSelectOptions}
           />
           <Checkbox
             name="cwaLinkEnabled"

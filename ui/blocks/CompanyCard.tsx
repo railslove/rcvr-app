@@ -4,10 +4,10 @@ import { CompanyRes } from '~lib/api'
 import { ActionCard } from '~ui/blocks/ActionCard/ActionCard'
 import { IconButton } from '~ui/core'
 import { Edit, Trash } from '~ui/svg'
-import { PDF_TYPE } from '~ui/whitelabels'
 
 export type CompanyCardProps = {
   locales: {
+    pdfType: string
     editButtonText: string
     menuPdfLinkText: string
   }
@@ -35,7 +35,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = ({
     >
       <ActionCard.Main
         title={company.name}
-        subtitle={`${company.menuAlias || PDF_TYPE}: ${menuText}`}
+        subtitle={`${company.menuAlias || locales.pdfType}: ${menuText}`}
       />
       <ActionCard.Actions>
         <IconButton
