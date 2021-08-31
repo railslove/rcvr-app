@@ -1,18 +1,127 @@
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useQueryClient } from 'react-query'
 import { updateOwner } from '~lib/actions'
-import { isFormal } from '~lib/config'
 import { generateKeys } from '~lib/crypto'
 import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import usePageLocale from '~locales/usePageLocale'
 import { ArrowsRight } from '~ui/anicons'
 import { Box, Button, Card, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-import { KeyPaper } from '~ui/svg'
-import { contactInformation, privateKeyExplanation } from '~ui/whitelabels'
+import { Warning, KeyPaper } from '~ui/svg'
+import { BUILD_VARIANT } from '~ui/whitelabels'
+
+const ContactInformation = () => {
+  const { t } = usePageLocale('business/setup/success')
+
+  switch (BUILD_VARIANT) {
+    case 'care': {
+      return (
+        <p>
+          {t('contactInformation_care1')}:{'  '}
+          <a href={t('contactInformationBSFLink')}>
+            {t('contactInformationBSFLinkText')}
+          </a>
+        </p>
+      )
+    }
+    case 'health': {
+      return (
+        <p>
+          {t('contactInformation_health1')}:{'  '}
+          <a href="tel:022197356159">{t('contactInformationBSFLinkText')}</a>
+        </p>
+      )
+    }
+    default: {
+      return null
+    }
+  }
+}
+
+const PrivateKeyExplanation: React.FC = () => {
+  const { t } = usePageLocale('business/setup/success')
+
+  switch (BUILD_VARIANT) {
+    case 'care':
+    case 'health': {
+      return (
+        <>
+          <p>
+            <strong>{t('privateKeyNextStep')}: </strong>
+            <br />
+            {t('privateKeyCareHealth1')}
+            <br />
+            {t('privateKeyCareHealth2')}
+          </p>
+          <Box height={4} />
+          <div>
+            <Warning />
+          </div>
+          <Box height={4} />
+          <p>
+            <strong>{t('privateKeyCareHealth3')}</strong>
+          </p>
+        </>
+      )
+    }
+    case 'fresenius': {
+      return (
+        <>
+          <p>
+            {t('privateKeyFresenius1')}
+            <span role="img" aria-label="Hurra!">
+              🎉
+            </span>
+          </p>
+          <p>{t('privateKeyFresenius2')}</p>
+          <p>
+            <strong>{t('privateKeyNextStep')}: </strong>
+            <br />
+            {t('privateKeyFresenius3')}
+          </p>
+          <p>
+            <strong>{t('privateKeyFresenius4')}</strong>
+          </p>
+          <p>
+            <strong>{t('privateKeyFresenius5')}</strong>
+          </p>
+        </>
+      )
+    }
+    default: {
+      return (
+        <>
+          <p>
+            {t('privateKey1')}
+            <span role="img" aria-label="Hurra!">
+              🎉
+            </span>
+          </p>
+          <p>{t('privateKey2')}</p>
+          <p>
+            <strong>{t('privateKeyNextStep')}: </strong>
+            <br />
+            {t('privateKey3')}
+            <br />
+            {t('privateKey4')}
+          </p>
+          <Box height={4} />
+          <div>
+            <Warning />
+          </div>
+          <Box height={4} />
+          <p>
+            <strong>{t('privateKey5')}</strong>
+          </p>
+        </>
+      )
+    }
+  }
+}
 
 const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = usePageLocale('business/setup/success')
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -41,12 +150,9 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
   }
 
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <title key="title">Account erstellt | recover</title>
-      </Head>
+    <MobileApp pageTitle={t('title')} logoVariant="big">
       <Text as="h3" variant="h3">
-        Account erstellen (2/3)
+        {t('title')} (2/3)
       </Text>
       <Box height={6} />
       <Row justifyContent="center">
@@ -56,12 +162,16 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
       <Card variant="form" mx={-4}>
         <Text as="h2" variant="h2">
           2.
-          {isFormal ? ' Ihr privater Schlüssel.' : ' Dein privater Schlüssel.'}
+          {t('headline')}
         </Text>
         <Box height={4} />
-        <Text>{privateKeyExplanation}</Text>
+        <Text>
+          <PrivateKeyExplanation />
+        </Text>
         <Box height={6} />
-        <Text>{contactInformation}</Text>
+        <Text>
+          <ContactInformation />
+        </Text>
         <Box height={6} />
         <Button
           onClick={() => {
@@ -69,7 +179,7 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
           }}
           right={<ArrowsRight color="green" />}
         >
-          Schlüssel als Datei herunterladen
+          {t('downloadKeyButtonText')}
         </Button>
         <Box height={6} />
         <Button
@@ -79,7 +189,7 @@ const SetupSuccessPage: React.FC<WithOwnerProps> = ({ owner }) => {
           right={<ArrowsRight color="green" />}
           css={{ textAlign: 'center' }}
         >
-          Schlüssel drucken / notieren
+          {t('printKeyButtonText')}
         </Button>
       </Card>
     </MobileApp>
