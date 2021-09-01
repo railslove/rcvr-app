@@ -1,121 +1,84 @@
 import * as React from 'react'
 import Head from 'next/head'
+import { isFormal } from '~lib/config'
+import { WithOwnerProps, withValidPrivateKey } from '~lib/pageWrappers'
 
-import { isCareEnv } from '~lib/config'
-import { generateKeys } from '~lib/crypto'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { updateOwner } from '~lib/actions'
-import { Text, Box, ButtonLink } from '~ui/core'
+import { Text, Box, ButtonLink, Button } from '~ui/core'
 import { ArrowsRight } from '~ui/anicons'
 import { MobileApp } from '~ui/layouts/MobileApp'
+import styled from '@emotion/styled'
 import { KeyViewer } from '~ui/blocks/KeyViewer'
 
 const SetupKeysPage: React.FC<WithOwnerProps> = ({ owner }) => {
-  const didGenerateKeys = React.useRef(false)
-  const [privateKey, setPrivateKey] = React.useState<string>()
-  const [wasGenerated, setWasGenerated] = React.useState(false)
-
-  React.useEffect(() => {
-    if (!owner) return
-
-    if (owner.publicKey && owner.privateKey) {
-      setPrivateKey(owner.privateKey)
-      return
-    }
-
-    if (!owner.publicKey && !owner.privateKey && !didGenerateKeys.current) {
-      didGenerateKeys.current = true
-      const { privateKey, publicKey } = generateKeys()
-      updateOwner({ ...owner, privateKey, publicKey }).then(() => {
-        setPrivateKey(privateKey)
-      })
-      return
-    }
-
-    // When we can't display the privateKey, it was already generated and is not
-    // stored on the device anymore.
-    setWasGenerated(true)
-  }, [owner])
-
+  const { privateKey } = owner
   return (
     <MobileApp>
       <Head>
         <title key="title">
-          {isCareEnv ? 'Ihr' : 'Dein'} Schlüssel | recover
+          {isFormal ? 'Ihr' : 'Dein'} Schlüssel | recover
         </title>
       </Head>
       <Text as="h2" variant="h2">
-        {isCareEnv ? 'Ihr' : 'Dein'} geheimer Schlüssel
+        {isFormal ? 'Ihr' : 'Dein'} geheimer Schlüssel
       </Text>
       <Box height={6} />
-      {wasGenerated ? (
-        <>
-          <Text>
-            <p>
-              {isCareEnv ? 'Sie haben' : 'Du hast'} schonmal einen Schlüssel
-              generiert. Wir können ihn nicht mehr anzeigen.
-            </p>
-          </Text>
-          <Box height={6} />
-          <ButtonLink
-            href="/business/setup/finished"
-            right={<ArrowsRight color="green" />}
-          >
-            Fertig
-          </ButtonLink>
-        </>
-      ) : (
-        <>
-          <Text>
-            <p>
-              <strong>
-                {isCareEnv
-                  ? 'Es ist sehr wichtig, dass Sie diesen Schlüssel notieren.'
-                  : 'Es ist sehr wichtig, dass Du diesen Schlüssel notierst.'}
-              </strong>
-            </p>
-            <p>
-              {isCareEnv
-                ? 'Schreiben Sie den Schlüssel zum Beispiel auf einen Zettel und verwahren ihn sorgfältig. Oder machen Sie einen Screenshot und speichern ihn. Sie können ihn auch in einem Passwortmanager speichern.'
-                : 'Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre ihn sorgfältig. Oder mach einen Screenshot davon und speichere ihn sicher. Du kannst ihn auch in einem Passwortmanager speichern.'}
-            </p>
-          </Text>
-          <Box height={4} />
+      <>
+        <TextNoPrint>
+          <p>
+            <strong>
+              {isFormal
+                ? 'Es ist sehr wichtig, dass Sie diesen Schlüssel notieren.'
+                : 'Es ist sehr wichtig, dass Du diesen Schlüssel notierst.'}
+            </strong>
+          </p>
+          <p>
+            {isFormal
+              ? 'Notieren Sie sich den Schlüssel zum Beispiel auf einem Zettel und verwahren Sie diesen sorgfältig. Sie können auch einen Screenshot machen und diesen abspeichern. Oder Sie speichern den Schlüssel in einem Passwortmanager.'
+              : 'Schreib den Schlüssel zum Beispiel auf einen Zettel und verwahre ihn sorgfältig. Oder mach einen Screenshot davon und speichere ihn sicher. Du kannst ihn auch in einem Passwortmanager speichern.'}
+          </p>
+        </TextNoPrint>
+        <Box height={4} />
 
-          {privateKey ? (
-            <Box mx={-6}>
-              <KeyViewer value={privateKey} />
-            </Box>
-          ) : (
-            <Box py={8}>
-              <Text fontFamily="monospace" textAlign="center">
-                Schlüssel wird erstellt...
-              </Text>
-            </Box>
-          )}
+        <Box mx={-6}>
+          <KeyViewer value={privateKey} />
+        </Box>
 
-          <Box height={6} />
-          <Text>
-            <p>
-              {isCareEnv
-                ? 'Im nächsten Schritt müssen Sie den Schlüssel eingeben. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
-                : 'Im nächsten Schritt musst Du den Schlüssel eingeben. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
-            </p>
-          </Text>
-          <Box height={6} />
+        <Box height={6} />
+        <TextNoPrint>
+          <p>
+            {isFormal
+              ? 'Im nächsten Schritt müssen Sie den Schlüssel eingeben. Damit gehen wir sicher, dass Sie ihn korrekt notiert haben.'
+              : 'Im nächsten Schritt musst Du den Schlüssel eingeben. Damit gehen wir sicher, dass Du ihn korrekt notiert hast.'}
+          </p>
+        </TextNoPrint>
+        <Box height={6} />
 
-          {privateKey && (
-            <ButtonLink
-              href="/business/setup/verify-key"
-              right={<ArrowsRight color="green" />}
-            >
-              Schlüssel prüfen
-            </ButtonLink>
-          )}
-        </>
-      )}
+        <ButtonLinkNoPrint
+          href="/business/setup/verify-key-manually"
+          right={<ArrowsRight color="green" />}
+        >
+          Schlüssel prüfen
+        </ButtonLinkNoPrint>
+        <Box height={4} />
+        <ButtonNoPrint onClick={window.print}>Schlüssel drucken</ButtonNoPrint>
+      </>
     </MobileApp>
   )
 }
 
-export default withOwner()(SetupKeysPage)
+const TextNoPrint = styled(Text)`
+  @media print {
+    display: none;
+  }
+`
+const ButtonLinkNoPrint = styled(ButtonLink)`
+  @media print {
+    display: none;
+  }
+`
+const ButtonNoPrint = styled(Button)`
+  @media print {
+    display: none;
+  }
+`
+export default withValidPrivateKey()(SetupKeysPage)

@@ -9,6 +9,7 @@ import { EyeOpen, EyeClosed, Trash } from '~ui/svg'
 import { Text } from './Text'
 import { Icon } from './Icon'
 import type { As } from './'
+import { ErrorText } from './ErrorText'
 
 interface Props {
   name: string
@@ -87,22 +88,16 @@ export const FileInput: React.FC<FileInputProps> = ({
   ...rest
 }) => {
   const [{ onChange: _, value, ...field }, meta, helpers] = useField(rest)
-  const [error, setError] = React.useState<string>()
-  const showError = Boolean(meta.touched && error)
+  const showError = Boolean(meta.touched && meta.error)
 
   const onDrop = React.useCallback(
-    (acceptedFiles, rejectedFiles) => {
-      helpers.setTouched(true)
-      setError(undefined)
-
+    (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         helpers.setValue(acceptedFiles[0])
+      } else {
+        helpers.setValue(null)
       }
-
-      if (rejectedFiles.length > 0) {
-        helpers.setTouched(true)
-        setError('Es können nur pdf-Dateien hochgeladen werden.')
-      }
+      helpers.setTouched(true)
     },
     [helpers]
   )
@@ -118,7 +113,6 @@ export const FileInput: React.FC<FileInputProps> = ({
       event.stopPropagation()
       helpers.setTouched(true)
       helpers.setValue(undefined)
-      setError(undefined)
     },
     [helpers]
   )
@@ -146,19 +140,11 @@ export const FileInput: React.FC<FileInputProps> = ({
         </InputElement>
         <Underline asError={showError} />
       </InputContainer>
-      {showError && <ErrorText variant="fineprint">{error}</ErrorText>}
+      {showError && <ErrorText variant="fineprint">{meta.error}</ErrorText>}
       {!showError && hint && <HintText variant="fineprint">{hint}</HintText>}
     </div>
   )
 }
-
-const ErrorText = styled(Text)(
-  css({
-    color: 'red.400',
-    py: 2,
-    px: 3,
-  })
-)
 
 const HintText = styled(Text)(
   css({

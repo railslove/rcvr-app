@@ -19,8 +19,11 @@ blocks:
           commands:
             - checkout
             - cache restore
-            - npm i
+            - cache restore cypress-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json)-$(checksum .semaphore/semaphore.yml)
+            - npm ci
+            - npm run cypress verify
             - cache store
+            - cache store cypress-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json)-$(checksum .semaphore/semaphore.yml) ~/.cache/Cypress
 
   - name: 'Test'
     dependencies: ['Install']
@@ -29,10 +32,18 @@ blocks:
         commands:
           - checkout --use-cache
           - cache restore
+          - cache restore cypress-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json)-$(checksum .semaphore/semaphore.yml)
+          - npm run start:ci &
       jobs:
-        - name: jest
+        - name: cypress
           commands:
             - npm test
+
+      epilogue:
+        on_fail:
+          commands:
+            - artifact push job cypress/videos
+            - artifact push job cypress/screenshots
 
   - name: 'Analyze'
     dependencies: ['Install']
@@ -41,6 +52,7 @@ blocks:
         commands:
           - checkout --use-cache
           - cache restore
+          - npm run update-supported-browsers
       jobs:
         - name: lint
           commands:

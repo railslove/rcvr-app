@@ -1,35 +1,44 @@
-import * as React from 'react'
-import Head from 'next/head'
 import { motion } from 'framer-motion'
-import { useMutation } from 'react-query'
-
-import { Checkin } from '~lib/db'
+import Head from 'next/head'
+import * as React from 'react'
+import { useMutation, useQueryClient } from 'react-query'
 import { checkout } from '~lib/actions'
 import { isCareEnv } from '~lib/config'
-import { useCheckins, useDelayedLoading } from '~lib/hooks'
-import { Box, Text, Callout } from '~ui/core'
+import { Checkin } from '~lib/db'
+import { useArea, useCheckins, useDelayedLoading } from '~lib/hooks'
+import { FixedBottomBar } from '~ui/blocks/BottomBar'
 import { CheckinCard, CheckinCardContainer } from '~ui/blocks/CheckinCard'
 import { LastCheckins } from '~ui/blocks/LastCheckins'
-import { PastCheckin } from '~ui/blocks/PastCheckin'
 import { Loading } from '~ui/blocks/Loading'
-import { FixedBottomBar } from '~ui/blocks/BottomBar'
+import { PastCheckin } from '~ui/blocks/PastCheckin'
+import { Box, Callout, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
 
 export default function MyCheckinsPage() {
   const checkinsInfo = useCheckins()
   const [isLoading, setIsLoading] = useDelayedLoading(false)
-  const [checkoutFn, { error }] = useMutation(checkout)
+  const mutation = useMutation(checkout)
+  const queryClient = useQueryClient()
 
   const handleCheckout = React.useCallback(
     async (checkins: Checkin[]) => {
       setIsLoading(true)
       await Promise.all(
-        checkins.map((checkin) => checkoutFn({ id: checkin.id }))
+        checkins.map((checkin) =>
+          mutation.mutate({ queryClient, checkin: { id: checkin.id } })
+        )
       )
       setIsLoading(false)
     },
-    [setIsLoading, checkoutFn]
+    [setIsLoading, mutation, queryClient]
   )
+
+  const sortedCheckins = React.useMemo(() => {
+    // Sort from old to new
+    return checkinsInfo.data?.sort(
+      (c1, c2) => c1.enteredAt.getTime() - c2.enteredAt.getTime()
+    )
+  }, [checkinsInfo.data])
 
   // Sorts checkins by time and groups proxy checkins together with their "main" checkins
   //
@@ -37,11 +46,6 @@ export default function MyCheckinsPage() {
   // and followed by the associated proxy checkins. We take each of these consecutive checkins
   // and put them in an array so we can render them as a group.
   const groupedCheckins = React.useMemo(() => {
-    // Sort from old to new
-    const sortedCheckins = checkinsInfo.data?.sort(
-      (c1, c2) => c1.enteredAt.getTime() - c2.enteredAt.getTime()
-    )
-
     return sortedCheckins?.reduce((result: Checkin[][], checkin: Checkin) => {
       if (!checkin.proxyCheckin) {
         result.unshift([checkin]) // main checkins are added in a new array
@@ -51,10 +55,22 @@ export default function MyCheckinsPage() {
 
       return result
     }, [])
-  }, [checkinsInfo.data])
+  }, [sortedCheckins])
+
+  const lastCheckin = React.useMemo(() => {
+    if (!sortedCheckins) {
+      return
+    }
+    if (sortedCheckins.length < 1) {
+      return
+    }
+    return sortedCheckins[sortedCheckins.length - 1]
+  }, [sortedCheckins])
+
+  const area = useArea(lastCheckin?.areaId)
 
   return (
-    <MobileApp logoVariant="sticky">
+    <MobileApp logoVariant="sticky" secondaryLogo={area?.data?.affiliateLogo}>
       <Head>
         <title key="title">Meine Checkins | recover</title>
       </Head>
@@ -92,20 +108,20 @@ export default function MyCheckinsPage() {
                     checkins={checkins}
                     onCheckout={handleCheckout}
                   />
-                  {error && (
+                  {mutation.error && (
                     <Callout variant="danger">
                       <Text>
-                        {error instanceof TypeError ? (
+                        {mutation.error instanceof TypeError ? (
                           <p>
-                            Wir konnten dich nicht auschecken. Hast du
+                            Wir konnten Dich nicht auschecken. Hast du
                             vielleicht gerade kein Internet?
                           </p>
                         ) : (
-                          <p>Wir konnten dich nicht auschecken.</p>
+                          <p>Wir konnten Dich nicht auschecken.</p>
                         )}
                         <p>
                           Sollte das Problem weiterhin bestehen, keine Sorge:
-                          wir checken dich später automatisch aus.
+                          wir checken Dich später automatisch aus.
                         </p>
                       </Text>
                     </Callout>

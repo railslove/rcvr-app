@@ -1,19 +1,21 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import formatDate from 'intl-dateformat'
-
-import { useCompanies, useOwner } from '~lib/hooks'
-import { Box, Text, Icon, Row, Callout } from '~ui/core'
-import { isCareEnv } from '~lib/config'
-import { Logo } from '~ui/whitelabels'
-import { Back } from '~ui/svg'
-import { SharedMeta } from '~ui/blocks/SharedMeta'
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import { CompanyRes, DataRequestRes } from '~lib/api'
+import { useCompanies, useModals, useOwner } from '~lib/hooks'
+import { useUnacceptedDataRequests } from '~lib/hooks/useUnacceptedDataRequests'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
+import { SharedMeta } from '~ui/blocks/SharedMeta'
+import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
+import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
+import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
+import { Back } from '~ui/svg'
+import { Logo, pageTitle } from '~ui/whitelabels'
 
 interface Props {
   children: React.ReactNode
@@ -23,13 +25,58 @@ interface Props {
 export const OwnerApp: React.FC<Props> = ({ children, title }) => {
   const { data: companies } = useCompanies()
   const { data: owner } = useOwner()
+  const { data: unacceptedDataRequests } = useUnacceptedDataRequests()
+  const router = useRouter()
+
+  const { modals, openModal } = useModals({
+    data: BusinessDataModal,
+    privateKey: PrivateKeyModal,
+  })
+
+  React.useEffect(() => {
+    if (!owner.publicKey) {
+      router.replace('/business/setup/success')
+    }
+  }, [])
+
+  const [hint, setHint] = React.useState(() => {
+    return localStorage.getItem('hintclosed') !== '1'
+  })
+  const closeHint = () => {
+    setHint(false)
+    localStorage.setItem('hintclosed', '1')
+  }
+
+  const isEmptyString = (string) => !string?.trim()
+
+  const companiesWithoutAddress = companies?.filter((company) => {
+    return (
+      isEmptyString(company.street) ||
+      isEmptyString(company.zip) ||
+      isEmptyString(company.city)
+    )
+  })
+
+  const getCompanyName = (companyId) =>
+    companies?.find((company: CompanyRes) => company.id === companyId)?.name
+
+  const formatDateRange = (dataRequest: DataRequestRes) => {
+    const dateRange =
+      dataRequest?.from && dataRequest?.to
+        ? formatDate(dataRequest.from, 'DD.MM.YYYY HH:mm') +
+          ' – ' +
+          formatDate(dataRequest.to, 'DD.MM.YYYY HH:mm')
+        : ''
+    return dateRange
+  }
 
   return (
     <Limit>
+      {modals}
       <SharedMeta />
       <Head>
         <title key="title">
-          {title ?? '____'} | {isCareEnv ? 'recover care' : 'recover'}
+          {title ?? '____'} | {pageTitle}
         </title>
       </Head>
       <Top>
@@ -88,42 +135,114 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           </ul>
         </Aside>
         <Main>
-          {owner.blockAt && (
+          {Object.keys(unacceptedDataRequests || {}).length > 0 && (
             <>
-              {owner.blockAt < new Date() ? (
-                <Callout variant="danger">
-                  <Text>
-                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
-                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
-                    überprüfen.
-                  </Text>
-                  <Text>
-                    Seit dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} sind
-                    keine neuen Checkins mehr möglich. Selbstverständlich haben
-                    Sie weiterhin Zugriff auf Ihr Konto und können Informationen
-                    zu alten Checkins anfordern und ans Gesundheitsamt
-                    weiterleiten.
-                  </Text>
-                </Callout>
-              ) : (
-                <Callout variant="warn">
-                  <Text>
-                    Sie haben aktuell keine aktive Subscription. Bitte gehen Sie
-                    auf Ihre Profil Seite um Ihre Zahlungsinformationen zu
-                    überprüfen.
-                  </Text>
-                  <Text>
-                    Ab dem {formatDate(owner.blockAt, 'DD.MM.YYYY')} werden
-                    keine neuen Checkins mehr möglich sein. Selbstverständlich
-                    werden Sie weiterhin Zugriff auf Ihr Konto haben und
-                    Informationen zu alten Checkins anfordern und ans
-                    Gesundheitsamt weiterleiten können.
-                  </Text>
-                </Callout>
-              )}
+              <Callout variant="danger">
+                <Text>
+                  Dringend: Datenfreigabe für das Gesundheitsamt erforderlich!
+                </Text>
+                <RequestList>
+                  {Object.keys(unacceptedDataRequests).map(
+                    (companyId: string) => {
+                      return unacceptedDataRequests[companyId]
+                        .map((dataRequest: DataRequestRes) => {
+                          return (
+                            <li key={`${companyId}-${dataRequest.id}`}>
+                              <Link
+                                href={`/business/company/${companyId}/data-request/${dataRequest.id}`}
+                              >
+                                <a>
+                                  {getCompanyName(companyId)} -{' '}
+                                  {formatDateRange(dataRequest)}
+                                </a>
+                              </Link>
+                            </li>
+                          )
+                        })
+                        .flat()
+                    }
+                  )}
+                </RequestList>
+              </Callout>
+              <Box height={6} />
             </>
           )}
-          <Box height={6} />
+          {owner.blockAt && (
+            <>
+              <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
+                <Text>
+                  recover steht Dir aktuell bis&nbsp;
+                  {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')} in vollem Umfang
+                  zur Verfügung, dann hast du noch zwei Tage um die Bezahldaten
+                  anzugeben. Wenn Du recover nach dem{' '}
+                  {formatDate(owner.blockAt, 'DD.MM.YYYY')} weiter für Checkins
+                  nutzen möchtest, bitten wir Dich im Profil-Bereich Deine
+                  Zahlungsinformationen zu bearbeiten.
+                </Text>
+                <Text>
+                  Selbstverständlich wirst Du weiter Zugriff auf Dein Konto
+                  haben, sowie Informationen zu alten Checkins anfordern und ans
+                  Gesundheitsamt weiterleiten können.
+                </Text>
+              </Callout>
+              <Box height={6} />
+            </>
+          )}
+          {hint && (
+            <>
+              <Callout>
+                <CloseButton onClose={closeHint} />
+                <Box height={2} />
+                <ol>
+                  <li>1. Betrieb anlegen</li>
+                  <li>2. Bereich in einem Betrieb anlegen</li>
+                  <li>3. Pro Bereich einen QR-Code anlegen und ausdrucken</li>
+                </ol>
+              </Callout>
+              <Box height={6} />
+            </>
+          )}
+          {companiesWithoutAddress?.length > 0 && (
+            <>
+              <Callout variant="danger">
+                <Text>
+                  Wichtiger Hinweis: Um im Corona-Positivfall Kontakte und
+                  Ereignisse zuordnen zu können, benötigt das Gesundheitsamt
+                  Angaben zum Standort Deiner Betriebe. Bitte trage noch bei
+                  allen Betrieben die Adresse nach. Diese ist mittlerweile eine
+                  Pflichtangabe. Vielen Dank!
+                </Text>
+                <Box height={2} />
+                {companiesWithoutAddress.length > 1 ? (
+                  <Text>Bitte die folgenden Betriebe vervollständigen:</Text>
+                ) : (
+                  <Text>Bitte den folgenden Betrieb vervollständigen:</Text>
+                )}
+                <Box height={2} />
+                <UnorderedList>
+                  {companiesWithoutAddress.map((company: CompanyRes) => (
+                    <li key={company.id}>
+                      <ButtonWithCursor
+                        onClick={() =>
+                          owner.privateKey
+                            ? openModal('data', {
+                                type: 'edit',
+                                owner: owner,
+                                company: company,
+                              })
+                            : openModal('privateKey', { ownerId: owner.id })
+                        }
+                      >
+                        {company.name}
+                      </ButtonWithCursor>
+                    </li>
+                  ))}
+                </UnorderedList>
+              </Callout>
+              <Box height={6} />
+            </>
+          )}
+
           <Text as="h2" variant="h2">
             {title ?? <>&nbsp;</>}
           </Text>
@@ -259,6 +378,34 @@ const LogoBox = styled(motion.div)(
       display: 'block',
       width: '100%',
       height: '100%',
+    },
+  })
+)
+
+const UnorderedList = styled('div')(
+  css({
+    listStyleType: 'disc',
+    marginLeft: 3,
+  })
+)
+
+const ButtonWithCursor = styled('button')(
+  css({
+    color: 'red.600',
+    cursor: 'pointer',
+  })
+)
+
+const RequestList = styled('ul')(
+  css({
+    listStyle: 'disc',
+    marginLeft: 8,
+    marginTop: 2,
+    li: {
+      marginBottom: 1,
+    },
+    '* a': {
+      textDecoration: 'underline',
     },
   })
 )

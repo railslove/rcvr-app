@@ -1,23 +1,18 @@
-import * as React from 'react'
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
-import * as Yup from 'yup'
-import { Formik, Form } from 'formik'
 import Link from 'next/link'
-
-import { isCareEnv } from '~lib/config'
-import { Callout, Text, Card, Box, Button, Input, Row } from '~ui/core'
-import { MobileApp } from '~ui/layouts/MobileApp'
-import { Loading } from '~ui/blocks/Loading'
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import * as Yup from 'yup'
 import { postResetPassword } from '~lib/api'
+import { isFormal } from '~lib/config'
+import { passwordValidator } from '~lib/validators/passwordValidator'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
+import { MobileApp } from '~ui/layouts/MobileApp'
 
 const PasswordSchema = Yup.object().shape({
-  password: Yup.string()
-    .required('Passwort muss angegeben werden.')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$&+,:;=?@#|'<>.^*()%!-[\]{}])[A-Za-z\d$&+,:;=?@#|'<>.^*()%!-[\]{}]{8,}$/,
-      'Das Passwort muss mindestens 8 Zeichen lang sein. Mindestens ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Sonderzeichen.'
-    ),
+  password: passwordValidator,
   passwordConfirmation: Yup.string()
     .required('Passwortbestätigung muss angegeben werden.')
     .oneOf([Yup.ref('password'), null], 'Passwörter stimmen nicht überein.'),
@@ -55,8 +50,8 @@ export default function PasswordResetNewPage() {
       <Box height={4} />
       <Text>
         <p>
-          {isCareEnv
-            ? 'Bitte gib ein neues Passwort an mit dem du dich von jetzt an anmelden kannst.'
+          {isFormal
+            ? 'Bitte gib ein neues Passwort an mit dem du Dich von jetzt an anmelden kannst.'
             : 'Bitte geben Sie ein neues Passwort an mit dem Sie sich von jetzt an anmelden können'}
         </p>
       </Text>

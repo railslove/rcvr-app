@@ -3,10 +3,8 @@ import { useQuery } from 'react-query'
 import { subHours } from 'date-fns'
 import { getTickets, CompanyTicketRes } from '../api'
 
-async function fetchLastTickets(
-  _key: unknown,
-  companyId: string
-): Promise<CompanyTicketRes[]> {
+async function fetchLastTickets({ queryKey }): Promise<CompanyTicketRes[]> {
+  const [_key, companyId] = queryKey
   const to = new Date()
   const from = new Date(subHours(to, 24))
   return await getTickets({ companyId, from, to })

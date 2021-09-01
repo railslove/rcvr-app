@@ -1,18 +1,20 @@
-import * as React from 'react'
 import styled from '@emotion/styled'
-import { useMutation, queryCache } from 'react-query'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import * as React from 'react'
+import { useQueryClient, useMutation } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
-
-import { Guest } from '~lib/db/guest'
-import { Onboarding } from '~ui/blocks/Onboarding'
 import { checkin as checkinAction } from '~lib/actions'
+import { updateCurrentGuest } from '~lib/actions/updateGuest'
+import { generateCwaLink } from '~lib/cwa/generateCwaLink'
 import { Checkin } from '~lib/db'
-import { Box, Text, Button } from '~ui/core'
-import { ArrowsRight, ArrowsLeft, Thumb, Check, Circle } from '~ui/anicons'
+import { Guest } from '~lib/db/guest'
+import { useArea } from '~lib/hooks'
+import { ArrowsLeft, ArrowsRight, Check, Circle, Thumb } from '~ui/anicons'
 import { CheckinDates } from '~ui/blocks/CheckinDates'
 import { Loading } from '~ui/blocks/Loading'
-import { useArea } from '~lib/hooks'
+import { Onboarding } from '~ui/blocks/Onboarding'
+import { Box, Button, ButtonLink, Text } from '~ui/core'
+import CwaLogo from '~ui/svg/logo-cwa.svg'
 
 interface Props {
   checkins: Checkin[]
@@ -26,10 +28,19 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
   const idRef = React.useRef<string>(uuidv4())
   const [showProxyCheckin, setShowProxyCheckin] = React.useState(false)
   const [isLoading, setLoading] = React.useState(false)
+  const [showEditData, setShowEditData] = React.useState(false)
 
-  const [checkinFn] = useMutation(checkinAction, {
-    throwOnError: true,
-  })
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(checkinAction)
+
+  const handleEditGuest = (guest, _opts) => {
+    setLoading(true)
+    updateCurrentGuest(queryClient, guest).then((_checkin) => {
+      setLoading(false)
+      setShowEditData(false)
+    })
+  }
 
   const proxyCheckin = React.useCallback(
     async (guest: Guest) => {
@@ -47,17 +58,17 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
           enteredAt: new Date(),
         }
 
-        await checkinFn({ ticket, guest })
+        await mutation.mutateAsync({ ticket, guest })
 
         idRef.current = uuidv4() // add a new one for the next
-        await queryCache.refetchQueries('checkins')
+        await queryClient.invalidateQueries('checkins')
         setShowProxyCheckin(false)
         setLoading(false)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
-    [checkin, checkinFn, setShowProxyCheckin, area]
+    [checkin, setShowProxyCheckin, area, queryClient, mutation]
   )
 
   return (
@@ -73,7 +84,9 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       <Box height={4} />
       <Text variant="h2">{checkedOut ? 'Checked out' : 'Welcome'}</Text>
       <Box height={1} />
-      <Text variant="h4">{checkin.business}</Text>
+      <Text variant="h4" data-wfd-location={checkin.business}>
+        {checkin.business}
+      </Text>
       {checkins.length > 1 && (
         <>
           <Box height={1} />
@@ -82,12 +95,28 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
       )}
       <Box height={4} />
       <CheckinDates from={checkin.enteredAt} to={checkin.leftAt} />
+      {!checkedOut && checkin.cwaLinkEnabled && checkin.cwaSeed && (
+        <>
+          <Box height={4} />
+          <ButtonLink
+            href={generateCwaLink(checkin)}
+            target="_blank"
+            name="cwaCheckinUrl"
+          >
+            <CwaLink>
+              <CwaLogo width="24" height="24" />
+              Check-in Corona Warn App
+            </CwaLink>
+          </ButtonLink>
+          <Box height={4} />
+        </>
+      )}
       <Box height={2} />
       {checkins
         .map(({ guest }) => guest)
         .filter((guest) => guest != null)
         .map((guest, index) => (
-          <div key={index}>
+          <GuestDetails key={index}>
             {index > 0 && <Box height={2} />}
             <Text variant="label" as="label">
               Name{' '}
@@ -99,7 +128,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             <Text variant="label" as="label">
               Anschrift{' '}
               <Text variant="regular" as="span">
-                {guest.address}
+                {guest.address}, {guest.postalCode}&nbsp;{guest.city}
               </Text>
             </Text>
             <Box height={1} />
@@ -110,7 +139,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
               </Text>
             </Text>
             <Box height={1} />
-          </div>
+          </GuestDetails>
         ))}
       <AnimatePresence>
         {!checkin.leftAt && (
@@ -126,16 +155,42 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
               left={<ArrowsRight color="pink" />}
               right={<ArrowsLeft color="pink" />}
               onClick={() => onCheckout(checkins)}
+              dataAttributes={{ 'wfd-action': 'check-out' }}
             >
               Check out
             </Button>
-            {isLoading && <Loading />}
+            <Box height={4} />
+            <Button
+              css={{ width: '100%' }}
+              onClick={() => setShowEditData(!showEditData)}
+            >
+              Deine Daten ändern
+            </Button>
+            <Box height={4} />
+            {showEditData && (
+              <Onboarding
+                area={area}
+                prefilledGuest={checkin.guest}
+                onSubmit={handleEditGuest}
+                hideRememberMe={true}
+                submitButtonValue="Speichern"
+              />
+            )}
+            <Loading show={isLoading} />
+            <Box height={8} />
             {showProxyCheckin ? (
               <>
                 <Box height={4} />
                 <Text variant="h3">Wen willst du mit dir einchecken?</Text>
                 <Box height={2} />
                 <Onboarding
+                  area={area}
+                  prefilledGuest={{
+                    address: checkin.guest?.address,
+                    postalCode: checkin.guest?.postalCode,
+                    city: checkin.guest?.city,
+                    phone: checkin.guest?.phone,
+                  }}
                   hideRememberMe={true}
                   onSubmit={proxyCheckin}
                   onAbort={() => setShowProxyCheckin(false)}
@@ -163,7 +218,7 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
             <Box height={4} />
             <a href={area.menuLink} target="_blank" rel="noopener noreferrer">
               <Button as="div" css={{ width: '100%' }}>
-                {area.menuAlias || 'Speisekarte'}
+                {area.menuAlias || 'Zusatz-Informationen'}
               </Button>
             </a>
           </motion.div>
@@ -176,5 +231,15 @@ export const LastCheckins: React.FC<Props> = ({ checkins, onCheckout }) => {
 const Container = styled.div({
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
+})
+
+const GuestDetails = styled.div({
+  width: '100%',
+})
+
+const CwaLink = styled.div({
+  display: 'flex',
+  flexDirection: 'row',
   alignItems: 'center',
 })

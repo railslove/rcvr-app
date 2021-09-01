@@ -9,6 +9,7 @@ import { ActionList } from '~ui/blocks/ActionList'
 import { AddCard } from '~ui/blocks/AddCard'
 import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
 import { BusinessDeleteModal } from '~ui/modals/BusinessDeleteModal'
+import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
 import { CompanyCard } from '~ui/blocks/CompanyCard'
 
 const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
@@ -16,9 +17,8 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const { modals, openModal } = useModals({
     data: BusinessDataModal,
     delete: BusinessDeleteModal,
+    privateKey: PrivateKeyModal,
   })
-
-  const menuPdfFileName = (company) => company.menuPdfLink?.split('/')?.pop()
 
   return (
     <OwnerApp title="Meine Betriebe">
@@ -27,23 +27,23 @@ const DashboardPage: React.FC<WithOwnerProps> = ({ owner }) => {
         <AddCard
           title="Betrieb anlegen..."
           onClick={() =>
-            openModal('data', { type: 'new', menuAlias: owner.menuAlias })
+            owner.privateKey
+              ? openModal('data', { type: 'new', owner: owner })
+              : openModal('privateKey', { ownerId: owner.id })
           }
         />
         {companies?.map((company) => (
           <CompanyCard
             key={company.id}
             company={company}
-            menuAlias={owner.menuAlias}
             onEdit={() =>
-              openModal('data', {
-                type: 'edit',
-                name: company.name,
-                menuLink: company.menuLink,
-                menuPdfLink: menuPdfFileName(company),
-                menuAlias: owner.menuAlias,
-                companyId: company.id,
-              })
+              owner.privateKey
+                ? openModal('data', {
+                    type: 'edit',
+                    owner: owner,
+                    company: company,
+                  })
+                : openModal('privateKey', { ownerId: owner.id })
             }
             onDelete={() => openModal('delete')}
           />

@@ -18,7 +18,10 @@ export const api = ky.create({
           '/companies',
           '/areas',
           '/data_requests',
+          '/unaccepted_data_requests',
           '/checkout',
+          '/setup_intent',
+          '/sepa_subscription',
           '/subscription-settings',
         ]
         const shouldSetToken = protectedPaths.some((path) =>
@@ -45,18 +48,20 @@ export const api = ky.create({
   },
 })
 
-export function parseDates<T>(obj: object, ...keys: string[]): T {
+export function parseDates<K, T>(obj: K, ...keys: string[]): T {
   const objCopy = { ...obj }
   for (const key of keys) {
-    if (objCopy[key]) objCopy[key] = Date.parse(objCopy[key])
+    if (objCopy[key]) {
+      objCopy[key] = new Date(Date.parse(objCopy[key] as string))
+    }
   }
-  return objCopy as T
+  return objCopy as unknown as T
 }
 
-export function stringifyDates(obj: object, ...keys: string[]): object {
+export function stringifyDates<K, T>(obj: K, ...keys: string[]): T {
   const objCopy = { ...obj }
   for (const key in keys) {
-    if (objCopy[key]) objCopy[key] = objCopy[key].toISOString()
+    if (objCopy[key]) objCopy[key] = (objCopy[key] as Date).toISOString()
   }
-  return objCopy
+  return objCopy as unknown as T
 }

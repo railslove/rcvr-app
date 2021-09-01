@@ -12,12 +12,15 @@ export function useModals<T extends ModalDefs, K extends keyof T>(
   modalDefs: T
 ) {
   const [activeModal, setActiveModal] = React.useState<K | 'none'>('none')
-  const [modalData, setModalData] = React.useState<object>({})
+  const [modalData, setModalData] = React.useState<Record<string, unknown>>({})
 
-  const openModal = React.useCallback((name: K, data: object = {}) => {
-    setActiveModal(name)
-    setModalData(data)
-  }, [])
+  const openModal = React.useCallback(
+    (name: K, data: Record<string, unknown> = {}) => {
+      setActiveModal(name)
+      setModalData(data)
+    },
+    []
+  )
 
   const closeModal = React.useCallback(() => {
     setActiveModal('none')
