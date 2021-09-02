@@ -1,8 +1,8 @@
 import de from './de'
 
 const en: typeof de = {
-  profile: 'profile',
-  businesses: 'businesses',
+  profile: 'Profile',
+  businesses: 'Businesses',
   areasLinkText: 'Areas',
   profileLinkText: 'My Profile',
   checkInsLinkText: 'Checkins',

@@ -18,10 +18,11 @@ import { BusinessDataModal } from '~ui/modals/BusinessDataModal'
 import { FetchingIndicator } from '~ui/blocks/FetchingIndicator'
 import { Box, Callout, CloseButton, Icon, Row, Text } from '~ui/core'
 
-import ownerAppLocales from './locales'
-import useLocaleObject from '~locales/useLocaleObject'
 import PageTitle from '~ui/blocks/Title/PageTitle'
+import useLocaleObject from '~locales/useLocaleObject'
 import LanguageSwitcher from '~ui/blocks/LanguageSwitcher'
+
+import ownerAppLocales from './locales'
 
 interface Props {
   children: React.ReactNode
@@ -89,6 +90,14 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
         <LogoBox layoutId="appLogo">
           <Logo />
         </LogoBox>
+        <Box
+          flex={1}
+          display={['none', 'flex', 'flex']}
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <LanguageSwitcher />
+        </Box>
         <FetchingIndicator />
         <MobileMenu>
           <li>
@@ -96,6 +105,9 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           </li>
           <li>
             <NavLink href="/business/profile">{t('profile')}</NavLink>
+          </li>
+          <li>
+            <LanguageSwitcher />
           </li>
         </MobileMenu>
       </Top>
@@ -140,14 +152,6 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
             <li>
               <NavLink href="/business/profile">{t('profileLinkText')}</NavLink>
             </li>
-            <Box
-              as="li"
-              display="flex"
-              alignItems={['center', 'center', 'flex-start']}
-              flexDirection="column"
-            >
-              <LanguageSwitcher />
-            </Box>
           </ul>
         </Aside>
         <Main>
@@ -251,15 +255,6 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
           </Text>
           <Box height={6} />
           {children}
-
-          <Box
-            display={['flex', 'flex', 'none']}
-            marginTop={4}
-            alignItems={['center', 'center', 'flex-start']}
-            flexDirection="column"
-          >
-            <LanguageSwitcher />
-          </Box>
         </Main>
       </Wrapper>
     </Limit>
@@ -368,6 +363,7 @@ const Aside = styled('aside')(
 const MobileMenu = styled('ul')(
   css({
     display: ['flex', 'none', 'none'],
+    alignItems: 'center',
     '> li': {
       mr: 2,
     },
