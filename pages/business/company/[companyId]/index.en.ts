@@ -2,7 +2,7 @@ import { isFormal } from '~lib/config'
 import indexDe from '~pages/business/company/[companyId]/index.de'
 
 const en: typeof indexDe = {
-  backLink: 'my businesses',
+  backLink: 'My Businesses',
 
   pageHeadline: 'Areas',
 
@@ -10,17 +10,17 @@ const en: typeof indexDe = {
   manageCheckins: 'Current Checkins',
 
   plausabilityCheckHeadline: 'plausibility check regulatory office',
-  plausabilityCheckText1: 'Customer contact data requests for present',
+  plausabilityCheckText1: 'Requests for customer contact data for',
   plausabilityCheckText2: `${
-    isFormal ? 'Visitors can you' : 'Guests can you'
-  } here automatically `,
+    isFormal ? 'visitors' : 'guests'
+  } present can be made here automatically.`,
 
-  dataRequestButtonText: 'ask',
+  dataRequestButtonText: 'Ask',
 
   askHealthOfficeHeadline: 'Request Health Office',
-  askHealthOfficeText1: `requests for customer contact data you can by email to`,
+  askHealthOfficeText1: `Requests for customer contact data you can by email to`,
 
-  askHealthOfficeText2: `make a request. We will get back to you as soon as possible you.`,
+  askHealthOfficeText2: `make a request. We will get back to you as soon as possible.`,
 
   releasedOn: 'Released on',
   notYetReleased: 'Not yet released',

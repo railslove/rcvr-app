@@ -2,7 +2,7 @@ import { isCareEnv } from '~lib/config'
 import de from '~pages/business/dashboard.de'
 
 const en: typeof de = {
-  title: 'My businesses',
+  title: 'My Businesses',
   actionTitle: 'Create business...',
 
   pdfType: isCareEnv ? 'Hygiene rules' : 'Additional information',
