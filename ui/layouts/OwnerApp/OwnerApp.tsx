@@ -190,7 +190,7 @@ export const OwnerApp: React.FC<Props> = ({ children, title }) => {
             <>
               <Callout variant={owner.blockAt < new Date() ? 'danger' : 'warn'}>
                 <Text>
-                  {t('ownerBlockAt1')}&nbsp;
+                  {t('ownerBlockAt1')}{' '}
                   {formatDate(owner.trialEndsAt, 'DD.MM.YYYY')}{' '}
                   {t('ownerBlockAt2')} {formatDate(owner.blockAt, 'DD.MM.YYYY')}{' '}
                   {t('ownerBlockAt3')}

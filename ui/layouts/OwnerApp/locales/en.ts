@@ -12,14 +12,10 @@ const en: typeof de = {
     'Urgent: data release required for health department!',
 
   ownerBlockAt1: 'recover is currently available to',
-  ownerBlockAt2: `in full extent
-  then you have two more days to enter the payment data.
-  to specify. If you specify recover after `,
-  ownerBlockAt3: `continue to use for checkins
-  we ask you to edit your payment information in the profile section.
-  payment information in the profile section`,
-  ownerBlockAt4: `Of course you will still be able to access your account and request
-  account, as well as request information about old checkins and forward them
+  ownerBlockAt2: `to the full extent, then you have two days to enter the payment details. If you want to continue using recover for checkins after the`,
+  ownerBlockAt3: `, we ask you to edit your payment information in the profile section.`,
+  ownerBlockAt4: `Of course you will still have access to your account
+  as well as requesting information about old checkins and forwarding it to the
   health department.`,
 
   hint1: 'Create business',
