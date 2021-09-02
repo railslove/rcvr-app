@@ -1,19 +1,16 @@
 import { Form, Formik } from 'formik'
-import Head from 'next/head'
-import Link from 'next/link'
+import Link from '~ui/core/Link/Link'
 import * as React from 'react'
 import * as Yup from 'yup'
 import { postRequestPasswordReset } from '~lib/api'
-import { isFormal } from '~lib/config'
+import usePageLocale from '~locales/usePageLocale'
 import { Loading } from '~ui/blocks/Loading'
 import { Box, Button, Callout, Card, Input, Row, Text } from '~ui/core'
 import { MobileApp } from '~ui/layouts/MobileApp'
-
-const EmailSchema = Yup.object().shape({
-  email: Yup.string().required('Email muss angegeben werden.'),
-})
+import RecoverTeamEmailLink from '~ui/core/Link/RecoverTeamEmailLink'
 
 export default function PasswordResetRequestPage() {
+  const { t } = usePageLocale('business/password-reset/request')
   const [loading, setLoading] = React.useState(false)
   const [done, setDone] = React.useState(false)
 
@@ -26,21 +23,18 @@ export default function PasswordResetRequestPage() {
     setLoading(false)
   }
 
+  const EmailSchema = Yup.object().shape({
+    email: Yup.string().required(t('emailRequired')),
+  })
+
   return (
-    <MobileApp logoVariant="big">
-      <Head>
-        <title key="title">Passwort Vergessen | recover</title>
-      </Head>
+    <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
       <Text as="h2" variant="h2">
-        Passwort Vergessen
+        {t('pageHeadline')}
       </Text>
       <Box height={4} />
       <Text>
-        <p>
-          Bitte {isFormal ? 'geben Sie Ihre' : 'gib Deine'} Email Adresse ein.
-          Wir schicken dann einen Link um das Passwort zurückzusetzen an die
-          angegebene Email Adresse.
-        </p>
+        <p>{t('pageExplanation')}</p>
       </Text>
       <Box height={4} />
 
@@ -56,7 +50,7 @@ export default function PasswordResetRequestPage() {
               <Input name="email" label="Email" autoComplete="email" />
               <Box height={5} />
               <Button type="submit" css={{ width: '100%' }}>
-                Passwort Zurücksetzen
+                {t('resetPasswordButtonText')}
               </Button>
             </Form>
           </Card>
@@ -65,20 +59,15 @@ export default function PasswordResetRequestPage() {
       {done && (
         <Callout>
           <Text>
-            Falls {isFormal ? 'Ihre' : 'Deine'} Email Adresse bei uns
-            registriert war haben wir {isFormal ? 'Ihnen' : 'dir'} einen Link
-            zum Passwort zurückzusetzen geschickt. Bitte{' '}
-            {isFormal ? 'überprüfen Sie Ihr' : 'überprüfe dein'} Email Konto.
-            Sollte das nicht funktioniert haben,
-            {isFormal ? 'wenden Sie' : 'wende Dich'} bitte an useren{' '}
-            <a href="mailto:team@recoverapp.de">support</a>.
+            {t('doneMessage')}
+            <RecoverTeamEmailLink>{t('support')}</RecoverTeamEmailLink>.
           </Text>
         </Callout>
       )}
 
       <Row justifyContent="center" my={6}>
         <Link href="/business/login" as="a" passHref>
-          <Text variant="link">Zum login</Text>
+          <Text variant="link">{t('goToLoginLinkText')}</Text>
         </Link>
       </Row>
     </MobileApp>
