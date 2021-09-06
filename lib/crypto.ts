@@ -31,6 +31,15 @@ export function decrypt(
   return new TextDecoder().decode(decrypted)
 }
 
+export function validatePrivateKey(
+  publicKey: string,
+  privateKey: string
+): boolean {
+  const text = 'My voice is my passport'
+  const encrypted = encrypt(publicKey, text)
+  return text == decrypt(encrypted, publicKey, privateKey)
+}
+
 type Keypair = {
   privateKey: string
   publicKey: string
@@ -70,8 +79,12 @@ export function toCSV(guest: Guest): string {
     guest.phone,
     `${guest.address}, ${guest.postalCode} ${guest.city}`,
     guest.resident,
+    guest.providedHealthDocument,
   ]
-  return values.map((v) => JSON.stringify(v)).join(',')
+  const value = values
+    .map((v) => JSON.stringify(v)?.replaceAll('\\"', '""'))
+    .join(',')
+  return value
 }
 
 interface DecryptedGuest {
@@ -79,6 +92,7 @@ interface DecryptedGuest {
   phone: string
   address: string
   resident?: string
+  providedHealthDocument?: string
 }
 
 export function fromCSV(csv: string): DecryptedGuest {
@@ -89,5 +103,6 @@ export function fromCSV(csv: string): DecryptedGuest {
     phone: values[1],
     address: values[2],
     resident: values[3],
+    providedHealthDocument: values[4],
   }
 }

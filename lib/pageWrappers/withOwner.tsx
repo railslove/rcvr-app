@@ -1,9 +1,9 @@
 import * as React from 'react'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useMountedState } from 'react-use'
 import { useOwner, CurrentOwner } from '~lib/hooks'
 import { Loading } from '~ui/blocks/Loading'
+import PageTitle from '~ui/blocks/Title/PageTitle'
 
 interface WithOwnerConfig {
   redirect?: 'authorized' | 'unauthorized' | false
@@ -55,9 +55,7 @@ export const withOwner =
 
       return (
         <>
-          <Head>
-            <title key="title">recover</title>
-          </Head>
+          <PageTitle />
           {renderPage ? (
             <ComposedComponent {...props} owner={data} />
           ) : (

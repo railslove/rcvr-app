@@ -1,19 +1,25 @@
-import * as React from 'react'
-import { useRouter } from 'next/router'
-import formatDate from 'intl-dateformat'
-import { useEffectOnce } from 'react-use'
-
-import { isCareEnv, isFormal } from '~lib/config'
-import { decryptTickets, DecryptedTicket } from '~lib/actions'
-import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
-import { useCompany, useDataRequest, useModals } from '~lib/hooks'
-import { Text, Box, Callout, Table, Button } from '~ui/core'
-import { Loading } from '~ui/blocks/Loading'
-import { OwnerApp, BackLink } from '~ui/layouts/OwnerApp'
-import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
-import { FilledCircle } from '~ui/core/FilledCircle'
 import styled from '@emotion/styled'
 import { css } from '@styled-system/css'
+import formatDate from 'intl-dateformat'
+import ky from 'ky-universal'
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import { QueryCache } from 'react-query'
+import { useEffectOnce } from 'react-use'
+import { v4 as uuidv4 } from 'uuid'
+import { DecryptedTicket, decryptTickets } from '~lib/actions'
+import { CompanyRes, postAcceptDataRequest } from '~lib/api'
+import { isCareEnv } from '~lib/config'
+import { GuestHealthDocumentEnum } from '~lib/db'
+import { useCompany, useDataRequest, useModals } from '~lib/hooks'
+import { withOwner, WithOwnerProps } from '~lib/pageWrappers'
+import { Loading } from '~ui/blocks/Loading'
+import { Box, Button, Callout, Table, Text } from '~ui/core'
+import { FilledCircle } from '~ui/core/FilledCircle'
+import { BackLink, OwnerApp } from '~ui/layouts/OwnerApp/OwnerApp'
+import { RedirectModal } from '~ui/modals/RedirectModal'
+import { PrivateKeyModal } from '~ui/modals/PrivateKeyModal'
+import usePageLocale from '~locales/usePageLocale'
 
 const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   return tickets.sort(
@@ -22,15 +28,76 @@ const sortTickets = (tickets: DecryptedTicket[]): DecryptedTicket[] => {
   )
 }
 
-const ticketsToExcel = (tickets: DecryptedTicket[]) => {
+const quoteValue = (value: string): string => {
+  return (value ?? '')
+    .trim()
+    .replace(/^=/g, "'=")
+    .replace(/^\+/g, "'+")
+    .replace(/^-/g, "'-")
+    .replace(/^@/g, "'@")
+}
+
+type DownloadFileLocales = {
+  tested: string
+  recovering: string
+  vaccinated: string
+  contactData: string
+  customerContactData: string
+  customerContactDataFrom: string
+  headerName: string
+  headerPhone: string
+  headerLeftAt: string
+  headerAddress: string
+  headerAreaName: string
+  headerEnteredAt: string
+  headerResidents: string
+  headerProvidedHealthDocument: string
+}
+
+const providedHealthDocumentToString = (
+  value: string,
+  locales: DownloadFileLocales
+) => {
+  switch (value) {
+    case GuestHealthDocumentEnum.hadCorona:
+      return locales.recovering
+
+    case GuestHealthDocumentEnum.vaccinated:
+      return locales.vaccinated
+
+    case GuestHealthDocumentEnum.tested:
+      return locales.tested
+
+    default:
+      return ''
+  }
+}
+
+const queryCache = new QueryCache({
+  onError: (error) => {
+    console.log(error)
+  },
+})
+
+const ticketsToExcel = (
+  company: CompanyRes,
+  tickets: DecryptedTicket[],
+  locales: DownloadFileLocales
+) => {
   const downloadableTickets = sortTickets(tickets).map((ticket) => ({
     enteredAt: formatDate(ticket.enteredAt, 'DD.MM.YYYY HH:mm'),
     leftAt: ticket.leftAt ? formatDate(ticket.leftAt, 'DD.MM.YYYY HH:mm') : '-',
-    areaName: ticket.areaName,
-    name: ticket.guest?.name ?? '-',
-    address: ticket.guest?.address ?? '-',
-    phone: ticket.guest?.phone ?? '-',
-    resident: isCareEnv ? ticket.guest?.resident ?? '-' : undefined,
+    areaName: quoteValue(ticket.areaName),
+    name: quoteValue(ticket.guest?.name ?? '-'),
+    address: quoteValue(ticket.guest?.address ?? '-'),
+    phone: quoteValue(ticket.guest?.phone ?? '-'),
+    resident: isCareEnv ? quoteValue(ticket.guest?.resident ?? '-') : undefined,
+    providedHealthDocument: company.needToShowCoronaTest
+      ? providedHealthDocumentToString(
+          ticket.guest?.providedHealthDocument,
+          locales
+        )
+      : undefined,
   }))
   const header = {
     enteredAt: 'Eingecheckt um',
@@ -41,12 +108,18 @@ const ticketsToExcel = (tickets: DecryptedTicket[]) => {
     phone: 'Telefon',
   }
 
+  if (company.needToShowCoronaTest)
+    header['providedHealthDocument'] = 'Vorgelegtes Dokument'
+
   if (isCareEnv) header['resident'] = 'Bewohnername'
 
   return [header, ...downloadableTickets]
 }
 
 const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
+  const { t } = usePageLocale(
+    'business/company/[companyId]/data-request/[dataRequestId]'
+  )
   const { query } = useRouter()
   const companyId = query.companyId.toString()
   const dataRequestId = query.dataRequestId.toString()
@@ -55,7 +128,48 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
   const [loading, setLoading] = React.useState(false)
   const { modals, openModal } = useModals({
     privateKey: PrivateKeyModal,
+    success: RedirectModal,
   })
+
+  const headerMessages = React.useMemo(
+    () => ({
+      headerFrom: t('headerFrom'),
+      headerName: t('headerName'),
+      headerPhone: t('headerPhone'),
+      headerUntil: t('headerUntil'),
+      headerLeftAt: t('headerLeftAt'),
+      headerAddress: t('headerAddress'),
+      headerAreaName: t('headerAreaName'),
+      headerEnteredAt: t('headerEnteredAt'),
+      headerResidents: t('headerResidents'),
+      headerProvidedHealthDocument: t('headerProvidedHealthDocument'),
+    }),
+    [t]
+  )
+
+  const downloadFileLocales: DownloadFileLocales = React.useMemo(
+    () => ({
+      tested: t('tested'),
+      vaccinated: t('vaccinated'),
+      recovering: t('recovering'),
+      contactData: t('contactData'),
+      customerContactData: t('customerContactData'),
+      customerContactDataFrom: t('customerContactDataFrom'),
+      ...headerMessages,
+    }),
+    [t, headerMessages]
+  )
+
+  const {
+    headerName,
+    headerFrom,
+    headerUntil,
+    headerPhone,
+    headerAddress,
+    headerAreaName,
+    headerResidents,
+    headerProvidedHealthDocument,
+  } = headerMessages
 
   useEffectOnce(() => {
     if (!owner.privateKey) {
@@ -76,7 +190,7 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
 
   const handleDownload = React.useCallback(async () => {
     setLoading(true)
-    const rows = ticketsToExcel(tickets)
+    const rows = ticketsToExcel(company, tickets, downloadFileLocales)
 
     // generate xlsx
     const { writeFile, utils: xlsx } = await import('xlsx')
@@ -89,9 +203,12 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
     const sheetname = date
     xlsx.book_append_sheet(book, sheet, sheetname)
 
-    writeFile(book, `Kontaktdaten ${company?.name} ${date}.xlsx`)
+    writeFile(
+      book,
+      `${downloadFileLocales.contactData} ${company?.name} ${date}.xlsx`
+    )
     setLoading(false)
-  }, [tickets, company, dataRequest])
+  }, [tickets, company, dataRequest, downloadFileLocales])
 
   const dateRange =
     dataRequest?.from && dataRequest?.to
@@ -99,14 +216,90 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
         ' – ' +
         formatDate(dataRequest.to, 'DD.MM.YYYY HH:mm')
       : ''
+
   const title = dateRange
-    ? `Kundenkontaktdaten vom ${dateRange}`
-    : 'Kundenkontaktdaten'
+    ? `${downloadFileLocales.customerContactDataFrom} ${dateRange}`
+    : downloadFileLocales.customerContactData
 
   const didDecrypt = dataRequest?.tickets && pendingCount === 0
 
   const twoHoursBefore = new Date()
   twoHoursBefore.setHours(new Date().getHours() - 2)
+
+  const approveRequest = React.useCallback(async () => {
+    if (didDecrypt) {
+      const json = {
+        method: 'submitGuestList',
+        jsonrpc: '2.0',
+        id: uuidv4(),
+        params: {
+          _client: {
+            name: 'Recover',
+          },
+          dataAuthorizationToken: dataRequest.irisDataAuthorizationToken,
+          guestList: {
+            dataProvider: {
+              name: company.name,
+              address: {
+                street: company.street.split(',')[0],
+                houseNumber: company.street.split(',')[1],
+                zipCode: company.zip,
+                city: company.city,
+              },
+            },
+
+            startDate: dataRequest.from,
+            endDate: dataRequest.to,
+            additionalInformation: dataRequest.reason,
+            guests: tickets.map((ticket) => {
+              const result = {
+                lastName: ticket.guest.name,
+                phone: ticket.guest.phone,
+                address: {
+                  street: ticket.guest.address,
+                },
+                attendanceInformation: {
+                  attendFrom: ticket.enteredAt,
+                  attendTo: ticket.leftAt,
+                  additionalInformation: ticket.areaName,
+                },
+              }
+              return result
+            }),
+          },
+        },
+      }
+
+      return await ky
+        .post(`https://${dataRequest.proxyEndpoint}:32325`, { json })
+        .json()
+        .then((res) => {
+          if (res['result'] == 'OK') {
+            postAcceptDataRequest(dataRequestId).then(() => {
+              queryCache.find(['dataRequests', companyId, dataRequestId])
+              queryCache.find(['unacceptedDataRequests'])
+              openModal('success', {
+                returnUrl: `/business/company/${companyId}`,
+                text: t('approveRequestModalText'),
+                title: t('approveRequestModalTitle'),
+              })
+            })
+          } else {
+            console.log(res)
+          }
+        })
+    }
+  }, [
+    t,
+    didDecrypt,
+    tickets,
+    company,
+    dataRequest,
+    dataRequestId,
+    companyId,
+    openModal,
+  ])
+
   return (
     <OwnerApp title={title}>
       <Loading show={loading} />
@@ -118,68 +311,76 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
         {company?.name}
       </BackLink>
       <Box height={2} />
-      {status !== 'success' && <Text variant="shy">Lade...</Text>}
+      {status !== 'success' && <Text variant="shy">{t('loading')}</Text>}
 
-      {dataRequest && !dataRequest.acceptedAt && (
-        <Callout>
-          <Text>
-            Die Daten für diesen Zeitraum wurden noch nicht für{' '}
-            {isFormal ? 'Sie' : 'Dich'}
-            freigegeben.
-          </Text>
-        </Callout>
-      )}
+      {dataRequest &&
+        !dataRequest.acceptedAt &&
+        pendingCount === 0 &&
+        errorCount === 0 && (
+          <>
+            <Callout variant="danger">
+              <Text>{t('acceptedAt1')}</Text>
+              <Box height={4} />
+              <Text as="h2">{t('acceptedAt2')}</Text>
+              <Text>{dataRequest.irisClientName}</Text>
+              <Box height={4} />
+              {dataRequest.reason && (
+                <>
+                  <Text as="h2">{t('acceptedAt3')}</Text>
+                  <Text>{dataRequest.reason}</Text>
+                  <Box height={4} />
+                </>
+              )}
+              <Button onClick={approveRequest}>{t('acceptedAt3')}</Button>
+            </Callout>
+            <Box height={4} />
+          </>
+        )}
 
       {dataRequest?.tickets && !owner.privateKey && (
         <Box mb={4}>
-          <Text>
-            {isFormal
-              ? 'Dein privater Schlüssel ist nicht mehr auf deinem Gerät gespeichert. Um die Daten zu entschlüsseln, musst du ihn neu eingeben.'
-              : 'Ihr privater Schlüssel ist nicht mehr auf Ihrem Gerät gespeichert. Um die Daten zu entschlüsseln, müssen Sie ihn neu eingeben.'}
-          </Text>
+          <Text>{t('enterKeyMessage')}</Text>
           <Box height={4} />
-          <Button onClick={handleEnterKey}>Schlüssel eingeben</Button>
+          <Button onClick={handleEnterKey}>{t('enterKeyButtonText')}</Button>
         </Box>
       )}
 
       {didDecrypt && (
         <Box>
-          <Text variant="shy">{successCount} Checkins entschlüsselt.</Text>
+          <Text variant="shy">
+            {successCount} {t('checkinsDecoded')}
+          </Text>
           {errorCount > 0 && (
             <Text variant="shy">
-              {errorCount} Checkins konnten nicht entschlüsselt werden.
+              {errorCount} {t('checkinsErrorCountText')}
             </Text>
           )}
           <Box height={4} />
           {successCount === 0 && errorCount > 0 && (
             <>
               <Callout variant="danger">
-                <Text>
-                  Keine Daten konnten entschlüsselt werden. Wahrscheinlich ist
-                  {isFormal ? 'Ihre' : 'dein'} privater Schlüssel nicht korrekt.
-                  Bitte {isFormal ? 'geben Sie' : 'gib'} ihn neu ein.
-                </Text>
+                <Text>{t('checkinsErrorCountMessage')}</Text>
               </Callout>
               <Box height={4} />
               <Button type="button" onClick={handleEnterKey}>
-                Schlüssel neu eingeben
+                {t('enterNewKeyButtonText')}
               </Button>
             </>
           )}
           <FlexibleRow>
             <FlexibleRowStart>
               <Box height={4} />
-              <Button onClick={handleDownload}>Download als Excel</Button>
+              <Button onClick={handleDownload}>{t('downloadAsExcel')}</Button>
             </FlexibleRowStart>
 
             <FlexibleRowEnd>
               <InfoRowItem>
                 <FilledCircle variant="cyan" />
-                Kontaktdaten der letzten 2 Stunden für das Ordnungsamt
+                {t('contactsFromLastHours')}
               </InfoRowItem>
               <InfoRowItem>
                 <FilledCircle variant="lilac" />
-                Ältere Kontaktdaten für Abfragen des Gesundheitsamt
+                {t('olderContactRequests')}
               </InfoRowItem>
             </FlexibleRowEnd>
           </FlexibleRow>
@@ -190,13 +391,16 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
         <Table css={{ maxWidth: '100%' }}>
           <thead>
             <tr>
-              <th>Von</th>
-              <th>Bis</th>
-              <th>Bereich</th>
-              <th>Name</th>
-              <th>Adresse</th>
-              <th>Telefon</th>
-              {isCareEnv && <th>Bewohner</th>}
+              <th>{headerFrom}</th>
+              <th>{headerUntil}</th>
+              <th>{headerAreaName}</th>
+              <th>{headerName}</th>
+              <th>{headerAddress}</th>
+              <th>{headerPhone}</th>
+              {company?.needToShowCoronaTest && (
+                <th>{headerProvidedHealthDocument}</th>
+              )}
+              {isCareEnv && <th>{headerResidents}</th>}
             </tr>
           </thead>
           <tbody>
@@ -216,16 +420,24 @@ const DataRequestPage: React.FC<WithOwnerProps> = ({ owner }) => {
                 </td>
                 <td>{ticket.areaName}</td>
                 {ticket.decryptionStatus === 'pending' && (
-                  <td colSpan={3}>noch verschlüsselt</td>
+                  <td colSpan={3}>{t('stillEncrypted')}</td>
                 )}
                 {ticket.decryptionStatus === 'error' && (
-                  <td colSpan={3}>nicht entschlüsselbar</td>
+                  <td colSpan={3}>{t('notDecodable')}</td>
                 )}
                 {ticket.decryptionStatus === 'success' && (
                   <>
                     <td>{ticket.guest.name}</td>
                     <td>{ticket.guest.address}</td>
                     <td>{ticket.guest.phone}</td>
+                    {company?.needToShowCoronaTest > 0 && (
+                      <td>
+                        {providedHealthDocumentToString(
+                          ticket.guest.providedHealthDocument,
+                          downloadFileLocales
+                        )}
+                      </td>
+                    )}
                     {isCareEnv && <td>{ticket.guest.resident}</td>}
                   </>
                 )}

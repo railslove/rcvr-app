@@ -5,8 +5,11 @@ export interface CompanyReq extends FormData {
   'company[name]'?: FormDataEntryValue
   'company[need_to_show_corona_test]'?: FormDataEntryValue
   'company[menu_link]'?: FormDataEntryValue
+  'company[menu_alias]'?: FormDataEntryValue
   'company[privacy_policy_link]'?: FormDataEntryValue
   'company[menu_pdf]'?: File
+  'company[cwa_link_enabled]'?: FormDataEntryValue
+  'company[cwa_crypto_seed]'?: FormDataEntryValue
 }
 
 export const CompanyTypeOptions = {
@@ -19,18 +22,26 @@ export const CompanyTypeOptions = {
   other: 'Anderes',
 }
 
+export const CoronaTestOptions = {
+  0: 'kein Test notwendig',
+  24: 'maximal 24 Stunden alter Test notwendig',
+  48: 'maximal 48 Stunden alter Test notwendig',
+}
+
 export interface CompanyRes {
   id: string
   name: string
   street: string
   zip: string
   city: string
-  needToShowCoronaTest: boolean
+  needToShowCoronaTest: number
   menuLink?: string
+  menuAlias?: string
   privacyPolicyLink?: string
   menuPdfLink?: string
   areas: AreaRes[]
   cwaLinkEnabled: boolean
+  cwaCryptoSeed?: string
   locationType: string
 }
 

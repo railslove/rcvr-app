@@ -19,7 +19,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: false,
+      companyNeedToShowCoronaTest: 0,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -58,7 +58,7 @@ context('Checkin', () => {
         privateKey
       )
       expect(decrypted).to.eq(
-        '"John Doe","0221 12312312","ExampleStreet 1, 12345 Example",'
+        '"John Doe","0221 12312312","ExampleStreet 1, 12345 Example",,'
       )
     })
 
@@ -77,7 +77,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: false,
+      companyNeedToShowCoronaTest: 0,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -127,7 +127,7 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: true,
+      companyNeedToShowCoronaTest: 24,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
@@ -145,14 +145,27 @@ context('Checkin', () => {
 
     cy.get('button[type="submit"]').click()
 
-    cy.contains('Ein negativer Test muss vorliegen')
+    cy.contains('Du musst entweder getestet, genesen oder geimpft sein.')
 
-    cy.get('label[for="haveNegativeTest"]').click()
+    cy.get('label[for="TESTED"]').click()
 
     cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {
       expect(request.body.ticket.id).to.match(
         /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
+      )
+      expect(request.body.ticket.area_id).to.be.eq(areaId)
+      expect(request.body.ticket.public_key).to.be.eq(publicKey)
+      expect(request.body.ticket.entered_at).to.be.eq(
+        '2020-05-11T12:35:00.000Z'
+      )
+      const decrypted = decrypt(
+        request.body.ticket.encrypted_data,
+        publicKey,
+        privateKey
+      )
+      expect(decrypted).to.eq(
+        '"John Doe","0221 12312312","ExampleStreet 1, 12345 Example",,"TESTED"'
       )
     })
     cy.location('pathname', { timeout: 20000 }).should(
@@ -171,19 +184,20 @@ context('Checkin', () => {
       name: 'Test Tisch',
       menuLink: null,
       companyId: 'some-uuid',
-      companyNeedToShowCoronaTest: true,
+      companyNeedToShowCoronaTest: 0,
     })
 
     cy.intercept('POST', `https://api.local/tickets`, {
       companyName: 'Testlokal',
-      companyCwaUrl: 'http://example.com/',
+      companyCwaLinkEnabled: true,
       enteredAt: '2020-05-11T12:30:00.000Z',
     }).as('createTicketWithTesting')
 
-    cy.visit(`/checkin?a=${areaId}&k=${encodeURIComponent(publicKey)}`)
-    cy.window().then((win) => {
-      cy.stub(win, 'open').as('windowOpen') // 'spy' vs 'stub' lets the new tab still open if you are visually watching it
-    })
+    cy.visit(
+      `/checkin?a=${areaId}&k=${encodeURIComponent(
+        publicKey
+      )}&cwa=u0DcUHT8Q6f33RP6DoIt7g==`
+    )
 
     cy.get('#name').clear().type('John Doe')
     cy.get('#phone').clear().type('0221 12312312')
@@ -193,11 +207,6 @@ context('Checkin', () => {
 
     cy.get('button[type="submit"]').click()
 
-    cy.contains('Ein negativer Test muss vorliegen')
-
-    cy.get('label[for="haveNegativeTest"]').click()
-
-    cy.get('button[type="submit"]').click()
     cy.wait('@createTicketWithTesting').should(({ request }) => {
       expect(request.body.ticket.id).to.match(
         /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
@@ -208,12 +217,78 @@ context('Checkin', () => {
       '/my-checkins'
     )
 
-    cy.get('button[name="cwaCheckinUrl"]').click()
-    cy.get('@windowOpen').should(
-      'be.calledWith',
-      'http://example.com/',
-      '_blank',
-      'noopener=yes'
+    cy.get('div[name="cwaCheckinUrl"]')
+      .parent('a[target="_blank"]')
+      .should('have.attr', 'href')
+      .and(
+        'include',
+        'https://e.coronawarn.app/?v=1#CAESDQgBEglUZXN0bG9rYWwadggBEmCDAszMTXne1DAA5/YxmhRdd/NZN2VKl9L32Jl9+ZybE4b2eNIrhFOKYU4XAOHq3RPLDxdHTW6ANiO24rCOO4rj06HzcVZy3pel58+L1KSPG+/PneL2BoyZQRz3qlu2hoAaELtA3FB0/EOn990T+g6CLe4iBAgBGAA='
+      )
+  })
+
+  it('does not crash the app if auto checkout does not find the ticket', () => {
+    const areaId = '5ac34aab-81f8-4f4d-bc24-97ba8d21eb7b'
+    cy.clock(Date.parse('2020-05-11T12:30:00.000Z'), ['Date'])
+
+    cy.intercept('GET', `https://api.local/areas/${areaId}`, {
+      id: areaId,
+      name: 'Test Tisch',
+      menuLink: null,
+      companyId: 'some-uuid',
+      companyNeedToShowCoronaTest: 0,
+    })
+
+    cy.intercept('POST', `https://api.local/tickets`, {
+      companyName: 'Testlokal',
+      enteredAt: '2020-05-11T12:30:00.000Z',
+    }).as('createTicket')
+
+    cy.visit(`/checkin?a=${areaId}&k=${encodeURIComponent(publicKey)}`)
+
+    cy.get('#name').clear().type('John Doe')
+    cy.get('#phone').clear().type('0221 12312312')
+    cy.get('#address').clear().type('ExampleStreet 1')
+    cy.get('#postalCode').clear().type('12345')
+    cy.get('#city').clear().type('Example')
+
+    cy.get('button[type="submit"]').click()
+
+    cy.location('pathname', { timeout: 20000 }).should(
+      'include',
+      '/my-checkins'
+    )
+
+    cy.intercept('GET', `https://api.local/areas/${areaId}`, {
+      id: areaId,
+      name: 'Test Tisch',
+      menuLink: null,
+      companyId: 'some-uuid',
+      companyNeedToShowCoronaTest: 0,
+    })
+
+    cy.intercept('POST', `https://api.local/tickets`, {
+      companyName: 'Testlokal',
+      enteredAt: '2020-05-11T12:30:00.000Z',
+    }).as('createTicket')
+
+    cy.intercept(`https://api.local/tickets/**`, {
+      statusCode: 404,
+    }).as('createTicket')
+
+    cy.visit(`/checkin?a=${areaId}&k=${encodeURIComponent(publicKey)}`)
+    cy.visit(`/checkin?a=${areaId}&k=${encodeURIComponent(publicKey)}`)
+
+    cy.get('#name').clear().type('John Doe')
+    cy.get('#phone').clear().type('0221 12312312')
+    cy.get('#address').clear().type('ExampleStreet 1')
+    cy.get('#postalCode').clear().type('12345')
+    cy.get('#city').clear().type('Example')
+
+    cy.get('button[type="submit"]').click()
+
+    cy.location('pathname', { timeout: 20000 }).should(
+      'include',
+      '/my-checkins'
     )
   })
 })
