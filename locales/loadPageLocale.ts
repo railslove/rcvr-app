@@ -7,7 +7,7 @@ import { LocaleContextProps } from '~locales/useLocaleContext'
 async function loadPageLocale(
   props: AppContext
 ): Promise<Partial<LocaleContextProps>> {
-  const locale = props.ctx.locale
+  const locale = props.router.locale
   const { pathname } = props.ctx
 
   if (config[pathname]) {

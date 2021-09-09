@@ -28,12 +28,12 @@ const useLocaleObject = <K extends string, V extends unknown>(
 
   function t<K extends keyof L>(key: K, options: translateOptions = {}): L[K] {
     if (!options.useEnv) {
-      return currentLocale ? currentLocale[key] : (key as L[K])
+      return currentLocale ? currentLocale[key] : (`[${key}]` as L[K])
     }
 
     const envLocale = currentLocale[`${key}_${BUILD_VARIANT}`]
 
-    return envLocale || currentLocale[key] || (key as L[K])
+    return envLocale || currentLocale[key] || (`[${key}]` as L[K])
   }
 
   return { t, lang: language }

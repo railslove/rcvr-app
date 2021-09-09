@@ -5,11 +5,15 @@ import useLocaleContext from '~locales/useLocaleContext'
 import { RoundTriangle } from '~ui/anicons'
 import { Box, Text } from '~ui/core'
 import { zIndexLanguageSwitcher } from '~ui/zIndexConstants'
+import usePersistLocaleCookie from '~lib/hooks/usePersistLocaleCookie'
+
+const handlePreventDefault = (ev: React.SyntheticEvent) => ev.preventDefault()
 
 const LanguageSwitcher: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const router = useRouter()
+  const persistLocale = usePersistLocaleCookie()
   const { lang: currentLocale, pageLocales = [] } = useLocaleContext()
 
   const availableLocales = pageLocales.filter((el) => el !== currentLocale)
@@ -17,6 +21,14 @@ const LanguageSwitcher: React.FC = () => {
   const handleToggle = useCallback(() => {
     setIsOpen(!isOpen)
   }, [isOpen])
+
+  const handleItemClick = useCallback(
+    (ev: React.SyntheticEvent<HTMLAnchorElement>) => {
+      const { locale } = ev.currentTarget.dataset
+      persistLocale(locale)
+    },
+    []
+  )
 
   return (
     <>
@@ -55,6 +67,7 @@ const LanguageSwitcher: React.FC = () => {
           top="100%"
           left="-1px"
           right="-1px"
+          role="menu"
           backgroundColor="white"
           css={{
             borderBottomLeftRadius: '4px',
@@ -75,6 +88,11 @@ const LanguageSwitcher: React.FC = () => {
                     width: '100%',
                     borderTop: '1px solid rgba(0,0,0,0.15)',
                   }}
+                  role="menuitem"
+                  tabIndex={0}
+                  data-locale={el}
+                  onClick={handleItemClick}
+                  onKeyPress={handlePreventDefault}
                 >
                   <Text
                     variant="regular"
