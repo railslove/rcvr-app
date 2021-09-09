@@ -25,9 +25,6 @@ const LanguageSwitcher: React.FC = () => {
   const handleItemClick = useCallback(
     (ev: React.SyntheticEvent<HTMLAnchorElement>) => {
       const { locale } = ev.currentTarget.dataset
-
-      console.log('locale', locale)
-
       persistLocale(locale)
     },
     []
