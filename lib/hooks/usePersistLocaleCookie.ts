@@ -1,6 +1,5 @@
 /**
- * See: https://github.com/vinissimus/next-translate#10-how-to-save-the-user-defined-language
- * NOTE: kept here in case we also wean to use local storage
+ * See: https://nextjs.org/docs/advanced-features/i18n-routing#leveraging-the-next_locale-cookie
  */
 export default function usePersistLocaleCookie() {
   return function persistLocale(locale: string) {
