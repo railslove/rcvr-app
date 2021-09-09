@@ -10,7 +10,7 @@ for env in care health fresenius; do
   echo "Deplopying $env"
   echo "--"
   git checkout env/$env
-  git pull origin master
+  git merge master
   git push origin env/$env
 done
 
