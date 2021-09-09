@@ -11,7 +11,7 @@ module.exports = {
     ...localesDefaults,
     defaultLocale:
       process.env.NODE_ENV === 'test' ? 'de' : localesDefaults.defaultLocale,
-    localeDetection: true,
+    localeDetection: false,
   },
   // needed to place locales under pages/ next to the page to be translated
   pageExtensions: ['tsx'],
