@@ -20,7 +20,6 @@ import {
 
 import SupportedBrowsersAlert from '~ui/SupportedBrowsersAlert/SupportedBrowsersAlert'
 import { theme, globalStyles } from '~ui/theme'
-import usePersistLocaleCookie from '~lib/hooks/usePersistLocaleCookie'
 
 const queryClient = new QueryClient()
 
@@ -41,7 +40,6 @@ const RecoverApp: RecoverAppFC = ({
   pageProps: { localeContext, ...pageProps },
 }) => {
   useA11yFocusRing()
-  usePersistLocaleCookie()
 
   return (
     <ThemeProvider theme={theme}>
