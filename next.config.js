@@ -1,18 +1,13 @@
 const execSync = require('child_process').execSync
 const { generateLocalesConfigAndTypes } = require('./locales/generate')
 
-const localesDefaults = require('./locales/defaults.json')
+const i18n = require('./locales/defaults')
 
 module.exports = {
   /**
    * i18n support
    */
-  i18n: {
-    ...localesDefaults,
-    defaultLocale:
-      process.env.NODE_ENV === 'test' ? 'de' : localesDefaults.defaultLocale,
-    localeDetection: true,
-  },
+  i18n,
   // needed to place locales under pages/ next to the page to be translated
   pageExtensions: ['tsx'],
 
