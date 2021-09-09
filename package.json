@@ -3,21 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "npm run generated",
     "dev": "next dev",
-    "prebuild": "npm run generated",
     "build": "node ./scripts/build.js",
     "next-build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js",
     "typecheck": "tsc --noemit",
-    "pretest": "npm run generated",
     "test": "cypress run",
     "cypress": "cypress",
     "start:ci": "NODE_ENV=test next dev -- -p 4040",
     "prepare": "husky install",
     "locales": "node scripts/locales.js",
     "generated": "npm run locales && npm run update-supported-browsers",
+    "postinstall": "npm run generated",
     "update-supported-browsers": "echo \"module.exports = $(browserslist-useragent-regexp --allowHigherVersions);\" > lib/supportedBrowsers.js"
   },
   "dependencies": {
