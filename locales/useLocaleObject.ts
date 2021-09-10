@@ -20,20 +20,27 @@ export type translateOptions = Partial<{
 const useLocaleObject = <K extends string, V extends unknown>(
   localeObject: LocaleObject<K, V>
 ) => {
+  type Result = LocaleObject<K, V>[SupportedLanguage]
+
   const router = useRouter()
   const language = router.locale as SupportedLanguage
-  const currentLocale = localeObject[language]
+  const currentLocale = (localeObject[language] || {}) as Result
 
-  type L = typeof currentLocale
+  function t<K extends keyof Result>(
+    key: K,
+    options: translateOptions = {}
+  ): Result[K] {
+    const placeholder = `[${key}]` as Result[K]
 
-  function t<K extends keyof L>(key: K, options: translateOptions = {}): L[K] {
-    if (!options.useEnv) {
-      return currentLocale ? currentLocale[key] : (`[${key}]` as L[K])
+    const value = currentLocale[key]
+    const valueEnv = currentLocale[`${key}_${BUILD_VARIANT}`]
+    const localeResult = options.useEnv && valueEnv != null ? valueEnv : value
+
+    if (localeResult == null) {
+      return placeholder
     }
 
-    const envLocale = currentLocale[`${key}_${BUILD_VARIANT}`]
-
-    return envLocale || currentLocale[key] || (`[${key}]` as L[K])
+    return localeResult == null ? placeholder : localeResult
   }
 
   return { t, lang: language }
