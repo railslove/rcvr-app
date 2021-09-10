@@ -171,7 +171,7 @@ export default function CheckinPage() {
     }
   }, [isReady, publicKey])
 
-  if (showLoading || areaInfo.data == null) {
+  if (areaInfo.data == null) {
     return (
       <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
         <Loading show={showLoading} />
