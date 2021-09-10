@@ -9,10 +9,17 @@ const usePageLocale = <NS extends keyof PageLocalesResources>(_ns: NS) => {
   type Result = PageLocalesResources[NS]
 
   const { lang, values } = useLocaleContext()
-  const localeValues = values as Result
+  const localeValues = (values || {}) as Result
 
   function translate<NSK extends keyof Result>(key: NSK): Result[NSK] {
-    return localeValues[key] || (`[${key}]` as unknown as Result[NSK])
+    const value = localeValues[key]
+    const placeholder = `[${key}]` as unknown as Result[NSK]
+
+    if (value == null) {
+      return placeholder
+    }
+
+    return value
   }
 
   return { t: translate, lang }
