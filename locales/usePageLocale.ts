@@ -15,11 +15,11 @@ const usePageLocale = <NS extends keyof PageLocalesResources>(_ns: NS) => {
     const value = localeValues[key]
     const placeholder = `[${key}]` as unknown as Result[NSK]
 
-    if (value != null) {
-      return value
+    if (value == null) {
+      return placeholder
     }
 
-    return placeholder
+    return value
   }
 
   return { t: translate, lang }

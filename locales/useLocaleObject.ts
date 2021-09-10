@@ -40,7 +40,7 @@ const useLocaleObject = <K extends string, V extends unknown>(
       return placeholder
     }
 
-    return localeResult == null ? placeholder : localeResult
+    return localeResult
   }
 
   return { t, lang: language }
