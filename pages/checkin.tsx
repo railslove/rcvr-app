@@ -70,6 +70,11 @@ export default function CheckinPage() {
   React.useEffect(() => {
     if (!areaInfo?.data?.frontendUrl) return
 
+    // NOTE: allows testing /checkin URLs in localhost
+    if (process.env.NODE_ENV === 'development') {
+      return
+    }
+
     const url = new URL(areaInfo.data.frontendUrl)
 
     if (window.location.origin === url.origin) return
@@ -103,7 +108,7 @@ export default function CheckinPage() {
         await mutationCheckin.mutateAsync({
           ticket,
           guest,
-          companyId: areaInfo.data.companyId,
+          companyId: areaInfo.data?.companyId,
           cwaSeed,
         })
         router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
@@ -171,24 +176,17 @@ export default function CheckinPage() {
     }
   }, [isReady, publicKey])
 
-  if (areaInfo.data == null) {
-    return (
-      <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
-        <Loading show={showLoading} />
-      </MobileApp>
-    )
-  }
-
   return (
     <MobileApp
       pageTitle={t('pageTitle')}
       logoVariant="big"
-      secondaryLogo={areaInfo.data.affiliateLogo}
+      secondaryLogo={areaInfo.data?.affiliateLogo}
     >
-      {areaInfo.data.ownerIsBlocked && (
+      <Loading show={showLoading} />
+      {areaInfo.data?.ownerIsBlocked && (
         <div>
           <Text as="h2" variant="h2">
-            {areaInfo.data.companyName}
+            {areaInfo.data?.companyName}
           </Text>
           <Box height={5} />
           <Callout variant="danger">
@@ -196,10 +194,10 @@ export default function CheckinPage() {
           </Callout>
         </div>
       )}
-      {!areaInfo.data.ownerIsBlocked && (showOnboarding || showConfirmation) && (
+      {!areaInfo.data?.ownerIsBlocked && (showOnboarding || showConfirmation) && (
         <div>
           <Text as="h2" variant="h2">
-            {areaInfo.data.companyName}
+            {areaInfo.data?.companyName}
           </Text>
           <Box height={5} />
           <Text as="h3" variant="h5">
@@ -224,7 +222,7 @@ export default function CheckinPage() {
               </Callout>
             </Box>
           )}
-          {showOnboarding && (
+          {showOnboarding && areaInfo.data && (
             <Card variant="form" mx={-4}>
               <Onboarding
                 area={areaInfo.data}
