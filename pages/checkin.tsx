@@ -176,17 +176,25 @@ export default function CheckinPage() {
     }
   }, [isReady, publicKey])
 
+  if (areaInfo.data == null) {
+    return (
+      <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
+        <Loading show />
+      </MobileApp>
+    )
+  }
+
   return (
     <MobileApp
       pageTitle={t('pageTitle')}
       logoVariant="big"
-      secondaryLogo={areaInfo.data?.affiliateLogo}
+      secondaryLogo={areaInfo.data.affiliateLogo}
     >
       <Loading show={showLoading} />
-      {areaInfo.data?.ownerIsBlocked && (
+      {areaInfo.data.ownerIsBlocked && (
         <div>
           <Text as="h2" variant="h2">
-            {areaInfo.data?.companyName}
+            {areaInfo.data.companyName}
           </Text>
           <Box height={5} />
           <Callout variant="danger">
@@ -194,10 +202,10 @@ export default function CheckinPage() {
           </Callout>
         </div>
       )}
-      {!areaInfo.data?.ownerIsBlocked && (showOnboarding || showConfirmation) && (
+      {!areaInfo.data.ownerIsBlocked && (showOnboarding || showConfirmation) && (
         <div>
           <Text as="h2" variant="h2">
-            {areaInfo.data?.companyName}
+            {areaInfo.data.companyName}
           </Text>
           <Box height={5} />
           <Text as="h3" variant="h5">
@@ -222,7 +230,7 @@ export default function CheckinPage() {
               </Callout>
             </Box>
           )}
-          {showOnboarding && areaInfo.data && (
+          {showOnboarding && (
             <Card variant="form" mx={-4}>
               <Onboarding
                 area={areaInfo.data}
