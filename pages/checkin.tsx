@@ -70,6 +70,11 @@ export default function CheckinPage() {
   React.useEffect(() => {
     if (!areaInfo?.data?.frontendUrl) return
 
+    // NOTE: allows testing /checkin URLs in localhost
+    if (process.env.NODE_ENV === 'development') {
+      return
+    }
+
     const url = new URL(areaInfo.data.frontendUrl)
 
     if (window.location.origin === url.origin) return
@@ -103,7 +108,7 @@ export default function CheckinPage() {
         await mutationCheckin.mutateAsync({
           ticket,
           guest,
-          companyId: areaInfo.data.companyId,
+          companyId: areaInfo.data?.companyId,
           cwaSeed,
         })
         router.replace('/my-checkins').then(() => window.scrollTo(0, 0))
@@ -174,7 +179,7 @@ export default function CheckinPage() {
   if (areaInfo.data == null) {
     return (
       <MobileApp pageTitle={t('pageTitle')} logoVariant="big">
-        <Loading show={showLoading} />
+        <Loading show />
       </MobileApp>
     )
   }
@@ -185,6 +190,7 @@ export default function CheckinPage() {
       logoVariant="big"
       secondaryLogo={areaInfo.data.affiliateLogo}
     >
+      <Loading show={showLoading} />
       {areaInfo.data.ownerIsBlocked && (
         <div>
           <Text as="h2" variant="h2">
