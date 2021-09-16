@@ -1,11 +1,13 @@
-import Link, { LinkHref } from '~ui/core/Link/Link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
+
 import useLocaleContext from '~locales/useLocaleContext'
-import { RoundTriangle } from '~ui/anicons'
-import { Box, Text } from '~ui/core'
-import { zIndexLanguageSwitcher } from '~ui/zIndexConstants'
 import usePersistLocaleCookie from '~lib/hooks/usePersistLocaleCookie'
+import { zIndexLanguageSwitcher } from '~ui/zIndexConstants'
+
+import { Box, Text } from '~ui/core'
+import { RoundTriangle } from '~ui/anicons'
+import Link, { LinkHref } from '~ui/core/Link/Link'
 
 const handlePreventDefault = (ev: React.SyntheticEvent) => ev.preventDefault()
 
@@ -25,7 +27,10 @@ const LanguageSwitcher: React.FC = () => {
   const handleItemClick = useCallback(
     (ev: React.SyntheticEvent<HTMLAnchorElement>) => {
       const { locale } = ev.currentTarget.dataset
+
       persistLocale(locale)
+
+      setTimeout(() => router.reload(), 300)
     },
     []
   )
