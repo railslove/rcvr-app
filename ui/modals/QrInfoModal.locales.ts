@@ -29,9 +29,8 @@ const de = {
   listMessage4: `Wenn ${isFormal ? 'Sie gehen' : 'Du gehst'}`,
   listMessage44: `${
     isFormal ? 'können Sie sich auf Ihrem' : 'kannst Du Dich auf deinem'
-  }{' '}
-  Handy wieder auschecken. So können wir noch besser herausfinden, ob{' '}
-  ${isFormal ? 'Sie' : 'Du'} im Zweifel eine mögliche Kontaktperson{' '}
+  } Handy wieder auschecken. So können wir noch besser herausfinden, ob${' '}
+  ${isFormal ? 'Sie' : 'Du'} im Zweifel eine mögliche Kontaktperson${' '}
   ${isFormal ? 'sind' : 'bist'} oder nicht.`,
 
   close: 'Schließen',
@@ -56,9 +55,7 @@ const en: typeof de = {
 
   listMessage3: 'At first checkin',
 
-  listMessage33: `enter your name,
-  phone number and address ${isFormal ? 'your' : 'yours'} Data
-  we store encrypted and secure, of course!`,
+  listMessage33: `enter your name, phone number and your address data. We store encrypted and secure, of course!`,
 
   listMessage4: `When you go`,
   listMessage44: `you can go on your phone and check out again. This way we can find out even better if you are in doubt a possible contact or not.`,
