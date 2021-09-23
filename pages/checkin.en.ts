@@ -13,7 +13,7 @@ const en: typeof de = {
     'Current corona regulations require you to leave your contact information if you are in a business that is required to take protective measures, such as restaurants. The app can also be used voluntarily to assist with tracking.',
 
   dataProtection1: 'Data protection is very important to us!',
-  dataProtection2: 'stores your data encrypted and secure',
+  dataProtection2: 'Your data is encrypted and stored securely.',
   dataProtection2_rcvr: 'stores your data encrypted and secure.',
 
   ownerIsBlockedMessage: [

@@ -15,7 +15,8 @@ const pl: typeof de = {
     "Ze względu na obowiązujące przepisy corona, musisz zostawić swoje dane kontaktowe, jeśli jesteś w biznesie, który jest zobowiązany do podjęcia środków ochronnych, takich jak restauracje.' Aplikacja może być również używana dobrowolnie, aby pomóc w śledzeniu",
 
   dataProtection1: 'Ochrona danych jest dla nas bardzo ważna!',
-  dataProtection2: 'przechowuje Twoje dane w sposób zaszyfrowany i bezpieczny',
+  dataProtection2:
+    'Twoje dane są zaszyfrowane i przechowywane w bezpieczny sposób.',
   dataProtection2_rcvr: 'przechowuje Twoje dane zaszyfrowane i bezpieczne',
 
   ownerIsBlockedMessage: [
