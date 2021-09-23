@@ -217,7 +217,8 @@ export default function CheckinPage() {
             <p>{t('address')}</p>
             <p>
               {t('dataProtection1')}
-              {isRcvrEnv ? <b>recover</b> : null} {t('dataProtection2')}
+              {isRcvrEnv ? <b>recover</b> : null}
+              {isRcvrEnv ? t('dataProtection2_rcvr') : t('dataProtection2')}
             </p>
           </Text>
           <Box height={6} />
