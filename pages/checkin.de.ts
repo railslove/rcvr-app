@@ -15,7 +15,7 @@ const de = {
 
   dataProtection1: 'Datenschutz ist uns dabei sehr wichtig!',
   dataProtection2: 'Ihre Daten werden verschlüsselt und sicher gespeichert.',
-  dataProtection2_rcvr: ' speichert Deine Daten verschlüsselt und sicher.',
+  dataProtection2_rcvr: 'speichert Deine Daten verschlüsselt und sicher.',
 
   ownerIsBlockedMessage: [
     'Die Kontaktdatenerfassung mit recover ist für diesen Betrieb leider nicht mehr aktiv. Bitte',

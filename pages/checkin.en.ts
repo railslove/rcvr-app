@@ -14,7 +14,7 @@ const en: typeof de = {
 
   dataProtection1: 'Data protection is very important to us!',
   dataProtection2: 'stores your data encrypted and secure',
-  dataProtection2_rcvr: ' stores your data encrypted and secure.',
+  dataProtection2_rcvr: 'stores your data encrypted and secure.',
 
   ownerIsBlockedMessage: [
     'Sorry, contact data collection with recover is no longer active for this business. Please',

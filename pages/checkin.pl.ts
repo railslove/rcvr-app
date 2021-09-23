@@ -16,7 +16,7 @@ const pl: typeof de = {
 
   dataProtection1: 'Ochrona danych jest dla nas bardzo ważna!',
   dataProtection2: 'przechowuje Twoje dane w sposób zaszyfrowany i bezpieczny',
-  dataProtection2_rcvr: ' przechowuje Twoje dane zaszyfrowane i bezpieczne',
+  dataProtection2_rcvr: 'przechowuje Twoje dane zaszyfrowane i bezpieczne',
 
   ownerIsBlockedMessage: [
     'Przepraszamy, zbieranie danych kontaktowych z odzysku nie jest już aktywne dla tej firmy. Proszę',
