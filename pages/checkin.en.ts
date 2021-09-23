@@ -12,13 +12,9 @@ const en: typeof de = {
   coronaRegulations:
     'Current corona regulations require you to leave your contact information if you are in a business that is required to take protective measures, such as restaurants. The app can also be used voluntarily to assist with tracking.',
 
-  dataProtection: [
-    'Privacy is very important to us in this!',
-    isRcvrEnv
-      ? 'stores your data encrypted and secure.'
-      : 'Your data is stored encrypted and secure.',
-    'Your data will be stored encrypted and secure.',
-  ].join(' '),
+  dataProtection1: 'Data protection is very important to us!',
+  dataProtection2: 'stores your data encrypted and secure',
+  dataProtection2_rcvr: ' stores your data encrypted and secure.',
 
   ownerIsBlockedMessage: [
     'Sorry, contact data collection with recover is no longer active for this business. Please',
