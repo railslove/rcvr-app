@@ -13,13 +13,10 @@ const de = {
   coronaRegulations:
     'Durch die aktuellen Corona-Verordnungen musst du Deine Kontaktdaten hinterlegen, wenn Du in einem Betrieb bist der zu Schutzmaßnahmen verpflichtet ist, wie z.B. Restaurants. Die App kann auch freiwillig genutzt werden, um die Nachverfolgung zu unterstützen.',
 
-  dataProtection: [
-    'Datenschutz ist uns dabei sehr wichtig!',
-    isRcvrEnv
-      ? 'speichert Deine Daten verschlüsselt und sicher.'
-      : 'Ihre Daten werden verschlüsselt und sicher gespeichert.',
-    'Ihre Daten werden verschlüsselt und sicher gespeichert.',
-  ].join(' '),
+  dataProtection1: 'Datenschutz ist uns dabei sehr wichtig!',
+  dataProtection2: isRcvrEnv
+    ? 'speichert Deine Daten verschlüsselt und sicher.'
+    : 'Ihre Daten werden verschlüsselt und sicher gespeichert.',
 
   ownerIsBlockedMessage: [
     'Die Kontaktdatenerfassung mit recover ist für diesen Betrieb leider nicht mehr aktiv. Bitte',
