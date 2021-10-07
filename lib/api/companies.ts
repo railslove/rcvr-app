@@ -24,9 +24,9 @@ export const CompanyTypeOptions = {
 
 export const CoronaTestOptions = {
   0: 'NO_TEST',
+  1: 'RECOVERED_OR_VACCINATED',
   24: '24_HOUR_TEST_NEEDED',
   48: '48_HOUR_TEST_NEEDED',
-  recovered: 'RECOVERED_OR_VACCINATED',
 }
 
 export interface CompanyRes {
