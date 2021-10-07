@@ -217,6 +217,7 @@ export default function CheckinPage() {
             <p>{t('address')}</p>
             <p>
               {t('dataProtection1')}
+              {isRcvrEnv ? ' ' : null}
               {isRcvrEnv ? <b>recover</b> : null}
               {isRcvrEnv ? ' ' : null}
               {isRcvrEnv ? t('dataProtection2_rcvr') : t('dataProtection2')}
