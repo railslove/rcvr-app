@@ -55,6 +55,7 @@ export const BusinessDataModal: React.FC<BusinessDataModalProps> = ({
     '0': t('coronaTestSelectOptions0'),
     '24': t('coronaTestSelectOptions24'),
     '48': t('coronaTestSelectOptions48'),
+    recovered: t('coronaTestSelectOptionsRecovered'),
   }
 
   const BusinessSchema = Yup.object().shape({
