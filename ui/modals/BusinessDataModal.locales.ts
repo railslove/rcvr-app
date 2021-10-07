@@ -7,9 +7,10 @@ export const de = {
   ...validatorsLocalesDE,
   ...CompanyTypeOptions,
 
-  coronaTestSelectOptions0: 'kein Test notwendig',
-  coronaTestSelectOptions24: 'maximal 24 Stunden alter Test notwendig',
-  coronaTestSelectOptions48: 'maximal 48 Stunden alter Test notwendig',
+  coronaTestSelectOptions0: 'Kein Nachweis notwendig',
+  coronaTestSelectOptions24: 'Genesen, Geimpt oder Getested (24 Stunden)',
+  coronaTestSelectOptions48: 'Genesen, Geimpt oder Getested (48 Stunden)',
+  coronaTestSelectOptionsRecovered: 'Genesen oder Geimpt',
 
   or: 'oder',
 
@@ -95,9 +96,12 @@ export const en: typeof de = {
   public_building: 'public building',
   educational_institution: 'educational institution',
 
-  coronaTestSelectOptions0: 'no test necessary',
-  coronaTestSelectOptions24: 'maximum 24 hours old test necessary',
-  coronaTestSelectOptions48: 'maximum 48 hours old test necessary',
+  coronaTestSelectOptions0: 'No proof required',
+  coronaTestSelectOptions24:
+    'Proof of recovery, Vaccination or test (24 hours)',
+  coronaTestSelectOptions48:
+    'Proof of recovery, Vaccination or test (48 hours)',
+  coronaTestSelectOptionsRecovered: 'Proof of recovery or vaccination',
 }
 
 export default { de, en }
