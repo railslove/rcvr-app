@@ -51,7 +51,10 @@ export const BusinessDataModal: React.FC<BusinessDataModalProps> = ({
     educational_institution: t('educational_institution'),
   }
 
-  const coronaTestSelectOptions: typeof CoronaTestOptions = {
+  const coronaTestSelectOptions: Record<
+    keyof typeof CoronaTestOptions,
+    string
+  > = {
     '0': t('coronaTestSelectOptions0'),
     '24': t('coronaTestSelectOptions24'),
     '48': t('coronaTestSelectOptions48'),

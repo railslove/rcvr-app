@@ -27,7 +27,10 @@ export const CoronaTestOptions = {
   1: 'RECOVERED_OR_VACCINATED',
   24: '24_HOUR_TEST_NEEDED',
   48: '48_HOUR_TEST_NEEDED',
-}
+} as const
+
+export type CoronaTestOptionsValues =
+  typeof CoronaTestOptions[keyof typeof CoronaTestOptions]
 
 export interface CompanyRes {
   id: string

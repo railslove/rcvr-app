@@ -10,6 +10,7 @@ import { Box, Button, Checkbox, Radio, Input, Text } from '~ui/core'
 
 import useLocaleObject from '~locales/useLocaleObject'
 import OnboardingLocales from '~ui/blocks/Onboarding/Onboarding.locales'
+import { getShouldShowCoronaTest } from '~lib/models/area'
 
 type OnboardingProps = {
   area: AreaRes
@@ -67,6 +68,8 @@ export const Onboarding: React.FC<OnboardingProps> = ({
     area.companyNeedToShowCoronaTest
   } ${t('provideTestLabel2')}.`
 
+  const shouldShowTested = getShouldShowCoronaTest(area)
+
   return (
     <div>
       <Formik
@@ -112,12 +115,14 @@ export const Onboarding: React.FC<OnboardingProps> = ({
           {area.companyNeedToShowCoronaTest > 0 && !area.testExemption && (
             <>
               <Box height={3} />
-              <Radio
-                name="providedHealthDocument"
-                label={provide_test_label}
-                value={GuestHealthDocumentEnum.tested}
-                hideError={true}
-              />
+              {shouldShowTested && (
+                <Radio
+                  name="providedHealthDocument"
+                  label={provide_test_label}
+                  value={GuestHealthDocumentEnum.tested}
+                  hideError={true}
+                />
+              )}
               <Radio
                 name="providedHealthDocument"
                 label={t('hadCoronaLabel')}
