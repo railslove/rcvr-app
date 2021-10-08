@@ -18,7 +18,7 @@ export const getAreaCoronaTestOption = (
   }
 }
 
-export const getShouldShowCoronaTest = (area: Partial<AreaRes>): boolean => {
+export const getAreaShouldAskForTest = (area: Partial<AreaRes>): boolean => {
   const option = getAreaCoronaTestOption(area)
 
   return option === '24_HOUR_TEST_NEEDED' || option === '48_HOUR_TEST_NEEDED'
