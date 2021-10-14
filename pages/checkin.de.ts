@@ -1,4 +1,4 @@
-import { isFormal, isRcvrEnv, isCareEnv, isHealthEnv } from '~lib/config'
+import { isFormal, isCareEnv, isHealthEnv } from '~lib/config'
 
 const de = {
   pageTitle: 'Checkin...',
