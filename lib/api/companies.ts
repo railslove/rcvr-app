@@ -23,10 +23,14 @@ export const CompanyTypeOptions = {
 }
 
 export const CoronaTestOptions = {
-  0: 'kein Test notwendig',
-  24: 'maximal 24 Stunden alter Test notwendig',
-  48: 'maximal 48 Stunden alter Test notwendig',
-}
+  0: 'NO_TEST',
+  1: 'RECOVERED_OR_VACCINATED',
+  24: '24_HOUR_TEST_NEEDED',
+  48: '48_HOUR_TEST_NEEDED',
+} as const
+
+export type CoronaTestOptionsValues =
+  typeof CoronaTestOptions[keyof typeof CoronaTestOptions]
 
 export interface CompanyRes {
   id: string

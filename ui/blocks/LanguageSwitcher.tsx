@@ -32,7 +32,7 @@ const LanguageSwitcher: React.FC = () => {
 
       setTimeout(() => router.reload(), 300)
     },
-    []
+    [router, persistLocale]
   )
 
   return (
