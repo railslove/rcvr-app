@@ -33,7 +33,7 @@ const useLocaleObject = <K extends string, V extends unknown>(
     const placeholder = `[${key}]` as Result[K]
 
     const value = currentLocale[key]
-    const valueEnv = currentLocale[`${key}_${BUILD_VARIANT}`]
+    const valueEnv = currentLocale[`${key}_${BUILD_VARIANT}` as K]
     const localeResult = options.useEnv && valueEnv != null ? valueEnv : value
 
     if (localeResult == null) {
