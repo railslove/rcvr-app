@@ -30,7 +30,7 @@
     "camelcase-keys": "^7.0.0",
     "date-fns": "^2.23.0",
     "detect-browser": "^5.2.0",
-    "dexie": "^3.0.1",
+    "dexie": "^3.2.3",
     "file-saver": "^2.0.5",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
